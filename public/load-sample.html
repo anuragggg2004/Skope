@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head><title>Loading Sample Report...</title></head>
+<body style="background:#080b14;color:white;font-family:sans-serif;display:flex;align-items:center;justify-content:center;height:100vh">
+<p>Loading sample PathReport...</p>
+<script>
+const sampleReport = {
+  profile_summary: "You're a Commerce student with a genuine entrepreneurial streak — not the 'I want to start a startup' kind that every second student says, but the kind that actually reads business case studies for fun and has already sold things online. Your comfort with numbers combined with creative marketing instincts puts you in a rare category that most commerce counsellors completely miss.",
+  key_insight: "You don't need an MBA to start building businesses. The students who succeed in entrepreneurship are the ones who start selling before they finish college, not after. Your instinct to sell online is already more valuable than 90% of what a BBA degree teaches.",
+  key_perspective: "Here's what nobody tells commerce students: SRCC and top DU colleges have great brand value, but their curriculum is still stuck in 2010. Students at newer colleges like Ashoka or Krea are getting exposed to behavioural economics, design thinking, and startup methodologies that SRCC students only discover in their MBA. The college name matters less than what you actually learn to do.",
+  strengths: [
+    "Already has real selling experience — most students only theorize about business",
+    "Strong quantitative ability — maths as a strength is rare in commerce students who also think creatively",
+    "Self-starter mentality — doesn't wait for college to teach things",
+    "Comfortable with ambiguity and risk — essential for entrepreneurship"
+  ],
+  gaps: [
+    "No structured understanding of finance yet — instinct alone won't scale past a point",
+    "Portfolio of business projects needs documentation — investors and colleges want proof",
+    "Parent conversation about non-traditional paths hasn't happened — this will become a blocker"
+  ],
+  careers: [
+    {
+      title: "Product Manager",
+      why_it_fits: "Your combination of business instinct and user empathy is exactly what product management demands. You already think about why people buy things — that's the core skill.",
+      entrance_exams: ["IPMAT (for IIM Indore integrated program)", "CUET (for DU colleges)", "Christ University entrance"],
+      earning_range: "₹8-25 LPA",
+      reality_check: "Everyone wants to be a PM now. The field is getting crowded with MBA grads. Your edge is starting to build products NOW, not waiting for a degree to tell you how."
+    },
+    {
+      title: "Investment Banking Analyst",
+      why_it_fits: "Your maths strength combined with business curiosity is the exact profile IB firms recruit. You enjoy the analytical side of commerce, not just the creative side.",
+      entrance_exams: ["CUET", "SRCC entrance", "Christ University entrance", "IPMAT"],
+      earning_range: "₹12-40 LPA",
+      reality_check: "IB is brutal. 80-100 hour weeks are real, not exaggerated. The money is excellent but the lifestyle cost is severe. Most people burn out by year 3."
+    },
+    {
+      title: "D2C Brand Founder",
+      why_it_fits: "You've already sold things online. Most 'entrepreneurs' haven't. A structured commerce education will give you the financial literacy to scale what you've already started.",
+      entrance_exams: ["SET (Symbiosis)", "Christ University entrance", "Ashoka written test"],
+      earning_range: "₹0-50 LPA (high variance)",
+      reality_check: "95% of D2C brands fail within 2 years. The ones that survive have founders who understand unit economics, not just marketing. You need to learn finance properly."
+    }
+  ],
+  colleges: [
+    {
+      name: "Shaheed Sukhdev College of Business Studies",
+      location: "Delhi",
+      type: "Delhi University",
+      annual_fee: "₹30,000/year",
+      why_fits: "This is the most underrated commerce college in Delhi. While everyone fights for SRCC admission, SSCBS has a BMS program that teaches more practical business skills than any BCom. Given your entrepreneurial bent, BMS here gives you case-study-heavy learning with Delhi startup ecosystem access.",
+      caution: "Admission is brutally competitive through CUET. Your boards need to be 95%+ realistically. Also, DU's bureaucracy can be frustrating.",
+      is_hidden_gem: true
+    },
+    {
+      name: "SRCC Delhi",
+      location: "Delhi",
+      type: "Delhi University",
+      annual_fee: "₹25,000/year",
+      why_fits: "The brand name opens doors that nothing else in commerce can. If you get in, the alumni network alone is worth it — SRCC grads are everywhere in finance and consulting.",
+      caution: "The curriculum itself is outdated. You'll learn more from peers and extracurriculars than from lectures. Don't expect the classroom to teach you entrepreneurship.",
+      is_hidden_gem: false
+    },
+    {
+      name: "Ashoka University",
+      location: "Sonipat",
+      type: "Private",
+      annual_fee: "₹4.5 Lakhs/year",
+      why_fits: "You probably haven't heard of this one for commerce, but hear me out. Ashoka's Economics + Entrepreneurship minor combination is genuinely world-class. The cohort is small, the professors push independent thinking, and the startup incubator is active. For someone who wants to BUILD, not just study business, this beats any DU college.",
+      caution: "Expensive. The campus is in Sonipat which feels isolated. Also, brand recognition outside metros is still weak — your relatives won't be impressed.",
+      is_hidden_gem: true
+    },
+    {
+      name: "Christ University",
+      location: "Bangalore",
+      type: "Deemed University",
+      annual_fee: "₹2.8 Lakhs/year",
+      why_fits: "Strong BBA program with excellent Bangalore placement access. The city itself is an education — every second person is building something. For an entrepreneurial commerce student, being in Bangalore is a cheat code.",
+      caution: "Very strict campus rules — attendance, dress code, phone policies. If you're used to freedom, this will feel suffocating. The strictness is real.",
+      is_hidden_gem: false
+    },
+    {
+      name: "Symbiosis Centre for Management Studies",
+      location: "Pune",
+      type: "Deemed University",
+      annual_fee: "₹3.2 Lakhs/year",
+      why_fits: "SET exam is manageable, campus is vibrant, and the BBA + MBA integrated pathway saves you a year. Pune's cost of living is lower than Bangalore or Delhi, which matters when you're bootstrapping side projects.",
+      caution: "Symbiosis has many campuses and quality varies wildly. Make sure you're getting the Pune main campus, not a satellite one.",
+      is_hidden_gem: false
+    },
+    {
+      name: "Flame University",
+      location: "Pune",
+      type: "Private",
+      annual_fee: "₹5 Lakhs/year",
+      why_fits: "Their liberal arts approach to business education is genuinely different from anything else in India. You can combine economics with psychology, data science, or design. For someone who thinks about WHY people buy things, this cross-disciplinary approach is a massive advantage.",
+      caution: "Very expensive and the brand is still building. You won't get the same immediate placement power as SRCC or Christ. This is a bet on long-term differentiation.",
+      is_hidden_gem: true
+    },
+    {
+      name: "IIM Indore (5-Year Integrated Program)",
+      location: "Indore",
+      type: "IIM",
+      annual_fee: "₹4.5 Lakhs/year",
+      why_fits: "This is the unconventional option you've never considered. IIM Indore runs a 5-year integrated BBA+MBA. You skip the CAT rat race, get an IIM degree, and enter the job market with credentials that open every door. For someone who wants business depth, this is the most efficient path.",
+      caution: "IPMAT is competitive (top 1% make it). You're committing to 5 years in Indore — a city with limited startup ecosystem. And the integrated program doesn't have the same alumni network power as the 2-year MBA.",
+      is_hidden_gem: true
+    }
+  ],
+  recommended_courses: [
+    {
+      course_name: "BBA (Business Analytics)",
+      offered_at: "Christ University, Bangalore",
+      duration: "3 years",
+      ai_relevance: "AI-augmented",
+      why_this_course: "Combines your business instinct with data skills that every company is desperate for. Business analytics grads who can also sell are unicorns."
+    },
+    {
+      course_name: "BMS (Bachelor of Management Studies)",
+      offered_at: "SSCBS, Delhi",
+      duration: "3 years",
+      ai_relevance: "AI-augmented",
+      why_this_course: "Case-study driven curriculum teaches you to think like a consultant and act like a founder. More practical than BCom."
+    },
+    {
+      course_name: "BSc Economics + Entrepreneurship Minor",
+      offered_at: "Ashoka University, Sonipat",
+      duration: "3 years",
+      ai_relevance: "AI-proof",
+      why_this_course: "Teaches you economic thinking frameworks that help you understand markets at a structural level — exactly what separates successful founders from lucky ones."
+    },
+    {
+      course_name: "Integrated BBA+MBA (IPM)",
+      offered_at: "IIM Indore",
+      duration: "5 years",
+      ai_relevance: "AI-proof",
+      why_this_course: "Most efficient path to an IIM degree. Saves you 2 years of CAT prep anxiety and gives you a head start on MBA peers."
+    },
+    {
+      course_name: "BBA (Innovation & Entrepreneurship)",
+      offered_at: "Symbiosis, Pune",
+      duration: "3 years",
+      ai_relevance: "AI-augmented",
+      why_this_course: "One of the few BBA programs in India that takes entrepreneurship seriously as a discipline, not just a buzzword elective."
+    },
+    {
+      course_name: "BA Economics + Finance Certificate",
+      offered_at: "FLAME University, Pune",
+      duration: "3 years",
+      ai_relevance: "AI-proof",
+      why_this_course: "The liberal arts approach forces you to think across disciplines — exactly the kind of thinking that builds differentiated businesses."
+    }
+  ],
+  emerging_roles: [
+    {
+      title: "Growth Product Manager",
+      description: "Sits at the intersection of product, data, and marketing. Owns the metrics that decide whether a startup lives or dies.",
+      why_relevant: "Your sales instinct + analytical ability is exactly this role's DNA. Most GPMs come from either pure tech or pure marketing — having both is rare."
+    },
+    {
+      title: "Creator Economy Strategist",
+      description: "Helps brands and creators monetize audiences. Builds revenue systems for the new economy of influencers, newsletters, and community-driven products.",
+      why_relevant: "You already understand online selling. This role takes that instinct and applies it at scale. It barely existed 3 years ago and is growing 40% year-over-year."
+    }
+  ],
+  next_actions: [
+    {
+      action: "Register for CUET and SET entrance exams",
+      timeline: "This week",
+      reason: "Registration deadlines are approaching and these are your primary pathways to SSCBS, Christ, and Symbiosis."
+    },
+    {
+      action: "Document your online selling experience as a case study — revenue, lessons, what failed",
+      timeline: "Next 2 weeks",
+      reason: "Ashoka and FLAME interviews specifically ask about real-world experience. A documented case study sets you apart from students who only have textbook knowledge."
+    },
+    {
+      action: "Take the IPMAT mock test to gauge if IIM Indore integrated program is realistic",
+      timeline: "Next 2 weeks",
+      reason: "No point preparing if the gap is too large. One mock test will tell you whether to invest 3 months of prep or redirect that energy."
+    },
+    {
+      action: "Have the conversation with parents about Ashoka/FLAME as alternatives to DU",
+      timeline: "Next month",
+      reason: "These colleges are expensive and unfamiliar to most parents. The earlier you start this conversation with data (placement stats, alumni outcomes), the less resistance you'll face."
+    },
+    {
+      action: "Start a small weekend project — a newsletter, a micro-product, anything that generates ₹1 of revenue",
+      timeline: "Next month",
+      reason: "Every college interview and every future employer will ask 'what have you built?' The answer needs to be something real, not a plan."
+    }
+  ]
+};
+
+sessionStorage.setItem('pathreport', JSON.stringify(sampleReport));
+window.location.href = '/result';
+</script>
+</body>
+</html>
