@@ -114,10 +114,7 @@ export default function Navbar() {
                     {hasReport && (
                       <li>
                         <button
-                          onClick={() => {
-                            setShowDropdown(false)
-                            navigate('/result')
-                          }}
+                          onClick={() => { setShowDropdown(false); navigate('/result') }}
                           className="w-full text-left font-dm text-[13px] text-[rgba(240,242,255,0.7)] hover:text-white hover:bg-[rgba(255,255,255,0.04)] px-3 py-2 rounded-[8px] cursor-pointer transition-colors"
                         >
                           📈 View PathReport
@@ -126,13 +123,26 @@ export default function Navbar() {
                     )}
                     <li>
                       <button
-                        onClick={() => {
-                          setShowDropdown(false)
-                          navigate('/form')
-                        }}
+                        onClick={() => { setShowDropdown(false); navigate('/form') }}
                         className="w-full text-left font-dm text-[13px] text-[rgba(240,242,255,0.7)] hover:text-white hover:bg-[rgba(255,255,255,0.04)] px-3 py-2 rounded-[8px] cursor-pointer transition-colors"
                       >
                         ⚡ New Diagnostic
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        onClick={() => { setShowDropdown(false); navigate('/profile') }}
+                        className="w-full text-left font-dm text-[13px] text-[rgba(240,242,255,0.7)] hover:text-white hover:bg-[rgba(255,255,255,0.04)] px-3 py-2 rounded-[8px] cursor-pointer transition-colors"
+                      >
+                        👤 My Profile
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        onClick={() => { setShowDropdown(false); navigate('/share') }}
+                        className="w-full text-left font-dm text-[13px] text-[rgba(240,242,255,0.7)] hover:text-white hover:bg-[rgba(255,255,255,0.04)] px-3 py-2 rounded-[8px] cursor-pointer transition-colors"
+                      >
+                        📤 Share Skope
                       </button>
                     </li>
                     <li>

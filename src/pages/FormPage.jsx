@@ -5,51 +5,62 @@ import LoadingDots from '../components/LoadingDots'
 
 // ─── Phase 1 Questions Config ─────────────────────────
 
+// ─── Step Icons (SVG, no emojis) ──────────────────────
+const STEP_ICONS = [
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/><path d="M8 7h8M8 11h5"/>
+  </svg>,
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2l-.94-.94-2.12-2.12-.94-.94z"/>
+    <path d="M12 15l-3-3a22 22 0 012-3.95A12.88 12.88 0 0122 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 01-4 2z"/>
+  </svg>,
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>
+  </svg>,
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="3" y1="20" x2="21" y2="20"/>
+  </svg>,
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/>
+    <line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/>
+  </svg>
+]
+
 const QUESTIONS = [
   {
-    id: 'q1',
-    number: '01',
-    emoji: '📚',
-    title: "What's your stream?",
-    subtitle: 'And which subjects do you actually study?',
-    placeholder: "e.g. PCM with Computer Science. I find Maths boring but love Physics experiments. Also took IP as optional...",
-    gradient: 'from-blue to-[#22d3a0]'
+    id: 'q1', number: '01',
+    title: "Stream and actual marks — right now.",
+    subtitle: "Not your target. Not your dream. What is on your marksheet today? What subject are you weakest in? Be honest.",
+    placeholder: "e.g. PCM with CS. Maths is my weakest — usually 65-70%. Physics I actually understand. CS I enjoy but never coded outside of school practicals...",
+    gradient: 'from-blue to-[#22d3a0]', color: '#4f8ef7'
   },
   {
-    id: 'q2',
-    number: '02',
-    emoji: '🎯',
-    title: "What do you do outside school?",
-    subtitle: 'Hobbies, obsessions, things you watch, read, or build — be specific.',
-    placeholder: "e.g. I binge-watch tech YouTube, play chess online, run a small meme page on Instagram, built a website once for fun...",
-    gradient: 'from-purple to-[#ec4899]'
+    id: 'q2', number: '02',
+    title: "What have you actually built, made, or done outside school?",
+    subtitle: "Not what you 'like'. What have you actually created, competed in, or worked on? If the answer is nothing, say that.",
+    placeholder: "e.g. I run a 2000-follower Instagram page on football tactics. I tried coding a website once but gave up. I won a district debate competition. I haven't built anything honestly...",
+    gradient: 'from-purple to-[#ec4899]', color: '#8b5cf6'
   },
   {
-    id: 'q3',
-    number: '03',
-    emoji: '🧠',
-    title: "What's in your head about life after 12th?",
-    subtitle: 'Write exactly what you think — even if it\'s confusion.',
-    placeholder: "e.g. Everyone says engineering but I'm not sure. I vaguely like design and startups but parents want stable job. Honestly confused...",
-    gradient: 'from-[#fbbf24] to-[#f97316]'
+    id: 'q3', number: '03',
+    title: "What career are you thinking? Whose idea is it?",
+    subtitle: "Be straight. Is this what you want or what your parents told you to want? Both answers are fine. Just be accurate.",
+    placeholder: "e.g. My dad wants engineering but I genuinely don't know if I want it. I vaguely like design but never told anyone. My friends are all doing JEE so I'm also doing it by default...",
+    gradient: 'from-[#fbbf24] to-[#f97316]', color: '#fbbf24'
   },
   {
-    id: 'q4',
-    number: '04',
-    emoji: '📊',
-    title: "What are your marks or percentile?",
-    subtitle: 'Board percentage, CUET percentile, or expected marks — whatever you have.',
-    placeholder: "e.g. 12th boards: 82% (CBSE). CUET percentile: haven't given yet. 10th was 91%. Expected 75-80% in boards...",
-    gradient: 'from-[#22d3a0] to-blue'
+    id: 'q4', number: '04',
+    title: "What are your ACTUAL marks or exam scores?",
+    subtitle: "Not expected. Not aspirational. The real numbers you have right now. This determines what is realistic vs what is fantasy.",
+    placeholder: "e.g. 12th predicted 78% CBSE. JEE mock percentile: 67. 10th was 85%. CUET not given yet. These are my real numbers, not what I'm hoping for...",
+    gradient: 'from-[#22d3a0] to-blue', color: '#22d3a0'
   },
   {
-    id: 'q5',
-    number: '05',
-    emoji: '📝',
-    title: "Which entrance exams have you given or plan to give?",
-    subtitle: 'JEE, NEET, CUET, UCEED, CLAT, or any other — include scores if you have them.',
-    placeholder: "e.g. Giving JEE Main in Jan, scored 78 percentile in mock. Planning CUET. Not sure about BITSAT. Skipping NEET...",
-    gradient: 'from-[#ec4899] to-purple'
+    id: 'q5', number: '05',
+    title: "Which exams are you preparing for? Be specific.",
+    subtitle: "JEE, NEET, CUET, CLAT, UCEED — list what you are actually studying for right now. Also say which ones you have already given up on.",
+    placeholder: "e.g. Seriously preparing JEE Main only. Not NEET at all. Planning to give CUET as backup. Have not even heard of most design exams. Skipped BITSAT prep...",
+    gradient: 'from-[#ec4899] to-purple', color: '#ec4899'
   }
 ]
 
@@ -64,7 +75,9 @@ function ChatBubble({ message, index }) {
     >
       {!isUser && (
         <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue to-purple flex items-center justify-center shrink-0 mr-2.5 mt-0.5 shadow-[0_2px_12px_rgba(79,142,247,0.25)]">
-          <span className="text-[12px]">🔍</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
         </div>
       )}
       <div
@@ -163,18 +176,30 @@ export default function FormPage() {
     }
   }
 
-  const fetchNextQuestion = async (history) => {
+  const fetchNextQuestion = async (history, attempt = 1) => {
+    const MAX_ATTEMPTS = 3
     try {
       const res = await fetch('/api/next-question', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ answers: phase1, chatHistory: history })
       })
-      if (!res.ok) throw new Error('Failed to get question. Please try again.')
+      if (!res.ok) {
+        const errData = await res.json().catch(() => ({}))
+        throw new Error(errData.error || `Server error (${res.status})`)
+      }
       const data = await res.json()
+      setError('')
       setChatHistory(prev => [...prev, { role: 'assistant', content: data.question }])
     } catch (err) {
-      setError(err.message)
+      if (attempt < MAX_ATTEMPTS) {
+        const delay = attempt * 2000
+        setError(`Connection issue — retrying in ${delay / 1000}s... (attempt ${attempt}/${MAX_ATTEMPTS})`)
+        await new Promise(r => setTimeout(r, delay))
+        setError('')
+        return fetchNextQuestion(history, attempt + 1)
+      }
+      setError('Could not reach the AI. Check your connection and tap retry.')
     }
   }
 

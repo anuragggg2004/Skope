@@ -5,6 +5,7 @@ import {
   signInWithPopup,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
+  signInAnonymously,
   signOut,
   updateProfile,
   sendPasswordResetEmail
@@ -26,7 +27,7 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       setUser(firebaseUser)
-      if (firebaseUser) {
+      if (firebaseUser && !firebaseUser.isAnonymous) {
         try {
           const res = await fetch(`/api/get-report/${firebaseUser.uid}`)
           if (res.ok) {
@@ -43,8 +44,10 @@ export function AuthProvider({ children }) {
           setPathReport(null)
         }
       } else {
-        setPathReport(null)
-        sessionStorage.removeItem('pathreport')
+        if (!firebaseUser) {
+          setPathReport(null)
+          sessionStorage.removeItem('pathreport')
+        }
       }
       setLoading(false)
     })
@@ -69,6 +72,11 @@ export function AuthProvider({ children }) {
     return result.user
   }
 
+  const loginAsGuest = async () => {
+    const result = await signInAnonymously(auth)
+    return result.user
+  }
+
   const logout = async () => {
     await signOut(auth)
   }
@@ -85,6 +93,7 @@ export function AuthProvider({ children }) {
     loginWithGoogle,
     loginWithEmail,
     signupWithEmail,
+    loginAsGuest,
     resetPassword,
     logout
   }
@@ -95,4 +104,3 @@ export function AuthProvider({ children }) {
     </AuthContext.Provider>
   )
 }
-

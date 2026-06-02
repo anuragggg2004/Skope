@@ -3,6 +3,34 @@ import { useNavigate } from 'react-router-dom'
 import Navbar from '../components/Navbar'
 import ChatMessage from '../components/ChatMessage'
 
+// ─── Print = screenshot of the dark page ──────────────────
+const PRINT_STYLES = `
+@media print {
+  /* Preserve dark background */
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  html, body, .page-wrapper { background: #080b14 !important; color: #ffffff !important; }
+
+  /* Hide chrome: navbar, bg effects, story scroll, chat, buttons */
+  nav, [data-noprint], .grid-bg, .orb-1, .orb-2, button { display: none !important; }
+
+  /* Show all sections in print */
+  .print-block { display: block !important; }
+
+  /* Remove page margin */
+  @page { margin: 15mm 15mm; }
+
+  /* Layout */
+  .page-wrapper { padding: 0 !important; margin: 0 !important; }
+  .max-w-\\[820px\\] { max-width: 100% !important; padding: 0 12px !important; }
+
+  /* Keep cards rendering */
+  .glass-card { border: 1px solid rgba(255,255,255,0.07) !important; background: #141926 !important; }
+
+  /* Avoid breaking cards across pages */
+  .glass-card, [class*='rounded-'] { break-inside: avoid; }
+}
+`
+
 // ─── Inline Sub-Components ────────────────────────────
 
 function StoryCard({ gradient, emoji, label, value, delay }) {
@@ -168,6 +196,7 @@ export default function ResultPage() {
   const [chatLoading, setChatLoading] = useState(false)
   const [showChips, setShowChips] = useState(true)
   const [activeTab, setActiveTab] = useState('careers')
+  const [showSharePopup, setShowSharePopup] = useState(false)
   const messagesEndRef = useRef(null)
   const textareaRef = useRef(null)
 
@@ -179,6 +208,18 @@ export default function ResultPage() {
     }
     setPathReport(JSON.parse(stored))
   }, [navigate])
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      const stored = sessionStorage.getItem('pathreport')
+      const shownThisSession = sessionStorage.getItem('share_popup_shown')
+      if (stored && !shownThisSession) {
+        setShowSharePopup(true)
+        sessionStorage.setItem('share_popup_shown', 'true')
+      }
+    }, 2000)
+    return () => clearTimeout(timer)
+  }, [])
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -223,6 +264,21 @@ export default function ResultPage() {
 
   const handleChipClick = (text) => { setShowChips(false); sendChat(text) }
 
+  // ─── Print the page as it looks ─────────────────
+  const handleDownloadPDF = () => {
+    window.print()
+  }
+
+  useEffect(() => {
+    const id = 'skope-print-styles'
+    if (!document.getElementById(id)) {
+      const style = document.createElement('style')
+      style.id = id
+      style.textContent = PRINT_STYLES
+      document.head.appendChild(style)
+    }
+  }, [])
+
   if (!pathReport) return null
 
   const chips = [
@@ -232,17 +288,17 @@ export default function ResultPage() {
     'I forgot to mention something important'
   ]
 
-  const nextActions = pathReport.next_actions || pathReport.next_30_days || []
-
   return (
     <>
       <div className="grid-bg" />
       <div className="orb-1" />
       <div className="orb-2" />
+
       <div className="page-wrapper">
         <Navbar />
 
         <div className="max-w-[820px] mx-auto px-6 py-10 sm:py-14 max-sm:px-4">
+
 
           {/* ═══════════════════════════════════════════ */}
           {/* HERO */}
@@ -255,15 +311,28 @@ export default function ResultPage() {
             <h1 className="font-sora text-[38px] sm:text-[46px] font-bold text-white tracking-[-1.5px] leading-[1.1] mb-3">
               Here's your <span className="text-gradient">scope</span>.
             </h1>
-            <p className="font-dm text-[14px] text-[rgba(240,242,255,0.4)] max-w-[420px] mx-auto">
+            <p className="font-dm text-[14px] text-[rgba(240,242,255,0.4)] max-w-[420px] mx-auto mb-6">
               Tap any card to see trade-offs and reality checks.
             </p>
+            {/* ✅ DOWNLOAD PDF BUTTON */}
+            <button
+              data-noprint
+              onClick={handleDownloadPDF}
+              className="inline-flex items-center gap-2 font-dm text-[13px] font-semibold px-5 py-2.5 rounded-full border border-[rgba(255,255,255,0.1)] bg-[rgba(255,255,255,0.04)] text-[rgba(240,242,255,0.7)] hover:text-white hover:bg-[rgba(255,255,255,0.08)] hover:border-[rgba(79,142,247,0.3)] transition-all duration-200 cursor-pointer"
+            >
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+                <polyline points="7 10 12 15 17 10"/>
+                <line x1="12" y1="15" x2="12" y2="3"/>
+              </svg>
+              Download PDF
+            </button>
           </div>
 
           {/* ═══════════════════════════════════════════ */}
           {/* STORY CARDS — Horizontal scroll */}
           {/* ═══════════════════════════════════════════ */}
-          <div className="flex gap-3 overflow-x-auto pb-4 mb-8 -mx-4 px-4 snap-x snap-mandatory scrollbar-hide">
+          <div data-noprint className="flex gap-3 overflow-x-auto pb-4 mb-8 -mx-4 px-4 snap-x snap-mandatory scrollbar-hide">
             <StoryCard
               gradient="linear-gradient(135deg, #4f8ef7, #8b5cf6)"
               emoji="🎯"
@@ -307,7 +376,11 @@ export default function ResultPage() {
           <div className="relative rounded-[18px] p-[1px] mb-5 animate-fadeUp overflow-hidden" style={{ animationDelay: '0.1s', background: 'linear-gradient(135deg, rgba(79,142,247,0.4), rgba(139,92,246,0.4))' }}>
             <div className="bg-[#0c1019] rounded-[17px] p-6 sm:p-7">
               <div className="flex items-center gap-2 mb-3">
-                <span className="text-[18px]">💡</span>
+                <div className="w-6 h-6 rounded-[7px] flex items-center justify-center bg-[rgba(79,142,247,0.2)]">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#4f8ef7" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+                  </svg>
+                </div>
                 <span className="font-dm text-[10px] font-bold uppercase tracking-[2px] text-blue">Key Insight</span>
               </div>
               <p className="font-sora text-[18px] sm:text-[22px] font-semibold text-white leading-[1.45] tracking-[-0.3px]">
@@ -322,7 +395,11 @@ export default function ResultPage() {
           {(pathReport.key_perspective || pathReport.wide_perspective) && (
             <div className="glass-card rounded-[16px] p-5 sm:p-6 mb-5 border-l-[3px] border-l-[#fbbf24] animate-fadeUp" style={{ animationDelay: '0.15s' }}>
               <div className="flex items-center gap-2 mb-3">
-                <span className="text-[16px]">🧠</span>
+                <div className="w-6 h-6 rounded-[7px] flex items-center justify-center bg-[rgba(251,191,36,0.12)]">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M9.5 2A2.5 2.5 0 017 4.5v0A2.5 2.5 0 014.5 7v0A2.5 2.5 0 012 9.5v5A2.5 2.5 0 004.5 17v0A2.5 2.5 0 007 19.5v0A2.5 2.5 0 009.5 22h5a2.5 2.5 0 002.5-2.5v0A2.5 2.5 0 0019.5 17v0A2.5 2.5 0 0022 14.5v-5A2.5 2.5 0 0019.5 7v0A2.5 2.5 0 0017 4.5v0A2.5 2.5 0 0014.5 2z"/>
+                  </svg>
+                </div>
                 <span className="font-dm text-[10px] font-bold uppercase tracking-[2px] text-[#fbbf24]">The Real Perspective</span>
               </div>
               <p className="font-dm text-[14px] text-[rgba(240,242,255,0.6)] leading-[1.7] italic">
@@ -379,11 +456,11 @@ export default function ResultPage() {
           {/* ═══════════════════════════════════════════ */}
           {/* TAB NAVIGATION — Careers / Colleges / Courses */}
           {/* ═══════════════════════════════════════════ */}
-          <div className="flex gap-1 p-1 bg-[rgba(15,19,32,0.8)] rounded-[12px] border border-[rgba(79,142,247,0.1)] mb-6 animate-fadeUp" style={{ animationDelay: '0.3s' }}>
+          <div data-noprint className="flex gap-1 p-1 bg-[rgba(15,19,32,0.8)] rounded-[12px] border border-[rgba(79,142,247,0.1)] mb-6 animate-fadeUp" style={{ animationDelay: '0.3s' }}>
             {[
               { key: 'careers', label: `Careers (${pathReport.careers?.length || 0})` },
               { key: 'colleges', label: `Colleges (${pathReport.colleges?.length || 0})` },
-              { key: 'courses', label: `Courses (${pathReport.recommended_courses?.length || 0})` }
+              { key: 'courses', label: `Courses (${(pathReport.recommended_courses?.length || 0) + (pathReport.hidden_courses?.length || 0)})` }
             ].map(tab => (
               <button
                 key={tab.key}
@@ -399,60 +476,118 @@ export default function ResultPage() {
             ))}
           </div>
 
-          {/* ═══════════════════════════════════════════ */}
-          {/* TAB CONTENT — Careers */}
-          {/* ═══════════════════════════════════════════ */}
-          {activeTab === 'careers' && (
-            <div className="mb-8">
-              <SectionHeader tag="Your Matches" title="Career Paths" delay={0.32} />
-              <div className="grid grid-cols-1 gap-3.5">
-                {pathReport.careers?.map((career, i) => (
-                  <CareerCardRedesigned key={i} career={career} index={i} />
-                ))}
-              </div>
+          {/* ─── Tab Content — Careers ─── */}
+          <div className={activeTab === 'careers' ? 'block mb-8' : 'hidden print-block mb-8'}>
+            <SectionHeader tag="Your Matches" title="Career Paths" delay={0.32} />
+            <div className="grid grid-cols-1 gap-3.5">
+              {pathReport.careers?.map((career, i) => (
+                <CareerCardRedesigned key={i} career={career} index={i} />
+              ))}
             </div>
-          )}
+          </div>
+
+          {/* ─── Tab Content — Colleges ─── */}
+          <div className={activeTab === 'colleges' ? 'block mb-8' : 'hidden print-block mb-8'}>
+            <SectionHeader tag="Filtered for You" title="College Recommendations" delay={0.32} />
+            <div className="grid grid-cols-1 gap-3">
+              {pathReport.colleges?.map((college, i) => (
+                <CollegeCardRedesigned key={i} college={college} index={i} />
+              ))}
+            </div>
+          </div>
+
+          {/* ─── Tab Content — Courses ─── */}
+          <div className={activeTab === 'courses' ? 'block mb-8' : 'hidden print-block mb-8'}>
+            {pathReport.recommended_courses?.length > 0 && (
+              <div className="mb-8">
+                <SectionHeader tag="What to Study" title="Standard Recommended Courses" delay={0.32} />
+                <div className="grid grid-cols-1 gap-3">
+                  {pathReport.recommended_courses.map((course, i) => (
+                    <div key={i} className="glass-card rounded-[16px] p-5">
+                      <div className="flex items-start justify-between gap-3 mb-2">
+                        <h4 className="font-sora text-[15px] font-bold text-white leading-snug">{course.course_name}</h4>
+                        <span className={`shrink-0 font-dm text-[9px] font-bold uppercase tracking-[1px] px-2.5 py-1 rounded-full border whitespace-nowrap
+                          ${course.ai_relevance?.toLowerCase().includes('proof')
+                            ? 'text-[#6bcb77] bg-[rgba(107,203,119,0.1)] border-[rgba(107,203,119,0.25)]'
+                            : course.ai_relevance?.toLowerCase().includes('augment')
+                              ? 'text-blue bg-[rgba(79,142,247,0.1)] border-[rgba(79,142,247,0.25)]'
+                              : 'text-[rgba(240,242,255,0.5)] bg-[rgba(240,242,255,0.05)] border-[rgba(240,242,255,0.15)]'
+                          }`}>
+                          {course.ai_relevance}
+                        </span>
+                      </div>
+                      <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mb-2">
+                        <span className="font-dm text-[12px] text-[rgba(240,242,255,0.45)]">📍 {course.offered_at}</span>
+                        <span className="font-dm text-[12px] text-[rgba(240,242,255,0.45)]">⏱ {course.duration}</span>
+                      </div>
+                      <p className="font-dm text-[13px] text-[rgba(240,242,255,0.55)] leading-relaxed">{course.why_this_course}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {pathReport.hidden_courses?.length > 0 && (
+              <div className="mb-8">
+                <SectionHeader tag="Niche & High Demand" title="Hidden Gem Fields" delay={0.32} />
+                <div className="grid grid-cols-1 gap-4">
+                  {pathReport.hidden_courses.map((course, i) => (
+                    <div key={i} className="glass-card rounded-[16px] p-5 border-l-[3px] border-l-[#fbbf24]">
+                      <div className="flex items-start justify-between gap-3 mb-2">
+                        <div>
+                          <span className="font-dm text-[10px] font-bold uppercase tracking-[1.5px] text-[#fbbf24] mb-1 block">💎 Niche Course</span>
+                          <h4 className="font-sora text-[15px] font-bold text-white leading-snug">{course.course_name} ({course.field})</h4>
+                        </div>
+                        {course.starting_salary && (
+                          <div className="text-right shrink-0">
+                            <span className="font-sora text-[14px] font-semibold text-[#6bcb77]">{course.starting_salary}</span>
+                            <span className="font-dm text-[10px] text-[rgba(240,242,255,0.3)] block">starting</span>
+                          </div>
+                        )}
+                      </div>
+                      <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mb-2 font-dm text-[12px] text-[rgba(240,242,255,0.45)]">
+                        <span>📍 Best Institute: {course.offered_at}</span>
+                        <span>🔑 Entrance Path: {course.how_to_enter}</span>
+                      </div>
+                      <p className="font-dm text-[13px] text-[rgba(240,242,255,0.55)] leading-relaxed mb-3">
+                        <strong className="text-white">Why it's hidden:</strong> {course.why_nobody_knows}
+                      </p>
+                      <div className="bg-[rgba(79,142,247,0.04)] border border-[rgba(79,142,247,0.1)] rounded-[10px] p-3.5 text-[12px] font-dm space-y-1 text-[rgba(240,242,255,0.7)]">
+                        <div>
+                          <span className="text-blue font-bold">Market Demand:</span> {course.market_demand}
+                        </div>
+                        <div>
+                          <span className="text-blue font-bold">Why it fits you:</span> {course.why_this_student}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
 
           {/* ═══════════════════════════════════════════ */}
-          {/* TAB CONTENT — Colleges */}
+          {/* EMERGING ROLES */}
           {/* ═══════════════════════════════════════════ */}
-          {activeTab === 'colleges' && (
-            <div className="mb-8">
-              <SectionHeader tag="Filtered for You" title="College Recommendations" delay={0.32} />
-              <div className="grid grid-cols-1 gap-3">
-                {pathReport.colleges?.map((college, i) => (
-                  <CollegeCardRedesigned key={i} college={college} index={i} />
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* ═══════════════════════════════════════════ */}
-          {/* TAB CONTENT — Courses */}
-          {/* ═══════════════════════════════════════════ */}
-          {activeTab === 'courses' && pathReport.recommended_courses?.length > 0 && (
-            <div className="mb-8">
-              <SectionHeader tag="What to Study" title="Recommended Courses" delay={0.32} />
-              <div className="grid grid-cols-1 gap-3">
-                {pathReport.recommended_courses.map((course, i) => (
-                  <div key={i} className="glass-card rounded-[16px] p-5 animate-fadeUp" style={{ animationDelay: `${0.05 + i * 0.06}s` }}>
-                    <div className="flex items-start justify-between gap-3 mb-2">
-                      <h4 className="font-sora text-[15px] font-bold text-white leading-snug">{course.course_name}</h4>
-                      <span className={`shrink-0 font-dm text-[9px] font-bold uppercase tracking-[1px] px-2.5 py-1 rounded-full border whitespace-nowrap
-                        ${course.ai_relevance?.toLowerCase().includes('proof')
-                          ? 'text-[#6bcb77] bg-[rgba(107,203,119,0.1)] border-[rgba(107,203,119,0.25)]'
-                          : course.ai_relevance?.toLowerCase().includes('augment')
-                            ? 'text-blue bg-[rgba(79,142,247,0.1)] border-[rgba(79,142,247,0.25)]'
-                            : 'text-[rgba(240,242,255,0.5)] bg-[rgba(240,242,255,0.05)] border-[rgba(240,242,255,0.15)]'
-                        }`}>
-                        {course.ai_relevance}
+          {pathReport.emerging_roles?.length > 0 && (
+            <div className="mb-10 animate-fadeUp" style={{ animationDelay: '0.35s' }}>
+              <SectionHeader tag="Future Outlook" title="Emerging Roles for You" delay={0.35} />
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                {pathReport.emerging_roles.map((role, i) => (
+                  <div key={i} className="glass-card rounded-[16px] p-5 flex flex-col justify-between border-t-[3px] border-t-purple">
+                    <div>
+                      <div className="flex items-center gap-2 mb-3">
+                        <span className="text-[16px]">🚀</span>
+                        <h4 className="font-sora text-[15px] font-bold text-white">{role.title}</h4>
+                      </div>
+                      <p className="font-dm text-[13px] text-[rgba(240,242,255,0.55)] leading-relaxed mb-4">{role.description}</p>
+                    </div>
+                    <div className="bg-[rgba(139,92,246,0.06)] border border-[rgba(139,92,246,0.15)] rounded-[10px] px-3.5 py-2.5">
+                      <span className="font-dm text-[12px] text-[#c084fc] leading-relaxed block">
+                        💡 <strong className="text-white">Why relevant:</strong> {role.why_relevant}
                       </span>
                     </div>
-                    <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mb-2">
-                      <span className="font-dm text-[12px] text-[rgba(240,242,255,0.45)]">📍 {course.offered_at}</span>
-                      <span className="font-dm text-[12px] text-[rgba(240,242,255,0.45)]">⏱ {course.duration}</span>
-                    </div>
-                    <p className="font-dm text-[13px] text-[rgba(240,242,255,0.5)] leading-relaxed">{course.why_this_course}</p>
                   </div>
                 ))}
               </div>
@@ -460,63 +595,9 @@ export default function ResultPage() {
           )}
 
           {/* ═══════════════════════════════════════════ */}
-          {/* EMERGING ROLES + ACTION PLAN */}
-          {/* ═══════════════════════════════════════════ */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 mb-10 animate-fadeUp" style={{ animationDelay: '0.35s' }}>
-            {/* Emerging Roles */}
-            <div className="glass-card rounded-[16px] p-5">
-              <div className="flex items-center gap-2 mb-4">
-                <span className="text-[14px]">🚀</span>
-                <span className="font-dm text-[10px] font-bold uppercase tracking-[2px] text-[rgba(240,242,255,0.35)]">Emerging Roles</span>
-              </div>
-              {pathReport.emerging_roles?.map((role, i) => (
-                <div key={i}>
-                  <h4 className="font-sora text-[14px] font-bold text-white mb-1">{role.title}</h4>
-                  <p className="font-dm text-[12px] text-[rgba(240,242,255,0.45)] mb-1 leading-relaxed">{role.description}</p>
-                  <p className="font-dm text-[11px] text-blue leading-relaxed">{role.why_relevant}</p>
-                  {i < (pathReport.emerging_roles?.length || 0) - 1 && (
-                    <div className="border-t border-[rgba(79,142,247,0.08)] my-4" />
-                  )}
-                </div>
-              ))}
-            </div>
-
-            {/* Action Plan */}
-            <div className="glass-card rounded-[16px] p-5">
-              <div className="flex items-center gap-2 mb-4">
-                <span className="text-[14px]">📋</span>
-                <span className="font-dm text-[10px] font-bold uppercase tracking-[2px] text-[rgba(240,242,255,0.35)]">Your Action Plan</span>
-              </div>
-              <ul className="space-y-3.5">
-                {nextActions.map((item, i) => {
-                  const isObject = typeof item === 'object'
-                  return (
-                    <li key={i} className="flex items-start gap-3">
-                      <span className="flex items-center justify-center w-6 h-6 rounded-[8px] bg-gradient-to-br from-blue to-purple text-white font-sora text-[11px] font-bold shrink-0 mt-0.5">
-                        {i + 1}
-                      </span>
-                      <div className="min-w-0">
-                        {isObject && item.timeline && (
-                          <span className="font-dm text-[9px] font-bold text-purple uppercase tracking-[1.5px] block mb-0.5">{item.timeline}</span>
-                        )}
-                        <span className="font-dm text-[13px] text-[rgba(240,242,255,0.65)] leading-[1.55] block">
-                          {isObject ? item.action : item}
-                        </span>
-                        {isObject && item.reason && (
-                          <span className="font-dm text-[11px] text-[rgba(240,242,255,0.3)] leading-relaxed block mt-0.5">{item.reason}</span>
-                        )}
-                      </div>
-                    </li>
-                  )
-                })}
-              </ul>
-            </div>
-          </div>
-
-          {/* ═══════════════════════════════════════════ */}
           {/* AI COUNSELLOR CHAT */}
           {/* ═══════════════════════════════════════════ */}
-          <div className="animate-fadeUp" style={{ animationDelay: '0.4s' }}>
+          <div data-noprint className="animate-fadeUp" style={{ animationDelay: '0.4s' }}>
             <SectionHeader tag="Keep Going" title="Ask your AI Counsellor" delay={0.4} />
 
             <div className="glass-card rounded-[16px] overflow-hidden">
@@ -586,6 +667,60 @@ export default function ResultPage() {
 
         </div>
       </div>
+
+      {/* Share Pop-up Modal */}
+      {showSharePopup && (
+        <div data-noprint className="fixed inset-0 z-50 flex items-center justify-center bg-[rgba(5,7,12,0.8)] backdrop-blur-sm p-4 animate-fadeIn">
+          <div className="bg-[#0c1019] border border-[rgba(79,142,247,0.3)] rounded-[20px] p-6 max-w-[400px] w-full text-center shadow-[0_10px_40px_rgba(0,0,0,0.5)] animate-fadeUp">
+            {/* Share Icon */}
+            <div className="w-16 h-16 rounded-[18px] bg-gradient-to-br from-blue to-purple flex items-center justify-center mx-auto mb-4 shadow-[0_4px_20px_rgba(79,142,247,0.25)]">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
+                <polyline points="16 6 12 2 8 6" />
+                <line x1="12" y1="2" x2="12" y2="15" />
+              </svg>
+            </div>
+
+            <h3 className="font-sora text-[18px] font-bold text-white mb-2">Spread the Word! 🚀</h3>
+            <p className="font-dm text-[14px] text-[rgba(240,242,255,0.7)] leading-[1.6] mb-6">
+              "If you like that, please share with your friends, colleagues, brother and sister siblings."
+            </p>
+
+            <div className="flex flex-col gap-2">
+              <button
+                onClick={async () => {
+                  const shareUrl = 'https://skope-app.onrender.com'
+                  const shareText = "Just discovered Skope — an AI counsellor that gives brutally honest career advice for Indian Class 12 students. No sugar coating. Hidden gem colleges, unknown courses, and real talk about your actual marks. Try it free."
+                  if (navigator.share) {
+                    try {
+                      await navigator.share({
+                        title: 'Skope — Brutally Honest Career Advice',
+                        text: shareText,
+                        url: shareUrl
+                      })
+                      setShowSharePopup(false)
+                    } catch (e) {
+                      console.log(e)
+                      navigate('/share')
+                    }
+                  } else {
+                    navigate('/share')
+                  }
+                }}
+                className="w-full font-sora text-[13px] font-semibold text-white py-3 rounded-[10px] cursor-pointer border-none bg-gradient-to-r from-blue to-purple hover:opacity-95 transition-opacity"
+              >
+                📤 Share Now
+              </button>
+              <button
+                onClick={() => setShowSharePopup(false)}
+                className="w-full font-dm text-[13px] font-semibold text-[rgba(240,242,255,0.4)] py-2.5 rounded-[10px] cursor-pointer border-none bg-transparent hover:text-[rgba(240,242,255,0.6)] transition-colors"
+              >
+                Maybe later
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   )
 }
