@@ -20,12 +20,22 @@ export function useAuth() {
 }
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState(() => {
+    const guest = sessionStorage.getItem('skope_guest_user')
+    return guest ? JSON.parse(guest) : null
+  })
   const [loading, setLoading] = useState(true)
   const [pathReport, setPathReport] = useState(null)
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+      // If local guest mode is active, do not override user with null
+      const isLocalGuest = sessionStorage.getItem('skope_guest_mode') === 'true'
+      if (isLocalGuest) {
+        setLoading(false)
+        return
+      }
+
       setUser(firebaseUser)
       if (firebaseUser && !firebaseUser.isAnonymous) {
         try {
@@ -55,16 +65,22 @@ export function AuthProvider({ children }) {
   }, [])
 
   const loginWithGoogle = async () => {
+    sessionStorage.removeItem('skope_guest_mode')
+    sessionStorage.removeItem('skope_guest_user')
     const result = await signInWithPopup(auth, googleProvider)
     return result.user
   }
 
   const loginWithEmail = async (email, password) => {
+    sessionStorage.removeItem('skope_guest_mode')
+    sessionStorage.removeItem('skope_guest_user')
     const result = await signInWithEmailAndPassword(auth, email, password)
     return result.user
   }
 
   const signupWithEmail = async (email, password, displayName) => {
+    sessionStorage.removeItem('skope_guest_mode')
+    sessionStorage.removeItem('skope_guest_user')
     const result = await createUserWithEmailAndPassword(auth, email, password)
     if (displayName) {
       await updateProfile(result.user, { displayName })
@@ -73,11 +89,22 @@ export function AuthProvider({ children }) {
   }
 
   const loginAsGuest = async () => {
-    const result = await signInAnonymously(auth)
-    return result.user
+    const mockUser = {
+      uid: 'guest_' + Math.random().toString(36).substr(2, 9),
+      email: 'guest@skope.ai',
+      displayName: 'Guest Student',
+      isAnonymous: true
+    }
+    sessionStorage.setItem('skope_guest_mode', 'true')
+    sessionStorage.setItem('skope_guest_user', JSON.stringify(mockUser))
+    setUser(mockUser)
+    return mockUser
   }
 
   const logout = async () => {
+    sessionStorage.removeItem('skope_guest_mode')
+    sessionStorage.removeItem('skope_guest_user')
+    setUser(null)
     await signOut(auth)
   }
 

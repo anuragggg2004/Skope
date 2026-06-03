@@ -156,7 +156,7 @@ export default function PreferencesPage() {
       sessionStorage.setItem('skope_preferences', JSON.stringify(preferences))
       if (setPathReport) setPathReport(data)
 
-      if (user) {
+      if (user && !user.isAnonymous) {
         fetch('/api/save-report', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
