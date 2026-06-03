@@ -1318,7 +1318,7 @@ export default function ResultPage() {
             <div className="flex flex-col gap-2">
               <button
                 onClick={async () => {
-                  const shareUrl = 'https://skope-app.onrender.com'
+                  const shareUrl = 'https://anuraggg.tech'
                   const shareText = "Just discovered Skope — an AI counsellor that gives brutally honest career advice for Indian Class 12 students. No sugar coating. Hidden gem colleges, unknown courses, and real talk about your actual marks. Try it free."
                   if (navigator.share) {
                     try {
@@ -1412,7 +1412,7 @@ export default function ResultPage() {
                 
                 <div>
                   <p className="font-dm text-[9px] text-[rgba(240,242,255,0.35)] mb-1">Get your PathReport at</p>
-                  <span className="font-mono text-[10px] text-blue font-semibold">skope-app.onrender.com</span>
+                  <span className="font-mono text-[10px] text-blue font-semibold">anuraggg.tech</span>
                 </div>
               </div>
             </div>

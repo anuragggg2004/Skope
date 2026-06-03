@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Navbar from '../components/Navbar'
 
-const SHARE_URL = 'https://skope-app.onrender.com'
+const SHARE_URL = 'https://anuraggg.tech'
 const SHARE_TEXT = "Just discovered Skope — an AI counsellor that gives brutally honest career advice for Indian Class 12 students. No sugar coating. Hidden gem colleges, unknown courses, and real talk about your actual marks. Try it free."
 
 export default function SharePage() {
