@@ -38,21 +38,6 @@ const IconGem = ({ color = '#fbbf24', size = 15 }) => (
     <polygon points="12 2 2 7 12 22 22 7 12 2"/><line x1="2" y1="7" x2="22" y2="7"/>
   </svg>
 )
-const IconCalendar = ({ color = 'currentColor', size = 15 }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
-  </svg>
-)
-const IconBook = ({ color = 'currentColor', size = 15 }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>
-  </svg>
-)
-const IconBrain = ({ color = 'currentColor', size = 20 }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M9.5 2A2.5 2.5 0 017 4.5v0A2.5 2.5 0 014.5 7v0A2.5 2.5 0 012 9.5v5A2.5 2.5 0 004.5 17v0A2.5 2.5 0 007 19.5v0A2.5 2.5 0 009.5 22h5a2.5 2.5 0 002.5-2.5v0A2.5 2.5 0 0019.5 17v0A2.5 2.5 0 0022 14.5v-5A2.5 2.5 0 0019.5 7v0A2.5 2.5 0 0017 4.5v0A2.5 2.5 0 0014.5 2z"/>
-  </svg>
-)
 const IconChevron = ({ open }) => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4f8ef7" strokeWidth="2.5" strokeLinecap="round"
     style={{ transform: open ? 'rotate(45deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }}>
@@ -65,42 +50,10 @@ const IconArrow = () => (
   </svg>
 )
 
-// ─── Data ─────────────────────────────────────────────
-const testimonials = [
-  {
-    quote: "I was about to take a drop for IIT. Skope showed me DAIICT and I didn't even know it existed. Got in. Best decision ever.",
-    name: "Aanya S.",
-    path: "B.Tech IT → DAIICT Gandhinagar",
-    color: '#4f8ef7',
-    Icon: IconTarget
-  },
-  {
-    quote: "My parents wanted me to do CA. Skope didn't say 'follow your passion'. It said 'here's how design pays — show your parents this data.'",
-    name: "Rahul M.",
-    path: "B.Des → Symbiosis Institute of Design",
-    color: '#fbbf24',
-    Icon: IconStar
-  },
-  {
-    quote: "It told me I won't crack NEET with my current marks. No counsellor ever said that. Then it gave me a real backup plan.",
-    name: "Priya K.",
-    path: "BSc Biotech → Manipal",
-    color: '#22d3a0',
-    Icon: IconBolt
-  },
-  {
-    quote: "The AI asked me questions about my actual life, not just my stream. That's when the recommendations started making sense.",
-    name: "Arjun D.",
-    path: "B.Tech CSE → Thapar Institute",
-    color: '#8b5cf6',
-    Icon: IconChat
-  }
-]
-
 const faqItems = [
   {
     q: "Is this an actual AI or a form with pre-written answers?",
-    a: "Real AI. It has a live conversation with you. It changes its questions based on your specific answers — no two students get the same interview."
+    a: "Real AI. It conducts a live conversation with you. It changes its follow-up questions based on your specific answers — no two students get the same interview."
   },
   {
     q: "Will it push me toward a college I can't afford?",
@@ -108,15 +61,15 @@ const faqItems = [
   },
   {
     q: "What if I don't have my final marks yet?",
-    a: "Tell us your estimated or current marks. You can come back and update your PathReport after results come out."
+    a: "Tell us your estimated or current marks. You can come back and update your PathReport after board results or competitive exam percentiles come out."
   },
   {
     q: "Does it only work for engineering students?",
-    a: "No. Skope covers PCM, PCB, Commerce, Arts, Design, Law, Hotel Management, Agriculture, Media, and more. It knows 800+ colleges across all streams."
+    a: "No. Skope covers PCM, PCB, Commerce, Arts, Design, Law, Hotel Management, Agriculture, Media, and more. It knows real Indian colleges across all streams."
   },
   {
     q: "How is this different from Google searching colleges?",
-    a: "Google gives you a list. Skope gives you a ranked shortlist filtered by YOUR marks, YOUR budget, YOUR city, and YOUR career interest — with honest reality checks attached."
+    a: "Google gives you sponsored lists. Skope gives you a ranked shortlist filtered by YOUR marks, YOUR budget, YOUR city, and YOUR career interest — with honest reality checks attached."
   }
 ]
 
@@ -134,8 +87,45 @@ const streams = [
 export default function LandingPage() {
   const navigate = useNavigate()
   const [openFaq, setOpenFaq] = useState(null)
+  
+  // Interactive Demo States
+  const [demoStep, setDemoStep] = useState(0)
+  const [demoSubject, setDemoSubject] = useState('')
+  const [demoText, setDemoText] = useState('')
+  const [demoLoading, setDemoLoading] = useState(false)
+  const [demoResponse, setDemoResponse] = useState('')
 
-  const handleStart = () => navigate('/form')
+  const handleStart = () => {
+    sessionStorage.setItem('initial_diagnostic_message', 'Let\'s build your PathReport.')
+    navigate('/form')
+  }
+
+  const handleDemoSubjectSelect = (sub) => {
+    setDemoSubject(sub)
+    setDemoLoading(true)
+    setTimeout(() => {
+      setDemoLoading(false)
+      setDemoStep(1)
+    }, 900)
+  }
+
+  const handleDemoTextSubmit = (e) => {
+    e.preventDefault()
+    if (!demoText.trim()) return
+    setDemoLoading(true)
+    setTimeout(() => {
+      setDemoLoading(false)
+      // Determine a fun mock result based on subject choice
+      let archetype = 'The Explorer'
+      if (demoSubject === 'Maths') archetype = 'The Analyst'
+      if (demoSubject === 'Art & Design') archetype = 'The Creator'
+      if (demoSubject === 'Business / Commerce') archetype = 'The Strategist'
+      if (demoSubject === 'Biology') archetype = 'The Builder'
+      
+      setDemoResponse(`Analyzing your vibe... You sound like you belong in "${archetype}" category. Let's do the full diagnostic!`)
+      setDemoStep(2)
+    }, 1200)
+  }
 
   return (
     <>
@@ -146,12 +136,16 @@ export default function LandingPage() {
         <Navbar />
 
         {/* ══════════════════════════════════════════════ */}
-        {/* HERO — Single CTA button here */}
+        {/* HERO */}
         {/* ══════════════════════════════════════════════ */}
         <section className="max-w-[820px] mx-auto px-10 pt-20 pb-16 text-center animate-fadeUp max-sm:px-5 max-sm:pt-12">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[rgba(79,142,247,0.15)] bg-[rgba(79,142,247,0.06)] mb-8">
-            <span className="w-2 h-2 rounded-full bg-[#4f8ef7] animate-pulse inline-block" />
-            <span className="font-dm text-[13px] text-[rgba(240,242,255,0.6)]">AI-powered · Built for India · Free</span>
+          {/* Brutally Honest Badge Row */}
+          <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1.5 mb-6 font-dm text-[12px] text-[#fbbf24] bg-[rgba(251,191,36,0.05)] border border-[rgba(251,191,36,0.15)] rounded-full px-4 py-1.5 w-fit mx-auto">
+            <span className="flex items-center gap-1">✓ No sugarcoating</span>
+            <span className="text-[rgba(240,242,255,0.25)]">•</span>
+            <span className="flex items-center gap-1">✓ No college commissions</span>
+            <span className="text-[rgba(240,242,255,0.25)]">•</span>
+            <span className="flex items-center gap-1">✓ No fake motivation</span>
           </div>
 
           <h1 className="font-sora font-bold text-[56px] leading-[1.1] tracking-[-2px] mb-6 max-sm:text-[38px] max-sm:tracking-[-1px]">
@@ -160,32 +154,66 @@ export default function LandingPage() {
             <span className="block text-white mt-1">Find out.</span>
           </h1>
 
-          <p className="font-dm text-[15px] text-[rgba(240,242,255,0.5)] max-w-[480px] mx-auto leading-relaxed mb-10">
-            Tell Skope what you're like. It tells you what fits — careers, colleges, entrance exams, and a real plan. No vague advice. No upselling. Just clarity.
+          {/* Upgraded Headline Copy with Emotion */}
+          <p className="font-dm text-[15px] text-[rgba(240,242,255,0.65)] max-w-[520px] mx-auto leading-relaxed mb-6">
+            The career advice most students get is generic. Yours shouldn't be. Stop choosing your future based on guesswork — Skope figures out what actually fits you.
           </p>
 
-          {/* ✅ SINGLE CTA BUTTON — HERO */}
-          <button onClick={handleStart} id="hero-cta"
-            className="inline-flex items-center gap-2.5 font-sora text-[15px] font-semibold bg-gradient-to-r from-[#4f8ef7] to-[#8b5cf6] text-white px-8 py-3.5 rounded-full border-none cursor-pointer hover:-translate-y-1 hover:shadow-[0_0_25px_rgba(139,92,246,0.35)] transition-all duration-300 mb-3">
-            Get My PathReport
-            <IconArrow />
-          </button>
+          {/* Archetype Preview above CTA */}
+          <div className="mb-6 animate-fadeUp" style={{ animationDelay: '0.1s' }}>
+            <span className="font-dm text-[11px] uppercase tracking-[1.5px] text-[rgba(240,242,255,0.45)] block mb-2.5">Discover your archetype</span>
+            <div className="flex flex-wrap items-center justify-center gap-2">
+              {['🛠️ Builder', '🔭 Explorer', '🎨 Creator', '🎯 Strategist', '📊 Analyst'].map((arch, idx) => (
+                <span key={idx} className="font-dm text-[12px] font-semibold text-white px-3 py-1 rounded-full border border-[rgba(255,255,255,0.06)] bg-[rgba(255,255,255,0.02)]">
+                  {arch}
+                </span>
+              ))}
+            </div>
+          </div>
 
-          <p className="font-dm text-[12px] text-[rgba(240,242,255,0.35)] mt-2">
-            Takes 6–10 minutes. No credit card. Works for all streams.
-          </p>
+          {/* CTA with Curiosity Driven Text */}
+          <div className="flex flex-col items-center">
+            <button onClick={handleStart} id="hero-cta"
+              className="inline-flex items-center gap-2.5 font-sora text-[15px] font-semibold bg-gradient-to-r from-[#4f8ef7] to-[#8b5cf6] text-white px-8 py-3.5 rounded-full border-none cursor-pointer hover:-translate-y-1 hover:shadow-[0_0_25px_rgba(139,92,246,0.35)] transition-all duration-300">
+              Discover My Archetype
+              <IconArrow />
+            </button>
 
-          {/* Social Proof */}
-          <div className="flex items-center justify-center gap-10 mt-12 pt-8 border-t border-[rgba(79,142,247,0.15)] max-sm:flex-col max-sm:gap-5">
+            {/* Time / Progress Preview */}
+            <p className="font-dm text-[12px] text-[#fbbf24] mt-3.5 flex items-center gap-1.5">
+              <span>⏱️ 8 questions total</span>
+              <span className="text-[rgba(240,242,255,0.25)]">•</span>
+              <span>≈ 7 minutes remaining</span>
+            </p>
+          </div>
+
+          {/* Moat / positioning copy block (You are not your marks) */}
+          <div className="my-12 p-6 glass-card rounded-[20px] border border-[rgba(108,99,255,0.15)] max-w-[600px] mx-auto text-left bg-gradient-to-r from-[rgba(108,99,255,0.03)] to-transparent">
+            <h3 className="font-sora text-[16px] font-bold text-white mb-2">You are not your marks.</h3>
+            <p className="font-dm text-[13px] text-[rgba(240,242,255,0.6)] leading-relaxed mb-4">
+              Skope maps the full picture of who you are, not just standard grade percentages:
+            </p>
+            <div className="grid grid-cols-2 gap-x-4 gap-y-2.5 font-dm text-[12.5px] text-[rgba(240,242,255,0.8)]">
+              <div>🧠 Interests & Personality</div>
+              <div>🎯 Personal Goals</div>
+              <div>🛡️ Real Constraints</div>
+              <div>📖 Learning Style</div>
+              <div>💰 Education Budget</div>
+              <div>🤝 Family Expectations</div>
+            </div>
+          </div>
+
+          {/* Social Proof with Real Credibility */}
+          <div className="flex items-center justify-center gap-10 mt-6 pt-8 border-t border-[rgba(79,142,247,0.15)] max-sm:flex-col max-sm:gap-5">
             {[
-              { n: '800+', l: 'Colleges tracked', s: '(IITs, NITs, hidden gems)' },
-              { n: '150+', l: 'Entrance exams', s: '(including niche ones)' },
-              { n: '0', l: 'Generic advice', s: '(everything is personalized)' }
+              { n: 'Personalized', l: 'for every student', s: '(no cookie-cutter advice)' },
+              { n: 'Adaptive', l: 'conversational questioning', s: '(finds hidden traits)' },
+              { n: 'Real', l: 'Indian colleges & careers', s: '(validated data systems)' }
             ].map((s, i) => (
               <div key={i} className="text-center">
-                <div className="font-sora text-[22px] font-semibold text-white">{s.n}</div>
-                <div className="font-dm text-[12px] text-[rgba(240,242,255,0.4)] mt-0.5 leading-snug">
-                  {s.l}<br/><span className="text-[rgba(240,242,255,0.3)]">{s.s}</span>
+                <div className="font-sora text-[17px] font-bold text-white">{s.n}</div>
+                <div className="font-dm text-[12.5px] text-[rgba(240,242,255,0.4)] mt-0.5 leading-snug">
+                  {s.l}<br/><span className="text-[rgba(240,242,255,0.3)] text-[11px]">{s.s}</span>
                 </div>
               </div>
             ))}
@@ -193,19 +221,187 @@ export default function LandingPage() {
         </section>
 
         {/* ══════════════════════════════════════════════ */}
+        {/* WHAT YOU'LL DISCOVER */}
+        {/* ══════════════════════════════════════════════ */}
+        <section className="max-w-[900px] mx-auto px-10 py-12 max-sm:px-5">
+          <div className="text-center mb-10">
+            <span className="font-dm text-[11px] font-medium uppercase tracking-[2px] text-[#4f8ef7] block mb-2">What you'll discover</span>
+            <h2 className="font-sora text-[30px] font-semibold text-white">Your exact scope, calculated.</h2>
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-5 gap-3.5">
+            {[
+              { title: 'Career Matches', desc: 'Roles matched to your specific archetype', color: 'rgba(79,142,247,0.1)' },
+              { title: 'Hidden Colleges', desc: 'Excellent options that fit your budget', color: 'rgba(139,92,246,0.1)' },
+              { title: 'Salary Reality', desc: 'True starting salaries, not averages', color: 'rgba(34,211,160,0.1)' },
+              { title: 'Entrance Exams', desc: 'Niche test paths for key programs', color: 'rgba(251,191,36,0.1)' },
+              { title: 'Future Self', desc: 'Simulated day-in-the-life story at 30', color: 'rgba(244,114,182,0.1)' }
+            ].map((item, idx) => (
+              <div key={idx} className="glass-card rounded-[16px] p-5 flex flex-col justify-between" style={{ background: item.color }}>
+                <div>
+                  <h4 className="font-sora text-[13.5px] font-bold text-white mb-2">✓ {item.title}</h4>
+                  <p className="font-dm text-[11.5px] text-[rgba(240,242,255,0.5)] leading-relaxed">{item.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* ══════════════════════════════════════════════ */}
+        {/* INTERACTIVE DEMO */}
+        {/* ══════════════════════════════════════════════ */}
+        <section className="max-w-[700px] mx-auto px-10 py-12 max-sm:px-5">
+          <div className="glass-card rounded-[20px] p-6 sm:p-8 border border-[rgba(108,99,255,0.15)] bg-[rgba(10,10,15,0.4)]">
+            <div className="text-center mb-6">
+              <span className="font-dm text-[11px] font-bold text-blue uppercase tracking-[1.5px]">Try A Demo</span>
+              <h3 className="font-sora text-[22px] font-bold text-white mt-1">Talk to Skope right now</h3>
+            </div>
+
+            <div className="space-y-4 min-h-[160px] flex flex-col justify-end">
+              {/* Question 0 */}
+              <div className="flex justify-start">
+                <div className="bg-[#141926] border border-[rgba(79,142,247,0.12)] rounded-[14px_14px_14px_4px] px-4 py-3 max-w-[85%] font-dm text-[13px] text-[rgba(240,242,255,0.85)]">
+                  <strong>Skope:</strong> What subject do you enjoy studying the most?
+                </div>
+              </div>
+
+              {/* Step 0 Subject Selector */}
+              {demoStep === 0 && !demoLoading && (
+                <div className="flex flex-wrap gap-2 justify-end mt-2 animate-fadeUp">
+                  {['Maths', 'Biology', 'Art & Design', 'Business / Commerce', 'Writing & Media'].map((sub, i) => (
+                    <button
+                      key={i}
+                      onClick={() => handleDemoSubjectSelect(sub)}
+                      className="font-dm text-[12px] bg-[rgba(108,99,255,0.1)] border border-[rgba(108,99,255,0.25)] text-white px-3 py-1.5 rounded-full hover:bg-[rgba(108,99,255,0.2)] transition-colors cursor-pointer"
+                    >
+                      {sub}
+                    </button>
+                  ))}
+                </div>
+              )}
+
+              {/* Step 1 User Answer */}
+              {demoStep >= 1 && (
+                <div className="flex justify-end">
+                  <div className="bg-[rgba(139,92,246,0.15)] border border-[rgba(139,92,246,0.25)] rounded-[14px_14px_4px_14px] px-4 py-3 max-w-[85%] font-dm text-[13px] text-white">
+                    I enjoy {demoSubject}.
+                  </div>
+                </div>
+              )}
+
+              {/* Step 1 Question */}
+              {demoStep >= 1 && !demoLoading && (
+                <div className="flex justify-start">
+                  <div className="bg-[#141926] border border-[rgba(79,142,247,0.12)] rounded-[14px_14px_14px_4px] px-4 py-3 max-w-[85%] font-dm text-[13px] text-[rgba(240,242,255,0.85)]">
+                    <strong>Skope:</strong> Interesting... {demoSubject} is versatile. Do you see yourself building technical solutions, or are you more curious about user behavior?
+                  </div>
+                </div>
+              )}
+
+              {/* Step 1 Input Form */}
+              {demoStep === 1 && !demoLoading && (
+                <form onSubmit={handleDemoTextSubmit} className="flex gap-2 mt-2 animate-fadeUp">
+                  <input
+                    type="text"
+                    required
+                    placeholder="Type: 'building things', 'understanding users' etc..."
+                    value={demoText}
+                    onChange={(e) => setDemoText(e.target.value)}
+                    className="flex-1 bg-navy3 border border-[rgba(255,255,255,0.08)] rounded-[10px] px-4 py-2 text-white font-dm text-[12.5px] outline-none focus:border-purple"
+                  />
+                  <button
+                    type="submit"
+                    className="font-sora text-[12px] font-semibold bg-gradient-to-r from-blue to-purple text-white px-4 py-2 rounded-[10px] border-none cursor-pointer"
+                  >
+                    Send
+                  </button>
+                </form>
+              )}
+
+              {/* Step 2 AI Answer */}
+              {demoStep === 2 && !demoLoading && (
+                <>
+                  <div className="flex justify-end">
+                    <div className="bg-[rgba(139,92,246,0.15)] border border-[rgba(139,92,246,0.25)] rounded-[14px_14px_4px_14px] px-4 py-3 max-w-[85%] font-dm text-[13px] text-white">
+                      {demoText}
+                    </div>
+                  </div>
+                  <div className="flex justify-start">
+                    <div className="bg-[#141926] border border-[rgba(79,142,247,0.12)] rounded-[14px_14px_14px_4px] px-4 py-3 max-w-[85%] font-dm text-[13px] text-[#fbbf24] border-l-2 border-l-[#fbbf24] leading-relaxed">
+                      💡 <strong>{demoResponse}</strong>
+                    </div>
+                  </div>
+                  
+                  <div className="flex justify-center mt-4">
+                    <button
+                      onClick={handleStart}
+                      className="font-sora text-[13px] font-bold bg-gradient-to-r from-blue to-purple text-white px-6 py-2.5 rounded-full border-none cursor-pointer shadow-[0_0_15px_rgba(108,99,255,0.3)]"
+                    >
+                      Discover My Archetype →
+                    </button>
+                  </div>
+                </>
+              )}
+
+              {/* Loading Indicator */}
+              {demoLoading && (
+                <div className="flex justify-start">
+                  <div className="bg-navy3 border border-[rgba(79,142,247,0.12)] rounded-full px-4 py-2.5 flex items-center gap-1.5">
+                    <span className="font-dm text-[11px] text-[rgba(240,242,255,0.4)]">Skope is thinking</span>
+                    <span className="w-1.5 h-1.5 rounded-full bg-purple animate-ping" />
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </section>
+
+        {/* ══════════════════════════════════════════════ */}
+        {/* FUTURE SELF PREVIEW */}
+        {/* ══════════════════════════════════════════════ */}
+        <section className="max-w-[820px] mx-auto px-10 py-12 max-sm:px-5">
+          <div className="text-center mb-8">
+            <span className="font-dm text-[11px] font-medium uppercase tracking-[2px] text-pink block mb-2">Simulation Preview</span>
+            <h2 className="font-sora text-[28px] font-bold text-white">A Day In Your Life At 30</h2>
+            <p className="font-dm text-[13.5px] text-[rgba(240,242,255,0.45)] mt-2">Here's a glimpse of the Future Self narratives Skope builds for you:</p>
+          </div>
+          
+          <div className="glass-card rounded-[20px] p-6 border border-[rgba(236,72,153,0.15)] bg-gradient-to-br from-[rgba(236,72,153,0.03)] to-transparent max-w-[500px] mx-auto">
+            <div className="flex items-center gap-2 mb-4">
+              <span className="text-[20px]">🔮</span>
+              <div>
+                <span className="font-dm text-[10px] font-bold text-pink uppercase tracking-[1.5px]">Simulation Preview</span>
+                <h4 className="font-sora text-[14px] font-bold text-white">Product Designer · Bangalore</h4>
+              </div>
+            </div>
+            
+            <div className="font-dm text-[12.5px] text-[rgba(240,242,255,0.7)] leading-[1.7] space-y-3.5 bg-[rgba(5,5,10,0.4)] p-4 rounded-[14px] border border-[rgba(255,255,255,0.03)] italic">
+              <div>
+                <strong>8:00 AM</strong> — You wake up in your apartment in Indiranagar, Bangalore. You grab a coffee and review a feature launch metrics dashboard. The new micro-interaction you designed saw a 14% increase in user retention overnight.
+              </div>
+              <div>
+                <strong>12:30 PM</strong> — You meet with the engineering team to solve a layout dispute. Since you know a bit of coding yourself, you're able to speak their language and resolve it instantly.
+              </div>
+              <div>
+                <strong>4:00 PM</strong> — Deep work session in Figma, mapping out the product flows for an AI-augmented educational tool. This feels exactly like the side projects you used to build back in Class 12...
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ══════════════════════════════════════════════ */}
         {/* HOW IT WORKS */}
         {/* ══════════════════════════════════════════════ */}
-        <section className="max-w-[900px] mx-auto px-10 py-20 max-sm:px-5 max-sm:py-12">
+        <section className="max-w-[900px] mx-auto px-10 py-16 max-sm:px-5 max-sm:py-12">
           <div className="text-center mb-12 animate-fadeUp">
             <span className="font-dm text-[11px] font-medium uppercase tracking-[2px] text-[#4f8ef7] block mb-3">How it works</span>
             <h2 className="font-sora text-[32px] font-semibold text-white max-sm:text-[24px]">Not a form. A conversation.</h2>
           </div>
           <div className="grid grid-cols-[repeat(auto-fit,minmax(180px,1fr))] gap-3.5">
             {[
-              { step: '01', title: 'Tell us about you', desc: 'Stream, subjects you love, what you do outside school. Write freely — no dropdowns.' },
+              { step: '01', title: 'Tell us about you', desc: 'Stream, subjects you love, what you do outside school. Write freely — no rigid checkboxes.' },
               { step: '02', title: 'Skope interviews you', desc: 'The AI asks follow-up questions that adapt to your specific answers. Like a real counsellor listening.' },
-              { step: '03', title: 'Set your constraints', desc: 'Budget, cities, exam preferences. We only recommend what actually fits your reality.' },
-              { step: '04', title: 'Get your PathReport', desc: 'Careers, colleges, hidden gems, entrance exams, reality checks, and a 30-day action plan.' }
+              { step: '03', title: 'Set your constraints', desc: 'Budget, cities, exam preferences. We only recommend what actually fits your financial reality.' },
+              { step: '04', title: 'Get your PathReport', desc: 'Careers, colleges, hidden gems, entrance exams, reality checks, and an interactive checklist.' }
             ].map((item, i) => (
               <div key={i} className="glass-card rounded-[14px] p-[24px] fade-in" style={{ animationDelay: `${(i + 1) * 0.1}s` }}>
                 <div className="font-sora text-[11px] font-medium text-[#4f8ef7] mb-3 tracking-[1px]">{item.step}</div>
@@ -219,7 +415,7 @@ export default function LandingPage() {
         {/* ══════════════════════════════════════════════ */}
         {/* WHY SKOPE IS DIFFERENT */}
         {/* ══════════════════════════════════════════════ */}
-        <section className="max-w-[900px] mx-auto px-10 py-20 max-sm:px-5 max-sm:py-12">
+        <section className="max-w-[900px] mx-auto px-10 py-16 max-sm:px-5 max-sm:py-12">
           <div className="text-center mb-10 animate-fadeUp">
             <span className="font-dm text-[11px] font-medium uppercase tracking-[2px] text-[#4f8ef7] block mb-3">The difference</span>
             <h2 className="font-sora text-[32px] font-semibold text-white max-sm:text-[24px]">Not your typical career counsellor.</h2>
@@ -233,7 +429,7 @@ export default function LandingPage() {
                 <span className="font-sora text-[15px] font-semibold text-[#ff6b6b]">Traditional Counsellors</span>
               </div>
               <ul className="space-y-3">
-                {['Push only IITs, NITs, and famous names', 'Same generic advice for every student', '"Follow your passion" (then charges ₹5000)', 'No real data on fees, exams, or placements', 'Never tells you the hard truth'].map((item, i) => (
+                {['Push only IITs, NITs, and famous names', 'Same generic advice for every student', '"Follow your passion" (then charges ₹5000)', 'No real data on fees, exams, or placements', 'Never tells you the hard truth', 'Ask only your stream'].map((item, i) => (
                   <li key={i} className="flex items-start gap-2.5">
                     <span className="shrink-0 mt-0.5"><IconX /></span>
                     <span className="font-dm text-[13px] text-[rgba(240,242,255,0.55)] leading-relaxed">{item}</span>
@@ -249,7 +445,7 @@ export default function LandingPage() {
                 <span className="font-sora text-[15px] font-semibold text-[#6bcb77]">Skope</span>
               </div>
               <ul className="space-y-3">
-                {['Hidden gems that genuinely fit YOUR profile', 'Questions adapt to your specific answers', 'Blunt about reality — names real blockers', '800+ colleges with fees, exams, and caution flags', 'Tells you when your plan has a problem'].map((item, i) => (
+                {['Hidden gems that genuinely fit YOUR profile', 'Questions adapt to your specific answers', 'Blunt about reality — names real blockers', 'Real colleges with fees, exams, and caution flags', 'Tells you when your plan has a problem', 'Understand your personality & goals'].map((item, i) => (
                   <li key={i} className="flex items-start gap-2.5">
                     <span className="shrink-0 mt-0.5"><IconCheck /></span>
                     <span className="font-dm text-[13px] text-[rgba(240,242,255,0.55)] leading-relaxed">{item}</span>
@@ -261,112 +457,9 @@ export default function LandingPage() {
         </section>
 
         {/* ══════════════════════════════════════════════ */}
-        {/* SAMPLE CONVERSATION — No button here */}
-        {/* ══════════════════════════════════════════════ */}
-        <section className="max-w-[900px] mx-auto px-10 py-20 max-sm:px-5 max-sm:py-12">
-          <div className="glass-card rounded-[18px] p-8 sm:p-10 bg-[rgba(79,142,247,0.03)] border border-[rgba(79,142,247,0.12)] animate-fadeUp">
-            <div className="text-center mb-8">
-              <span className="font-dm text-[11px] font-medium uppercase tracking-[2px] text-[#4f8ef7] block mb-3">See it in action</span>
-              <h2 className="font-sora text-[28px] sm:text-[32px] font-semibold text-white max-sm:text-[22px]">This is how Skope talks to you.</h2>
-            </div>
-            <div className="max-w-[600px] mx-auto space-y-4">
-              <div className="flex justify-start">
-                <div className="bg-[#141926] border border-[rgba(79,142,247,0.15)] rounded-[14px_14px_14px_4px] px-5 py-3.5 max-w-[85%]">
-                  <div className="font-dm text-[11px] text-[#4f8ef7] font-medium mb-1.5">Skope</div>
-                  <p className="font-dm text-[13px] text-[rgba(240,242,255,0.75)] leading-relaxed">
-                    You mentioned parents want engineering but you're thinking product design. That's not a bad split — they're not mutually exclusive. But when you say "product", what do you actually mean? Designing how buttons look, or figuring out what problem the product solves?
-                  </p>
-                </div>
-              </div>
-              <div className="flex justify-end">
-                <div className="bg-[rgba(139,92,246,0.12)] border border-[rgba(139,92,246,0.2)] rounded-[14px_14px_4px_14px] px-5 py-3.5 max-w-[85%]">
-                  <div className="font-dm text-[11px] text-[#8b5cf6] font-medium mb-1.5">You</div>
-                  <p className="font-dm text-[13px] text-[rgba(240,242,255,0.75)] leading-relaxed">
-                    Honestly, I like both. I watch videos about how Figma works and how apps are designed, but I also built a website and enjoyed the coding part. I'm not sure which one to lean into.
-                  </p>
-                </div>
-              </div>
-              <div className="flex justify-start">
-                <div className="bg-[#141926] border border-[rgba(79,142,247,0.15)] rounded-[14px_14px_14px_4px] px-5 py-3.5 max-w-[85%]">
-                  <div className="font-dm text-[11px] text-[#4f8ef7] font-medium mb-1.5">Skope</div>
-                  <p className="font-dm text-[13px] text-[rgba(240,242,255,0.75)] leading-relaxed">
-                    So you want both — that's actually a smart position. But a standard B.Tech CS degree puts you on the default path. Given your marks and budget, which skill do you want as primary and which will you teach yourself?
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* ══════════════════════════════════════════════ */}
-        {/* PATHREPORT PREVIEW */}
-        {/* ══════════════════════════════════════════════ */}
-        <section className="max-w-[900px] mx-auto px-10 py-20 max-sm:px-5 max-sm:py-12">
-          <div className="text-center mb-10 animate-fadeUp">
-            <span className="font-dm text-[11px] font-medium uppercase tracking-[2px] text-[#4f8ef7] block mb-3">Your PathReport</span>
-            <h2 className="font-sora text-[32px] font-semibold text-white max-sm:text-[24px]">Here's what you'll get.</h2>
-          </div>
-          <div className="glass-card rounded-[18px] p-8 sm:p-10 animate-fadeUp" style={{ animationDelay: '0.1s' }}>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-              <div>
-                <h3 className="font-sora text-[18px] font-semibold text-white mb-5">Your PathReport includes</h3>
-                <ul className="space-y-3.5">
-                  {[
-                    { Icon: IconTarget, color: '#4f8ef7', text: 'Career paths ranked for YOUR interests' },
-                    { Icon: IconBook, color: '#22d3a0', text: '8 colleges matched to your marks & budget' },
-                    { Icon: IconBolt, color: '#fbbf24', text: 'Entrance exams — including ones you\'ve never heard of' },
-                    { Icon: IconX, color: '#ff8a8a', text: 'Reality checks — the hard truths' },
-                    { Icon: IconCalendar, color: '#8b5cf6', text: 'Action plan with specific timelines' },
-                    { Icon: IconGem, color: '#fbbf24', text: 'Hidden gem colleges most counsellors miss' },
-                    { Icon: IconChat, color: '#4f8ef7', text: 'AI counsellor for unlimited follow-ups' }
-                  ].map((item, i) => (
-                    <li key={i} className="flex items-start gap-3">
-                      <span className="shrink-0 mt-0.5"><item.Icon color={item.color} size={15} /></span>
-                      <span className="font-dm text-[14px] text-[rgba(240,242,255,0.6)] leading-relaxed">{item.text}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="space-y-3">
-                <div className="bg-[rgba(79,142,247,0.08)] border border-[rgba(79,142,247,0.15)] rounded-[14px] p-5">
-                  <div className="font-dm text-[10px] font-medium text-[#4f8ef7] uppercase tracking-[1.5px] mb-2">Sample Career Match</div>
-                  <div className="font-sora text-[16px] font-semibold text-white mb-2">Product Engineer</div>
-                  <p className="font-dm text-[13px] text-[rgba(240,242,255,0.5)] leading-relaxed mb-3">
-                    Coders who understand product are rarer and more valuable than pure engineers. You'd write code that solves real user problems.
-                  </p>
-                  <div className="flex items-center gap-2 mb-3">
-                    <span className="font-dm text-[11px] text-[rgba(240,242,255,0.35)] uppercase tracking-[0.5px]">Salary</span>
-                    <span className="font-dm text-[13px] text-white font-medium">₹12–30L/year</span>
-                  </div>
-                  <div className="bg-[rgba(255,217,61,0.06)] border border-[rgba(255,217,61,0.15)] rounded-lg px-3.5 py-2.5 flex items-start gap-2">
-                    <IconBolt color="#ffd93d" size={13} />
-                    <span className="font-dm text-[12px] text-[#ffd93d] leading-relaxed">
-                      Your math weakness will limit you in competitive coding. Build a project portfolio to compensate.
-                    </span>
-                  </div>
-                </div>
-                <div className="bg-[rgba(139,92,246,0.08)] border border-[rgba(139,92,246,0.15)] rounded-[14px] p-5">
-                  <div className="font-dm text-[10px] font-medium text-[#8b5cf6] uppercase tracking-[1.5px] mb-2">Sample Hidden Gem College</div>
-                  <div className="flex items-center gap-2 mb-1">
-                    <span className="font-sora text-[14px] font-semibold text-white">DAIICT Gandhinagar</span>
-                    <span className="font-dm text-[10px] font-medium text-[#fbbf24] bg-[rgba(251,191,36,0.12)] px-2 py-0.5 rounded-full border border-[rgba(251,191,36,0.25)] flex items-center gap-1">
-                      <IconGem size={10} />
-                      Hidden Gem
-                    </span>
-                  </div>
-                  <p className="font-dm text-[12px] text-[rgba(240,242,255,0.45)] leading-relaxed mt-1.5">
-                    Founded specifically for CS/IT with a design-thinking curriculum. Stronger for product engineering than most mid-tier NITs.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* ══════════════════════════════════════════════ */}
         {/* THE TRUTH SECTION */}
         {/* ══════════════════════════════════════════════ */}
-        <section className="max-w-[900px] mx-auto px-10 py-20 max-sm:px-5 max-sm:py-12">
+        <section className="max-w-[900px] mx-auto px-10 py-16 max-sm:px-5 max-sm:py-12">
           <div className="glass-card rounded-[18px] p-8 sm:p-10 bg-[rgba(139,92,246,0.04)] border-t-2 border-t-[#8b5cf6] animate-fadeUp">
             <div className="flex items-center gap-3 mb-5">
               <div className="w-9 h-9 rounded-[10px] flex items-center justify-center bg-[rgba(139,92,246,0.12)]">
@@ -394,7 +487,7 @@ export default function LandingPage() {
         {/* ══════════════════════════════════════════════ */}
         {/* WORKS FOR ALL STREAMS */}
         {/* ══════════════════════════════════════════════ */}
-        <section className="max-w-[900px] mx-auto px-10 py-20 max-sm:px-5 max-sm:py-12">
+        <section className="max-w-[900px] mx-auto px-10 py-16 max-sm:px-5 max-sm:py-12">
           <div className="text-center mb-10 animate-fadeUp">
             <span className="font-dm text-[11px] font-medium uppercase tracking-[2px] text-[#4f8ef7] block mb-3">Every path</span>
             <h2 className="font-sora text-[32px] font-semibold text-white max-sm:text-[24px]">Works for all streams.</h2>
@@ -414,35 +507,19 @@ export default function LandingPage() {
         </section>
 
         {/* ══════════════════════════════════════════════ */}
-        {/* TESTIMONIALS */}
+        {/* HONEST STATUS SECTION (Replaced Fake Testimonials) */}
         {/* ══════════════════════════════════════════════ */}
-        <section className="max-w-[900px] mx-auto px-10 py-20 max-sm:px-5 max-sm:py-12">
-          <div className="text-center mb-10 animate-fadeUp">
-            <span className="font-dm text-[11px] font-medium uppercase tracking-[2px] text-[#4f8ef7] block mb-3">Real students</span>
-            <h2 className="font-sora text-[32px] font-semibold text-white max-sm:text-[24px]">What they found.</h2>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 animate-fadeUp" style={{ animationDelay: '0.1s' }}>
-            {testimonials.map((t, i) => (
-              <div key={i} className="glass-card rounded-[14px] p-6 flex flex-col justify-between hover:-translate-y-1 transition-transform duration-200 group">
-                <div>
-                  <div className="w-10 h-10 rounded-[10px] flex items-center justify-center mb-4 transition-transform duration-300 group-hover:scale-110"
-                    style={{ background: `${t.color}15`, border: `1px solid ${t.color}25` }}>
-                    <t.Icon color={t.color} />
-                  </div>
-                  <p className="font-dm text-[14px] text-[rgba(240,242,255,0.65)] leading-[1.7] italic mb-4">"{t.quote}"</p>
-                </div>
-                <div className="border-t border-[rgba(79,142,247,0.1)] pt-3">
-                  <div className="font-sora text-[13px] font-semibold text-white">{t.name}</div>
-                  <div className="font-dm text-[11px] text-[#4f8ef7] mt-0.5">{t.path}</div>
-                </div>
-              </div>
-            ))}
-          </div>
+        <section className="max-w-[900px] mx-auto px-10 py-16 text-center max-sm:px-5">
+          <span className="font-dm text-[11px] font-medium uppercase tracking-[2px] text-[#4f8ef7] block mb-3">Beta Testing</span>
+          <h2 className="font-sora text-[26px] sm:text-[30px] font-bold text-white mb-3">Currently testing with early student beta testers.</h2>
+          <p className="font-dm text-[13.5px] text-[rgba(240,242,255,0.45)] max-w-[420px] mx-auto leading-relaxed">
+            We are gathering real feedback from Class 12 students across India. Authentic success stories will be published here soon.
+          </p>
         </section>
 
         {/* City trust signals */}
         <section className="max-w-[900px] mx-auto px-10 py-12 max-sm:px-5 animate-fadeUp">
-          <p className="text-center font-dm text-[12px] text-[rgba(240,242,255,0.35)] mb-6">Built for students from</p>
+          <p className="text-center font-dm text-[12px] text-[rgba(240,242,255,0.35)] mb-6">Designed for students from</p>
           <div className="flex justify-center items-center gap-6 sm:gap-10 flex-wrap">
             {['Delhi NCR', 'Mumbai', 'Bangalore', 'Hyderabad', 'Pune', 'Kolkata', 'Tier 2 & 3 cities'].map((city, i) => (
               <span key={i} className="font-dm text-[13px] text-[rgba(240,242,255,0.35)] whitespace-nowrap">{city}</span>
@@ -453,7 +530,7 @@ export default function LandingPage() {
         {/* ══════════════════════════════════════════════ */}
         {/* FAQ */}
         {/* ══════════════════════════════════════════════ */}
-        <section className="max-w-[700px] mx-auto px-10 py-20 max-sm:px-5 max-sm:py-12">
+        <section className="max-w-[700px] mx-auto px-10 py-16 max-sm:px-5 max-sm:py-12">
           <div className="text-center mb-10 animate-fadeUp">
             <span className="font-dm text-[11px] font-medium uppercase tracking-[2px] text-[#4f8ef7] block mb-3">FAQ</span>
             <h2 className="font-sora text-[32px] font-semibold text-white max-sm:text-[24px]">Questions?</h2>
@@ -478,7 +555,7 @@ export default function LandingPage() {
         {/* ══════════════════════════════════════════════ */}
         {/* PRICING */}
         {/* ══════════════════════════════════════════════ */}
-        <section className="max-w-[900px] mx-auto px-10 py-20 max-sm:px-5 max-sm:py-12">
+        <section className="max-w-[900px] mx-auto px-10 py-16 max-sm:px-5 max-sm:py-12">
           <div className="text-center mb-10 animate-fadeUp">
             <h2 className="font-sora text-[32px] font-semibold text-white max-sm:text-[24px]">Completely free. No hidden costs.</h2>
             <p className="font-dm text-[14px] text-[rgba(240,242,255,0.45)] mt-3">We built this because every student deserves real guidance, not a sales pitch.</p>
@@ -486,11 +563,11 @@ export default function LandingPage() {
           <div className="glass-card rounded-[18px] p-8 max-w-[520px] mx-auto animate-fadeUp" style={{ animationDelay: '0.1s' }}>
             <ul className="space-y-4">
               {[
-                { Icon: IconCheck, color: '#6bcb77', text: 'Full PathReport — careers, colleges, exams, action plan' },
+                { Icon: IconCheck, color: '#6bcb77', text: 'Full PathReport — careers, colleges, exams, interactive checklist' },
                 { Icon: IconCheck, color: '#6bcb77', text: 'Unlimited follow-up chats with AI counsellor' },
                 { Icon: IconCheck, color: '#6bcb77', text: 'No credit card. No ads. Works as a guest too.' },
-                { Icon: IconCheck, color: '#6bcb77', text: 'Update your report anytime with new information' },
-                { Icon: IconArrow, color: '#4f8ef7', text: 'Premium features (mentor intro, college calls) coming soon' }
+                { Icon: IconCheck, color: '#6bcb77', text: 'Update your report anytime with new board or exam marks' },
+                { Icon: IconArrow, color: '#4f8ef7', text: 'Premium features (mentor connection, direct calls) coming soon' }
               ].map((item, i) => (
                 <li key={i} className="flex items-start gap-3">
                   <span className="shrink-0 mt-0.5"><item.Icon color={item.color} /></span>
@@ -502,19 +579,18 @@ export default function LandingPage() {
         </section>
 
         {/* ══════════════════════════════════════════════ */}
-        {/* FINAL CTA — Second and LAST CTA button */}
+        {/* FINAL CTA */}
         {/* ══════════════════════════════════════════════ */}
         <section className="max-w-[900px] mx-auto px-10 py-20 text-center max-sm:px-5 max-sm:py-12">
           <h2 className="font-sora text-[36px] sm:text-[42px] font-bold text-white tracking-[-1px] mb-4 max-sm:text-[28px]">
             Ready to find your scope?
           </h2>
           <p className="font-dm text-[15px] text-[rgba(240,242,255,0.45)] mb-8 max-w-[400px] mx-auto">
-            6–10 minutes. No credit card. A real plan for your actual situation.
+            ⏱️ 8 questions total  |  ≈ 7 minutes remaining. Real diagnostic plans.
           </p>
-          {/* ✅ SINGLE FINAL CTA BUTTON */}
           <button onClick={handleStart} id="final-cta"
             className="inline-flex items-center gap-2.5 font-sora text-[16px] font-semibold bg-gradient-to-r from-[#4f8ef7] to-[#8b5cf6] text-white px-10 py-4 rounded-full border-none cursor-pointer hover:-translate-y-1 hover:shadow-[0_0_30px_rgba(139,92,246,0.4)] transition-all duration-300">
-            Get My PathReport
+            Discover My Archetype
             <IconArrow />
           </button>
           <p className="font-dm text-[12px] text-[rgba(240,242,255,0.25)] mt-4">
@@ -523,8 +599,17 @@ export default function LandingPage() {
         </section>
 
         {/* Footer */}
-        <footer className="border-t border-[rgba(79,142,247,0.15)] px-10 py-8 max-sm:px-5">
-          <div className="max-w-[900px] mx-auto flex items-center justify-between max-sm:flex-col max-sm:gap-4 max-sm:text-center">
+        <footer className="border-t border-[rgba(79,142,247,0.15)] px-10 py-10 max-sm:px-5">
+          <div className="max-w-[900px] mx-auto flex items-center justify-between gap-6 max-sm:flex-col max-sm:text-center">
+            
+            {/* Founder Message block */}
+            <div className="flex flex-col gap-1.5 max-w-[280px] max-sm:max-w-none text-left max-sm:text-center">
+              <p className="font-dm text-[12.5px] text-[rgba(240,242,255,0.65)] leading-relaxed italic">
+                "Built because choosing a college shouldn't feel like gambling."
+              </p>
+              <span className="font-sora text-[11px] text-purple font-semibold">— Anurag, Founder</span>
+            </div>
+
             <div className="flex items-center gap-2.5">
               <div className="w-7 h-7 rounded-[8px] flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #4f8ef7, #8b5cf6)' }}>
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none">
@@ -538,13 +623,17 @@ export default function LandingPage() {
                 <span className="text-white">pe</span>
               </span>
             </div>
-            <div className="flex items-center gap-6">
-              <button onClick={() => navigate('/share')} className="font-dm text-[12px] text-[rgba(240,242,255,0.35)] hover:text-white bg-transparent border-none cursor-pointer transition-colors">Share</button>
-              <button onClick={() => navigate('/login')} className="font-dm text-[12px] text-[rgba(240,242,255,0.35)] hover:text-white bg-transparent border-none cursor-pointer transition-colors">Sign In</button>
+            
+            <div className="flex flex-col items-end max-sm:items-center gap-2">
+              <div className="flex items-center gap-6">
+                <button onClick={() => navigate('/share')} className="font-dm text-[12px] text-[rgba(240,242,255,0.35)] hover:text-white bg-transparent border-none cursor-pointer transition-colors">Share</button>
+                <button onClick={() => navigate('/login')} className="font-dm text-[12px] text-[rgba(240,242,255,0.35)] hover:text-white bg-transparent border-none cursor-pointer transition-colors">Sign In</button>
+              </div>
+              <p className="font-dm text-[12px] text-[rgba(240,242,255,0.3)]">
+                © 2025 Skope · anuraggg.tech
+              </p>
             </div>
-            <p className="font-dm text-[12px] text-[rgba(240,242,255,0.3)]">
-              © 2025 Skope · anuraggg.tech
-            </p>
+
           </div>
         </footer>
       </div>
