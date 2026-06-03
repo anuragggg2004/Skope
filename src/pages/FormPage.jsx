@@ -64,17 +64,21 @@ const QUESTIONS = [
   }
 ]
 
+import { motion, AnimatePresence } from 'framer-motion'
+
 // ─── Chat Bubble ──────────────────────────────────────
 
 function ChatBubble({ message, index }) {
   const isUser = message.role === 'user'
   return (
-    <div
-      className={`flex ${isUser ? 'justify-end' : 'justify-start'} animate-fadeUp`}
-      style={{ animationDelay: `${Math.min(index * 0.04, 0.3)}s` }}
+    <motion.div
+      initial={{ opacity: 0, y: 12 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1], delay: 0.05 }}
+      className={`flex ${isUser ? 'justify-end' : 'justify-start'} w-full`}
     >
       {!isUser && (
-        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue to-purple flex items-center justify-center shrink-0 mr-2.5 mt-0.5 shadow-[0_2px_12px_rgba(79,142,247,0.25)]">
+        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#6c63ff] to-[#4f8ef7] flex items-center justify-center shrink-0 mr-2.5 mt-0.5 shadow-[0_2px_12px_rgba(108,99,255,0.25)]">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
             <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
           </svg>
@@ -83,34 +87,41 @@ function ChatBubble({ message, index }) {
       <div
         className={`max-w-[78%] px-4 py-3 font-dm text-[14px] leading-[1.7] ${
           isUser
-            ? 'bg-gradient-to-r from-[rgba(79,142,247,0.15)] to-[rgba(139,92,246,0.15)] border border-[rgba(139,92,246,0.2)] text-white rounded-[18px_18px_4px_18px]'
+            ? 'bg-gradient-to-r from-[rgba(108,99,255,0.15)] to-[rgba(79,142,247,0.15)] border border-[rgba(108,99,255,0.2)] text-white rounded-[18px_18px_4px_18px]'
             : 'bg-[rgba(255,255,255,0.03)] border border-[rgba(255,255,255,0.06)] text-[rgba(240,242,255,0.85)] rounded-[18px_18px_18px_4px]'
         }`}
       >
         {message.content}
       </div>
-    </div>
+    </motion.div>
   )
 }
 
 // ─── Main Form Page ───────────────────────────────────
 
+const INITIAL_QUESTIONS = [
+  "Hey! I'm Skope, your AI career strategist. Let's find your archetype. First, what stream are you in and what are your ACTUAL marks?",
+  "What have you actually built, made, or done outside school? (If nothing, say that.)",
+  "What career are you thinking, and honestly, whose idea is it?",
+  "What are your ACTUAL marks or exam scores? (No dreams, give me the real numbers on your sheet.)",
+  "Which exams are you preparing for? Be specific about what you are studying for right now."
+]
+
 export default function FormPage() {
   const navigate = useNavigate()
-  const [phase, setPhase] = useState(1)
-  const [currentQ, setCurrentQ] = useState(0)
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
   const [phase1, setPhase1] = useState({ q1: '', q2: '', q3: '', q4: '', q5: '' })
-  const [chatHistory, setChatHistory] = useState([])
+  const [chatHistory, setChatHistory] = useState([
+    { role: 'assistant', content: INITIAL_QUESTIONS[0] }
+  ])
   const [chatInput, setChatInput] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
-  const [transitioning, setTransitioning] = useState(false)
 
   const messagesEndRef = useRef(null)
   const textareaRef = useRef(null)
-  const inputRef = useRef(null)
 
-  // Clear stale session data
+  // Clear stale session data on mount
   useEffect(() => {
     sessionStorage.removeItem('pathreport')
     sessionStorage.removeItem('skope_phase1')
@@ -124,66 +135,27 @@ export default function FormPage() {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [chatHistory, loading])
 
-  // Auto-focus input on question change
+  // Focus textarea on mount
   useEffect(() => {
-    setTimeout(() => inputRef.current?.focus(), 400)
-  }, [currentQ])
+    textareaRef.current?.focus()
+  }, [])
 
-  const totalSteps = 5 + 8 // 5 phase1 + 8 interview
-  const completedSteps = phase === 1
-    ? currentQ
-    : 5 + Math.floor(chatHistory.filter(m => m.role === 'user').length)
+  const totalSteps = 5 + 3 // 5 initial + 3 adaptive = 8 questions total (16 messages)
+  const completedSteps = chatHistory.filter(m => m.role === 'user').length
   const progress = Math.round((completedSteps / totalSteps) * 100)
-  const questionsAnswered = chatHistory.filter(m => m.role === 'user').length
 
   const handleTextareaResize = (e) => {
     e.target.style.height = 'auto'
     e.target.style.height = Math.min(e.target.scrollHeight, 120) + 'px'
   }
 
-  const goNext = () => {
-    const q = QUESTIONS[currentQ]
-    if (!phase1[q.id].trim()) {
-      setError('Write something before continuing.')
-      return
-    }
-    setError('')
-
-    if (currentQ < 4) {
-      setTransitioning(true)
-      setTimeout(() => {
-        setCurrentQ(currentQ + 1)
-        setTransitioning(false)
-      }, 300)
-    } else {
-      startInterview()
-    }
-  }
-
-  const goBack = () => {
-    if (currentQ > 0) {
-      setTransitioning(true)
-      setTimeout(() => {
-        setCurrentQ(currentQ - 1)
-        setTransitioning(false)
-      }, 300)
-    }
-  }
-
-  const handlePhase1KeyDown = (e) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault()
-      goNext()
-    }
-  }
-
-  const fetchNextQuestion = async (history, attempt = 1) => {
+  const fetchNextAdaptiveQuestion = async (history, currentPhase1, attempt = 1) => {
     const MAX_ATTEMPTS = 3
     try {
       const res = await fetch('/api/next-question', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ answers: phase1, chatHistory: history })
+        body: JSON.stringify({ answers: currentPhase1, chatHistory: history })
       })
       if (!res.ok) {
         const errData = await res.json().catch(() => ({}))
@@ -198,18 +170,10 @@ export default function FormPage() {
         setError(`Connection issue — retrying in ${delay / 1000}s... (attempt ${attempt}/${MAX_ATTEMPTS})`)
         await new Promise(r => setTimeout(r, delay))
         setError('')
-        return fetchNextQuestion(history, attempt + 1)
+        return fetchNextAdaptiveQuestion(history, currentPhase1, attempt + 1)
       }
       setError('Could not reach the AI. Check your connection and tap retry.')
     }
-  }
-
-  const startInterview = async () => {
-    setLoading(true)
-    setError('')
-    await fetchNextQuestion([])
-    setPhase(2)
-    setLoading(false)
   }
 
   const handleSendMessage = async () => {
@@ -224,13 +188,38 @@ export default function FormPage() {
     setLoading(true)
     setError('')
 
-    if (newHistory.length >= 16) {
-      sessionStorage.setItem('skope_phase1', JSON.stringify(phase1))
-      sessionStorage.setItem('skope_chatHistory', JSON.stringify(newHistory))
-      navigate('/preferences')
+    const updatedPhase1 = { ...phase1 }
+
+    if (currentQuestionIndex < 5) {
+      // Store in phase1 variables
+      const qKey = `q${currentQuestionIndex + 1}`
+      updatedPhase1[qKey] = msg
+      setPhase1(updatedPhase1)
+
+      const nextIdx = currentQuestionIndex + 1
+      setCurrentQuestionIndex(nextIdx)
+
+      if (nextIdx < 5) {
+        // Prompt next static question
+        setTimeout(() => {
+          setChatHistory(prev => [...prev, { role: 'assistant', content: INITIAL_QUESTIONS[nextIdx] }])
+          setLoading(false)
+        }, 1000)
+      } else {
+        // Completed initial questions -> call first adaptive
+        await fetchNextAdaptiveQuestion(newHistory, updatedPhase1)
+        setLoading(false)
+      }
     } else {
-      await fetchNextQuestion(newHistory)
-      setLoading(false)
+      // In adaptive phase
+      if (newHistory.length >= 16) {
+        sessionStorage.setItem('skope_phase1', JSON.stringify(phase1))
+        sessionStorage.setItem('skope_chatHistory', JSON.stringify(newHistory))
+        navigate('/preferences')
+      } else {
+        await fetchNextAdaptiveQuestion(newHistory, phase1)
+        setLoading(false)
+      }
     }
   }
 
@@ -241,233 +230,118 @@ export default function FormPage() {
     }
   }
 
-  const q = QUESTIONS[currentQ]
-
   return (
     <>
       <div className="grid-bg" />
       <div className="orb-1" />
       <div className="orb-2" />
-      <div className="page-wrapper flex flex-col h-screen">
+      <div className="page-wrapper flex flex-col h-screen overflow-hidden">
         <Navbar />
 
         {/* Progress Bar */}
-        <div className="h-[3px] bg-[rgba(79,142,247,0.06)] relative overflow-hidden shrink-0">
+        <div className="h-[3px] bg-[rgba(108,99,255,0.06)] relative overflow-hidden shrink-0">
           <div
-            className="h-full bg-gradient-to-r from-blue to-purple transition-all duration-700 ease-out rounded-r-full"
+            className="h-full bg-gradient-to-r from-[#6c63ff] to-[#4f8ef7] transition-all duration-700 ease-out rounded-r-full"
             style={{ width: `${progress}%` }}
           />
         </div>
 
-        {/* ═══════════════════════════════════════════ */}
-        {/* PHASE 1 — One question at a time           */}
-        {/* ═══════════════════════════════════════════ */}
-        {phase === 1 && (
-          <div className="flex-1 flex items-center justify-center overflow-hidden">
-            <div
-              className={`max-w-[600px] w-full mx-auto px-8 max-sm:px-5 transition-all duration-300 ${
-                transitioning ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'
-              }`}
-            >
-              {/* Question Number + Dots */}
-              <div className="flex items-center gap-3 mb-6">
-                <span className="text-[32px]">{q.emoji}</span>
-                <div className="flex items-center gap-1.5">
-                  {QUESTIONS.map((_, i) => (
-                    <div
-                      key={i}
-                      className={`h-1.5 rounded-full transition-all duration-500 ${
-                        i < currentQ
-                          ? 'w-6 bg-gradient-to-r from-blue to-purple'
-                          : i === currentQ
-                            ? 'w-10 bg-gradient-to-r from-blue to-purple'
-                            : 'w-1.5 bg-[rgba(255,255,255,0.1)]'
-                      }`}
-                    />
-                  ))}
+        {/* Unified Conversational Chat Box */}
+        <div className="flex-1 flex flex-col overflow-hidden animate-fadeUp">
+          {/* Chat Header */}
+          <div className="shrink-0 px-6 py-3.5 border-b border-[rgba(108,99,255,0.06)] bg-[rgba(10,10,15,0.6)] backdrop-blur-md">
+            <div className="max-w-[700px] mx-auto flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="relative">
+                  <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[#6c63ff] to-[#4f8ef7] flex items-center justify-center shadow-[0_2px_12px_rgba(108,99,255,0.25)]">
+                    <span className="text-[14px]">🔍</span>
+                  </div>
+                  <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-[#22d3a0] border-2 border-[#0A0A0F]" />
+                </div>
+                <div>
+                  <div className="font-sora text-[14px] font-semibold text-white">Skope AI Counsellor</div>
+                  <div className="font-dm text-[11px] text-[#22d3a0]">
+                    {loading ? 'Skope is thinking...' : 'Online'}
+                  </div>
                 </div>
               </div>
 
-              {/* Question Title */}
-              <h1 className="font-sora text-[32px] sm:text-[40px] font-bold text-white tracking-[-1px] leading-[1.15] mb-2">
-                {q.title}
-              </h1>
-              <p className="font-dm text-[15px] text-[rgba(240,242,255,0.4)] mb-8 leading-relaxed">
-                {q.subtitle}
-              </p>
-
-              {/* Input */}
-              <div className="relative mb-6">
-                <textarea
-                  ref={inputRef}
-                  className="w-full bg-transparent border-none border-b-2 border-b-[rgba(79,142,247,0.2)] text-white font-dm text-[16px] sm:text-[18px] outline-none placeholder:text-[rgba(240,242,255,0.15)] resize-none leading-[1.75] pb-4 focus:border-b-blue transition-colors"
-                  rows={3}
-                  style={{ minHeight: '80px', borderTop: 'none', borderLeft: 'none', borderRight: 'none', borderRadius: 0, background: 'transparent', boxShadow: 'none' }}
-                  placeholder={q.placeholder}
-                  value={phase1[q.id]}
-                  onChange={e => {
-                    setPhase1({ ...phase1, [q.id]: e.target.value })
-                    setError('')
-                  }}
-                  onKeyDown={handlePhase1KeyDown}
-                />
+              {/* Progress counter */}
+              <div className="flex items-center gap-1.5 bg-[rgba(255,255,255,0.03)] border border-[rgba(255,255,255,0.06)] rounded-full px-3 py-1.5 font-dm text-[11px] text-[rgba(240,242,255,0.6)]">
+                <span>{completedSteps} of {totalSteps} questions answered</span>
               </div>
-
-              {/* Error */}
-              {error && (
-                <p className="font-dm text-[13px] text-[#ff8a8a] mb-4">{error}</p>
-              )}
-
-              {/* Navigation */}
-              <div className="flex items-center justify-between">
-                {currentQ > 0 ? (
-                  <button
-                    onClick={goBack}
-                    className="font-dm text-[13px] text-[rgba(240,242,255,0.35)] hover:text-white cursor-pointer bg-transparent border-none transition-colors flex items-center gap-1.5"
-                  >
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-                      <path d="M19 12H5M5 12L11 6M5 12L11 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                    Back
-                  </button>
-                ) : (
-                  <div />
-                )}
-
-                <button
-                  onClick={goNext}
-                  disabled={loading}
-                  className={`font-sora text-[14px] font-semibold text-white px-6 py-3 rounded-[12px] border-none cursor-pointer transition-all duration-300 flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed bg-gradient-to-r ${q.gradient} hover:-translate-y-0.5 hover:shadow-[0_8px_25px_rgba(79,142,247,0.2)]`}
-                >
-                  {loading ? (
-                    <span className="flex items-center gap-2">Starting <LoadingDots /></span>
-                  ) : currentQ === 4 ? (
-                    <>
-                      Start Interview
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                        <path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                      </svg>
-                    </>
-                  ) : (
-                    <>
-                      Next
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                        <path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                      </svg>
-                    </>
-                  )}
-                </button>
-              </div>
-
-              {/* Keyboard hint */}
-              <p className="font-dm text-[11px] text-[rgba(240,242,255,0.2)] text-center mt-8">
-                press <span className="font-mono bg-[rgba(255,255,255,0.05)] px-1.5 py-0.5 rounded text-[rgba(240,242,255,0.3)]">Enter ↵</span> to continue
-              </p>
             </div>
           </div>
-        )}
 
-        {/* ═══════════════════════════════════════════ */}
-        {/* PHASE 2 — Chat Interview                   */}
-        {/* ═══════════════════════════════════════════ */}
-        {phase === 2 && (
-          <div className="flex-1 flex flex-col overflow-hidden animate-fadeUp">
-            {/* Chat Header */}
-            <div className="shrink-0 px-6 py-3.5 border-b border-[rgba(79,142,247,0.06)] bg-[rgba(8,11,20,0.6)] backdrop-blur-md">
-              <div className="max-w-[700px] mx-auto flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="relative">
-                    <div className="w-9 h-9 rounded-full bg-gradient-to-br from-blue to-purple flex items-center justify-center shadow-[0_2px_12px_rgba(79,142,247,0.25)]">
-                      <span className="text-[14px]">🔍</span>
-                    </div>
-                    <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-[#6bcb77] border-2 border-[#080b14]" />
-                  </div>
-                  <div>
-                    <div className="font-sora text-[14px] font-semibold text-white">Skope</div>
-                    <div className="font-dm text-[11px] text-[#6bcb77]">
-                      {loading ? 'Thinking...' : 'Online'}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Progress dots */}
-                <div className="flex items-center gap-1.5 bg-[rgba(255,255,255,0.03)] border border-[rgba(255,255,255,0.06)] rounded-full px-3 py-1.5">
-                  {Array.from({ length: 8 }).map((_, i) => (
-                    <div
-                      key={i}
-                      className={`w-[6px] h-[6px] rounded-full transition-all duration-500 ${
-                        i < questionsAnswered
-                          ? 'bg-[#6bcb77]'
-                          : i === questionsAnswered && !loading
-                            ? 'bg-[rgba(79,142,247,0.5)] animate-pulse'
-                            : 'bg-[rgba(255,255,255,0.08)]'
-                      }`}
-                    />
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* Messages */}
-            <div className="flex-1 overflow-y-auto px-6 py-5">
-              <div className="max-w-[700px] mx-auto flex flex-col gap-4">
+          {/* Chat Messages */}
+          <div className="flex-1 overflow-y-auto px-6 py-5">
+            <div className="max-w-[700px] mx-auto flex flex-col gap-4">
+              <AnimatePresence>
                 {chatHistory.map((msg, i) => (
                   <ChatBubble key={i} message={msg} index={i} />
                 ))}
+              </AnimatePresence>
 
-                {loading && (
-                  <div className="flex items-start gap-2.5 animate-fadeUp">
-                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue to-purple flex items-center justify-center shrink-0 shadow-[0_2px_12px_rgba(79,142,247,0.25)]">
-                      <span className="text-[12px]">🔍</span>
-                    </div>
-                    <div className="bg-[rgba(255,255,255,0.03)] border border-[rgba(255,255,255,0.06)] rounded-[18px_18px_18px_4px] px-4 py-3 flex items-center gap-2">
-                      <span className="typing-dot" />
-                      <span className="typing-dot" />
-                      <span className="typing-dot" />
-                    </div>
-                  </div>
-                )}
-
-                {error && (
-                  <div className="bg-[rgba(255,107,107,0.06)] border border-[rgba(255,107,107,0.15)] rounded-[12px] px-4 py-3 text-center">
-                    <p className="font-dm text-[13px] text-[#ff8a8a]">{error}</p>
-                  </div>
-                )}
-
-                <div ref={messagesEndRef} />
-              </div>
-            </div>
-
-            {/* Input */}
-            <div className="shrink-0 border-t border-[rgba(79,142,247,0.06)] bg-[rgba(8,11,20,0.85)] backdrop-blur-xl px-6 py-4">
-              <div className="max-w-[700px] mx-auto flex items-end gap-3">
-                <div className="flex-1 rounded-[14px] bg-[rgba(255,255,255,0.03)] border border-[rgba(255,255,255,0.06)] focus-within:border-[rgba(79,142,247,0.25)] focus-within:shadow-[0_0_25px_rgba(79,142,247,0.06)] transition-all duration-200">
-                  <textarea
-                    ref={textareaRef}
-                    className="w-full bg-transparent border-none px-4 py-3 text-white font-dm text-[14px] outline-none placeholder:text-[rgba(240,242,255,0.18)] resize-none leading-[1.65]"
-                    rows={1}
-                    style={{ maxHeight: '100px' }}
-                    placeholder={chatHistory.length >= 16 ? "Interview complete! Moving to preferences..." : "Be honest — there are no wrong answers..."}
-                    value={chatInput}
-                    disabled={loading || chatHistory.length >= 16}
-                    onChange={(e) => { setChatInput(e.target.value); handleTextareaResize(e) }}
-                    onKeyDown={handleChatKeyDown}
-                  />
-                </div>
-                <button
-                  onClick={handleSendMessage}
-                  disabled={loading || !chatInput.trim() || chatHistory.length >= 16}
-                  className="w-11 h-11 rounded-[12px] bg-gradient-to-br from-blue to-purple flex items-center justify-center cursor-pointer border-none hover:shadow-[0_4px_20px_rgba(139,92,246,0.3)] transition-all duration-200 disabled:opacity-25 disabled:cursor-not-allowed shrink-0"
+              {loading && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="flex items-start gap-2.5"
                 >
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                    <path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                </button>
-              </div>
+                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#6c63ff] to-[#4f8ef7] flex items-center justify-center shrink-0 shadow-[0_2px_12px_rgba(108,99,255,0.25)]">
+                    <span className="text-[12px]">🔍</span>
+                  </div>
+                  <div className="bg-[rgba(255,255,255,0.03)] border border-[rgba(255,255,255,0.06)] rounded-[18px_18px_18px_4px] px-4 py-3 flex flex-col gap-1.5">
+                    <span className="font-dm text-[11px] text-[rgba(240,242,255,0.4)]">Skope is thinking...</span>
+                    <div className="flex items-center gap-1">
+                      <span className="typing-dot" />
+                      <span className="typing-dot" />
+                      <span className="typing-dot" />
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+
+              {error && (
+                <div className="bg-[rgba(248,113,113,0.06)] border border-[rgba(248,113,113,0.15)] rounded-[12px] px-4 py-3 text-center">
+                  <p className="font-dm text-[13px] text-[#f87171]">{error}</p>
+                </div>
+              )}
+
+              <div ref={messagesEndRef} />
             </div>
           </div>
-        )}
+
+          {/* Message Input Box */}
+          <div className="shrink-0 border-t border-[rgba(108,99,255,0.06)] bg-[rgba(10,10,15,0.85)] backdrop-blur-xl px-6 py-4">
+            <div className="max-w-[700px] mx-auto flex items-end gap-3">
+              <div className="flex-1 rounded-[14px] bg-[rgba(255,255,255,0.03)] border border-[rgba(255,255,255,0.06)] focus-within:border-[rgba(108,99,255,0.25)] focus-within:shadow-[0_0_25px_rgba(108,99,255,0.06)] transition-all duration-200">
+                <textarea
+                  ref={textareaRef}
+                  className="w-full bg-transparent border-none px-4 py-3 text-white font-dm text-[14px] outline-none placeholder:text-[rgba(240,242,255,0.18)] resize-none leading-[1.65]"
+                  rows={1}
+                  style={{ maxHeight: '100px' }}
+                  placeholder={chatHistory.length >= 16 ? "Interview complete! Moving to preferences..." : "Be honest — there are no wrong answers..."}
+                  value={chatInput}
+                  disabled={loading || chatHistory.length >= 16}
+                  onChange={(e) => { setChatInput(e.target.value); handleTextareaResize(e) }}
+                  onKeyDown={handleChatKeyDown}
+                />
+              </div>
+              <button
+                onClick={handleSendMessage}
+                disabled={loading || !chatInput.trim() || chatHistory.length >= 16}
+                className="w-11 h-11 rounded-[12px] bg-gradient-to-br from-[#6c63ff] to-[#4f8ef7] flex items-center justify-center cursor-pointer border-none hover:shadow-[0_4px_20px_rgba(108,99,255,0.3)] transition-all duration-200 disabled:opacity-25 disabled:cursor-not-allowed shrink-0"
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                  <path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </>
   )
 }
+

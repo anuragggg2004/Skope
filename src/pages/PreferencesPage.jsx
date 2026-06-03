@@ -84,6 +84,10 @@ export default function PreferencesPage() {
     }
   }
 
+  const [showLoadingOverlay, setShowLoadingOverlay] = useState(false)
+  const [loadingStepsProgress, setLoadingStepsProgress] = useState([0, 0, 0, 0, 0])
+  const [currentStepIndex, setCurrentStepIndex] = useState(0)
+
   const handleSubmit = async () => {
     if (!budget) {
       setError('Please select your budget range.')
@@ -100,58 +104,100 @@ export default function PreferencesPage() {
 
     setLoading(true)
     setError('')
-    setProgress(92)
-    setLoadingMsgIndex(0)
+    setShowLoadingOverlay(true)
+    setLoadingStepsProgress([0, 0, 0, 0, 0])
+    setCurrentStepIndex(0)
 
-    try {
-      const phase1 = JSON.parse(sessionStorage.getItem('skope_phase1'))
-      const chatHistory = JSON.parse(sessionStorage.getItem('skope_chatHistory'))
+    let currentStep = 0
+    let progressArr = [0, 0, 0, 0, 0]
 
-      const preferences = {
-        budget: budgetOptions.find(b => b.value === budget)?.label || budget,
-        cities: selectedCities,
-        ai_relevance: aiRelevance,
-        additional_note: additionalNote
-      }
+    let apiResultReceived = false
+    let apiResultData = null
+    let apiError = null
 
-      const res = await fetch('/api/generate-report', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ phase1, chatHistory, preferences })
-      })
+    // Start API request in parallel
+    const brutally_honest = sessionStorage.getItem('brutally_honest') === 'true'
+    const phase1 = JSON.parse(sessionStorage.getItem('skope_phase1') || '{}')
+    const chatHistory = JSON.parse(sessionStorage.getItem('skope_chatHistory') || '[]')
 
+    const preferences = {
+      budget: budgetOptions.find(b => b.value === budget)?.label || budget,
+      cities: selectedCities,
+      ai_relevance: aiRelevance,
+      additional_note: additionalNote
+    }
+
+    fetch('/api/generate-report', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ phase1, chatHistory, preferences, brutally_honest })
+    }).then(async (res) => {
       if (!res.ok) {
-        const errData = await res.json()
+        const errData = await res.json().catch(() => ({}))
         throw new Error(errData.error || 'Failed to generate report.')
       }
+      return res.json()
+    }).then((data) => {
+      apiResultData = data
+      apiResultReceived = true
+    }).catch((err) => {
+      apiError = err
+      apiResultReceived = true
+    })
 
-      const data = await res.json()
+    const handleReportCompletion = (data, error) => {
+      setShowLoadingOverlay(false)
+      setLoading(false)
+      if (error) {
+        setError(error.message)
+        return
+      }
       sessionStorage.setItem('pathreport', JSON.stringify(data))
+      sessionStorage.setItem('skope_preferences', JSON.stringify(preferences))
       if (setPathReport) setPathReport(data)
 
-      // Save report to MongoDB in the background if the user is authenticated
       if (user) {
-        try {
-          fetch('/api/save-report', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              userId: user.uid,
-              email: user.email,
-              reportData: data
-            })
-          }).catch(e => console.error('Background report save failed:', e))
-        } catch (saveErr) {
-          console.error('Failed to initiate report save:', saveErr)
-        }
+        fetch('/api/save-report', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            userId: user.uid,
+            email: user.email,
+            reportData: data
+          })
+        }).catch(e => console.error('Background report save failed:', e))
       }
 
       setProgress(100)
-      setTimeout(() => navigate('/result'), 400)
-    } catch (err) {
-      setError(err.message)
-      setLoading(false)
+      navigate('/result')
     }
+
+    const interval = setInterval(() => {
+      if (currentStep < 5) {
+        progressArr[currentStep] += 5 // 5% per 100ms -> 100% in 2.0s
+        if (progressArr[currentStep] >= 100) {
+          progressArr[currentStep] = 100
+          if (currentStep < 4) {
+            currentStep += 1
+            setCurrentStepIndex(currentStep)
+          } else {
+            // Reached final step -> wait for API if not ready
+            if (apiResultReceived) {
+              clearInterval(interval)
+              handleReportCompletion(apiResultData, apiError)
+            } else {
+              progressArr[4] = 99
+            }
+          }
+        }
+        setLoadingStepsProgress([...progressArr])
+      } else {
+        if (apiResultReceived) {
+          clearInterval(interval)
+          handleReportCompletion(apiResultData, apiError)
+        }
+      }
+    }, 100)
   }
 
   return (
@@ -192,8 +238,8 @@ export default function PreferencesPage() {
                     onClick={() => setBudget(opt.value)}
                     className={`font-dm text-[13px] px-3 py-2.5 rounded-[10px] border cursor-pointer transition-all duration-200 text-left
                       ${budget === opt.value
-                        ? 'bg-[rgba(79,142,247,0.15)] border-blue text-white'
-                        : 'bg-navy3 border-[rgba(79,142,247,0.15)] text-[rgba(240,242,255,0.5)] hover:border-[rgba(79,142,247,0.3)]'
+                        ? 'bg-[rgba(108,99,255,0.15)] border-[#6c63ff] text-white'
+                        : 'bg-navy3 border-[rgba(108,99,255,0.15)] text-[rgba(240,242,255,0.5)] hover:border-[rgba(108,99,255,0.3)]'
                       }`}
                   >
                     {opt.label}
@@ -214,8 +260,8 @@ export default function PreferencesPage() {
                     onClick={() => toggleCity(city)}
                     className={`font-dm text-[12px] px-3 py-1.5 rounded-full border cursor-pointer transition-all duration-200
                       ${selectedCities.includes(city)
-                        ? 'bg-[rgba(79,142,247,0.15)] border-blue text-white'
-                        : 'bg-navy3 border-[rgba(79,142,247,0.15)] text-[rgba(240,242,255,0.5)] hover:border-[rgba(79,142,247,0.3)]'
+                        ? 'bg-[rgba(108,99,255,0.15)] border-[#6c63ff] text-white'
+                        : 'bg-navy3 border-[rgba(108,99,255,0.15)] text-[rgba(240,242,255,0.5)] hover:border-[rgba(108,99,255,0.3)]'
                       }`}
                   >
                     {selectedCities.includes(city) && <span className="mr-1">✓</span>}
@@ -226,7 +272,7 @@ export default function PreferencesPage() {
               <div className="flex gap-2">
                 <input
                   type="text"
-                  className="flex-1 bg-navy3 border border-[rgba(79,142,247,0.15)] rounded-[10px] px-4 py-2 text-white font-dm text-[13px] outline-none focus:border-blue transition-colors placeholder:text-[rgba(240,242,255,0.25)]"
+                  className="flex-1 bg-navy3 border border-[rgba(108,99,255,0.15)] rounded-[10px] px-4 py-2 text-white font-dm text-[13px] outline-none focus:border-[#6c63ff] transition-colors placeholder:text-[rgba(240,242,255,0.25)]"
                   placeholder="Add another city..."
                   value={customCity}
                   onChange={(e) => setCustomCity(e.target.value)}
@@ -234,7 +280,7 @@ export default function PreferencesPage() {
                 />
                 <button
                   onClick={addCustomCity}
-                  className="font-dm text-[12px] font-medium bg-navy3 border border-[rgba(79,142,247,0.15)] text-blue px-4 py-2 rounded-[10px] cursor-pointer hover:border-blue transition-colors"
+                  className="font-dm text-[12px] font-medium bg-navy3 border border-[rgba(108,99,255,0.15)] text-blue px-4 py-2 rounded-[10px] cursor-pointer hover:border-[#6c63ff] transition-colors"
                 >
                   Add
                 </button>
@@ -257,8 +303,8 @@ export default function PreferencesPage() {
                   onClick={() => setAiRelevance(opt.value)}
                   className={`w-full font-dm text-[13px] px-4 py-3 rounded-[10px] border cursor-pointer transition-all duration-200 text-left mb-2 flex items-center gap-3
                     ${aiRelevance === opt.value
-                      ? 'bg-[rgba(79,142,247,0.15)] border-blue text-white'
-                      : 'bg-navy3 border-[rgba(79,142,247,0.15)] text-[rgba(240,242,255,0.5)] hover:border-[rgba(79,142,247,0.3)]'
+                      ? 'bg-[rgba(108,99,255,0.15)] border-[#6c63ff] text-white'
+                      : 'bg-navy3 border-[rgba(108,99,255,0.15)] text-[rgba(240,242,255,0.5)] hover:border-[rgba(108,99,255,0.3)]'
                     }`}
                 >
                   <span className="text-[18px]">{opt.emoji}</span>
@@ -273,7 +319,7 @@ export default function PreferencesPage() {
                 Anything else we should know? <span className="text-[rgba(240,242,255,0.35)] font-normal">(optional)</span>
               </label>
               <textarea
-                  className="w-full glass-card border-[rgba(255,255,255,0.1)] rounded-[12px] px-4 py-3.5 text-white font-dm text-[14px] outline-none focus:border-purple focus:shadow-[0_0_15px_rgba(139,92,246,0.2)] transition-all placeholder:text-[rgba(240,242,255,0.25)] resize-y"
+                className="w-full glass-card border-[rgba(255,255,255,0.1)] rounded-[12px] px-4 py-3.5 text-white font-dm text-[14px] outline-none focus:border-purple focus:shadow-[0_0_15px_rgba(108,99,255,0.2)] transition-all placeholder:text-[rgba(240,242,255,0.25)] resize-y"
                 rows={2}
                 style={{ minHeight: '60px' }}
                 placeholder="e.g. I have a scholarship, parents prefer government colleges, I want to stay close to home..."
@@ -291,19 +337,61 @@ export default function PreferencesPage() {
             <button
               onClick={handleSubmit}
               disabled={loading}
-                className="w-full font-sora text-[15px] font-semibold bg-gradient-to-r from-blue to-purple text-white py-3.5 rounded-full border-none cursor-pointer hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(139,92,246,0.3)] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 mt-4"
+              className="w-full font-sora text-[15px] font-semibold bg-gradient-to-r from-blue to-purple text-white py-3.5 rounded-full border-none cursor-pointer hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(108,99,255,0.3)] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 mt-4"
             >
-              {loading ? (
-                <span className="flex items-center justify-center gap-2">
-                  {loadingMessages[loadingMsgIndex]} <LoadingDots />
-                </span>
-              ) : (
-                'Generate My PathReport →'
-              )}
+              Generate My PathReport →
             </button>
           </div>
         </div>
       </div>
+
+      {/* Discovery Loading Screen Overlay */}
+      {showLoadingOverlay && (
+        <div className="fixed inset-0 z-50 bg-[#0A0A0F]/95 backdrop-blur-[24px] flex items-center justify-center p-6 animate-fadeIn">
+          <div className="max-w-[480px] w-full glass-card p-8 rounded-[24px] border border-[rgba(108,99,255,0.15)] flex flex-col gap-6 shadow-[0_20px_50px_rgba(108,99,255,0.15)] hover:transform-none">
+            <div className="text-center mb-2">
+              <h3 className="font-sora text-[22px] font-bold text-white mb-2">Running AI Diagnostics</h3>
+              <p className="font-dm text-[13px] text-[rgba(240,242,255,0.45)]">Generating your proprietary Skope Archetype and PathReport...</p>
+            </div>
+
+            <div className="flex flex-col gap-5">
+              {[
+                'Understanding your interests...',
+                'Identifying hidden strengths...',
+                'Matching careers...',
+                'Analyzing college fit...',
+                'Finding opportunities...'
+              ].map((label, idx) => {
+                const stepProgress = loadingStepsProgress[idx]
+                const isActive = idx === currentStepIndex
+                const isCompleted = idx < currentStepIndex
+                return (
+                  <div key={idx} className="flex flex-col gap-1.5 opacity-90">
+                    <div className="flex items-center justify-between font-dm text-[13px]">
+                      <span className={isActive ? 'text-[#6c63ff] font-semibold' : isCompleted ? 'text-[#22d3a0]' : 'text-[rgba(240,242,255,0.3)]'}>
+                        {label}
+                      </span>
+                      <span className={`font-mono text-[12px] ${isActive ? 'text-[#6c63ff]' : isCompleted ? 'text-[#22d3a0]' : 'text-[rgba(240,242,255,0.3)]'}`}>
+                        {stepProgress}%
+                      </span>
+                    </div>
+                    <div className="h-[6px] bg-[rgba(255,255,255,0.03)] border border-[rgba(255,255,255,0.06)] rounded-full overflow-hidden">
+                      <div
+                        className={`h-full transition-all duration-100 ease-out rounded-full bg-gradient-to-r ${
+                          isCompleted
+                            ? 'from-[#22d3a0] to-[#22d3a0]'
+                            : 'from-[#6c63ff] to-[#4f8ef7]'
+                        }`}
+                        style={{ width: `${stepProgress}%` }}
+                      />
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+        </div>
+      )}
     </>
   )
 }

@@ -278,7 +278,7 @@ Generate the next ONE question:`
 // =============================================
 app.post('/api/generate-report', async (req, res) => {
   try {
-    const { phase1, phase2, chatHistory, preferences } = req.body
+    const { phase1, phase2, chatHistory, preferences, brutally_honest } = req.body
 
     if (!phase1) {
       return res.status(400).json({ error: 'Phase1 data is required.' })
@@ -297,13 +297,13 @@ app.post('/api/generate-report', async (req, res) => {
 
     const preferencesText = preferences
       ? `\nSTUDENT PREFERENCES:
-Budget: ${preferences.budget}
+Preferred Budget: ${preferences.budget}
 Preferred Cities: ${preferences.cities.join(', ')}
 AI-era relevance preference: ${preferences.ai_relevance}
 ${preferences.additional_note ? `Additional notes: ${preferences.additional_note}` : ''}`
       : ''
 
-    const systemPrompt = `You are an Indian career counsellor who has seen 10,000 students make the same mistakes. You are the one person in the room who will tell the truth. No motivation. No generic advice. Just the mirror.
+    let systemPrompt = `You are an Indian career counsellor who has seen 10,000 students make the same mistakes. You are the one person in the room who will tell the truth. No motivation. No generic advice. Just the mirror.
 
 YOUR TONE: Blunt. Direct. Specific. You sound like someone who has earned the right to be honest because they have seen what actually happens to students who choose wrong.
 
@@ -332,7 +332,7 @@ For hidden gems specifically, you MUST mark is_hidden_gem: true and include a re
 
 YOUR EXPANDED KNOWLEDGE BASE:
 
-HIDDEN GEM COLLEGES (prioritize these over predictable ones):
+HIDDEN GEM COLLEGES:
 - Plaksha University Mohali: New-age tech university backed by 50+ IIT/Wharton alumni. 4-year tech program with project-based learning. Tiny class size. Strong US grad school sends. Reddit says: students actually build things here, not just study for placements.
 - DAIICT Gandhinagar: One of the best CS colleges in India that almost nobody outside Gujarat talks about. 100% placement, smaller campus, no ragging culture, strong alumni. Reddit says: if you get this and a random NIT, take DAIICT.
 - IIIT Hyderabad: Genuinely research-heavy, produces PhD students who go to top US programs. Famous for NLP and AI research. Reddit says: if you want to do ML research this is better than most IITs.
@@ -357,33 +357,26 @@ HIDDEN GEM COLLEGES (prioritize these over predictable ones):
 - LNUPE Gwalior: The only government sports science university in India. Produces coaches, sports managers, sports scientists. Reddit says: if you are serious about sports as a career, there is literally no other option.
 - ICAR-IARI New Delhi: The best agricultural university in the country. Reddit says: agricultural research roles here pay better than most private sector biology jobs.
 
-HIDDEN EXAMS (always include at least 2 in the entrance_exams field that the student has never heard of):
-- UCEED: Design entrance for IIT design programs. Vastly underused by students who could qualify.
-- SEED: NIFT-level design entrance. Very few students know this exists.
-- IISER IAT: Gets you into one of India's best science institutions with less competition than IIT.
-- NEST: Admission to NISER. Excellent for pure science students.
-- TISS NET: Social work and HR graduate programs at the best institution in the country.
-- NCHM JEE: Hotel management entrance. Most hotel management aspirants do not know this is the national entrance.
-- LSAT India: Law school admission test accepted by 80+ law schools including private ones. Alternative to AILET/CLAT.
-- IPMAT: Integrated MBA program at IIM Indore and Rohtak. Students with commerce background who want IIM brand without MBA.
+HIDDEN EXAMS:
+- UCEED: Design entrance for IIT design programs.
+- SEED: NIFT-level design entrance.
+- IISER IAT: Gets you into one of India's best science institutions.
+- NEST: Admission to NISER.
+- TISS NET: Social work and HR graduate programs.
+- NCHM JEE: Hotel management entrance.
+- LSAT India: Law school admission test.
+- IPMAT: Integrated MBA program at IIM Indore and Rohtak.
 - XAT: Management entrance taken alongside CAT. Very few know that Xavier's programs are genuinely top-tier.
-- IIHM eCHAT: Hotel management entrance for IIHM group. Less known than NCHM but good placement.
-- JGEEBILS: Entrance for JNCASR — one of India's best research institutes. Almost zero students apply here.
-- CEED: Post-graduation design entrance at IITs. For students who want to pivot to design after engineering.
+- IIHM eCHAT: Hotel management entrance for IIHM group.
+- JGEEBILS: Entrance for JNCASR — one of India's best research institutes.
+- CEED: Post-graduation design entrance at IITs.
 
-HIDDEN CAREER FIELDS — MUST INCLUDE at least 3 in hidden_courses:
+HIDDEN CAREER FIELDS:
 - Actuarial Science: Uses statistics to calculate risk for insurance companies. Starting salary 8-15 LPA. Exam path: Institute of Actuaries. Less than 500 qualified actuaries under 30 in India.
 - Geomatics/Geoinformatics Engineering: Satellite mapping, GIS, drone surveys. Used by defence, urban planning, ISRO. Starting salary 6-12 LPA. Almost nobody applies.
 - Clinical Data Management: Manages data from drug trials. 100% job guarantee with right certification. Pharma and CRO companies hire thousands. Starting salary 5-9 LPA.
 - UX Research: Distinct from UI design. Deep user psychology research for product companies. Starting 8-15 LPA. Very few trained professionals.
 - Sound Design: For film, gaming, podcasts, VR. Huge OTT boom demand. FTII and some private institutes offer it.
-- Marine Engineering: Works on ships. 80-90% on-shore salary while at sea. Starting after training: 50,000-1L USD equivalent.
-- Sports Science and Biomechanics: Injury prevention, performance coaching for athletes. Growing field in India post-Olympics push.
-- Computational Linguistics: Builds language models and NLP tools. Extremely rare skillset. Companies like Google, Microsoft, Sarvam hire directly from college.
-- Fashion Technology: Distinct from fashion design. Supply chain, production, tech. NIFT offers it. Starting 5-8 LPA.
-- Landscape Architecture: Designs public spaces, urban parks, resorts. CEPT offers it. Very few in India. Starting 5-8 LPA.
-- Agricultural Technology/Precision Farming: Uses drones and sensors for farming. Massive government push. Startups like DeHaat, AgroStar hiring aggressively.
-- Occupational Therapy: Allied health field. Massive shortage in India. Starting 4-7 LPA with 100% placement in hospitals and rehab centers.
 
 NEVER recommend a college that does not exist. Filter strictly by budget and city preferences.
 Return ONLY valid JSON. No markdown, no text outside the JSON.
@@ -396,15 +389,15 @@ PERSONALIZATION MANDATE:
 - If any section reads generic enough to copy-paste for another student, you have failed.
 
 REALITY CHECK MANDATE:
-For each career path, include a reality_check field that names the hard truth.
-Do NOT soften these. This is where trust is built.
+For each career path, include detailed pros, cons, and reality check guidelines. Do NOT soften.
 
 KEY PERSPECTIVE RULES:
 The key_perspective must be 2-4 sentences of dense, specific insight about Indian education/careers for THIS student.
-Not motivational. Not generic. Something they did not know.
+Not motivational. Not generic. Something they did not know.`
 
-GOOD: 'IIT placements often include mass hiring by consulting firms who take anyone with the IIT tag. If you want to build products, a college like Thapar with active startup culture might teach you more useful skills.'
-BAD: 'Follow your passion and you will succeed.'`
+    if (brutally_honest) {
+      systemPrompt += `\n\nCRITICAL: BRUTALLY HONEST MODE IS ENABLED. You must push back harder, challenge delusional expectations, and point out any gaps or weak preparation scores directly and realistically. Do not sugarcoat any critiques. Speak with absolute candor.`
+    }
 
     const userPrompt = `Student profile:
 
@@ -421,6 +414,11 @@ ${preferencesText}
 
 Return this exact JSON structure:
 {
+  "archetype": {
+    "name": "One of: The Builder / The Explorer / The Creator / The Strategist / The Analyst / The Innovator / The Connector",
+    "description": "2 sentences describing this profile's mindset.",
+    "why_match": "1-2 sentences explaining why this student matches this based on their inputs."
+  },
   "profile_summary": "4-5 lines referencing at least 3 specific things this student said. Must sound like it could ONLY describe this student.",
   "key_insight": "1 observation that could ONLY come from this conversation. Not generic career advice.",
   "key_perspective": "2-4 sentences of dense insight about Indian education/careers specific to this student's situation. Must make the student think: I did not know that. No motivational cliches.",
@@ -432,7 +430,10 @@ Return this exact JSON structure:
       "why_it_fits": "explain how this career connects to a specific thing they said they care about",
       "entrance_exams": ["exam1", "exam2 — explain what this is and how hard it is compared to JEE if it is not widely known"],
       "earning_range": "realistic Indian market range (be honest, not optimistic)",
-      "reality_check": "the hard truth about this path for THIS student. Name the specific blocker or risk. Do not soften."
+      "reality_check": "the hard truth about this path for THIS student. Name the specific blocker or risk. Do not soften.",
+      "pros": ["Pro 1", "Pro 2"],
+      "cons": ["Cons 1", "Cons 2"],
+      "what_nobody_tells_you": "Detailed 2-3 sentence inside scoop about what this career actually involves day-to-day."
     }
   ],
   "colleges": [
@@ -445,7 +446,9 @@ Return this exact JSON structure:
       "why_fits": "2-3 sentences explaining specifically why THIS STUDENT should consider it. Reference their marks, budget, career interest, and geographic preference.",
       "caution": "1-2 sentences naming the real downside or trade-off of this college for this student.",
       "is_hidden_gem": false,
-      "reddit_verdict": "What students on Reddit/Quora actually say about this college. 1-2 sentences of real insider opinion. Not marketing copy."
+      "reddit_verdict": "What students on Reddit/Quora actually say about this college. 1-2 sentences of real insider opinion. Not marketing copy.",
+      "match_score": 92,
+      "match_reasons": ["Reason 1 why it fits", "Reason 2", "Reason 3"]
     }
   ],
   "recommended_courses": [
@@ -469,13 +472,30 @@ Return this exact JSON structure:
       "why_this_student": "Why this specific student should consider it based on what they said"
     }
   ],
+  "hidden_careers": [
+    {
+      "title": "A career almost no student knows exists",
+      "what_they_do": "1-2 sentences explaining what they actually do day-to-day.",
+      "average_salary": "Realistic starting salary in India",
+      "why_enjoy": "Why this specific student would enjoy this career."
+    }
+  ],
   "emerging_roles": [
     {
       "title": "Role Title",
       "description": "what this role actually does in 1-2 sentences",
       "why_relevant": "why this fits this specific student"
     }
-  ]
+  ],
+  "future_self": {
+    "career": "The career this simulation is based on (must be one of their top recommended careers)",
+    "story": "A 300-500 word immersive day-in-the-life narrative at age 30, e.g. waking up in Bangalore or Mumbai, working in this career, and the tasks/challenges they face. Written in second-person ('You wake up...'). Be highly realistic, sensory, and detailed."
+  },
+  "confidence_score": {
+    "percentage": 78,
+    "explanation": "Why their career direction confidence is estimated at this level based on their inputs.",
+    "actions": ["Specific action 1 to improve confidence", "Action 2", "Action 3"]
+  }
 }
 
 COLLEGE SELECTION — MANDATORY:
@@ -486,7 +506,7 @@ Return EXACTLY 10 colleges with EXACTLY this mix:
 - 1 unconventional fit for their specific profile
 - 1 realistic safety given their actual marks and budget
 
-Return exactly 3 careers, exactly 10 colleges, exactly 8 regular recommended_courses, exactly 5 hidden_courses, exactly 2 emerging roles.`
+Return exactly 3 careers, exactly 10 colleges, exactly 8 regular recommended_courses, exactly 5 hidden_courses, exactly 5 hidden_careers, exactly 2 emerging roles.`
 
     const responseText = await callAI(systemPrompt, userPrompt)
     const cleaned = responseText.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim()
@@ -524,6 +544,39 @@ ${JSON.stringify(pathreport)}`
   } catch (error) {
     console.error('Error in /api/chat:', error)
     res.status(500).json({ error: 'Failed to get a response. Please try again.' })
+  }
+})
+
+// =============================================
+// ENDPOINT 3.5: POST /api/what-if
+// =============================================
+app.post('/api/what-if', async (req, res) => {
+  try {
+    const { scenario, pathreport } = req.body
+
+    if (!scenario || !pathreport) {
+      return res.status(400).json({ error: 'scenario and pathreport are required.' })
+    }
+
+    const systemPrompt = `You are an expert Indian career counsellor. The student has previously generated a PathReport, which is provided below.
+The student wants to simulate a 'What-If' scenario: "${scenario}"
+
+Analyze this scenario specifically for this student. Re-evaluate their careers, colleges, recommended courses, and emerging roles based on this scenario.
+Return ONLY valid JSON in the exact same schema format as the original PathReport, reflecting ONLY the updated recommendations and calculations. Keep the archetype and profile summary, but customize them if needed to explain the shift. Ensure you return exactly 3 careers, exactly 10 colleges, exactly 8 regular recommended_courses, exactly 5 hidden_courses, exactly 5 hidden_careers, and exactly 2 emerging roles, all adjusted for the scenario.
+
+STUDENT ORIGINAL PATHREPORT:
+${JSON.stringify(pathreport)}`
+
+    const userPrompt = `Re-evaluate my PathReport under this scenario: "${scenario}".
+What colleges, careers, and courses change? Return ONLY valid JSON in the same schema.`
+
+    const responseText = await callAI(systemPrompt, userPrompt)
+    const cleaned = responseText.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim()
+    const parsed = JSON.parse(cleaned)
+    res.json(parsed)
+  } catch (error) {
+    console.error('Error in /api/what-if:', error)
+    res.status(500).json({ error: 'Failed to simulate scenario. Please try again.' })
   }
 })
 
