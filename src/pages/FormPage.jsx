@@ -116,6 +116,7 @@ export default function FormPage() {
     sessionStorage.removeItem('skope_phase1')
     sessionStorage.removeItem('skope_phase2')
     sessionStorage.removeItem('skope_chatHistory')
+    sessionStorage.removeItem('share_popup_shown')
   }, [])
 
   // Auto scroll chat
