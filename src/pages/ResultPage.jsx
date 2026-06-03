@@ -10,14 +10,14 @@ const PRINT_STYLES = `
   * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
   html, body, .page-wrapper { background: #080b14 !important; color: #ffffff !important; }
 
-  /* Hide chrome: navbar, bg effects, story scroll, chat, buttons */
-  nav, [data-noprint], .grid-bg, .orb-1, .orb-2, button { display: none !important; }
+  /* Hide chrome: navbar, bg effects, chat, buttons */
+  nav, .grid-bg, .orb-1, .orb-2, button, [data-noprint] { display: none !important; }
 
-  /* Show all sections in print */
-  .print-block { display: block !important; }
+  /* Allow story cards to wrap in print so all 5 are visible */
+  .scrollbar-hide { overflow-x: visible !important; flex-wrap: wrap !important; justify-content: center !important; }
 
   /* Remove page margin */
-  @page { margin: 15mm 15mm; }
+  @page { margin: 10mm 10mm; }
 
   /* Layout */
   .page-wrapper { padding: 0 !important; margin: 0 !important; }
@@ -332,7 +332,7 @@ export default function ResultPage() {
           {/* ═══════════════════════════════════════════ */}
           {/* STORY CARDS — Horizontal scroll */}
           {/* ═══════════════════════════════════════════ */}
-          <div data-noprint className="flex gap-3 overflow-x-auto pb-4 mb-8 -mx-4 px-4 snap-x snap-mandatory scrollbar-hide">
+          <div className="flex gap-3 overflow-x-auto pb-4 mb-8 -mx-4 px-4 snap-x snap-mandatory scrollbar-hide">
             <StoryCard
               gradient="linear-gradient(135deg, #4f8ef7, #8b5cf6)"
               emoji="🎯"
@@ -456,7 +456,7 @@ export default function ResultPage() {
           {/* ═══════════════════════════════════════════ */}
           {/* TAB NAVIGATION — Careers / Colleges / Courses */}
           {/* ═══════════════════════════════════════════ */}
-          <div data-noprint className="flex gap-1 p-1 bg-[rgba(15,19,32,0.8)] rounded-[12px] border border-[rgba(79,142,247,0.1)] mb-6 animate-fadeUp" style={{ animationDelay: '0.3s' }}>
+          <div className="flex gap-1 p-1 bg-[rgba(15,19,32,0.8)] rounded-[12px] border border-[rgba(79,142,247,0.1)] mb-6 animate-fadeUp" style={{ animationDelay: '0.3s' }}>
             {[
               { key: 'careers', label: `Careers (${pathReport.careers?.length || 0})` },
               { key: 'colleges', label: `Colleges (${pathReport.colleges?.length || 0})` },
@@ -477,7 +477,7 @@ export default function ResultPage() {
           </div>
 
           {/* ─── Tab Content — Careers ─── */}
-          <div className={activeTab === 'careers' ? 'block mb-8' : 'hidden print-block mb-8'}>
+          <div className={activeTab === 'careers' ? 'block mb-8' : 'hidden mb-8'}>
             <SectionHeader tag="Your Matches" title="Career Paths" delay={0.32} />
             <div className="grid grid-cols-1 gap-3.5">
               {pathReport.careers?.map((career, i) => (
@@ -487,7 +487,7 @@ export default function ResultPage() {
           </div>
 
           {/* ─── Tab Content — Colleges ─── */}
-          <div className={activeTab === 'colleges' ? 'block mb-8' : 'hidden print-block mb-8'}>
+          <div className={activeTab === 'colleges' ? 'block mb-8' : 'hidden mb-8'}>
             <SectionHeader tag="Filtered for You" title="College Recommendations" delay={0.32} />
             <div className="grid grid-cols-1 gap-3">
               {pathReport.colleges?.map((college, i) => (
@@ -497,7 +497,7 @@ export default function ResultPage() {
           </div>
 
           {/* ─── Tab Content — Courses ─── */}
-          <div className={activeTab === 'courses' ? 'block mb-8' : 'hidden print-block mb-8'}>
+          <div className={activeTab === 'courses' ? 'block mb-8' : 'hidden mb-8'}>
             {pathReport.recommended_courses?.length > 0 && (
               <div className="mb-8">
                 <SectionHeader tag="What to Study" title="Standard Recommended Courses" delay={0.32} />
