@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anurag Tiwary | Operations & Vibe Coding Portfolio</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300..1000;1,9..40,300..1000&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Sora:wght@100..800&display=swap" rel="stylesheet">
+  
+  <style>
+    /* =============================================
+       CORE DESIGN SYSTEM
+       ============================================= */
+    :root {
+      --bg: #07080e;
+      --surface: #0e111a;
+      --card: #131724;
+      --border: rgba(255, 255, 255, 0.05);
+      --violet: #8b5cf6;
+      --blue: #3b82f6;
+      --pink: #ec4899;
+      --green: #10b981;
+      --yellow: #fbbf24;
+      --white: #f3f4f6;
+      --muted: rgba(243, 244, 246, 0.5);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      overflow-x: hidden;
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    /* Ambient Glowing Background Orbs */
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(120px);
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.6;
+    }
+    .orb-1 {
+      top: -10%;
+      right: -10%;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(139, 92, 246, 0.2) 0%, rgba(59, 130, 246, 0.05) 70%);
+      animation: pulseGlow 10s ease-in-out infinite alternate;
+    }
+    .orb-2 {
+      bottom: -10%;
+      left: -10%;
+      width: 450px;
+      height: 450px;
+      background: radial-gradient(circle, rgba(236, 72, 153, 0.15) 0%, rgba(139, 92, 246, 0.05) 70%);
+      animation: pulseGlow 12s ease-in-out infinite alternate-reverse;
+    }
+
+    @keyframes pulseGlow {
+      0% { transform: scale(1) translate(0, 0); }
+      100% { transform: scale(1.15) translate(20px, -20px); }
+    }
+
+    /* Grid Overlay */
+    .grid-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+      background-size: 60px 60px;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* Section Containers */
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Glassmorphism Cards */
+    .glass-card {
+      background: rgba(14, 17, 26, 0.6);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .glass-card:hover {
+      background: rgba(14, 17, 26, 0.7);
+      border-color: rgba(255, 255, 255, 0.1);
+      transform: translateY(-4px);
+    }
+
+    /* Header / Hero */
+    header {
+      padding: 120px 0 60px 0;
+      text-align: center;
+    }
+
+    .badge-vibe {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(139, 92, 246, 0.1);
+      border: 1px solid rgba(139, 92, 246, 0.3);
+      padding: 6px 14px;
+      border-radius: 50px;
+      font-family: 'Sora', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #c084fc;
+      margin-bottom: 24px;
+      box-shadow: 0 0 20px rgba(139, 92, 246, 0.15);
+    }
+
+    h1 {
+      font-family: 'Sora', sans-serif;
+      font-size: 48px;
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -2px;
+      background: linear-gradient(135deg, #fff 30%, var(--violet) 70%, var(--blue) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 16px;
+    }
+
+    .subtitle {
+      font-size: 18px;
+      color: var(--muted);
+      max-width: 600px;
+      margin: 0 auto 32px auto;
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      border-radius: 12px;
+      font-family: 'Sora', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      color: #fff;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--violet), var(--blue));
+      border: none;
+      box-shadow: 0 4px 20px rgba(139, 92, 246, 0.3);
+    }
+    .btn-primary:hover {
+      opacity: 0.95;
+      transform: scale(1.02);
+    }
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+    }
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.07);
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+
+    /* Section Headings */
+    .section-title {
+      font-family: 'Sora', sans-serif;
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      margin-bottom: 32px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .section-title span {
+      background: linear-gradient(135deg, var(--violet), var(--pink));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ─── LIVE TERMINAL WIDGET ─── */
+    .terminal-section {
+      margin-bottom: 80px;
+    }
+
+    .terminal-window {
+      font-family: 'JetBrains Mono', monospace;
+      background: #090a0f;
+      border: 1px solid rgba(139, 92, 246, 0.25);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    }
+
+    .terminal-header {
+      background: #11131a;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .terminal-dots {
+      display: flex;
+      gap: 8px;
+    }
+    .terminal-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+    .td-red { background: #f87171; }
+    .td-yellow { background: #fbbf24; }
+    .td-green { background: #34d399; }
+
+    .terminal-title {
+      font-size: 11px;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .terminal-body {
+      padding: 24px;
+      height: 380px;
+      overflow-y: auto;
+      font-size: 13.5px;
+      display: flex;
+      flex-col: column;
+      gap: 8px;
+      color: rgba(243, 244, 246, 0.9);
+      scroll-behavior: smooth;
+    }
+
+    .terminal-output {
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      margin-bottom: 12px;
+      line-height: 1.5;
+    }
+
+    .terminal-input-line {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .terminal-prompt {
+      color: #a78bfa;
+      font-weight: bold;
+      white-space: nowrap;
+    }
+
+    .terminal-input-field {
+      background: transparent;
+      border: none;
+      color: #fff;
+      font-family: inherit;
+      font-size: inherit;
+      outline: none;
+      flex-grow: 1;
+    }
+
+    .cli-cmd { color: #3b82f6; font-weight: bold; }
+    .cli-header { color: #8b5cf6; font-weight: bold; }
+    .cli-success { color: #10b981; }
+    .cli-warning { color: #fbbf24; }
+    
+    /* ─── SCM SLIDER ─── */
+    .scm-section {
+      margin-bottom: 80px;
+    }
+
+    .scm-slider-container {
+      position: relative;
+      overflow: hidden;
+      border-radius: 24px;
+      padding: 40px;
+      background: rgba(14, 17, 26, 0.7);
+    }
+
+    .scm-track {
+      display: flex;
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      width: 400%; /* 4 steps */
+    }
+
+    .scm-step {
+      width: 25%;
+      flex-shrink: 0;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+    @media (min-width: 768px) {
+      .scm-step {
+        grid-template-columns: 1.2fr 0.8fr;
+        align-items: center;
+      }
+    }
+
+    .scm-details span.step-num {
+      font-family: 'Sora', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--blue);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      display: block;
+      margin-bottom: 8px;
+    }
+    .scm-details h3 {
+      font-family: 'Sora', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: #fff;
+    }
+    .scm-details p {
+      font-size: 14.5px;
+      color: var(--muted);
+      margin-bottom: 24px;
+      line-height: 1.7;
+    }
+    .scm-details ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .scm-details li {
+      font-size: 13.5px;
+      color: var(--white);
+      display: flex;
+      align-items: start;
+      gap: 8px;
+    }
+    .scm-details li::before {
+      content: "✓";
+      color: var(--green);
+      font-weight: bold;
+    }
+
+    .scm-stats {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 8px;
+    }
+    .scm-stats span.stat-title {
+      font-family: 'Sora', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+    }
+    .scm-stats span.stat-val {
+      font-family: 'Sora', sans-serif;
+      font-size: 32px;
+      font-weight: 800;
+      color: #fff;
+      background: linear-gradient(135deg, #fff, var(--violet));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .scm-stats span.stat-desc {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .scm-controls {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 32px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+    }
+    
+    .scm-dots {
+      display: flex;
+      gap: 10px;
+    }
+    .scm-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.15);
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .scm-dot.active {
+      background: var(--violet);
+      box-shadow: 0 0 10px rgba(139, 92, 246, 0.6);
+    }
+
+    .scm-arrows {
+      display: flex;
+      gap: 12px;
+    }
+    .scm-arrow {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .scm-arrow:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    /* ─── SKOPE SHOWCASE ─── */
+    .skope-section {
+      margin-bottom: 120px;
+    }
+    .skope-card {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 32px;
+      padding: 40px;
+    }
+    @media (min-width: 768px) {
+      .skope-card {
+        grid-template-columns: 1.1fr 0.9fr;
+      }
+    }
+
+    .skope-info h3 {
+      font-family: 'Sora', sans-serif;
+      font-size: 26px;
+      font-weight: 800;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, #fff, var(--violet));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .skope-info p {
+      font-size: 14.5px;
+      color: var(--muted);
+      margin-bottom: 24px;
+      line-height: 1.7;
+    }
+
+    .skope-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 32px;
+    }
+    .skope-tag {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11.5px;
+      color: var(--muted);
+    }
+
+    .skope-metrics {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      align-content: center;
+    }
+
+    .metric-box {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px;
+      text-align: center;
+    }
+    .metric-val {
+      font-family: 'Sora', sans-serif;
+      font-size: 28px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+    .metric-lbl {
+      font-size: 11px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* Footer */
+    footer {
+      padding: 60px 0;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    footer a {
+      color: var(--violet);
+      text-decoration: none;
+    }
+
+    /* Custom Scrollbar for Terminal */
+    .terminal-body::-webkit-scrollbar {
+      width: 4px;
+    }
+    .terminal-body::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .terminal-body::-webkit-scrollbar-thumb {
+      background: rgba(139, 92, 246, 0.3);
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Orbs & Grid -->
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="grid-overlay"></div>
+
+  <!-- Hero Header -->
+  <header>
+    <div class="container">
+      <div class="badge-vibe">⚡ Vibe Coder & Builder</div>
+      <h1>Anurag Tiwary</h1>
+      <p class="subtitle">BBA Operations candidate specializing in Strategy, Procure-to-Pay processes, and deploying AI-augmented automated systems.</p>
+      
+      <div class="social-links">
+        <a href="https://linkedin.com/in/anurag-tiwary" target="_blank" class="btn btn-primary">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          LinkedIn
+        </a>
+        <a href="mailto:off.anuragtiwary@gmail.com" class="btn btn-secondary">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          Email Me
+        </a>
+        <a href="https://github.com/anuragggg2004" target="_blank" class="btn btn-secondary">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+          GitHub
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Interactive Terminal -->
+  <section class="terminal-section">
+    <div class="container">
+      <h2 class="section-title"><span>$</span> query --resume</h2>
+      
+      <div class="terminal-window">
+        <div class="terminal-header">
+          <div class="terminal-dots">
+            <div class="terminal-dot td-red"></div>
+            <div class="terminal-dot td-yellow"></div>
+            <div class="terminal-dot td-green"></div>
+          </div>
+          <div class="terminal-title">anurag@anuraggg.tech: ~</div>
+          <div style="width: 52px;"></div>
+        </div>
+        
+        <div class="terminal-body" id="terminalBody">
+          <div class="terminal-output">
+            <span class="cli-header">Welcome to Anurag's Interactive CLI Portfolio! (v2.0)</span>
+            Type <span class="cli-cmd">help</span> to view available resume queries.
+          </div>
+          
+          <div class="terminal-input-line">
+            <span class="terminal-prompt">anurag@portfolio:~$</span>
+            <input type="text" class="terminal-input-field" id="terminalInput" autofocus />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Welspun SCM P2P Slider -->
+  <section class="scm-section" id="scmSection">
+    <div class="container">
+      <h2 class="section-title">📦 Procurement <span>&</span> P2P Workflow</h2>
+      
+      <div class="scm-slider-container glass-card">
+        <div class="scm-track" id="scmTrack">
+          
+          <!-- Step 1 -->
+          <div class="scm-step">
+            <div class="scm-details">
+              <span class="step-num">Step 01 / Procure-to-Pay</span>
+              <h3>Purchase Requisitions</h3>
+              <p>Liaised actively between procurement, finance, and logistics teams at Welspun Enterprises to coordinate onboarding and review time-sensitive requisitions.</p>
+              <ul>
+                <li>Ensured workflow continuity under tight logistics schedules.</li>
+                <li>Reduced communication delays and process blockers between divisions.</li>
+                <li>Audited requirements templates before onboarding vendor assets.</li>
+              </ul>
+            </div>
+            <div class="scm-stats">
+              <span class="stat-title">Internship Performance</span>
+              <span class="stat-val">Zero</span>
+              <span class="stat-desc">documentation errors over P2P cycles</span>
+            </div>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="scm-step">
+            <div class="scm-details">
+              <span class="step-num">Step 02 / Procure-to-Pay</span>
+              <h3>Supplier Performance Evaluation</h3>
+              <p>Reviewed vendor datasets to design evaluation indexes, helping shortlist logistics providers and supporting strategic cost-control decisions.</p>
+              <ul>
+                <li>Analyzed logistics delivery timelines.</li>
+                <li>Built dynamic comparison indexes using MS Excel pivots.</li>
+                <li>Contributed directly to procurement cost-saving metrics.</li>
+              </ul>
+            </div>
+            <div class="scm-stats">
+              <span class="stat-title">Analytics Skill</span>
+              <span class="stat-val">Pivots & VLOOKUP</span>
+              <span class="stat-desc">used to model supplier rankings</span>
+            </div>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="scm-step">
+            <div class="scm-details">
+              <span class="step-num">Step 03 / Procure-to-Pay</span>
+              <h3>SAP MM Operations</h3>
+              <p>Executed Purchase Order (PO) processing and tracked transactional operations using SAP Material Management (MM) flows.</p>
+              <ul>
+                <li>Created and verified purchase order entries.</li>
+                <li>Monitored material codes, descriptions, and cost-centers.</li>
+                <li>Maintained system logs to match strict internal auditing criteria.</li>
+              </ul>
+            </div>
+            <div class="scm-stats">
+              <span class="stat-title">Tech Platform</span>
+              <span class="stat-val">SAP MM</span>
+              <span class="stat-desc">hands-on ERP workflows and transaction screens</span>
+            </div>
+          </div>
+
+          <!-- Step 4 -->
+          <div class="scm-step">
+            <div class="scm-details">
+              <span class="step-num">Step 04 / Procure-to-Pay</span>
+              <h3>Goods Receipt & Audit Compliance</h3>
+              <p>Supported standard Goods Receipt (GR) reconciliations, checking invoice receipts and maintaining audit-ready procurement logs.</p>
+              <ul>
+                <li>Liaised with site managers to log physical receipts.</li>
+                <li>Audited ledger entries against delivery documents.</li>
+                <li>Achieved 100% compliance markers with internal financial checks.</li>
+              </ul>
+            </div>
+            <div class="scm-stats">
+              <span class="stat-title">Operations Accuracy</span>
+              <span class="stat-val">100% Audit</span>
+              <span class="stat-desc">compliance scored across all logged items</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Slider Controls -->
+        <div class="scm-controls">
+          <div class="scm-dots">
+            <div class="scm-dot active" onclick="gotoStep(0)"></div>
+            <div class="scm-dot" onclick="gotoStep(1)"></div>
+            <div class="scm-dot" onclick="gotoStep(2)"></div>
+            <div class="scm-dot" onclick="gotoStep(3)"></div>
+          </div>
+          <div class="scm-arrows">
+            <button class="scm-arrow" onclick="prevStep()">←</button>
+            <button class="scm-arrow" onclick="nextStep()">→</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Skope Showcase -->
+  <section class="skope-section">
+    <div class="container">
+      <h2 class="section-title">🔮 Project <span>Spotlight</span>: Skope</h2>
+      
+      <div class="skope-card glass-card">
+        <div class="skope-info">
+          <h3>Skope — AI Career Discovery</h3>
+          <p>As a solo founder, I designed and built an AI-powered diagnostic and college mapping platform for Indian Class 12 students. Recognizing that standard career counseling in India is generic, Skope uses adaptive AI interviews to output brutally honest, personalized roadmap reports.</p>
+          
+          <div class="skope-tags">
+            <span class="skope-tag">#Node.js</span>
+            <span class="skope-tag">#Express</span>
+            <span class="skope-tag">#GeminiAPI</span>
+            <span class="skope-tag">#React</span>
+            <span class="skope-tag">#VibeCoding</span>
+          </div>
+          
+          <a href="https://github.com/anuragggg2004/skope" target="_blank" class="btn btn-primary">
+            Explore Code
+          </a>
+        </div>
+        
+        <div class="skope-metrics">
+          <div class="metric-box">
+            <div class="metric-val">600+</div>
+            <div class="metric-lbl">Beta Followers</div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-val">8 Question</div>
+            <div class="metric-lbl">Adaptive Diagnostic</div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-val">100%</div>
+            <div class="metric-lbl">Vibe Coded via AI</div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-val">15 / 15</div>
+            <div class="metric-lbl">Colleges & Courses</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>Built with 💜 by Anurag Tiwary | Hosted at <a href="https://anuraggg.tech">anuraggg.tech</a></p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    // =============================================
+    // TERMINAL FUNCTIONALITY
+    // =============================================
+    const terminalBody = document.getElementById('terminalBody');
+    const terminalInput = document.getElementById('terminalInput');
+    
+    // Command history
+    const commandResponses = {
+      help: `Available commands:
+  <span class="cli-cmd">experience</span>  - Displays professional internships & founder history
+  <span class="cli-cmd">skills</span>      - Lists Operations, SCM, and AI development stack
+  <span class="cli-cmd">projects</span>    - Showcase of custom builds (Skope, n8n automations, Excel dashboards)
+  <span class="cli-cmd">education</span>   - BBA academic details at Lloyd Business School
+  <span class="cli-cmd">vibe-code</span>   - Prints the vibe coding philosophy
+  <span class="cli-cmd">clear</span>       - Clears console screen`,
+      experience: `<span class="cli-header">WELSPUN ENTERPRISES LTD</span> | Supply Chain Intern | Noida | Jul 2024 - Aug 2024
+  - Executed procurement tasks across P2P cycles.
+  - Used SAP MM to track vendor onboarding, PO creation, and goods receipts.
+  - Shortlisted logistics vendors by analyzing performance datasets.
+  
+<span class="cli-header">FOUNDER'S FEED</span> | Founder & Content Strategist | Aug 2024 - Nov 2024
+  - Created storytelling content for early-stage startup founders.
+  - Scaled brand from 0 to 600+ organic followers in 90 days.
+  - Achieved +25% post-level engagement increase.
+  
+<span class="cli-header">TARE ZAMEEN FOUNDATION</span> | Fundraising Intern | Oct 2023 - Nov 2023
+  - Structured micro-donation outreach campaigns for 300+ underserved kids.`,
+      skills: `<span class="cli-header">OPERATIONS & SCM</span>:
+  Procure-to-Pay (P2P), SAP MM, Vendor Onboarding, PO Processing, Supplier Evaluation, Inventory Concepts, Cost Control.
+
+<span class="cli-header">VIBE CODING & TECH</span>:
+  n8n Automation, Gemini API, OpenAI API, Node.js, Express, JavaScript, Tailwind CSS, Vercel, Render.
+
+<span class="cli-header">ANALYTICS & CORE BUSINESS</span>:
+  MS Excel (Pivot Tables, VLOOKUP, Dashboards), Data Analysis, Strategic Communication, Content Strategy, Brand Storytelling.`,
+      projects: `<span class="cli-header">1. SKOPE (AI Career Navigator)</span>
+  - Conversational diagnostic portal for Class 12 students.
+  - Node.js, Express backend, Gemini API, custom frontend, Netlify waitlist deployment.
+  
+<span class="cli-header">2. AI RESUME SCREENING PIPELINE</span>
+  - End-to-end automations built for 48h hackathon.
+  - Ingests candidates from Google Forms, filters via Gemini, saves score matrix to Google Sheets.
+  - Powered by n8n.
+  
+<span class="cli-header">3. ROAD ACCIDENT ANALYSIS DASHBOARD</span>
+  - Excel dashboard compiling road accident stats.
+  - Uses dynamic charts, slicers, and data formatting.`,
+      education: `<span class="cli-header">LLOYD BUSINESS SCHOOL</span> | Greater Noida, UP
+  - Bachelor of Business Administration (BBA) | Aug 2023 - Jun 2026 (Expected)
+  - Coursework: Strategic Management, SCM, Operations Research, Financial Accounting.
+  
+<span class="cli-header">APEEJAY SCHOOL</span> | Kolkata, WB
+  - CBSE Class XII (Commerce Stream) | Graduated: May 2023
+  - Coursework: Financial Accounting, Economics, Business Studies.`,
+      "vibe-code": `  <span class="cli-header">THE VIBE CODING MANIFESTO:</span>
+  
+  ┌────────────────────────────────────────────────────────┐
+  │ "I don't need a CS degree to build platforms.          │
+  │  I compile thoughts into prompt declarations, and let │
+  │  Claude compile them to production JavaScript."        │
+  └────────────────────────────────────────────────────────┘
+  
+  - No formal coding classes? No problem.
+  - Prompts are the new compilers.
+  - Focus on product, operations, and scaling. Let AI run the syntax.`
+    };
+
+    terminalInput.addEventListener('keydown', function(event) {
+      if (event.key === 'Enter') {
+        const inputVal = terminalInput.value.trim();
+        const cmd = inputVal.toLowerCase();
+        
+        // Create past prompt log
+        const logLine = document.createElement('div');
+        logLine.innerHTML = `<span class="terminal-prompt">anurag@portfolio:~$</span> ${inputVal}`;
+        terminalBody.insertBefore(logLine, terminalInput.parentElement);
+        
+        // Handle command
+        if (cmd === 'clear') {
+          // Clear all except input
+          const lines = Array.from(terminalBody.children);
+          lines.forEach(line => {
+            if (line !== terminalInput.parentElement) {
+              line.remove();
+            }
+          });
+        } else if (cmd !== '') {
+          const responseDiv = document.createElement('div');
+          responseDiv.className = 'terminal-output';
+          if (commandResponses[cmd]) {
+            responseDiv.innerHTML = commandResponses[cmd];
+          } else {
+            responseDiv.innerHTML = `command not found: <span class="cli-warning">${inputVal}</span>. Type <span class="cli-cmd">help</span> for a list of queries.`;
+          }
+          terminalBody.insertBefore(responseDiv, terminalInput.parentElement);
+        }
+        
+        // Reset input & scroll to bottom
+        terminalInput.value = '';
+        terminalBody.scrollTop = terminalBody.scrollHeight;
+      }
+    });
+
+    // Auto-focus terminal on click anywhere inside window
+    document.querySelector('.terminal-window').addEventListener('click', () => {
+      terminalInput.focus();
+    });
+
+
+    // =============================================
+    // SCM SLIDER DYNAMICS
+    // =============================================
+    let currentStepIndex = 0;
+    const scmTrack = document.getElementById('scmTrack');
+    const dots = document.querySelectorAll('.scm-dot');
+
+    function updateSlider() {
+      scmTrack.style.transform = `translateX(-${currentStepIndex * 25}%)`;
+      dots.forEach((dot, idx) => {
+        if (idx === currentStepIndex) {
+          dot.classList.add('active');
+        } else {
+          dot.classList.remove('active');
+        }
+      });
+    }
+
+    function nextStep() {
+      currentStepIndex = (currentStepIndex + 1) % 4;
+      updateSlider();
+    }
+
+    function prevStep() {
+      currentStepIndex = (currentStepIndex - 1 + 4) % 4;
+      updateSlider();
+    }
+
+    function gotoStep(index) {
+      currentStepIndex = index;
+      updateSlider();
+    }
+
+    // Auto slide every 10 seconds
+    setInterval(nextStep, 10000);
+  </script>
+</body>
+</html>
