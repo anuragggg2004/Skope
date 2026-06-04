@@ -1,7 +1,7 @@
 # Hey there, I'm Anurag Tiwary! 👋
 
 <div align="center">
-  <img src="https://readme-typing-svg.herokuapp.com?font=Sora&weight=700&size=24&duration=3000&pause=1000&color=6C63FF&center=true&vCenter=true&width=650&height=50&lines=BBA+Operations+%26+Strategy;Scm+Intern+%40+Welspun;Vibe+Coder+%26+Builder;Founder+%40+Skope" alt="Typing SVG" />
+  <img src="https://readme-typing-svg.herokuapp.com?font=Sora&weight=700&size=24&duration=3000&pause=1000&color=9b8eff&center=true&vCenter=true&width=650&height=50&lines=BBA+Operations+%26+Strategy;Scm+Intern+%40+Welspun;Vibe+Coder+%26+Builder;Founder+%40+Skope" alt="Typing SVG" />
 </div>
 
 <p align="center">
@@ -12,89 +12,102 @@
 
 ---
 
-### 💼 About Me
+### 🧠 My Vibe: BBA by Day, Vibe Coding by Night
 
-I am a BBA candidate (2023–2026) at **Lloyd Business School** specializing in **Operations & Strategy**. I call myself a **Vibe Coder**—I don't have a formal software engineering degree, but I use AI-augmented development (Claude, GitHub Copilot, n8n) to build, automate, and scale real-world projects from scratch.
+I’m a BBA candidate (2023–2026) at **Lloyd Business School** specializing in **Operations & Strategy** who realized that waitlists and MVPs shouldn't wait for developers. I'm a **Vibe Coder**—I don't compile code, I compile prompts. I use AI (Claude, Copilot, n8n) to build, launch, and automate systems.
 
-*   ✈️ **Operations & SCM**: Procurement intern experience at **Welspun Enterprises Ltd**, running P2P, vendor onboarding, and purchase orders in **SAP MM**.
-*   🚀 **Builder Mindset**: Shipped **Skope** (AI career finder for Gen Z) and scaled **Founder's Feed** (digital brand) from 0 to 600+ followers in under 90 days.
-*   🤖 **AI & Automation**: Building workflows using **n8n**, the **Gemini/Claude APIs**, and no-code tools to automate business operations.
+```text
+  ┌──────────────────────────────────────────────────────────┐
+  │  "I write prompts, not bugs. Claude writes code,         │
+  │   I approve the vibes. We are not the same."             │
+  └──────────────────────────────────────────────────────────┘
+```
+
+*   📦 **Operations & SCM**: Procurement intern at **Welspun Enterprises Ltd**, processing P2P workflows and Purchase Orders in **SAP MM**.
+*   ⚡ **Waitlist Shipping**: Shipped **Skope** (AI Career Discovery) with zero prior software engineering training by prompting Claude to write the React frontend & Express backend.
+*   🤖 **AI Automation**: Built an automated **AI Resume Screener** using **n8n** and **Gemini API** in 48 hours just to see if I could.
 
 ---
 
-### 🛠️ My Skill Matrix
+### 🛠️ The Vibe Coder Stack
 
 <table>
   <tr>
     <td valign="top" width="50%">
-      <h4>📦 Operations & Supply Chain</h4>
-      <img src="https://img.shields.io/badge/SAP_MM_/_ERP-008FD3?style=flat-square&logo=sap&logoColor=white" alt="SAP MM" />
-      <img src="https://img.shields.io/badge/Procure--to--Pay_(P2P)-232F3E?style=flat-square" alt="P2P" />
-      <img src="https://img.shields.io/badge/Vendor_Management-4B0082?style=flat-square" alt="Vendor Management" />
-      <br/>
-      <img src="https://img.shields.io/badge/Cost_Control-2E8B57?style=flat-square" alt="Cost Control" />
-      <img src="https://img.shields.io/badge/Supplier_Evaluation-D2691E?style=flat-square" alt="Supplier Evaluation" />
+      <h4>🧠 AI Co-Founders & Prompters</h4>
+      <img src="https://img.shields.io/badge/Claude_3.5_Sonnet-D97706?style=flat-square&logo=anthropic&logoColor=white" alt="Claude" />
+      <img src="https://img.shields.io/badge/GitHub_Copilot-181717?style=flat-square&logo=githubcopilot&logoColor=white" alt="Copilot" />
+      <img src="https://img.shields.io/badge/ChatGPT_Plus-10a37f?style=flat-square&logo=openai&logoColor=white" alt="ChatGPT" />
     </td>
     <td valign="top" width="50%">
-      <h4>⚡ Vibe Coding & Automation</h4>
+      <h4>⚡ No-Code / Automation Hub</h4>
       <img src="https://img.shields.io/badge/n8n_Automation-FF6C37?style=flat-square&logo=n8n&logoColor=white" alt="n8n" />
-      <img src="https://img.shields.io/badge/Gemini_API-4285F4?style=flat-square&logo=google-gemini&logoColor=white" alt="Gemini" />
-      <img src="https://img.shields.io/badge/OpenAI_API-412991?style=flat-square&logo=openai&logoColor=white" alt="OpenAI" />
-      <br/>
-      <img src="https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=node.js&logoColor=white" alt="Node" />
-      <img src="https://img.shields.io/badge/Express-000000?style=flat-square&logo=express&logoColor=white" alt="Express" />
-      <img src="https://img.shields.io/badge/HTML/CSS/JS-E34F26?style=flat-square&logo=html5&logoColor=white" alt="Web Dev" />
+      <img src="https://img.shields.io/badge/Google_Sheets_DB-217346?style=flat-square&logo=googlesheets&logoColor=white" alt="Sheets" />
+      <img src="https://img.shields.io/badge/Canva_AI_/_Design-00C4CC?style=flat-square&logo=canva&logoColor=white" alt="Canva" />
     </td>
   </tr>
   <tr>
     <td valign="top" width="50%">
-      <h4>📊 Business Analysis & Analytics</h4>
-      <img src="https://img.shields.io/badge/MS_Excel_(Pivots/VLOOKUP)-217346?style=flat-square&logo=microsoft-excel&logoColor=white" alt="Excel" />
-      <img src="https://img.shields.io/badge/Data_Dashboards-4682B4?style=flat-square" alt="Dashboards" />
-      <img src="https://img.shields.io/badge/Process_Improvement-8B0000?style=flat-square" alt="Process Improvement" />
+      <h4>📦 Operations Core</h4>
+      <img src="https://img.shields.io/badge/SAP_MM_/_ERP-008FD3?style=flat-square&logo=sap&logoColor=white" alt="SAP MM" />
+      <img src="https://img.shields.io/badge/MS_Excel_(Pivots_/_VLOOKUP)-217346?style=flat-square&logo=microsoftexcel&logoColor=white" alt="Excel" />
+      <img src="https://img.shields.io/badge/P2P_Procurement-4B0082?style=flat-square" alt="P2P" />
     </td>
     <td valign="top" width="50%">
-      <h4>📣 Strategy & Growth Marketing</h4>
-      <img src="https://img.shields.io/badge/Canva_AI-00C4CC?style=flat-square&logo=canva&logoColor=white" alt="Canva" />
-      <img src="https://img.shields.io/badge/Content_Strategy-FF69B4?style=flat-square" alt="Content" />
-      <img src="https://img.shields.io/badge/Social_Analytics-FF8C00?style=flat-square" alt="Social Analytics" />
+      <h4>💻 Languages I Prompt In</h4>
+      <img src="https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=node.js&logoColor=white" alt="Node" />
+      <img src="https://img.shields.io/badge/Express-000000?style=flat-square&logo=express&logoColor=white" alt="Express" />
+      <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black" alt="JS" />
+      <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=flat-square&logo=tailwindcss&logoColor=white" alt="Tailwind" />
     </td>
   </tr>
 </table>
 
 ---
 
-### 🌟 Featured Projects
+### 🌟 Project Spotlights
 
 <table>
   <tr>
     <td width="50%" valign="top">
       <h4>🏫 <a href="https://github.com/anuragggg2004/skope">Skope Platform</a></h4>
-      <p>An AI-powered diagnostic and college mapping platform that helps Class 12 students discover their career archetypes through adaptive questioning.</p>
-      <img src="https://img.shields.io/badge/Built_with-Node.js_/_Express-6C63FF?style=flat-square" alt="Node/Express" />
-      <img src="https://img.shields.io/badge/AI-Gemini_/_OpenAI-4F8EF7?style=flat-square" alt="AI APIs" />
+      <p>An AI-powered diagnostic and college mapping platform that helps Class 12 students discover their career archetypes. <i>(Zero formal coding classes; 100% build-and-learn vibe).</i></p>
+      <img src="https://img.shields.io/badge/Front--End-React_/_Tailwind-61DAFB?style=flat-square" alt="React" />
+      <img src="https://img.shields.io/badge/Back--End-Express_/_Gemini-FF6C37?style=flat-square" alt="Backend" />
     </td>
     <td width="50%" valign="top">
       <h4>⚡ <a href="#">AI Resume Screener</a></h4>
-      <p>An automated HR screening pipeline built for a 48-hour challenge, transforming Google Form uploads into structured candidate profiles in Google Sheets using n8n and the Gemini API.</p>
-      <img src="https://img.shields.io/badge/Built_with-n8n_Workflows-FF6C37?style=flat-square" alt="n8n" />
-      <img src="https://img.shields.io/badge/DB-Google_Sheets-217346?style=flat-square" alt="Sheets" />
+      <p>An automated HR screening pipeline built for a 48-hour challenge. Ingests candidate resumes, scores them with Gemini, and records results directly inside Google Sheets.</p>
+      <img src="https://img.shields.io/badge/Pipeline-n8n_Workflows-FF6C37?style=flat-square" alt="n8n" />
+      <img src="https://img.shields.io/badge/AI_Engine-Gemini_Flash-4285F4?style=flat-square" alt="Gemini" />
     </td>
   </tr>
   <tr>
     <td width="50%" valign="top">
-      <h4>📊 <a href="#">Excel Road Accident Analysis</a></h4>
-      <p>An interactive, data-driven dashboard analyzing regional traffic accident rates. Surface insights using Pivot Tables, dynamic slicers, and trend charts.</p>
-      <img src="https://img.shields.io/badge/Tool-MS_Excel-217346?style=flat-square&logo=microsoft-excel&logoColor=white" alt="Excel" />
+      <h4>📊 <a href="#">Excel Road Accident Dashboard</a></h4>
+      <p>Interactive Excel dashboard analyzing traffic safety patterns. Built with Pivot tables, slicers, and dynamic charts for structured reporting.</p>
+      <img src="https://img.shields.io/badge/Engine-MS_Excel-217346?style=flat-square" alt="Excel" />
     </td>
     <td width="50%" valign="top">
       <h4>📈 <a href="#">Founder's Feed</a></h4>
-      <p>Built a startup-storytelling and personal branding growth strategy brand, driving 40% organic reach expansion and scaling to 600+ multi-platform followers in under 3 months.</p>
-      <img src="https://img.shields.io/badge/Tool-Canva_AI-00C4CC?style=flat-square" alt="Canva" />
-      <img src="https://img.shields.io/badge/Data-Campaign_Analytics-green?style=flat-square" alt="Analytics" />
+      <p>Demonstrated growth brand scaling. Grew a digital content brand focused on early-stage startup founders to 600+ organic followers in 90 days.</p>
+      <img src="https://img.shields.io/badge/Domain-Growth_Strategy-green?style=flat-square" alt="Strategy" />
     </td>
   </tr>
 </table>
+
+---
+
+### 📊 Vibe Code Stats
+
+```text
+  ┌────────────────────────────────────────────────────────┐
+  │  ☕ Coffee Consumed:  [ ██████████████████ ] Stack    │
+  │  🤖 Claude Prompts:   [ ██████████████████ ] 9000+     │
+  │  🐛 Bugs Fixed:       [ ████████░░░░░░░░░░ ] By Claude │
+  │  ✨ Vibe level:       [ ██████████████████ ] Maximum   │
+  └────────────────────────────────────────────────────────┘
+```
 
 ---
 
@@ -118,5 +131,5 @@ I am a BBA candidate (2023–2026) at **Lloyd Business School** specializing in 
 ---
 
 <div align="center">
-  <sub>Built with 💜 and AI by Anurag · BBA Operations Candidate & Vibe Coder</sub>
+  <sub>Built with 💜 and Claude by Anurag · BBA Operations Candidate & Vibe Coder</sub>
 </div>
