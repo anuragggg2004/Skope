@@ -50,7 +50,7 @@ function StoryCard({ gradient, emoji, label, value, delay }) {
     <motion.div
       initial={{ opacity: 0, y: 15 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4, delay, ease: [0.16, 1, 0.3, 1] }}
+      transition={{ duration: 0.3, delay, ease: [0.16, 1, 0.3, 1] }}
       whileHover={{ y: -4, scale: 1.02 }}
       className="shrink-0 w-[140px] sm:w-[155px] rounded-[16px] p-[3px] cursor-default"
       style={{ background: gradient }}
@@ -774,7 +774,7 @@ export default function ResultPage() {
             <motion.div
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
+              transition={{ duration: 0.3, delay: 0.1 }}
               className="glass-card rounded-[24px] p-6 mb-6 border border-[rgba(108,99,255,0.15)] bg-gradient-to-br from-[rgba(108,99,255,0.05)] to-[rgba(79,142,247,0.05)]"
             >
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-4">
@@ -806,7 +806,7 @@ export default function ResultPage() {
             <motion.div
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.15 }}
+              transition={{ duration: 0.3, delay: 0.15 }}
               className="glass-card rounded-[20px] p-6 mb-6 border border-[rgba(108,99,255,0.06)] grid grid-cols-1 md:grid-cols-3 gap-6"
             >
               <div className="flex flex-col items-center justify-center text-center border-r border-[rgba(255,255,255,0.06)] pr-2 max-md:border-r-0 max-md:border-b max-md:pb-6 max-md:pr-0">
@@ -867,7 +867,7 @@ export default function ResultPage() {
             <motion.div
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
+              transition={{ duration: 0.3, delay: 0.2 }}
               className="glass-card rounded-[20px] p-6 mb-6 border border-[rgba(236,72,153,0.15)] bg-gradient-to-br from-[rgba(236,72,153,0.04)] to-transparent"
             >
               <div className="flex items-center gap-2.5 mb-4">

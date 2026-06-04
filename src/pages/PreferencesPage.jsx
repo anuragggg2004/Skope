@@ -173,8 +173,11 @@ export default function PreferencesPage() {
     }
 
     const interval = setInterval(() => {
+      // If API results have loaded, fast-forward the progress!
+      const stepIncrement = apiResultReceived ? 50 : 12;
+
       if (currentStep < 5) {
-        progressArr[currentStep] += 5 // 5% per 100ms -> 100% in 2.0s
+        progressArr[currentStep] += stepIncrement
         if (progressArr[currentStep] >= 100) {
           progressArr[currentStep] = 100
           if (currentStep < 4) {

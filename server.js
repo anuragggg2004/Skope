@@ -46,22 +46,21 @@ app.use(express.json())
 
 const PORT = process.env.PORT || 3000
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY
-const GEMINI_MODEL = 'gemini-2.5-flash'
-const GEMINI_ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_API_KEY}`
+const MODELS = ['gemini-2.5-flash', 'gemini-1.5-flash', 'gemini-1.5-pro']
 
 // Helper: fetch with retry on 429 (respects Gemini rate limits)
-async function fetchWithRetry(url, options, retries = 5) {
+async function fetchWithRetry(url, options, retries = 3) {
   for (let i = 0; i < retries; i++) {
     const response = await fetch(url, options)
     if (response.status === 429 && i < retries - 1) {
       // Try to parse Gemini's suggested retry delay
-      let waitMs = (i + 1) * 15000 // default: 15s, 30s, 45s, 60s
+      let waitMs = (i + 1) * 3000 // default: 3s, 6s
       try {
         const errBody = await response.clone().json()
         const retryDetail = errBody?.error?.details?.find(d => d['@type']?.includes('RetryInfo'))
         if (retryDetail?.retryDelay) {
           const parsed = parseInt(retryDetail.retryDelay)
-          if (parsed > 0) waitMs = (parsed + 2) * 1000 // add 2s buffer
+          if (parsed > 0) waitMs = (parsed + 1) * 1000 // add 1s buffer
         }
       } catch {}
       console.log(`Rate limited, retrying in ${Math.round(waitMs / 1000)}s (attempt ${i + 2}/${retries})...`)
@@ -70,6 +69,51 @@ async function fetchWithRetry(url, options, retries = 5) {
     }
     return response
   }
+}
+
+// Centralized runner that tries models in order if rate limited, quota over, or token limit exceeded
+async function callAIBase(payload) {
+  let lastError = null
+  for (const model of MODELS) {
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${GEMINI_API_KEY}`
+    console.log(`[AI] Attempting generation with model: ${model}`)
+    try {
+      const response = await fetchWithRetry(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+
+      if (!response.ok) {
+        const errText = await response.text()
+        console.error(`[AI] Model ${model} returned error status ${response.status}:`, errText)
+        lastError = new Error(`Model ${model} returned ${response.status}: ${errText}`)
+        continue // Try next model
+      }
+
+      const responseBody = await response.json()
+      if (!responseBody.candidates || responseBody.candidates.length === 0) {
+        console.error(`[AI] Model ${model} returned no candidates:`, JSON.stringify(responseBody))
+        lastError = new Error(`Model ${model} returned no candidates`)
+        continue // Try next model
+      }
+
+      const text = responseBody.candidates[0].content.parts[0].text
+      if (!text) {
+        console.error(`[AI] Model ${model} returned empty text:`, JSON.stringify(responseBody))
+        lastError = new Error(`Model ${model} returned empty text`)
+        continue // Try next model
+      }
+
+      console.log(`[AI] Successful response from model: ${model}`)
+      return text
+    } catch (err) {
+      console.error(`[AI] Fetch / network error on model ${model}:`, err.message)
+      lastError = err
+      // Try next model
+    }
+  }
+  throw lastError || new Error("All available Gemini models failed.")
 }
 
 // Reusable Gemini helper (single turn)
@@ -90,21 +134,7 @@ async function callAI(systemPrompt, userPrompt) {
       responseMimeType: 'application/json'
     }
   }
-
-  const response = await fetchWithRetry(GEMINI_ENDPOINT, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload)
-  })
-
-  if (!response.ok) {
-    const errText = await response.text()
-    console.error(`Gemini API error (${response.status}):`, errText)
-    throw new Error(`Gemini API returned ${response.status}: ${errText}`)
-  }
-
-  const responseBody = await response.json()
-  return responseBody.candidates[0].content.parts[0].text
+  return await callAIBase(payload)
 }
 
 // Reusable Gemini helper (single turn, plain text response)
@@ -124,21 +154,7 @@ async function callAIText(systemPrompt, userPrompt) {
       maxOutputTokens: 2000
     }
   }
-
-  const response = await fetchWithRetry(GEMINI_ENDPOINT, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload)
-  })
-
-  if (!response.ok) {
-    const errText = await response.text()
-    console.error(`Gemini API error (${response.status}):`, errText)
-    throw new Error(`Gemini API returned ${response.status}: ${errText}`)
-  }
-
-  const responseBody = await response.json()
-  return responseBody.candidates[0].content.parts[0].text
+  return await callAIBase(payload)
 }
 
 // Reusable Gemini helper for multi-turn chat
@@ -159,21 +175,7 @@ async function callAIChat(systemPrompt, messages) {
       maxOutputTokens: 2000
     }
   }
-
-  const response = await fetchWithRetry(GEMINI_ENDPOINT, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload)
-  })
-
-  if (!response.ok) {
-    const errText = await response.text()
-    console.error(`Gemini API error (${response.status}):`, errText)
-    throw new Error(`Gemini API returned ${response.status}`)
-  }
-
-  const responseBody = await response.json()
-  return responseBody.candidates[0].content.parts[0].text
+  return await callAIBase(payload)
 }
 
 // =============================================
@@ -321,14 +323,21 @@ NEVER:
 - Generic college praise without specific evidence
 
 COLLEGE SELECTION — STRICT RULES:
-Return EXACTLY 10 colleges with this mandatory mix:
-1. TWO famous/aspirational colleges realistic for their marks (IIT/NIT/BITS/DU top college). This is for parent confidence.
-2. TWO solid mid-tier colleges with proven placements but less brand name (Thapar, DAIICT, IIIT Hyderabad, PES, Manipal, VIT, Symbiosis, Christ, KIIT, UPES, etc.)
-3. FOUR genuine hidden gems — colleges that are genuinely excellent but most students have never heard of. These are NOT second choices. These are often BETTER choices.
-4. ONE unconventional option — a path most students in this situation would never think of but which fits them specifically.
+Return EXACTLY 15 colleges with this mandatory mix:
+1. THREE famous/aspirational colleges realistic for their marks (IIT/NIT/BITS/DU top college). This is for parent confidence.
+2. FOUR solid mid-tier colleges with proven placements but less brand name (Thapar, DAIICT, IIIT Hyderabad, PES, Manipal, VIT, Symbiosis, Christ, KIIT, UPES, etc.)
+3. FIVE genuine hidden gems — colleges that are genuinely excellent but most students have never heard of. These are NOT second choices. These are often BETTER choices.
+4. TWO unconventional options — a path most students in this situation would never think of but which fits them specifically.
 5. ONE 'you need to hear this' safety — the college they can realistically get into given their actual marks and budget.
 
-For hidden gems specifically, you MUST mark is_hidden_gem: true and include a reddit_verdict field. The reddit_verdict should be 1-2 sentences of what students actually say on Reddit/Quora about this place — the real insider opinion.
+For hidden gems specifically, you MUST mark is_hidden_gem: true and include a reddit_verdict field. The reddit_verdict should be 1 sentence of what students actually say on Reddit/Quora about this place — the real insider opinion.
+
+CRITICAL SPEED OPTIMIZATION RULES:
+- Keep all explanations extremely brief and concise.
+- For each college: "why_fits" must be exactly 1 short sentence, "caution" must be exactly 1 short sentence, and "reddit_verdict" must be exactly 1 short sentence.
+- For each course: "why_this_course" must be exactly 1 short sentence.
+- For each career: "why_it_fits" must be exactly 1 short sentence, "reality_check" must be exactly 1-2 short sentences, and "what_nobody_tells_you" must be exactly 1-2 short sentences.
+This ensures fast API response times while delivering exactly 15 colleges and 15 courses.
 
 YOUR EXPANDED KNOWLEDGE BASE:
 
@@ -427,13 +436,13 @@ Return this exact JSON structure:
   "careers": [
     {
       "title": "Career Title",
-      "why_it_fits": "explain how this career connects to a specific thing they said they care about",
+      "why_it_fits": "exactly 1 sentence explaining how this career connects to their interests",
       "entrance_exams": ["exam1", "exam2 — explain what this is and how hard it is compared to JEE if it is not widely known"],
       "earning_range": "realistic Indian market range (be honest, not optimistic)",
-      "reality_check": "the hard truth about this path for THIS student. Name the specific blocker or risk. Do not soften.",
+      "reality_check": "exactly 1-2 short sentences naming the blocker/risk. Do not soften.",
       "pros": ["Pro 1", "Pro 2"],
       "cons": ["Cons 1", "Cons 2"],
-      "what_nobody_tells_you": "Detailed 2-3 sentence inside scoop about what this career actually involves day-to-day."
+      "what_nobody_tells_you": "exactly 1-2 short sentences about what this career actually involves day-to-day."
     }
   ],
   "colleges": [
@@ -443,12 +452,12 @@ Return this exact JSON structure:
       "type": "IIT/NIT/Central Univ/Private/Deemed",
       "college_tier": "famous / mid-tier / hidden-gem / unconventional / realistic-safety",
       "annual_fee": "e.g. 2.5 Lakhs per year",
-      "why_fits": "2-3 sentences explaining specifically why THIS STUDENT should consider it. Reference their marks, budget, career interest, and geographic preference.",
-      "caution": "1-2 sentences naming the real downside or trade-off of this college for this student.",
+      "why_fits": "exactly 1 sentence explaining why this fits them based on marks, budget, and location.",
+      "caution": "exactly 1 sentence naming the real downside or trade-off.",
       "is_hidden_gem": false,
-      "reddit_verdict": "What students on Reddit/Quora actually say about this college. 1-2 sentences of real insider opinion. Not marketing copy.",
+      "reddit_verdict": "exactly 1 sentence insider opinion from Reddit/Quora. Not marketing copy.",
       "match_score": 92,
-      "match_reasons": ["Reason 1 why it fits", "Reason 2", "Reason 3"]
+      "match_reasons": ["Reason 1 why it fits", "Reason 2"]
     }
   ],
   "recommended_courses": [
@@ -457,7 +466,7 @@ Return this exact JSON structure:
       "offered_at": "College Name, City",
       "duration": "4 years",
       "ai_relevance": "AI-proof / AI-augmented / Traditional",
-      "why_this_course": "why this specific course fits this student's stated goals"
+      "why_this_course": "exactly 1 sentence why this specific course fits"
     }
   ],
   "hidden_courses": [
@@ -499,14 +508,14 @@ Return this exact JSON structure:
 }
 
 COLLEGE SELECTION — MANDATORY:
-Return EXACTLY 10 colleges with EXACTLY this mix:
-- 2 famous/aspirational (realistic for their marks)
-- 2 solid mid-tier with proven placements
-- 4 hidden gems the student has probably never heard of (mark is_hidden_gem: true)
-- 1 unconventional fit for their specific profile
+Return EXACTLY 15 colleges with EXACTLY this mix:
+- 3 famous/aspirational (realistic for their marks)
+- 4 solid mid-tier with proven placements
+- 5 hidden gems the student has probably never heard of (mark is_hidden_gem: true)
+- 2 unconventional fits for their specific profile
 - 1 realistic safety given their actual marks and budget
 
-Return exactly 3 careers, exactly 10 colleges, exactly 8 regular recommended_courses, exactly 5 hidden_courses, exactly 5 hidden_careers, exactly 2 emerging roles.`
+Return exactly 3 careers, exactly 15 colleges, exactly 15 regular recommended_courses, exactly 5 hidden_courses, exactly 5 hidden_careers, exactly 2 emerging roles.`
 
     const responseText = await callAI(systemPrompt, userPrompt)
     const cleaned = responseText.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim()
@@ -562,7 +571,9 @@ app.post('/api/what-if', async (req, res) => {
 The student wants to simulate a 'What-If' scenario: "${scenario}"
 
 Analyze this scenario specifically for this student. Re-evaluate their careers, colleges, recommended courses, and emerging roles based on this scenario.
-Return ONLY valid JSON in the exact same schema format as the original PathReport, reflecting ONLY the updated recommendations and calculations. Keep the archetype and profile summary, but customize them if needed to explain the shift. Ensure you return exactly 3 careers, exactly 10 colleges, exactly 8 regular recommended_courses, exactly 5 hidden_courses, exactly 5 hidden_careers, and exactly 2 emerging roles, all adjusted for the scenario.
+Return ONLY valid JSON in the exact same schema format as the original PathReport, reflecting ONLY the updated recommendations and calculations. Keep the archetype and profile summary, but customize them if needed to explain the shift. Ensure you return exactly 3 careers, exactly 15 colleges, exactly 15 regular recommended_courses, exactly 5 hidden_courses, exactly 5 hidden_careers, and exactly 2 emerging roles, all adjusted for the scenario.
+
+CRITICAL SPEED OPTIMIZATION: Keep all explanations extremely brief and concise. For each college, the "why_fits", "caution", and "reddit_verdict" must be exactly 1 short sentence. For each course, "why_this_course" must be exactly 1 short sentence.
 
 STUDENT ORIGINAL PATHREPORT:
 ${JSON.stringify(pathreport)}`
