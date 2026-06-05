@@ -98,7 +98,7 @@ export default function Navbar() {
 
               {/* Dropdown Menu */}
               {showDropdown && (
-                <div className="absolute right-0 top-12 w-64 glass-card rounded-[16px] p-4 bg-[#0f1320]/95 shadow-[0_10px_40px_rgba(0,0,0,0.5)] border border-[rgba(255,255,255,0.08)] z-50 animate-fadeUp">
+                <div className="absolute right-0 top-12 w-64 rounded-[16px] p-4 bg-[#0c1019] shadow-[0_10px_40px_rgba(0,0,0,0.65)] border border-[rgba(255,255,255,0.12)] z-50 animate-fadeUp">
                   {/* User Profile Summary */}
                   <div className="border-b border-[rgba(255,255,255,0.06)] pb-3 mb-3">
                     <p className="font-sora text-[13px] font-semibold text-white truncate">
