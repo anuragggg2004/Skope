@@ -113,7 +113,75 @@ async function callAIBase(payload) {
       // Try next model
     }
   }
-  throw lastError || new Error("All available Gemini models failed.")
+
+  // OpenRouter Fallback Integration
+  const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY
+  if (OPENROUTER_API_KEY) {
+    console.log(`[AI] All Gemini models failed or rate-limited. Activating OpenRouter fallback...`)
+    try {
+      // 1. Extract system instruction and messages from Gemini payload
+      const systemPrompt = payload.system_instruction?.parts?.[0]?.text || ""
+      const messages = []
+      
+      if (systemPrompt) {
+        messages.push({ role: 'system', content: systemPrompt })
+      }
+      
+      // Parse contents from Gemini schema to OpenAI schema
+      if (Array.isArray(payload.contents)) {
+        payload.contents.forEach(content => {
+          const role = content.role === 'model' ? 'assistant' : 'user'
+          const text = content.parts?.[0]?.text || ""
+          messages.push({ role, content: text })
+        })
+      }
+      
+      // 2. Build OpenRouter request payload
+      const openRouterModel = 'meta-llama/llama-3.3-70b-instruct:free'
+      const openRouterPayload = {
+        model: openRouterModel,
+        messages: messages,
+        temperature: payload.generationConfig?.temperature || 0.7
+      }
+      
+      // If original requested JSON response type, enforce it for OpenRouter too
+      if (payload.generationConfig?.responseMimeType === 'application/json') {
+        openRouterPayload.response_format = { type: 'json_object' }
+      }
+
+      console.log(`[AI] Querying OpenRouter model: ${openRouterModel}`)
+      const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${OPENROUTER_API_KEY}`,
+          'HTTP-Referer': 'https://anuraggg.tech',
+          'X-Title': 'Skope Platform'
+        },
+        body: JSON.stringify(openRouterPayload)
+      })
+
+      if (!response.ok) {
+        const errText = await response.text()
+        console.error(`[AI] OpenRouter API returned error status ${response.status}:`, errText)
+        throw new Error(`OpenRouter returned status ${response.status}: ${errText}`)
+      }
+
+      const responseBody = await response.json()
+      const text = responseBody.choices?.[0]?.message?.content
+      if (!text) {
+        throw new Error("Empty message returned from OpenRouter")
+      }
+
+      console.log(`[AI] Successful response from OpenRouter (${openRouterModel})`)
+      return text
+    } catch (openRouterErr) {
+      console.error(`[AI] OpenRouter fallback failed:`, openRouterErr.message)
+      lastError = new Error(`Both Gemini and OpenRouter failed. Last OpenRouter error: ${openRouterErr.message}`)
+    }
+  }
+
+  throw lastError || new Error("All available AI models (Gemini + OpenRouter) failed.")
 }
 
 // Reusable Gemini helper (single turn)
