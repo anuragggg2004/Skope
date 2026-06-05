@@ -104,7 +104,7 @@ export default function Navbar() {
                     <p className="font-sora text-[13px] font-semibold text-white truncate">
                       {user.displayName || 'Skope Explorer'}
                     </p>
-                    <p className="font-dm text-[11px] text-[rgba(240,242,255,0.4)] truncate mt-0.5">
+                    <p className="font-dm text-[11px] text-[rgba(240,242,255,0.65)] truncate mt-0.5">
                       {user.email}
                     </p>
                   </div>
@@ -115,7 +115,7 @@ export default function Navbar() {
                       <li>
                         <button
                           onClick={() => { setShowDropdown(false); navigate('/result') }}
-                          className="w-full text-left font-dm text-[13px] text-[rgba(240,242,255,0.7)] hover:text-white hover:bg-[rgba(255,255,255,0.04)] px-3 py-2 rounded-[8px] cursor-pointer transition-colors"
+                          className="w-full text-left font-dm text-[13px] text-[rgba(240,242,255,0.92)] hover:text-white hover:bg-[rgba(255,255,255,0.04)] px-3 py-2 rounded-[8px] cursor-pointer transition-colors"
                         >
                           📈 View PathReport
                         </button>
@@ -124,7 +124,7 @@ export default function Navbar() {
                     <li>
                       <button
                         onClick={() => { setShowDropdown(false); navigate('/form') }}
-                        className="w-full text-left font-dm text-[13px] text-[rgba(240,242,255,0.7)] hover:text-white hover:bg-[rgba(255,255,255,0.04)] px-3 py-2 rounded-[8px] cursor-pointer transition-colors"
+                        className="w-full text-left font-dm text-[13px] text-[rgba(240,242,255,0.92)] hover:text-white hover:bg-[rgba(255,255,255,0.04)] px-3 py-2 rounded-[8px] cursor-pointer transition-colors"
                       >
                         ⚡ New Diagnostic
                       </button>
@@ -132,7 +132,7 @@ export default function Navbar() {
                     <li>
                       <button
                         onClick={() => { setShowDropdown(false); navigate('/profile') }}
-                        className="w-full text-left font-dm text-[13px] text-[rgba(240,242,255,0.7)] hover:text-white hover:bg-[rgba(255,255,255,0.04)] px-3 py-2 rounded-[8px] cursor-pointer transition-colors"
+                        className="w-full text-left font-dm text-[13px] text-[rgba(240,242,255,0.92)] hover:text-white hover:bg-[rgba(255,255,255,0.04)] px-3 py-2 rounded-[8px] cursor-pointer transition-colors"
                       >
                         👤 My Profile
                       </button>
@@ -140,7 +140,7 @@ export default function Navbar() {
                     <li>
                       <button
                         onClick={() => { setShowDropdown(false); navigate('/share') }}
-                        className="w-full text-left font-dm text-[13px] text-[rgba(240,242,255,0.7)] hover:text-white hover:bg-[rgba(255,255,255,0.04)] px-3 py-2 rounded-[8px] cursor-pointer transition-colors"
+                        className="w-full text-left font-dm text-[13px] text-[rgba(240,242,255,0.92)] hover:text-white hover:bg-[rgba(255,255,255,0.04)] px-3 py-2 rounded-[8px] cursor-pointer transition-colors"
                       >
                         📤 Share Skope
                       </button>
