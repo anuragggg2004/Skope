@@ -1,0 +1,162 @@
+{
+  "colleges": [
+    {
+      "keywords": ["iit bombay", "iitb", "iit b"],
+      "name": "Indian Institute of Technology, Bombay (IIT Bombay)",
+      "fees": "Tuition fee is around ₹2.2 - 2.5 Lakhs per year. Total 4-year B.Tech cost including hostel, mess, and campus amenities is around ₹10-12 Lakhs.",
+      "placements": "Average package overall is ₹21.8 LPA. Computer Science (CSE) average is around ₹28 LPA. Design (B.Des) average package is around ₹16 LPA.",
+      "admission": "B.Tech requires JEE Advanced rank. B.Des requires UCEED rank.",
+      "caution": "Extreme academic competition. Relative grading means you are constantly compared to peers. The workload is heavy and pressure can build up.",
+      "reddit_verdict": "Unmatched brand status, startup network, and cultural life in India, but requires high mental resilience."
+    },
+    {
+      "keywords": ["iit delhi", "iitd", "iit d"],
+      "name": "Indian Institute of Technology, Delhi (IIT Delhi)",
+      "fees": "Tuition is ₹2.2 Lakhs per year. Total 4-year B.Tech cost including accommodation is around ₹10-11 Lakhs.",
+      "placements": "Average B.Tech package is ₹20-22 LPA. Heavy placement presence from global giants like Google, Microsoft, McKinsey, and top hedge funds.",
+      "admission": "B.Tech requires a top rank in JEE Advanced. B.Des requires a top rank in UCEED.",
+      "caution": "Highly crowded, intense peer pressure, and Delhi's winter air pollution can be a challenge.",
+      "reddit_verdict": "Excellent tech ecosystem, strong entrepreneurial support, and prime location for networking."
+    },
+    {
+      "keywords": ["nid ahmedabad", "nid", "nids"],
+      "name": "National Institute of Design, Ahmedabad (NID Ahmedabad)",
+      "fees": "Approx. ₹3.8 Lakhs per year. Total 4-year B.Des cost around ₹15-16 Lakhs.",
+      "placements": "Average package ranges from ₹8-12 LPA. Top interaction design/UX packages can go up to ₹20-25 LPA.",
+      "admission": "NID Design Aptitude Test (DAT) - Prelims and Mains (Studio Test).",
+      "caution": "Extremely selective (only ~100-125 general seats in B.Des nationwide). It is a pure design school, not a tech school; there is no coding or CS in the syllabus.",
+      "reddit_verdict": "The gold standard for design in India. If you want pure product design or animation, NID has no equal."
+    },
+    {
+      "keywords": ["bits pilani", "bits", "bits goa", "bits hyderabad"],
+      "name": "Birla Institute of Technology and Science, Pilani (Pilani, Goa, and Hyderabad Campuses)",
+      "fees": "Fees are high, approx. ₹5.5 - 6 Lakhs per year. Total 4-year B.Tech cost is around ₹24-26 Lakhs.",
+      "placements": "Average package is ₹18-20 LPA overall across campuses. CS branch average is ₹25-27 LPA. Strongest startup culture in India alongside IITs.",
+      "admission": "Requires a high score in BITSAT exam.",
+      "caution": "No reservation quota (100% merit-based), resulting in very high academic cutoff peers. The fast-paced semester fee hikes are a common student grievance.",
+      "reddit_verdict": "Excellent private alternative to IITs. The zero-attendance policy allows students freedom to build startups and side-projects."
+    },
+    {
+      "keywords": ["symbiosis", "sid", "sid pune"],
+      "name": "Symbiosis Institute of Design, Pune (SID Pune)",
+      "fees": "Approx. ₹4.2 Lakhs per year (tuition) + hostel/mess of ₹1.5-2 Lakhs per year. Total 4-year B.Des cost around ₹23-25 Lakhs.",
+      "placements": "Average package is ₹6-8 LPA. Top placements reach ₹14-16 LPA, mostly in UX/UI design, graphic design, and user research.",
+      "admission": "Symbiosis Entrance Exam for Design (SEED) + Portfolio Review and Personal Interview.",
+      "caution": "Very high fees for a private design institute. Placement outcomes depend heavily on the strength of your personal design portfolio rather than the college brand name alone.",
+      "reddit_verdict": "Great campus infrastructure and curriculum for UX/UI design if budget is not an obstacle."
+    },
+    {
+      "keywords": ["vit vellore", "vit", "vit chennai"],
+      "name": "Vellore Institute of Technology (VIT)",
+      "fees": "Structured in 5 categories based on exam rank. Category 1 is ₹2 Lakhs/year; Category 5 is ₹5 Lakhs/year. Hostel is ₹1-1.5 Lakhs/year.",
+      "placements": "Average package is ₹8-9 LPA. Computer Science (CSE) average is around ₹10-12 LPA. Recruiting is massive with 800+ companies visiting.",
+      "admission": "VITEEE entrance exam rank.",
+      "caution": "Massive student intake (thousands in CS alone) leads to extreme competition during placements. Campus rules are famously strict (strict curfews, biometrics, rules for interaction).",
+      "reddit_verdict": "A reliable backup option with decent placement statistics, but feels like an extension of school rules with strict supervision."
+    },
+    {
+      "keywords": ["manipal", "mit manipal", "mit"],
+      "name": "Manipal Institute of Technology (MIT Manipal)",
+      "fees": "Approx. ₹4.5 - 5 Lakhs per year. Total 4-year B.Tech cost is around ₹20-22 Lakhs including hostel.",
+      "placements": "Average package is ₹10-12 LPA. CSE and IT branch averages are around ₹14-16 LPA.",
+      "admission": "Manipal Entrance Test (MET).",
+      "caution": "High cost of living and expensive tuition. The student lifestyle and social options in Manipal require self-discipline to avoid distractions from studies.",
+      "reddit_verdict": "Phenomenal campus life, liberal culture, and strong tech/coding clubs. Great placement opportunities for CS/IT branches."
+    },
+    {
+      "keywords": ["shiv nadar", "snu", "snu delhi"],
+      "name": "Shiv Nadar University, Delhi NCR",
+      "fees": "Approx. ₹4.5 Lakhs per year. Total 4-year B.Tech cost is ₹18-20 Lakhs.",
+      "placements": "Average package is ₹10-12 LPA. CS branch average is around ₹15 LPA.",
+      "admission": "SNUSAT entrance exam and subsequent personal interview.",
+      "caution": "Located in Dadri/Greater Noida, which is relatively isolated from central Delhi. Strict academic rigor and grade standards.",
+      "reddit_verdict": "A hidden gem. Great research funding, top-tier lab facilities, and highly flexible multidisciplinary majors/minors (like B.Tech with Design minor)."
+    },
+    {
+      "keywords": ["ashoka university", "ashoka"],
+      "name": "Ashoka University, Sonipat",
+      "fees": "Approx. ₹10 Lakhs per year including residence. Note: Generous need-based financial aid is provided to over 45% of students.",
+      "placements": "Average package is ₹10-12 LPA. Recruiting is strong from global consulting firms (McKinsey, Bain, BCG), analytics companies, and tech startups.",
+      "admission": "Ashoka Aptitude Test (AAT), essays, and personal interview.",
+      "caution": "Not a traditional engineering or vocational college. The focus is on Liberal Arts, critical thinking, and multidisciplinary education.",
+      "reddit_verdict": "Top-tier humanities and liberal arts network in India, offering Ivy-League style academic rigor and networking."
+    },
+    {
+      "keywords": ["plaksha", "plaksha university"],
+      "name": "Plaksha University, Mohali",
+      "fees": "Approx. ₹8-9 Lakhs per year. Scholarships are available based on merit and financial need.",
+      "placements": "Recent graduating batches have average packages around ₹12-14 LPA. Strong recruiting ties with modern tech firms and startups.",
+      "admission": "Comprehensive application review, writing test, and personal interview.",
+      "caution": "Very new university (founded in 2021). The brand name is still establishing itself among traditional public sector and conservative corporate employers.",
+      "reddit_verdict": "Highly modern, interdisciplinary engineering curriculum (major focus on AI, Data Science, and Robotics) backed by top Indian business leaders."
+    },
+    {
+      "keywords": ["tiss", "tiss mumbai"],
+      "name": "Tata Institute of Social Sciences, Mumbai (TISS)",
+      "fees": "Extremely low fees, approx. ₹60,000 - 1 Lakh per year including hostel accommodations.",
+      "placements": "Famous for its MA in Human Resource Management (equivalent to MBA) with average packages around ₹25-27 LPA. Undergraduate programs average ₹6-8 LPA.",
+      "admission": "CUET scores or specific university test.",
+      "caution": "Historically politically active campus with a strong focus on social sciences and activism. Extremely few undergraduate seats.",
+      "reddit_verdict": "Incredible value for money. The absolute best college in India for Human Resources and Development Studies."
+    },
+    {
+      "keywords": ["nift", "nift delhi"],
+      "name": "National Institute of Fashion Technology, Delhi (NIFT Delhi)",
+      "fees": "Approx. ₹2.8 - 3 Lakhs per year. Total 4-year B.Des cost is around ₹12-13 Lakhs.",
+      "placements": "Average package is ₹5-8 LPA. Top fashion brands, retail companies, and design houses recruit here.",
+      "admission": "NIFT Entrance Exam (consisting of General Ability Test, Creative Ability Test, and Situation Test).",
+      "caution": "Workloads are intense with daily hands-on submissions, model building, and fashion show deadlines. Starting packages in fashion retail can be low compared to tech fields.",
+      "reddit_verdict": "The premier fashion and communication design institute in India, but requires a strong portfolio and patience to grow your salary."
+    }
+  ],
+  "exams": [
+    {
+      "keywords": ["jee main", "jee", "jeemains"],
+      "name": "Joint Entrance Examination (JEE) Main",
+      "eligibility": "Class 12 pass with Physics, Chemistry, and Mathematics (PCM). Max 3 attempts in consecutive years.",
+      "structure": "3-hour computer-based test containing MCQs and Numerical Value questions in Physics, Chemistry, and Math (300 marks total).",
+      "difficulty": "Extremely high competition due to sheer numbers. Over 14 Lakh students appear for ~55,000 seats across NITs, IIITs, and government colleges.",
+      "colleges_accepting": "All National Institutes of Technology (NITs), Indian Institutes of Information Technology (IIITs), and state government engineering colleges."
+    },
+    {
+      "keywords": ["jee advanced", "jee adv", "jeeadvanced"],
+      "name": "Joint Entrance Examination (JEE) Advanced",
+      "eligibility": "Must be in the top 2.5 Lakh rank holders of JEE Main. Max 2 attempts in consecutive years.",
+      "structure": "Two mandatory papers of 3 hours each on the same day. Highly unpredictable pattern, multiple-correct questions, list-matches, and negative marking.",
+      "difficulty": "One of the toughest exams globally. Requires deep conceptual logic, analytical deduction, and strong advanced calculus. Only ~17,000 total seats in IITs.",
+      "colleges_accepting": "All 23 Indian Institutes of Technology (IITs) and Rajiv Gandhi Institute of Petroleum Technology (RGIPT)."
+    },
+    {
+      "keywords": ["uceed", "uceed exam"],
+      "name": "Undergraduate Common Entrance Examination for Design (UCEED)",
+      "eligibility": "Class 12 pass in any stream (Science, Commerce, or Arts). Max 2 attempts in consecutive years.",
+      "structure": "Part A (2 hours, Computer-based): Visualization, spatial ability, observation, design concepts. Part B (1 hour, Paper-based): Drawing and design sketching.",
+      "difficulty": "Low conceptual math/physics load, but highly competitive. Only ~150-180 general seats are available in the top IIT B.Des programs, making the drawing evaluation cutoff very selective.",
+      "colleges_accepting": "IIT Bombay, IIT Delhi, IIT Guwahati, IIT Hyderabad, IIITDM Jabalpur, and several private design colleges (as partners)."
+    },
+    {
+      "keywords": ["nid dat", "nid exam", "nid entrance"],
+      "name": "National Institute of Design - Design Aptitude Test (NID DAT)",
+      "eligibility": "Class 12 pass in any stream (Science, Commerce, Arts).",
+      "structure": "Stage 1 (Prelims): Written exam on design theory, visual spatial logic, and sketching. Stage 2 (Mains): Studio test involving 3D model making, material handling, audio-visual tests, and interview.",
+      "difficulty": "Very high. Rote learning won't work here. The exam tests creative problem solving, hand-eye coordination, and spatial logic.",
+      "colleges_accepting": "All NID campuses (Ahmedabad, Bangalore, Kurukshetra, Vijayawada, Bhopal, Jorhat)."
+    },
+    {
+      "keywords": ["clat", "clat exam"],
+      "name": "Common Law Admission Test (CLAT)",
+      "eligibility": "Class 12 pass with minimum 45% marks (40% for SC/ST). No upper age limit.",
+      "structure": "2-hour offline test containing 120 multiple-choice questions focusing on Reading Comprehension, Current Affairs, Legal Reasoning, Logical Reasoning, and Quantitative Techniques.",
+      "difficulty": "Moderately high. It is a speed-reading and comprehension test. Success depends heavily on vocabulary, scanning ability, and legal logic under time constraints.",
+      "colleges_accepting": "24 National Law Universities (NLUs) across India."
+    },
+    {
+      "keywords": ["cuet", "cuet ug"],
+      "name": "Common University Entrance Test (CUET) UG",
+      "eligibility": "Class 12 pass in any stream.",
+      "structure": "Section 1: Languages, Section 2: Domain-specific subjects (PCM/Arts/Commerce), Section 3: General Test (General Knowledge, Aptitude). Computer-based test.",
+      "difficulty": "Moderate. Tests based directly on NCERT Class 12 syllabus, but high percentiles are required due to massive application numbers for top central universities.",
+      "colleges_accepting": "Central Universities (like Delhi University, BHU, JNU) and several state/private universities."
+    }
+  ]
+}

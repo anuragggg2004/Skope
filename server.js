@@ -28,7 +28,83 @@ import { fileURLToPath } from 'url'
 import dotenv from 'dotenv'
 import mongoose from 'mongoose'
 import Report from './models/Report.js'
+import fs from 'fs'
 dotenv.config()
+
+// =============================================
+// LOCAL RAG KNOWLEDGE BASE INITIALIZATION
+// =============================================
+const kbPath = path.join(process.cwd(), 'data', 'knowledge_base.json')
+let knowledgeBase = null
+try {
+  if (fs.existsSync(kbPath)) {
+    knowledgeBase = JSON.parse(fs.readFileSync(kbPath, 'utf8'))
+    console.log(`[RAG] Loaded knowledge base successfully. (${knowledgeBase.colleges?.length || 0} colleges, ${knowledgeBase.exams?.length || 0} exams)`)
+  } else {
+    console.warn(`[RAG] Knowledge base file not found at: ${kbPath}`)
+  }
+} catch (err) {
+  console.error('[RAG] Error loading knowledge base:', err.message)
+}
+
+// RAG Retrieval Helper
+function retrieveRAGContext(userMessage) {
+  if (!knowledgeBase || !userMessage) return ''
+
+  const query = userMessage.toLowerCase()
+  const matchedColleges = []
+  const matchedExams = []
+
+  // Search colleges
+  if (Array.isArray(knowledgeBase.colleges)) {
+    for (const col of knowledgeBase.colleges) {
+      if (col.keywords && col.keywords.some(kw => query.includes(kw.toLowerCase()))) {
+        matchedColleges.push(col)
+      }
+    }
+  }
+
+  // Search exams
+  if (Array.isArray(knowledgeBase.exams)) {
+    for (const exam of knowledgeBase.exams) {
+      if (exam.keywords && exam.keywords.some(kw => query.includes(kw.toLowerCase()))) {
+        matchedExams.push(exam)
+      }
+    }
+  }
+
+  if (matchedColleges.length === 0 && matchedExams.length === 0) {
+    return ''
+  }
+
+  let context = '\n\n[VERIFIED LOCAL RAG CONTEXT - INJECTED TRUTHS]\n'
+  context += 'Use the following verified figures for any details in your response. Do not contradict them:\n'
+
+  if (matchedColleges.length > 0) {
+    context += '\nColleges Reference Data:\n'
+    matchedColleges.forEach(col => {
+      context += `- **${col.name}**:\n`
+      context += `  * Fees: ${col.fees}\n`
+      context += `  * Placements: ${col.placements}\n`
+      context += `  * Admission Pathway: ${col.admission}\n`
+      context += `  * Student Reddit Verdict: ${col.reddit_verdict}\n`
+      context += `  * Caution: ${col.caution}\n`
+    })
+  }
+
+  if (matchedExams.length > 0) {
+    context += '\nEntrance Exams Reference Data:\n'
+    matchedExams.forEach(exam => {
+      context += `- **${exam.name}**:\n`
+      context += `  * Eligibility: ${exam.eligibility}\n`
+      context += `  * Format & Structure: ${exam.structure}\n`
+      context += `  * Difficulty/Acceptance Rates: ${exam.difficulty}\n`
+      context += `  * Accepting Colleges: ${exam.colleges_accepting}\n`
+    })
+  }
+
+  return context
+}
 
 // Connect to MongoDB Atlas (if URI is provided)
 const MONGODB_URI = process.env.MONGODB_URI
@@ -611,7 +687,9 @@ app.post('/api/chat', async (req, res) => {
       { role: "user", content: message }
     ]
 
-    const systemPrompt = `You are a personal career counsellor for an Indian Class 12 student. You already generated their PathReport which is provided below. You know everything about them. Answer specifically based on their profile — never generic. If they share new information, tell them exactly what changes in their recommendations — name actual colleges and actual exams. Keep responses to 3-5 lines max unless they ask for detail. Sound like a knowledgeable senior who genuinely cares. Be direct, warm, honest. Zero fluff.
+    const ragContext = retrieveRAGContext(message)
+
+    const systemPrompt = `You are a personal career counsellor for an Indian Class 12 student. You already generated their PathReport which is provided below. You know everything about them. Answer specifically based on their profile — never generic. If they share new information, tell them exactly what changes in their recommendations — name actual colleges and actual exams. Keep responses to 3-5 lines max unless they ask for detail. Sound like a knowledgeable senior who genuinely cares. Be direct, warm, honest. Zero fluff.${ragContext}
 
 STUDENT PATHREPORT:
 ${JSON.stringify(pathreport)}`
