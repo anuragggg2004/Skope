@@ -68,14 +68,24 @@ import { motion, AnimatePresence } from 'framer-motion'
 
 // ─── Chat Bubble ──────────────────────────────────────
 
+// ─── Chat Bubble ──────────────────────────────────────
+
 function ChatBubble({ message, index }) {
   const isUser = message.role === 'user'
+  const [copied, setCopied] = useState(false)
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(message.content)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
+  }
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1], delay: 0.05 }}
-      className={`flex ${isUser ? 'justify-end' : 'justify-start'} w-full`}
+      className={`flex ${isUser ? 'justify-end' : 'justify-start'} w-full group relative`}
     >
       {!isUser && (
         <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#6c63ff] to-[#4f8ef7] flex items-center justify-center shrink-0 mr-2.5 mt-0.5 shadow-[0_2px_12px_rgba(108,99,255,0.25)]">
@@ -84,14 +94,35 @@ function ChatBubble({ message, index }) {
           </svg>
         </div>
       )}
-      <div
-        className={`max-w-[78%] px-4 py-3 font-dm text-[14px] leading-[1.7] ${
-          isUser
-            ? 'bg-gradient-to-r from-[rgba(108,99,255,0.15)] to-[rgba(79,142,247,0.15)] border border-[rgba(108,99,255,0.2)] text-white rounded-[18px_18px_4px_18px]'
-            : 'bg-[rgba(255,255,255,0.03)] border border-[rgba(255,255,255,0.06)] text-[rgba(240,242,255,0.85)] rounded-[18px_18px_18px_4px]'
-        }`}
-      >
-        {message.content}
+      <div className="relative max-w-[78%]">
+        <div
+          className={`px-4 py-3 font-dm text-[14px] leading-[1.7] ${
+            isUser
+              ? 'bg-gradient-to-r from-[rgba(108,99,255,0.15)] to-[rgba(79,142,247,0.15)] border border-[rgba(108,99,255,0.2)] text-white rounded-[18px_18px_4px_18px]'
+              : 'bg-[rgba(255,255,255,0.03)] border border-[rgba(255,255,255,0.06)] text-[rgba(240,242,255,0.85)] rounded-[18px_18px_18px_4px] pr-10'
+          }`}
+        >
+          {message.content}
+        </div>
+
+        {!isUser && (
+          <button
+            onClick={handleCopy}
+            className="absolute right-2.5 top-2.5 opacity-0 group-hover:opacity-100 transition-opacity bg-[#141926] hover:bg-[rgba(255,255,255,0.08)] border border-[rgba(255,255,255,0.08)] rounded-md p-1.5 text-[rgba(240,242,255,0.4)] hover:text-white cursor-pointer"
+            title="Copy message"
+          >
+            {copied ? (
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#22d3a0" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+            ) : (
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+              </svg>
+            )}
+          </button>
+        )}
       </div>
     </motion.div>
   )
@@ -109,11 +140,23 @@ const INITIAL_QUESTIONS = [
 
 export default function FormPage() {
   const navigate = useNavigate()
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
-  const [phase1, setPhase1] = useState({ q1: '', q2: '', q3: '', q4: '', q5: '' })
-  const [chatHistory, setChatHistory] = useState([
-    { role: 'assistant', content: INITIAL_QUESTIONS[0] }
-  ])
+
+  // Load state from sessionStorage if it exists to survive page refreshes
+  const getInitialChat = () => {
+    const saved = sessionStorage.getItem('skope_chatHistory')
+    return saved ? JSON.parse(saved) : [{ role: 'assistant', content: INITIAL_QUESTIONS[0] }]
+  }
+
+  const [chatHistory, setChatHistory] = useState(getInitialChat)
+  const [phase1, setPhase1] = useState(() => {
+    const saved = sessionStorage.getItem('skope_phase1')
+    return saved ? JSON.parse(saved) : { q1: '', q2: '', q3: '', q4: '', q5: '' }
+  })
+
+  const completedSteps = chatHistory.filter(m => m.role === 'user').length
+  const initialIndex = Math.min(completedSteps, 5)
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(initialIndex)
+
   const [chatInput, setChatInput] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
@@ -121,13 +164,36 @@ export default function FormPage() {
   const messagesEndRef = useRef(null)
   const textareaRef = useRef(null)
 
-  // Clear stale session data on mount
+  // Clear report caches on mount so they can run fresh reports, but leave the chat session intact
   useEffect(() => {
     sessionStorage.removeItem('pathreport')
-    sessionStorage.removeItem('skope_phase1')
+    sessionStorage.removeItem('skope_preferences')
     sessionStorage.removeItem('skope_phase2')
-    sessionStorage.removeItem('skope_chatHistory')
     sessionStorage.removeItem('share_popup_shown')
+
+    // Recovery if page was refreshed while AI was thinking / generating the next question
+    const initialChat = getInitialChat()
+    if (initialChat.length % 2 === 0 && initialChat.length > 0) {
+      setLoading(true)
+      const completed = initialChat.filter(m => m.role === 'user').length
+      if (completed < 5) {
+        const nextIdx = completed
+        setTimeout(() => {
+          setChatHistory(prev => {
+            const next = [...prev, { role: 'assistant', content: INITIAL_QUESTIONS[nextIdx] }]
+            sessionStorage.setItem('skope_chatHistory', JSON.stringify(next))
+            return next
+          })
+          setLoading(false)
+        }, 800)
+      } else {
+        const savedPhase1 = sessionStorage.getItem('skope_phase1')
+        const currentPhase1 = savedPhase1 ? JSON.parse(savedPhase1) : { q1: '', q2: '', q3: '', q4: '', q5: '' }
+        fetchNextAdaptiveQuestion(initialChat, currentPhase1).then(() => {
+          setLoading(false)
+        })
+      }
+    }
   }, [])
 
   // Auto scroll chat
@@ -141,12 +207,23 @@ export default function FormPage() {
   }, [])
 
   const totalSteps = 5 + 3 // 5 initial + 3 adaptive = 8 questions total (16 messages)
-  const completedSteps = chatHistory.filter(m => m.role === 'user').length
   const progress = Math.round((completedSteps / totalSteps) * 100)
 
   const handleTextareaResize = (e) => {
     e.target.style.height = 'auto'
     e.target.style.height = Math.min(e.target.scrollHeight, 120) + 'px'
+  }
+
+  const handleRestart = () => {
+    if (window.confirm("Are you sure you want to restart the diagnostic? All your current answers will be cleared.")) {
+      sessionStorage.removeItem('skope_phase1')
+      sessionStorage.removeItem('skope_chatHistory')
+      setPhase1({ q1: '', q2: '', q3: '', q4: '', q5: '' })
+      setChatHistory([{ role: 'assistant', content: INITIAL_QUESTIONS[0] }])
+      setCurrentQuestionIndex(0)
+      setError('')
+      setChatInput('')
+    }
   }
 
   const fetchNextAdaptiveQuestion = async (history, currentPhase1, attempt = 1) => {
@@ -163,7 +240,11 @@ export default function FormPage() {
       }
       const data = await res.json()
       setError('')
-      setChatHistory(prev => [...prev, { role: 'assistant', content: data.question }])
+      setChatHistory(prev => {
+        const next = [...prev, { role: 'assistant', content: data.question }]
+        sessionStorage.setItem('skope_chatHistory', JSON.stringify(next))
+        return next
+      })
     } catch (err) {
       if (attempt < MAX_ATTEMPTS) {
         const delay = attempt * 2000
@@ -185,6 +266,7 @@ export default function FormPage() {
 
     const newHistory = [...chatHistory, { role: 'user', content: msg }]
     setChatHistory(newHistory)
+    sessionStorage.setItem('skope_chatHistory', JSON.stringify(newHistory))
     setLoading(true)
     setError('')
 
@@ -195,6 +277,7 @@ export default function FormPage() {
       const qKey = `q${currentQuestionIndex + 1}`
       updatedPhase1[qKey] = msg
       setPhase1(updatedPhase1)
+      sessionStorage.setItem('skope_phase1', JSON.stringify(updatedPhase1))
 
       const nextIdx = currentQuestionIndex + 1
       setCurrentQuestionIndex(nextIdx)
@@ -202,7 +285,11 @@ export default function FormPage() {
       if (nextIdx < 5) {
         // Prompt next static question
         setTimeout(() => {
-          setChatHistory(prev => [...prev, { role: 'assistant', content: INITIAL_QUESTIONS[nextIdx] }])
+          setChatHistory(prev => {
+            const next = [...prev, { role: 'assistant', content: INITIAL_QUESTIONS[nextIdx] }]
+            sessionStorage.setItem('skope_chatHistory', JSON.stringify(next))
+            return next
+          })
           setLoading(false)
         }, 1000)
       } else {
@@ -266,9 +353,22 @@ export default function FormPage() {
                 </div>
               </div>
 
-              {/* Progress counter */}
-              <div className="flex items-center gap-1.5 bg-[rgba(255,255,255,0.03)] border border-[rgba(255,255,255,0.06)] rounded-full px-3 py-1.5 font-dm text-[11px] text-[rgba(240,242,255,0.6)]">
-                <span>{completedSteps} of {totalSteps} questions answered</span>
+              {/* Progress counter & Start Over */}
+              <div className="flex items-center gap-2.5">
+                <button
+                  onClick={handleRestart}
+                  className="flex items-center gap-1 bg-[rgba(248,113,113,0.08)] hover:bg-[rgba(248,113,113,0.15)] border border-[rgba(248,113,113,0.15)] hover:border-[rgba(248,113,113,0.3)] transition-all duration-200 rounded-full px-3 py-1.5 font-dm text-[11px] text-[#f87171] cursor-pointer"
+                  title="Clear history and start over"
+                >
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M23 4v6h-6" />
+                    <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10" />
+                  </svg>
+                  <span>Start Over</span>
+                </button>
+                <div className="flex items-center gap-1.5 bg-[rgba(255,255,255,0.03)] border border-[rgba(255,255,255,0.06)] rounded-full px-3 py-1.5 font-dm text-[11px] text-[rgba(240,242,255,0.6)]">
+                  <span>{completedSteps} of {totalSteps} questions answered</span>
+                </div>
               </div>
             </div>
           </div>
