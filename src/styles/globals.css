@@ -277,3 +277,8 @@ textarea {
   100% { opacity: 1; transform: scale(1.08); }
 }
 
+/* 120fps touch momentum scroll for mobile & tablets */
+.overflow-y-auto, .overflow-x-auto, [class*="overflow-"] {
+  -webkit-overflow-scrolling: touch;
+}
+

@@ -1,14 +1,45 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
-export default function ChatMessage({ message }) {
+// ─── Typewriter Effect ─────────────────────────────────
+function TypewriterText({ text, speed = 8, onType, onComplete }) {
+  const [displayedText, setDisplayedText] = useState('')
+
+  useEffect(() => {
+    let index = 0
+    setDisplayedText('')
+    
+    const interval = setInterval(() => {
+      if (index < text.length) {
+        const charsToTake = Math.min(3, text.length - index)
+        setDisplayedText(text.substring(0, index + charsToTake))
+        index += charsToTake
+        if (onType) {
+          requestAnimationFrame(onType)
+        }
+      } else {
+        clearInterval(interval)
+        if (onComplete) onComplete()
+      }
+    }, speed)
+
+    return () => clearInterval(interval)
+  }, [text, speed])
+
+  return <span>{displayedText}</span>
+}
+
+export default function ChatMessage({ message, isLatest, onType }) {
   const isUser = message.role === 'user'
   const [copied, setCopied] = useState(false)
+  const [typingComplete, setTypingComplete] = useState(false)
 
   const handleCopy = () => {
     navigator.clipboard.writeText(message.content)
     setCopied(true)
     setTimeout(() => setCopied(false), 2000)
   }
+
+  const shouldType = !isUser && isLatest && !typingComplete
 
   return (
     <div className={`flex ${isUser ? 'justify-end' : 'justify-start'} w-full group relative`}>
@@ -20,10 +51,18 @@ export default function ChatMessage({ message }) {
               : 'glass-card border-[rgba(255,255,255,0.1)] text-[rgba(240,242,255,0.9)] rounded-[20px_20px_20px_4px] pr-10'
           }`}
         >
-          {message.content}
+          {shouldType ? (
+            <TypewriterText
+              text={message.content}
+              onType={onType}
+              onComplete={() => setTypingComplete(true)}
+            />
+          ) : (
+            message.content
+          )}
         </div>
 
-        {!isUser && (
+        {!isUser && (!shouldType || typingComplete) && (
           <button
             onClick={handleCopy}
             className="absolute right-2 top-[50%] -translate-y-[50%] opacity-0 group-hover:opacity-100 transition-opacity bg-[#141926]/90 hover:bg-[rgba(255,255,255,0.08)] border border-[rgba(255,255,255,0.08)] rounded-md p-1.5 text-[rgba(240,242,255,0.4)] hover:text-white cursor-pointer"

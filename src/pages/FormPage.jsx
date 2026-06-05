@@ -66,13 +66,39 @@ const QUESTIONS = [
 
 import { motion, AnimatePresence } from 'framer-motion'
 
-// ─── Chat Bubble ──────────────────────────────────────
+// ─── Typewriter Effect ─────────────────────────────────
+function TypewriterText({ text, speed = 8, onType, onComplete }) {
+  const [displayedText, setDisplayedText] = useState('')
+
+  useEffect(() => {
+    let index = 0
+    setDisplayedText('')
+    
+    const interval = setInterval(() => {
+      if (index < text.length) {
+        const charsToTake = Math.min(3, text.length - index)
+        setDisplayedText(text.substring(0, index + charsToTake))
+        index += charsToTake
+        if (onType) {
+          requestAnimationFrame(onType)
+        }
+      } else {
+        clearInterval(interval)
+        if (onComplete) onComplete()
+      }
+    }, speed)
+
+    return () => clearInterval(interval)
+  }, [text, speed])
+
+  return <span>{displayedText}</span>
+}
 
 // ─── Chat Bubble ──────────────────────────────────────
-
-function ChatBubble({ message, index }) {
+function ChatBubble({ message, index, isLatest, onType }) {
   const isUser = message.role === 'user'
   const [copied, setCopied] = useState(false)
+  const [typingComplete, setTypingComplete] = useState(false)
 
   const handleCopy = () => {
     navigator.clipboard.writeText(message.content)
@@ -80,11 +106,13 @@ function ChatBubble({ message, index }) {
     setTimeout(() => setCopied(false), 2000)
   }
 
+  const shouldType = !isUser && isLatest && !typingComplete
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1], delay: 0.05 }}
+      transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
       className={`flex ${isUser ? 'justify-end' : 'justify-start'} w-full group relative`}
     >
       {!isUser && (
@@ -102,10 +130,18 @@ function ChatBubble({ message, index }) {
               : 'bg-[rgba(255,255,255,0.03)] border border-[rgba(255,255,255,0.06)] text-[rgba(240,242,255,0.85)] rounded-[18px_18px_18px_4px] pr-10'
           }`}
         >
-          {message.content}
+          {shouldType ? (
+            <TypewriterText
+              text={message.content}
+              onType={onType}
+              onComplete={() => setTypingComplete(true)}
+            />
+          ) : (
+            message.content
+          )}
         </div>
 
-        {!isUser && (
+        {!isUser && (!shouldType || typingComplete) && (
           <button
             onClick={handleCopy}
             className="absolute right-2.5 top-2.5 opacity-0 group-hover:opacity-100 transition-opacity bg-[#141926] hover:bg-[rgba(255,255,255,0.08)] border border-[rgba(255,255,255,0.08)] rounded-md p-1.5 text-[rgba(240,242,255,0.4)] hover:text-white cursor-pointer"
@@ -212,6 +248,10 @@ export default function FormPage() {
   const handleTextareaResize = (e) => {
     e.target.style.height = 'auto'
     e.target.style.height = Math.min(e.target.scrollHeight, 120) + 'px'
+  }
+
+  const handleScrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'auto' })
   }
 
   const handleRestart = () => {
@@ -354,20 +394,21 @@ export default function FormPage() {
               </div>
 
               {/* Progress counter & Start Over */}
-              <div className="flex items-center gap-2.5">
+              <div className="flex items-center gap-1.5 sm:gap-2.5">
                 <button
                   onClick={handleRestart}
-                  className="flex items-center gap-1 bg-[rgba(248,113,113,0.08)] hover:bg-[rgba(248,113,113,0.15)] border border-[rgba(248,113,113,0.15)] hover:border-[rgba(248,113,113,0.3)] transition-all duration-200 rounded-full px-3 py-1.5 font-dm text-[11px] text-[#f87171] cursor-pointer"
+                  className="flex items-center gap-1 bg-[rgba(248,113,113,0.08)] hover:bg-[rgba(248,113,113,0.15)] border border-[rgba(248,113,113,0.15)] hover:border-[rgba(248,113,113,0.3)] transition-all duration-200 rounded-full px-2.5 sm:px-3 py-1.5 font-dm text-[11px] text-[#f87171] cursor-pointer"
                   title="Clear history and start over"
                 >
                   <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M23 4v6h-6" />
                     <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10" />
                   </svg>
-                  <span>Start Over</span>
+                  <span className="hidden sm:inline">Start Over</span>
                 </button>
-                <div className="flex items-center gap-1.5 bg-[rgba(255,255,255,0.03)] border border-[rgba(255,255,255,0.06)] rounded-full px-3 py-1.5 font-dm text-[11px] text-[rgba(240,242,255,0.6)]">
-                  <span>{completedSteps} of {totalSteps} questions answered</span>
+                <div className="flex items-center gap-1.5 bg-[rgba(255,255,255,0.03)] border border-[rgba(255,255,255,0.06)] rounded-full px-2.5 sm:px-3 py-1.5 font-dm text-[10px] sm:text-[11px] text-[rgba(240,242,255,0.6)]">
+                  <span className="sm:hidden">{completedSteps}/{totalSteps} Qs</span>
+                  <span className="hidden sm:inline">{completedSteps} of {totalSteps} questions answered</span>
                 </div>
               </div>
             </div>
@@ -378,7 +419,13 @@ export default function FormPage() {
             <div className="max-w-[700px] mx-auto flex flex-col gap-4">
               <AnimatePresence>
                 {chatHistory.map((msg, i) => (
-                  <ChatBubble key={i} message={msg} index={i} />
+                  <ChatBubble 
+                    key={i} 
+                    message={msg} 
+                    index={i} 
+                    isLatest={i === chatHistory.length - 1} 
+                    onType={handleScrollToBottom} 
+                  />
                 ))}
               </AnimatePresence>
 

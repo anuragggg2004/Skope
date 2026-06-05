@@ -126,7 +126,7 @@ function CareerCardRedesigned({ career, index }) {
         <div className={`overflow-hidden transition-all duration-300 ${expanded ? 'max-h-[800px] opacity-100 mt-4' : 'max-h-0 opacity-0'}`}>
           {/* Pros & Cons */}
           {career.pros && career.pros.length > 0 && (
-            <div className="grid grid-cols-2 gap-3.5 border-t border-[rgba(255,255,255,0.04)] pt-3.5 mb-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 border-t border-[rgba(255,255,255,0.04)] pt-3.5 mb-4">
               <div>
                 <span className="font-dm text-[11px] font-bold text-[#22d3a0] uppercase tracking-[1px] block mb-1.5">✓ Pros</span>
                 <ul className="space-y-1">
@@ -476,6 +476,10 @@ export default function ResultPage() {
   const handleTextareaResize = (e) => {
     e.target.style.height = 'auto'
     e.target.style.height = Math.min(e.target.scrollHeight, 80) + 'px'
+  }
+
+  const handleChatScroll = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'auto' })
   }
 
   // Handle college shortlisting
@@ -1222,7 +1226,12 @@ export default function ResultPage() {
                 }} />
 
                 {chatHistory.map((msg, i) => (
-                  <ChatMessage key={i} message={msg} />
+                  <ChatMessage 
+                    key={i} 
+                    message={msg} 
+                    isLatest={i === chatHistory.length - 1} 
+                    onType={handleChatScroll} 
+                  />
                 ))}
 
                 {chatLoading && (

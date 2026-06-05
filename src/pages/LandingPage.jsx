@@ -198,7 +198,7 @@ export default function LandingPage() {
             <p className="font-dm text-[13px] text-[rgba(240,242,255,0.6)] leading-relaxed mb-4">
               Skope maps the full picture of who you are, not just standard grade percentages:
             </p>
-            <div className="grid grid-cols-2 gap-x-4 gap-y-2.5 font-dm text-[12.5px] text-[rgba(240,242,255,0.8)]">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2.5 font-dm text-[12.5px] text-[rgba(240,242,255,0.8)]">
               <div>🧠 Interests & Personality</div>
               <div>🎯 Personal Goals</div>
               <div>🛡️ Real Constraints</div>
