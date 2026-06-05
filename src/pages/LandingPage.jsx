@@ -127,7 +127,7 @@ export default function LandingPage() {
       if (demoSubject === 'Business / Commerce') archetype = 'The Strategist'
       if (demoSubject === 'Biology') archetype = 'The Builder'
       
-      setDemoResponse(`Analyzing your vibe... You sound like you belong in "${archetype}" category. Let's do the full diagnostic!`)
+      setDemoResponse(`Analyzing your vibe... You sound like you belong in the "${archetype}" category. Let's take the full test!`)
       setDemoStep(2)
     }, 1200)
   }
@@ -166,7 +166,7 @@ export default function LandingPage() {
 
           {/* Archetype Preview above CTA */}
           <div className="mb-6 animate-fadeUp" style={{ animationDelay: '0.1s' }}>
-            <span className="font-dm text-[11px] uppercase tracking-[1.5px] text-[rgba(240,242,255,0.45)] block mb-2.5">Discover your archetype</span>
+            <span className="font-dm text-[11px] uppercase tracking-[1.5px] text-[rgba(240,242,255,0.45)] block mb-2.5">Find your career vibe</span>
             <div className="flex flex-wrap items-center justify-center gap-2">
               {['🛠️ Builder', '🔭 Explorer', '🎨 Creator', '🎯 Strategist', '📊 Analyst'].map((arch, idx) => (
                 <span key={idx} className="font-dm text-[12px] font-semibold text-white px-3 py-1 rounded-full border border-[rgba(255,255,255,0.06)] bg-[rgba(255,255,255,0.02)]">
@@ -180,7 +180,7 @@ export default function LandingPage() {
           <div className="flex flex-col items-center">
             <button onClick={handleStart} id="hero-cta"
               className="inline-flex items-center gap-2.5 font-sora text-[15px] font-semibold bg-gradient-to-r from-[#4f8ef7] to-[#8b5cf6] text-white px-8 py-3.5 rounded-full border-none cursor-pointer hover:-translate-y-1 hover:shadow-[0_0_25px_rgba(139,92,246,0.35)] transition-all duration-300">
-              Discover My Archetype
+              Find My Career Vibe
               <IconArrow />
             </button>
 
@@ -341,7 +341,7 @@ export default function LandingPage() {
                       onClick={handleStart}
                       className="font-sora text-[13px] font-bold bg-gradient-to-r from-blue to-purple text-white px-6 py-2.5 rounded-full border-none cursor-pointer shadow-[0_0_15px_rgba(108,99,255,0.3)]"
                     >
-                      Discover My Archetype →
+                      Find My Career Vibe →
                     </button>
                   </div>
                 </>
@@ -591,11 +591,11 @@ export default function LandingPage() {
             Ready to find your scope?
           </h2>
           <p className="font-dm text-[15px] text-[rgba(240,242,255,0.45)] mb-8 max-w-[400px] mx-auto">
-            ⏱️ 8 questions total  |  ≈ 7 minutes remaining. Real diagnostic plans.
+            ⏱️ 8 questions total  |  ≈ 7 minutes remaining. Real, personalized insights.
           </p>
           <button onClick={handleStart} id="final-cta"
             className="inline-flex items-center gap-2.5 font-sora text-[16px] font-semibold bg-gradient-to-r from-[#4f8ef7] to-[#8b5cf6] text-white px-10 py-4 rounded-full border-none cursor-pointer hover:-translate-y-1 hover:shadow-[0_0_30px_rgba(139,92,246,0.4)] transition-all duration-300">
-            Discover My Archetype
+            Find My Career Vibe
             <IconArrow />
           </button>
           <p className="font-dm text-[12px] text-[rgba(240,242,255,0.25)] mt-4">

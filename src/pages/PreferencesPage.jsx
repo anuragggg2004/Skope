@@ -353,8 +353,8 @@ export default function PreferencesPage() {
         <div className="fixed inset-0 z-50 bg-[#0A0A0F]/95 backdrop-blur-[24px] flex items-center justify-center p-6 animate-fadeIn">
           <div className="max-w-[480px] w-full glass-card p-8 rounded-[24px] border border-[rgba(108,99,255,0.15)] flex flex-col gap-6 shadow-[0_20px_50px_rgba(108,99,255,0.15)] hover:transform-none">
             <div className="text-center mb-2">
-              <h3 className="font-sora text-[22px] font-bold text-white mb-2">Running AI Diagnostics</h3>
-              <p className="font-dm text-[13px] text-[rgba(240,242,255,0.45)]">Generating your proprietary Skope Archetype and PathReport...</p>
+              <h3 className="font-sora text-[22px] font-bold text-white mb-2">Analyzing Your Career Vibe</h3>
+              <p className="font-dm text-[13px] text-[rgba(240,242,255,0.45)]">Generating your personalized Career Vibe and PathReport...</p>
             </div>
 
             <div className="flex flex-col gap-5">

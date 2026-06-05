@@ -352,13 +352,13 @@ function TinderSwipeDeck({ additionalCareers, onSwipeRight, onSwipeLeft }) {
 function ProfileTimelineTracker({ pathReport }) {
   const steps = [
     {
-      title: 'AI Career Diagnostic',
+      title: 'AI Career Test',
       desc: 'Analysed subjects, marks, side-projects, and geographic constraints.',
       status: 'completed',
       date: 'Step 1'
     },
     {
-      title: 'Archetype Matched',
+      title: 'Career Vibe Matched',
       desc: `Identified as "${pathReport.archetype?.name || 'Explorer'}" — visual, self-directed and ambitious.`,
       status: 'completed',
       date: 'Step 2'
@@ -621,7 +621,7 @@ export default function ResultPage() {
       useCORS: true
     }).then(canvas => {
       const link = document.createElement('a')
-      link.download = `Skope_StoryCard_${pathReport.archetype?.name || 'Archetype'}.png`
+      link.download = `Skope_StoryCard_${pathReport.archetype?.name || 'CareerVibe'}.png`
       link.href = canvas.toDataURL('image/png')
       link.click()
     })
@@ -785,7 +785,7 @@ export default function ResultPage() {
                 <div className="flex items-center gap-3">
                   <span className="text-[40px]">{ARCHETYPE_EMOJIS[pathReport.archetype.name] || '🧠'}</span>
                   <div>
-                    <span className="font-dm text-[11px] font-bold text-purple uppercase tracking-[1.5px]">Your Profile Archetype</span>
+                    <span className="font-dm text-[11px] font-bold text-purple uppercase tracking-[1.5px]">Your Career Vibe</span>
                     <h2 className="font-sora text-[22px] font-bold text-white leading-tight">{pathReport.archetype.name}</h2>
                   </div>
                 </div>
@@ -1387,7 +1387,7 @@ export default function ResultPage() {
                     Sk<span className="text-[#4f8ef7]">o</span>pe
                   </div>
                   
-                  <span className="font-dm text-[9px] uppercase tracking-[2px] text-pink font-bold block mb-1">My Career Archetype</span>
+                  <span className="font-dm text-[9px] uppercase tracking-[2px] text-pink font-bold block mb-1">My Career Vibe</span>
                   <div className="text-[42px] mb-2">{ARCHETYPE_EMOJIS[pathReport.archetype?.name] || '🧠'}</div>
                   <h2 className="font-sora text-[22px] font-extrabold text-white leading-tight mb-2">
                     {pathReport.archetype?.name || 'Explorer'}

@@ -358,7 +358,7 @@ export default function ProfilePage() {
                 <button onClick={() => navigate('/form')}
                   className="font-dm text-[11px] font-semibold px-3.5 py-2 rounded-[9px] border-none cursor-pointer transition-all text-white flex items-center gap-1.5"
                   style={{ background: 'linear-gradient(135deg, #4f8ef7, #8b5cf6)' }}>
-                  <IconPlus /> {hasReport ? 'New Report' : 'Start Diagnostic'}
+                  <IconPlus /> {hasReport ? 'Retake Test' : 'Start Test'}
                 </button>
               </div>
             </div>

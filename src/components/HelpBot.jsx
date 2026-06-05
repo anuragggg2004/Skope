@@ -40,7 +40,7 @@ const FAQ = [
   },
   {
     keywords: ['can i redo', 'redo', 'retake', 'another report', 'new report', 'do again'],
-    answer: "Yes! You can click 'New Diagnostic' in the app to start fresh and generate a new PathReport anytime. Each new report takes your current answers, so if your marks or exam situation changes, do it again."
+    answer: "Yes! You can click 'Retake Test' in the app to start fresh and generate a new PathReport anytime. Each new report takes your current answers, so if your marks or exam situation changes, do it again."
   },
   {
     keywords: ['download', 'pdf', 'save', 'share', 'export'],
@@ -60,7 +60,7 @@ const FAQ = [
   },
   {
     keywords: ['after 12th', 'what to do', 'confused', 'do not know', 'no idea'],
-    answer: "That is exactly why Skope exists. Start the diagnostic — answer the questions honestly, including if you are confused. The interview phase is specifically designed to dig out what you actually want vs what you think you want. The PathReport is most useful when you are genuinely uncertain."
+    answer: "That is exactly why Skope exists. Start the test — answer the questions honestly, including if you are confused. The interview phase is specifically designed to dig out what you actually want vs what you think you want. The PathReport is most useful when you are genuinely uncertain."
   }
 ]
 

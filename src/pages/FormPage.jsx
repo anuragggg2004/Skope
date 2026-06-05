@@ -167,7 +167,7 @@ function ChatBubble({ message, index, isLatest, onType }) {
 // ─── Main Form Page ───────────────────────────────────
 
 const INITIAL_QUESTIONS = [
-  "Hey! I'm Skope, your AI career strategist. Let's find your archetype. First, what stream are you in and what are your ACTUAL marks?",
+  "Hey! I'm Skope, your AI career strategist. Let's find your career vibe. First, what stream are you in and what are your ACTUAL marks?",
   "What have you actually built, made, or done outside school? (If nothing, say that.)",
   "What career are you thinking, and honestly, whose idea is it?",
   "What are your ACTUAL marks or exam scores? (No dreams, give me the real numbers on your sheet.)",
@@ -255,7 +255,7 @@ export default function FormPage() {
   }
 
   const handleRestart = () => {
-    if (window.confirm("Are you sure you want to restart the diagnostic? All your current answers will be cleared.")) {
+    if (window.confirm("Are you sure you want to restart the test? All your current answers will be cleared.")) {
       sessionStorage.removeItem('skope_phase1')
       sessionStorage.removeItem('skope_chatHistory')
       setPhase1({ q1: '', q2: '', q3: '', q4: '', q5: '' })

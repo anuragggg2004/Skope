@@ -1056,7 +1056,7 @@ const html = `
           <div class="ps-track"><div class="ps-fill"></div></div>
           <div class="ps-text">68% complete</div>
         </div>
-        <button class="btn-ghost" onclick="window.location.href='/'">Retake Diagnostic</button>
+        <button class="btn-ghost" onclick="window.location.href='/'">Retake Test</button>
       </div>
     </aside>
 
