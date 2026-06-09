@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
-import { motion, useAnimation, useInView } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
 
 // Icons as simple SVG components to keep it self-contained
 const CompassIcon = () => (
@@ -16,6 +17,20 @@ const TargetIcon = () => (
 );
 
 export default function Dashboard() {
+  const navigate = useNavigate();
+  const [report, setReport] = useState(null);
+
+  useEffect(() => {
+    const stored = sessionStorage.getItem('pathreport');
+    if (stored) {
+      try {
+        setReport(JSON.parse(stored));
+      } catch (e) {
+        console.error("Error parsing pathreport from sessionStorage:", e);
+      }
+    }
+  }, []);
+
   return (
     <>
       <div className="grid-bg" />
@@ -42,12 +57,23 @@ export default function Dashboard() {
             Tools to analyze your vibe, explore top colleges, and track your skills—built to accelerate your career journey.
           </p>
 
+          {!report && (
+            <div className="mt-8 flex justify-center">
+              <button 
+                onClick={() => navigate('/form')}
+                className="bg-gradient-to-r from-blue to-purple text-white px-6 py-3 rounded-full font-sora font-semibold text-sm hover:scale-105 transition-transform"
+              >
+                Take the Vibe Assessment to Unlock Data
+              </button>
+            </div>
+          )}
+
           {/* Grid */}
           <div className="mt-16 grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 font-dm">
-            <MatchProgressCard />
-            <TopCollegesCard />
+            <MatchProgressCard report={report} />
+            <TopCollegesCard report={report} />
             <LearningStackCard />
-            <ActionPlanCard />
+            <ActionPlanCard report={report} />
           </div>
         </section>
       </div>
@@ -57,10 +83,19 @@ export default function Dashboard() {
 
 // ─── Cards ──────────────────────────────────────────────
 
-function MatchProgressCard() {
+function MatchProgressCard({ report }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-20%" });
-  
+  const navigate = useNavigate();
+
+  // Extract top 2 careers or use fallbacks
+  const career1 = report?.careers?.[0] || { title: 'Software Engineering', matchScore: 89, category: 'Technology' };
+  const career2 = report?.careers?.[1] || { title: 'Business Analytics', matchScore: 65, category: 'Data & Strategy' };
+
+  // Use the match_score if it exists, otherwise generate a deterministic high number
+  const score1 = career1.match_score || career1.matchScore || 92;
+  const score2 = career2.match_score || career2.matchScore || 76;
+
   return (
     <section ref={ref} className="group relative overflow-hidden rounded-3xl bg-white/[0.04] ring-1 ring-white/10 p-5 md:p-6 transition-all hover:bg-white/[0.06]">
       <div className="absolute inset-0 bg-gradient-to-br from-sky-500/10 via-transparent to-transparent pointer-events-none"></div>
@@ -76,62 +111,63 @@ function MatchProgressCard() {
           {/* Row 1 */}
           <div className="rounded-xl bg-white/[0.04] p-3.5 ring-1 ring-white/10">
             <div className="flex items-center gap-3">
-              <div className="flex items-center justify-center h-8 w-8 rounded-full bg-sky-500/20 text-sky-300 ring-1 ring-sky-500/40">
+              <div className="flex items-center justify-center h-8 w-8 rounded-full bg-sky-500/20 text-sky-300 ring-1 ring-sky-500/40 shrink-0">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
               </div>
-              <div className="flex-1">
+              <div className="flex-1 overflow-hidden">
                 <div className="flex items-center justify-between mb-1.5">
-                  <p className="text-sm font-medium text-white/90">Software Engineering</p>
-                  <p className="text-xs text-white/60 font-mono">High Match</p>
+                  <p className="text-sm font-medium text-white/90 truncate mr-2">{career1.title}</p>
+                  <p className="text-xs text-white/60 font-mono shrink-0">High Match</p>
                 </div>
                 <div className="h-2 w-full rounded-full bg-white/10 overflow-hidden">
                   <motion.div 
                     initial={{ width: 0 }}
-                    animate={isInView ? { width: '89%' } : { width: 0 }}
+                    animate={isInView ? { width: `${score1}%` } : { width: 0 }}
                     transition={{ duration: 1.5, ease: "easeOut", delay: 0.2 }}
                     className="h-full rounded-full bg-gradient-to-r from-sky-400 to-blue-500"
                   />
                 </div>
               </div>
-              <span className="text-xs text-white/70 font-mono w-8 text-right">
-                <AnimatedCounter from={0} to={89} active={isInView} />%
+              <span className="text-xs text-white/70 font-mono w-8 text-right shrink-0">
+                <AnimatedCounter from={0} to={score1} active={isInView} />%
               </span>
             </div>
-            <p className="mt-2.5 text-[11px] text-white/50 tracking-wide uppercase">Technology & Innovation</p>
           </div>
 
           {/* Row 2 */}
           <div className="rounded-xl bg-white/[0.04] p-3.5 ring-1 ring-white/10">
             <div className="flex items-center gap-3">
-              <div className="flex items-center justify-center h-8 w-8 rounded-full bg-emerald-500/20 text-emerald-300 ring-1 ring-emerald-500/40">
+              <div className="flex items-center justify-center h-8 w-8 rounded-full bg-emerald-500/20 text-emerald-300 ring-1 ring-emerald-500/40 shrink-0">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
               </div>
-              <div className="flex-1">
+              <div className="flex-1 overflow-hidden">
                 <div className="flex items-center justify-between mb-1.5">
-                  <p className="text-sm font-medium text-white/90">Business Analytics</p>
-                  <p className="text-xs text-white/60 font-mono">Good Match</p>
+                  <p className="text-sm font-medium text-white/90 truncate mr-2">{career2.title}</p>
+                  <p className="text-xs text-white/60 font-mono shrink-0">Good Match</p>
                 </div>
                 <div className="h-2 w-full rounded-full bg-white/10 overflow-hidden">
                   <motion.div 
                     initial={{ width: 0 }}
-                    animate={isInView ? { width: '65%' } : { width: 0 }}
+                    animate={isInView ? { width: `${score2}%` } : { width: 0 }}
                     transition={{ duration: 1.5, ease: "easeOut", delay: 0.4 }}
                     className="h-full rounded-full bg-gradient-to-r from-emerald-400 to-teal-500"
                   />
                 </div>
               </div>
-              <span className="text-xs text-white/70 font-mono w-8 text-right">
-                <AnimatedCounter from={0} to={65} active={isInView} delay={200} />%
+              <span className="text-xs text-white/70 font-mono w-8 text-right shrink-0">
+                <AnimatedCounter from={0} to={score2} active={isInView} delay={200} />%
               </span>
             </div>
-            <p className="mt-2.5 text-[11px] text-white/50 tracking-wide uppercase">Data & Strategy</p>
           </div>
         </div>
 
         <div className="mt-5 flex items-center justify-between">
-          <button className="inline-flex items-center gap-2 rounded-full bg-sky-500/15 px-3.5 py-1.5 text-xs text-sky-200 ring-1 ring-sky-400/30 hover:bg-sky-500/25 transition duration-300 shadow-[0_0_15px_rgba(56,189,248,0.1)]">
+          <button 
+            onClick={() => navigate(report ? '/result' : '/form')}
+            className="inline-flex items-center gap-2 rounded-full bg-sky-500/15 px-3.5 py-1.5 text-xs text-sky-200 ring-1 ring-sky-400/30 hover:bg-sky-500/25 transition duration-300 shadow-[0_0_15px_rgba(56,189,248,0.1)]"
+          >
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="h-3.5 w-3.5"><path d="M19.07 4.93A10 10 0 0 0 6.99 3.34"></path><path d="M4 6h.01"></path><path d="M2.29 9.62A10 10 0 1 0 21.31 8.35"></path><path d="M16.24 7.76A6 6 0 1 0 8.23 16.67"></path><path d="M12 18h.01"></path><path d="M17.99 11.66A6 6 0 0 1 15.77 16.67"></path><circle cx="12" cy="12" r="2"></circle><path d="m13.41 10.59 5.66-5.66"></path></svg>
-            AI Vibe Analysis
+            {report ? "View Full PathReport" : "Take Vibe Assessment"}
           </button>
           <div className="flex items-center gap-2 text-[11px] text-emerald-400/80 font-medium">
             <span className="relative flex h-2 w-2">
@@ -151,11 +187,12 @@ function MatchProgressCard() {
   );
 }
 
-function TopCollegesCard() {
-  const colleges = [
-    { name: 'Stanford University', loc: 'US • Highly Selective', icon: 'star', color: 'text-amber-300' },
-    { name: 'IIT Delhi', loc: 'IN • Technology Focus', icon: 'badge', color: 'text-sky-300' },
-    { name: 'Oxford University', loc: 'GB • Historic Excellence', icon: 'shield', color: 'text-emerald-300' }
+function TopCollegesCard({ report }) {
+  // Extract top colleges or use fallback
+  const displayColleges = report?.colleges?.slice(0, 3) || [
+    { name: 'Stanford University', location: 'US • Highly Selective', icon: 'star', color: 'text-amber-300' },
+    { name: 'IIT Delhi', location: 'IN • Technology Focus', icon: 'badge', color: 'text-sky-300' },
+    { name: 'Oxford University', location: 'GB • Historic Excellence', icon: 'shield', color: 'text-emerald-300' }
   ];
 
   return (
@@ -184,20 +221,19 @@ function TopCollegesCard() {
             transition={{ ease: "linear", duration: 10, repeat: Infinity }}
             className="flex flex-col pt-2"
           >
-            {[...colleges, ...colleges].map((c, i) => (
+            {[...displayColleges, ...displayColleges].map((c, i) => (
               <div key={i} className="flex items-center justify-between px-3 py-2.5">
-                <div className="flex items-center gap-3">
-                  <div className="flex items-center justify-center h-8 w-8 rounded-full bg-white/5 text-white/80 ring-1 ring-white/20">
+                <div className="flex items-center gap-3 overflow-hidden">
+                  <div className="flex items-center justify-center h-8 w-8 rounded-full bg-white/5 text-white/80 ring-1 ring-white/20 shrink-0">
                     <span className="text-xs font-bold font-sora">{c.name.charAt(0)}</span>
                   </div>
-                  <div>
-                    <p className="text-sm text-white/90 font-medium">{c.name}</p>
-                    <p className="text-[11px] text-white/50 uppercase tracking-widest mt-0.5">{c.loc}</p>
+                  <div className="overflow-hidden">
+                    <p className="text-sm text-white/90 font-medium truncate">{c.name}</p>
+                    <p className="text-[11px] text-white/50 uppercase tracking-widest mt-0.5 truncate">{c.location || c.city || 'Top Tier'}</p>
                   </div>
                 </div>
-                {c.icon === 'star' && <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className={`h-4 w-4 ${c.color}`}><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>}
-                {c.icon === 'shield' && <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className={`h-4 w-4 ${c.color}`}><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="m9 12 2 2 4-4"></path></svg>}
-                {c.icon === 'badge' && <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className={`h-4 w-4 ${c.color}`}><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"></path><path d="m9 12 2 2 4-4"></path></svg>}
+                {/* Fallback to star icon if none provided in actual data */}
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className={`h-4 w-4 shrink-0 ${c.color || 'text-amber-300'}`}><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
               </div>
             ))}
           </motion.div>
@@ -298,11 +334,11 @@ function LearningStackCard() {
   );
 }
 
-function ActionPlanCard() {
+function ActionPlanCard({ report }) {
   const [tasks, setTasks] = useState([
-    { id: 1, name: 'Take Vibe Assessment', desc: 'Find your career match', status: 'Completed', icon: 'check', color: 'text-emerald-400' },
-    { id: 2, name: 'Review PathReport', desc: 'Explore career matches', status: 'In Progress', icon: 'clock', color: 'text-amber-400' },
-    { id: 3, name: 'Shortlist Colleges', desc: 'Build your target list', status: 'Pending', icon: 'circle', color: 'text-white/40' }
+    { id: 1, name: 'Take Vibe Assessment', desc: 'Find your career match', status: report ? 'Completed' : 'Pending', icon: report ? 'check' : 'circle', color: report ? 'text-emerald-400' : 'text-white/40' },
+    { id: 2, name: 'Review PathReport', desc: 'Explore career matches', status: report ? 'Completed' : 'Pending', icon: report ? 'check' : 'circle', color: report ? 'text-emerald-400' : 'text-white/40' },
+    { id: 3, name: 'Shortlist Colleges', desc: 'Build your target list', status: report ? 'In Progress' : 'Pending', icon: report ? 'clock' : 'circle', color: report ? 'text-amber-400' : 'text-white/40' }
   ]);
 
   const addTask = () => {
