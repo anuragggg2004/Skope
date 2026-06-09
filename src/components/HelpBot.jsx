@@ -143,46 +143,64 @@ export default function HelpBot() {
       {/* Chat Panel */}
       {open && (
         <div
-          className="fixed bottom-24 right-6 z-50 w-[340px] max-w-[calc(100vw-24px)] rounded-[20px] overflow-hidden animate-fadeUp"
+          className="fixed bottom-24 right-6 z-50 w-[350px] max-w-[calc(100vw-24px)] rounded-[24px] overflow-hidden animate-fadeUp border border-white/10 bg-neutral-900/90 backdrop-blur-[20px]"
           style={{
-            background: 'rgba(10, 14, 26, 0.92)',
-            backdropFilter: 'blur(20px)',
-            border: '1px solid rgba(79,142,247,0.15)',
-            boxShadow: '0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.04)'
+            boxShadow: 'inset 0 0 0 1px rgba(255,255,255,0.06), 0 30px 80px rgba(59,130,246,0.15)'
           }}
         >
+          {/* Lighting highlight borders */}
+          <div className="absolute inset-0 border-white/20 border rounded-[24px] pointer-events-none" style={{ maskImage: 'linear-gradient(135deg, white, transparent 60%)', WebkitMaskImage: 'linear-gradient(135deg, white, transparent 60%)' }} />
+          <div className="absolute inset-0 border-white/10 border rounded-[24px] pointer-events-none" style={{ maskImage: 'linear-gradient(135deg, transparent 60%, white)', WebkitMaskImage: 'linear-gradient(135deg, transparent 60%, white)' }} />
+
           {/* Header */}
-          <div className="flex items-center gap-3 px-4 py-3.5 border-b border-[rgba(79,142,247,0.1)]"
-            style={{ background: 'linear-gradient(135deg, rgba(79,142,247,0.08), rgba(139,92,246,0.08))' }}>
-            <div className="w-9 h-9 rounded-full flex items-center justify-center shrink-0"
-              style={{ background: 'linear-gradient(135deg, #4f8ef7, #8b5cf6)' }}>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="white" strokeWidth="2"/>
-                <path d="M9 9C9 7.34315 10.3431 6 12 6C13.6569 6 15 7.34315 15 9C15 10.6569 13.6569 12 12 12V13" stroke="white" strokeWidth="2" strokeLinecap="round"/>
-                <circle cx="12" cy="16.5" r="0.75" fill="white" stroke="white" strokeWidth="0.5"/>
-              </svg>
-            </div>
-            <div>
-              <div className="font-sora text-[13px] font-semibold text-white">Skope Help</div>
-              <div className="font-dm text-[10px] text-[#6bcb77] flex items-center gap-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#6bcb77] inline-block animate-pulse" />
-                Always available
+          <div className="flex items-center justify-between px-4 py-3 border-b border-white/5 bg-zinc-950/40 relative z-10">
+            <div className="flex items-center gap-3">
+              <div className="relative">
+                <div
+                  className="w-8 h-8 rounded-full bg-cover ring-white/10 ring-1 animate-floatSlow"
+                  style={{
+                    backgroundImage: "url('https://hoirqrkdgbmvpwutwuwj-all.supabase.co/storage/v1/object/public/assets/assets/fc36a88f-5106-416e-82ac-ea0cd24cf358_320w.webp')",
+                    animationDuration: '7s'
+                  }}
+                />
+                <span className="absolute -bottom-0.5 -right-0.5 w-2 h-2 rounded-full bg-blue-400 border border-[#0A0A0F]" />
+              </div>
+              <div>
+                <div className="font-sora text-[12.5px] font-semibold text-white">Skope Help</div>
+                <div className="flex items-center gap-1.5 mt-0.5">
+                  <span className="inline-flex items-center gap-1.5 text-[9px] text-blue-200 bg-blue-900/30 rounded-full px-2 py-0.5 ring-1 ring-blue-700">
+                    <span className="w-1 h-1 rounded-full bg-blue-400 animate-breathe" />
+                    Online
+                  </span>
+                </div>
               </div>
             </div>
           </div>
 
           {/* Messages */}
-          <div className="max-h-[280px] overflow-y-auto px-4 py-3 flex flex-col gap-3">
+          <div className="max-h-[260px] overflow-y-auto px-4 py-3.5 flex flex-col gap-3 relative z-10">
             {messages.map((msg, i) => (
-              <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                <div
-                  className={`max-w-[85%] px-3.5 py-2.5 rounded-[14px] font-dm text-[12.5px] leading-[1.65] ${
-                    msg.role === 'user'
-                      ? 'bg-gradient-to-r from-[rgba(79,142,247,0.2)] to-[rgba(139,92,246,0.2)] text-white border border-[rgba(139,92,246,0.2)] rounded-tr-[4px]'
-                      : 'bg-[rgba(255,255,255,0.04)] text-[rgba(240,242,255,0.8)] border border-[rgba(255,255,255,0.06)] rounded-tl-[4px]'
-                  }`}
-                >
-                  {msg.text}
+              <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'} items-start w-full group relative mb-0.5`}>
+                {msg.role !== 'user' && (
+                  <div
+                    className="w-6 h-6 bg-cover ring-white/10 ring-1 rounded-full animate-floatSlow shrink-0 mr-2 mt-0.5"
+                    style={{
+                      backgroundImage: "url('https://hoirqrkdgbmvpwutwuwj-all.supabase.co/storage/v1/object/public/assets/assets/fc36a88f-5106-416e-82ac-ea0cd24cf358_320w.webp')",
+                      animationDuration: '7s'
+                    }}
+                  />
+                )}
+                <div className="relative max-w-[80%]">
+                  <div
+                    className={`px-3 py-1.5 font-dm text-[12px] leading-[1.6] shadow-sm ${
+                      msg.role === 'user'
+                        ? 'ring-1 ring-blue-400 text-white rounded-[12px_12px_4px_12px] animate-glowPulse'
+                        : 'bg-neutral-900 ring-1 ring-white/10 text-neutral-200 rounded-[12px_12px_12px_4px]'
+                    }`}
+                    style={msg.role === 'user' ? { background: 'linear-gradient(45deg, #06b6d4, #3b82f6, #2563eb)' } : {}}
+                  >
+                    {msg.text}
+                  </div>
                 </div>
               </div>
             ))}
@@ -191,7 +209,7 @@ export default function HelpBot() {
 
           {/* Quick questions — only shown at start */}
           {messages.length <= 1 && (
-            <div className="px-4 pb-2 flex flex-wrap gap-1.5">
+            <div className="px-4 pb-3 flex flex-wrap gap-1.5 relative z-10">
               {quickQuestions.map((q, i) => (
                 <button
                   key={i}
@@ -199,7 +217,7 @@ export default function HelpBot() {
                     const answer = findAnswer(q)
                     setMessages(prev => [...prev, { role: 'user', text: q }, { role: 'bot', text: answer }])
                   }}
-                  className="font-dm text-[11px] text-[rgba(240,242,255,0.55)] bg-[rgba(255,255,255,0.04)] border border-[rgba(79,142,247,0.12)] rounded-full px-2.5 py-1 cursor-pointer hover:border-blue hover:text-blue transition-all duration-200"
+                  className="font-dm text-[10.5px] text-[rgba(240,242,255,0.55)] bg-[rgba(255,255,255,0.04)] border border-[rgba(79,142,247,0.12)] rounded-full px-2.5 py-1 cursor-pointer hover:border-blue hover:text-blue transition-all duration-200"
                 >
                   {q}
                 </button>
@@ -208,24 +226,24 @@ export default function HelpBot() {
           )}
 
           {/* Input */}
-          <div className="flex items-center gap-2 px-4 py-3 border-t border-[rgba(79,142,247,0.08)]">
-            <input
-              type="text"
-              className="flex-1 bg-[rgba(255,255,255,0.04)] border border-[rgba(255,255,255,0.08)] rounded-[10px] px-3 py-2 text-white font-dm text-[12.5px] outline-none focus:border-[rgba(79,142,247,0.3)] transition-colors placeholder:text-[rgba(240,242,255,0.2)]"
-              placeholder="Ask anything..."
-              value={input}
-              onChange={e => setInput(e.target.value)}
-              onKeyDown={handleKey}
-            />
+          <div className="flex items-center gap-2 px-4 py-3 border-t border-white/5 bg-zinc-950/40 relative z-10">
+            <div className="flex-1 flex items-center bg-neutral-900/95 rounded-full ring-1 ring-white/10 px-3.5 py-1 focus-within:ring-blue-400/50 focus-within:ring-1 transition-all duration-200">
+              <input
+                type="text"
+                className="flex-1 bg-transparent border-none text-white font-dm text-[12.5px] outline-none placeholder:text-neutral-500 py-1"
+                placeholder="Ask anything..."
+                value={input}
+                onChange={e => setInput(e.target.value)}
+                onKeyDown={handleKey}
+              />
+            </div>
             <button
               onClick={handleSend}
               disabled={!input.trim()}
-              className="w-8 h-8 rounded-[8px] flex items-center justify-center border-none cursor-pointer transition-all duration-200 disabled:opacity-30 disabled:cursor-not-allowed shrink-0"
-              style={{ background: 'linear-gradient(135deg, #4f8ef7, #8b5cf6)' }}
+              className="px-3 py-1.5 text-[11px] font-semibold rounded-full text-white ring-1 ring-blue-400 shadow-[0_6px_16px_rgba(59,130,246,0.35)] animate-glowPulse disabled:opacity-30 disabled:cursor-not-allowed shrink-0 transition-transform active:scale-95"
+              style={{ background: 'linear-gradient(45deg, #06b6d4, #3b82f6, #2563eb)' }}
             >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-                <path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
+              Send
             </button>
           </div>
         </div>
@@ -233,3 +251,4 @@ export default function HelpBot() {
     </>
   )
 }
+

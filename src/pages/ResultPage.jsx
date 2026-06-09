@@ -1635,9 +1635,41 @@ export default function ResultPage() {
           <div data-noprint className="animate-fadeUp" style={{ animationDelay: '0.4s' }}>
             <SectionHeader tag="Keep Going" title="Ask your AI Counsellor" delay={0.4} />
 
-            <div className="glass-card rounded-[16px] overflow-hidden">
+            <div className="relative rounded-3xl border border-white/10 bg-neutral-900/60 backdrop-blur-[16px] overflow-hidden transition-all duration-300">
+              {/* Lighting highlight borders */}
+              <div className="absolute inset-0 border-white/20 border rounded-3xl pointer-events-none" style={{ maskImage: 'linear-gradient(135deg, white, transparent 60%)', WebkitMaskImage: 'linear-gradient(135deg, white, transparent 60%)' }} />
+              <div className="absolute inset-0 border-white/10 border rounded-3xl pointer-events-none" style={{ maskImage: 'linear-gradient(135deg, transparent 60%, white)', WebkitMaskImage: 'linear-gradient(135deg, transparent 60%, white)' }} />
+              
+              {/* Box shadow glow overlay */}
+              <div className="pointer-events-none absolute inset-0 rounded-3xl shimmer" style={{ boxShadow: 'inset 0 0 0 1px rgba(255,255,255,0.06), 0 40px 120px rgba(59,130,246,0.15)' }}></div>
+
+              {/* Chat Header */}
+              <div className="flex items-center justify-between px-6 py-3 border-b border-white/5 bg-zinc-950/40 relative z-10">
+                <div className="flex items-center gap-3">
+                  <div className="relative">
+                    <div
+                      className="w-8 h-8 rounded-full bg-cover ring-white/10 ring-1 animate-floatSlow"
+                      style={{
+                        backgroundImage: `url('https://hoirqrkdgbmvpwutwuwj-all.supabase.co/storage/v1/object/public/assets/assets/fc36a88f-5106-416e-82ac-ea0cd24cf358_320w.webp')`,
+                        animationDuration: '7s'
+                      }}
+                    />
+                    <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-blue-400 border border-[#0A0A0F]" />
+                  </div>
+                  <div>
+                    <div className="font-sora text-[13.5px] font-semibold text-white">Skope AI Counsellor</div>
+                    <div className="flex items-center gap-1.5 mt-0.5">
+                      <span className="inline-flex items-center gap-1.5 text-[10px] text-blue-200 bg-blue-900/30 rounded-full px-2.5 py-0.5 ring-1 ring-blue-700">
+                        <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-breathe" />
+                        {chatLoading ? 'Thinking' : 'Active'}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
               {/* Messages */}
-              <div className="max-h-[400px] overflow-y-auto p-5 flex flex-col gap-3">
+              <div className="max-h-[400px] overflow-y-auto p-5 flex flex-col gap-3 relative z-10">
                 <ChatMessage message={{
                   role: 'assistant',
                   content: "Your PathReport is loaded. Ask me anything — compare colleges, dig into a career, clarify exams, or update something you forgot to mention. I'll adjust your recommendations."
@@ -1654,10 +1686,13 @@ export default function ResultPage() {
 
                 {chatLoading && (
                   <div className="flex justify-start">
-                    <div className="bg-navy3 border border-[rgba(79,142,247,0.15)] rounded-[12px_12px_12px_4px] px-4 py-3 flex items-center gap-1.5">
-                      <span className="typing-dot" />
-                      <span className="typing-dot" />
-                      <span className="typing-dot" />
+                    <div className="bg-neutral-900 ring-1 ring-white/10 rounded-[14px_14px_14px_4px] px-3.5 py-2 flex items-center gap-2">
+                      <span className="font-dm text-[11px] text-neutral-400">Thinking</span>
+                      <span className="typing-dots inline-flex items-center gap-1">
+                        <span className="typing-dot" />
+                        <span className="typing-dot" />
+                        <span className="typing-dot" />
+                      </span>
                     </div>
                   </div>
                 )}
@@ -1667,12 +1702,12 @@ export default function ResultPage() {
 
               {/* Chips */}
               {showChips && (
-                <div className="px-5 pb-3 flex flex-wrap gap-2">
+                <div className="px-5 pb-3 flex flex-wrap gap-2 relative z-10">
                   {chips.map((chip, i) => (
                     <button
                       key={i}
                       onClick={() => handleChipClick(chip)}
-                      className="font-dm text-[12px] text-[rgba(240,242,255,0.55)] bg-navy3 border border-[rgba(79,142,247,0.12)] rounded-full px-3.5 py-1.5 cursor-pointer hover:border-blue hover:text-blue transition-all duration-200"
+                      className="font-dm text-[11px] text-[rgba(240,242,255,0.55)] bg-neutral-900 border border-[rgba(79,142,247,0.12)] rounded-full px-3.5 py-1.5 cursor-pointer hover:border-blue hover:text-blue transition-all duration-200"
                     >
                       {chip}
                     </button>
@@ -1681,26 +1716,32 @@ export default function ResultPage() {
               )}
 
               {/* Input */}
-              <div className="flex items-end gap-2.5 px-5 py-4 border-t border-[rgba(79,142,247,0.08)] bg-[rgba(15,19,32,0.3)]">
-                <textarea
-                  ref={textareaRef}
-                  className="flex-1 bg-navy3 border border-[rgba(79,142,247,0.12)] rounded-[10px] px-4 py-2.5 text-white font-dm text-[14px] outline-none focus:border-blue transition-colors placeholder:text-[rgba(240,242,255,0.2)] resize-none"
-                  rows={1}
-                  style={{ maxHeight: '80px' }}
-                  placeholder="Ask anything about your PathReport..."
-                  value={chatInput}
-                  onChange={(e) => { setChatInput(e.target.value); handleTextareaResize(e) }}
-                  onKeyDown={handleKeyDown}
-                />
-                <button
-                  onClick={() => sendChat()}
-                  disabled={chatLoading || !chatInput.trim()}
-                  className="w-10 h-10 rounded-[10px] bg-gradient-to-br from-blue to-purple flex items-center justify-center cursor-pointer border-none hover:opacity-90 transition-opacity disabled:opacity-40 disabled:cursor-not-allowed shrink-0"
-                >
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                    <path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                </button>
+              <div className="shrink-0 border-t border-white/5 bg-zinc-950/60 px-6 py-4 relative z-10">
+                <div className="flex items-center gap-3">
+                  <div className="flex-1 flex items-center bg-neutral-900/90 rounded-full ring-1 ring-white/10 px-4 py-1 focus-within:ring-blue-400/50 focus-within:ring-1 transition-all duration-200">
+                    <svg className="w-3.5 h-3.5 text-neutral-400 animate-tilt mr-2.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                      <path d="M12 5v14M5 12h14" />
+                    </svg>
+                    <textarea
+                      ref={textareaRef}
+                      className="flex-1 bg-transparent border-none text-white font-dm text-[13.5px] outline-none placeholder:text-neutral-500 resize-none leading-relaxed pt-1.5"
+                      rows={1}
+                      style={{ maxHeight: '80px' }}
+                      placeholder="Ask anything about your PathReport..."
+                      value={chatInput}
+                      onChange={(e) => { setChatInput(e.target.value); handleTextareaResize(e) }}
+                      onKeyDown={handleKeyDown}
+                    />
+                  </div>
+                  <button
+                    onClick={() => sendChat()}
+                    disabled={chatLoading || !chatInput.trim()}
+                    className="px-4 py-2 text-xs font-semibold rounded-full text-white ring-1 ring-blue-400 shadow-[0_6px_18px_rgba(59,130,246,0.35)] animate-glowPulse disabled:opacity-30 disabled:cursor-not-allowed shrink-0 transition-transform active:scale-95"
+                    style={{ background: 'linear-gradient(45deg, #06b6d4, #3b82f6, #2563eb)' }}
+                  >
+                    Send
+                  </button>
+                </div>
               </div>
             </div>
           </div>
