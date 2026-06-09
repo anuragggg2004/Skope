@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+import { useInView } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
 import Navbar from '../components/Navbar'
 import ChatMessage from '../components/ChatMessage'
@@ -64,6 +65,41 @@ function StoryCard({ gradient, emoji, label, value, delay }) {
   )
 }
 
+// ─── Animated progress bar (dashboard-inspired) ─────
+function AnimatedBar({ pct, color = 'from-[#4f8ef7] to-[#8b5cf6]', delay = 0 }) {
+  const ref = useRef(null)
+  const inView = useInView(ref, { once: true, margin: '-10%' })
+  return (
+    <div ref={ref} className="h-1.5 w-full rounded-full bg-white/[0.07] overflow-hidden">
+      <motion.div
+        className={`h-full rounded-full bg-gradient-to-r ${color}`}
+        initial={{ width: 0 }}
+        animate={inView ? { width: `${pct}%` } : { width: 0 }}
+        transition={{ duration: 1.4, ease: 'easeOut', delay }}
+      />
+    </div>
+  )
+}
+
+// ─── Animated counter number ──────────────────────────
+function CountUp({ to, active, suffix = '' }) {
+  const [val, setVal] = useState(0)
+  useEffect(() => {
+    if (!active) return
+    let start = null
+    const step = (ts) => {
+      if (!start) start = ts
+      const progress = Math.min((ts - start) / 1200, 1)
+      const ease = 1 - Math.pow(1 - progress, 3)
+      setVal(Math.floor(ease * to))
+      if (progress < 1) requestAnimationFrame(step)
+      else setVal(to)
+    }
+    requestAnimationFrame(step)
+  }, [active, to])
+  return <>{val}{suffix}</>
+}
+
 function SectionHeader({ tag, title, delay = 0 }) {
   return (
     <div className="mb-5 animate-fadeUp" style={{ animationDelay: `${delay}s` }}>
@@ -75,14 +111,24 @@ function SectionHeader({ tag, title, delay = 0 }) {
 
 function CareerCardRedesigned({ career, index }) {
   const [expanded, setExpanded] = useState(false)
+  const cardRef = useRef(null)
+  const inView = useInView(cardRef, { once: true, margin: '-10%' })
+
   const gradients = [
     'linear-gradient(135deg, rgba(79,142,247,0.12), rgba(108,99,255,0.06))',
     'linear-gradient(135deg, rgba(108,99,255,0.12), rgba(236,72,153,0.06))',
     'linear-gradient(135deg, rgba(107,203,119,0.1), rgba(79,142,247,0.06))'
   ]
+  const barColors = [
+    'from-[#4f8ef7] to-[#8b5cf6]',
+    'from-[#8b5cf6] to-[#ec4899]',
+    'from-[#6bcb77] to-[#4f8ef7]'
+  ]
+  const matchScore = career.match_score || career.matchScore || (90 - index * 8)
 
   return (
     <div
+      ref={cardRef}
       className="rounded-[20px] border border-[rgba(255,255,255,0.06)] p-[1px] cursor-pointer group hover:border-[rgba(108,99,255,0.2)] transition-all duration-300"
       onClick={() => setExpanded(!expanded)}
     >
@@ -90,16 +136,24 @@ function CareerCardRedesigned({ career, index }) {
         className="rounded-[19px] p-5 sm:p-6 h-full transition-all duration-300"
         style={{ background: gradients[index % 3] }}
       >
-        {/* Number + Title */}
+        {/* Number + Title + Match Score */}
         <div className="flex items-start gap-3 mb-3">
           <span className="font-sora text-[32px] font-bold text-[rgba(255,255,255,0.08)] leading-none select-none">
             {String(index + 1).padStart(2, '0')}
           </span>
-          <div className="min-w-0">
-            <h3 className="font-sora text-[17px] font-bold text-white leading-snug">{career.title}</h3>
+          <div className="min-w-0 flex-1">
+            <div className="flex items-center justify-between gap-2 mb-0.5">
+              <h3 className="font-sora text-[17px] font-bold text-white leading-snug">{career.title}</h3>
+              <span className="font-mono text-[13px] font-bold text-white/80 shrink-0">
+                <CountUp to={matchScore} active={inView} suffix="%" />
+              </span>
+            </div>
             {career.earning_range && (
-              <span className="font-dm text-[12px] text-[rgba(240,242,255,0.45)] mt-0.5 block">{career.earning_range}</span>
+              <span className="font-dm text-[12px] text-[rgba(240,242,255,0.45)] block mb-2">{career.earning_range}</span>
             )}
+            {/* Animated Match Bar */}
+            <AnimatedBar pct={matchScore} color={barColors[index % 3]} delay={index * 0.15} />
+            <span className="font-dm text-[9px] uppercase tracking-[1.5px] text-white/30 mt-1 block">Match Score</span>
           </div>
         </div>
 
@@ -138,7 +192,7 @@ function CareerCardRedesigned({ career, index }) {
               <div>
                 <span className="font-dm text-[11px] font-bold text-[#f87171] uppercase tracking-[1px] block mb-1.5">✗ Cons</span>
                 <ul className="space-y-1">
-                  {career.cons.map((c, i) => (
+                  {career.cons && career.cons.map((c, i) => (
                     <li key={i} className="font-dm text-[12px] text-[rgba(240,242,255,0.65)]">• {c}</li>
                   ))}
                 </ul>
@@ -451,6 +505,140 @@ function ProfileTimelineTracker({ pathReport }) {
           </div>
         ))}
       </div>
+    </div>
+  )
+}
+
+// ─── Dashboard Stat Strip ─────────────────────────────
+function DashboardStatStrip({ pathReport }) {
+  const ref = useRef(null)
+  const inView = useInView(ref, { once: true, margin: '-10%' })
+
+  const stats = [
+    {
+      label: 'Career Matches',
+      value: pathReport?.careers?.length || 0,
+      icon: '🎯',
+      color: 'from-[#4f8ef7] to-[#8b5cf6]',
+      ring: 'ring-[rgba(79,142,247,0.2)]'
+    },
+    {
+      label: 'Colleges Found',
+      value: pathReport?.colleges?.length || 0,
+      icon: '🏫',
+      color: 'from-[#8b5cf6] to-[#ec4899]',
+      ring: 'ring-[rgba(139,92,246,0.2)]'
+    },
+    {
+      label: 'Profile Score',
+      value: pathReport?.confidence_score?.score || 84,
+      suffix: '%',
+      icon: '⚡',
+      color: 'from-[#6bcb77] to-[#4f8ef7]',
+      ring: 'ring-[rgba(107,203,119,0.2)]'
+    },
+    {
+      label: 'Action Items',
+      value: pathReport?.confidence_score?.actions?.length || 3,
+      icon: '📋',
+      color: 'from-[#fbbf24] to-[#f97316]',
+      ring: 'ring-[rgba(251,191,36,0.2)]'
+    }
+  ]
+
+  return (
+    <div ref={ref} className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8 animate-fadeUp" style={{ animationDelay: '0.18s' }}>
+      {stats.map((s, i) => (
+        <div
+          key={i}
+          className={`glass-card rounded-[16px] p-4 ring-1 ${s.ring} flex flex-col items-center text-center gap-1.5 hover:scale-[1.02] transition-transform duration-200`}
+        >
+          <span className="text-[24px]">{s.icon}</span>
+          <div className={`font-sora text-[28px] font-extrabold text-transparent bg-clip-text bg-gradient-to-r ${s.color}`}>
+            <CountUp to={s.value} active={inView} suffix={s.suffix || ''} />
+          </div>
+          <span className="font-dm text-[10px] uppercase tracking-[1.5px] text-white/40">{s.label}</span>
+        </div>
+      ))}
+    </div>
+  )
+}
+
+// ─── 30-Day Action Plan Section ───────────────────────
+function ActionPlanSection({ pathReport }) {
+  const rawActions = pathReport?.next_30_days || pathReport?.confidence_score?.actions || []
+  const defaultActions = [
+    'Review your top career match in detail',
+    'Shortlist 3 colleges from your recommendations',
+    'Check entrance exam syllabus for your target',
+  ]
+  const actions = rawActions.length > 0 ? rawActions : defaultActions
+  const [checked, setChecked] = useState({})
+
+  const completedCount = Object.values(checked).filter(Boolean).length
+  const pct = actions.length > 0 ? Math.round((completedCount / actions.length) * 100) : 0
+
+  return (
+    <div className="glass-card rounded-[20px] p-6 mb-6 border border-[rgba(108,99,255,0.1)] bg-gradient-to-br from-[rgba(108,99,255,0.04)] to-transparent animate-fadeUp" style={{ animationDelay: '0.28s' }}>
+      {/* Header */}
+      <div className="flex items-center justify-between gap-4 mb-4">
+        <div className="flex items-center gap-2.5">
+          <span className="text-[20px]">📅</span>
+          <div>
+            <span className="font-dm text-[10px] font-bold uppercase tracking-[1.5px] text-purple block">Action Plan</span>
+            <h3 className="font-sora text-[16px] font-bold text-white">Your Next 30 Days</h3>
+          </div>
+        </div>
+        <div className="flex flex-col items-end gap-1">
+          <span className="font-mono text-[12px] font-bold text-white/70">{completedCount}/{actions.length} done</span>
+          <div className="w-24 h-1.5 rounded-full bg-white/[0.07] overflow-hidden">
+            <motion.div
+              className="h-full rounded-full bg-gradient-to-r from-[#8b5cf6] to-[#4f8ef7]"
+              initial={{ width: 0 }}
+              animate={{ width: `${pct}%` }}
+              transition={{ duration: 0.6, ease: 'easeOut' }}
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Steps */}
+      <div className="space-y-2.5">
+        {actions.slice(0, 5).map((act, i) => (
+          <motion.div
+            key={i}
+            layout
+            className={`flex items-start gap-3 rounded-[12px] px-4 py-3 border transition-all duration-200 cursor-pointer ${
+              checked[i]
+                ? 'bg-[rgba(34,211,160,0.05)] border-[rgba(34,211,160,0.15)]'
+                : 'bg-white/[0.02] border-white/[0.05] hover:bg-white/[0.04] hover:border-[rgba(108,99,255,0.15)]'
+            }`}
+            onClick={() => setChecked(prev => ({ ...prev, [i]: !prev[i] }))}
+          >
+            {/* Checkbox */}
+            <div className={`w-5 h-5 rounded-full border-2 shrink-0 mt-0.5 flex items-center justify-center transition-all duration-200 ${
+              checked[i] ? 'bg-[#22d3a0] border-[#22d3a0]' : 'border-white/20'
+            }`}>
+              {checked[i] && (
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+              )}
+            </div>
+            <span className={`font-dm text-[13px] leading-snug transition-colors duration-200 ${
+              checked[i] ? 'text-white/35 line-through' : 'text-white/75'
+            }`}>
+              {act}
+            </span>
+          </motion.div>
+        ))}
+      </div>
+
+      {pct === 100 && (
+        <div className="mt-4 text-center p-3 bg-[rgba(34,211,160,0.08)] border border-[rgba(34,211,160,0.2)] rounded-[12px]">
+          <span className="font-sora text-[14px] font-bold text-[#22d3a0]">🎉 All done! You're ahead of the curve.</span>
+        </div>
+      )}
     </div>
   )
 }
@@ -817,6 +1005,11 @@ export default function ResultPage() {
           </div>
 
           {/* ═══════════════════════════════════════════ */}
+          {/* DASHBOARD STAT STRIP */}
+          {/* ═══════════════════════════════════════════ */}
+          <DashboardStatStrip pathReport={pathReport} />
+
+          {/* ═══════════════════════════════════════════ */}
           {/* PERSONALITY ARCHETYPE HERO CARD */}
           {/* ═══════════════════════════════════════════ */}
           {pathReport.archetype && (
@@ -1044,7 +1237,7 @@ export default function ResultPage() {
           {/* ═══════════════════════════════════════════ */}
           {/* STRENGTHS & GAPS — Side by side pills */}
           {/* ═══════════════════════════════════════════ */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 mb-8 animate-fadeUp" style={{ animationDelay: '0.25s' }}>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 mb-6 animate-fadeUp" style={{ animationDelay: '0.25s' }}>
             <div className="glass-card rounded-[16px] p-5">
               <div className="flex items-center gap-2 mb-4">
                 <div className="w-2 h-2 rounded-full bg-[#6bcb77]" />
@@ -1075,6 +1268,11 @@ export default function ResultPage() {
               </ul>
             </div>
           </div>
+
+          {/* ═══════════════════════════════════════════ */}
+          {/* 30-DAY ACTION PLAN */}
+          {/* ═══════════════════════════════════════════ */}
+          <ActionPlanSection pathReport={pathReport} />
 
           {/* ═══════════════════════════════════════════ */}
           {/* TAB NAVIGATION — Careers / Colleges / Courses */}

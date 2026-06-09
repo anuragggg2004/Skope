@@ -45,7 +45,6 @@ function AvatarDropdown({ user, logout }) {
   const items = [
     { label: '🎯 My PathReport',    action: () => navigate('/result') },
     { label: '⚡ Retake Test',       action: () => navigate('/form') },
-    { label: '📊 Dashboard',         action: () => navigate('/dashboard') },
     { label: '👤 Profile',           action: () => navigate('/profile') },
     { divider: true },
     { label: '🚪 Sign Out',          action: logout, danger: true },
@@ -180,7 +179,6 @@ function MobileMenu({ open, onClose, user, logout }) {
               { label: 'Home',              path: '/' },
               { label: 'Find My Career Vibe', path: user ? '/form' : '/login' },
               { label: 'My PathReport',       path: user ? '/result' : '/login' },
-              user && { label: 'Dashboard',   path: '/dashboard' },
               user && { label: 'Profile',     path: '/profile' },
             ].filter(Boolean).map(item => (
               <button
@@ -277,7 +275,6 @@ export default function Navbar() {
               {[
                 { label: 'Home',       path: '/' },
                 { label: 'PathReport', path: '/result' },
-                { label: 'Dashboard',  path: '/dashboard' },
               ].map(item => (
                 <button
                   key={item.path}

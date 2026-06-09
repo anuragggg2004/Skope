@@ -298,13 +298,14 @@ async function callAI(systemPrompt, userPrompt, useSearch = false) {
     ],
     generationConfig: {
       temperature: 0.7,
-      maxOutputTokens: 16000,
-      responseMimeType: 'application/json'
+      maxOutputTokens: 16000
     }
   }
 
   if (useSearch) {
     payload.tools = [{ googleSearch: {} }]
+  } else {
+    payload.generationConfig.responseMimeType = 'application/json'
   }
 
   return await callAIBase(payload)
