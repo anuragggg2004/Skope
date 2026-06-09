@@ -44,7 +44,7 @@ function AvatarDropdown({ user, logout }) {
 
   const items = [
     { label: '🎯 My PathReport',    action: () => navigate('/result') },
-    { label: '⚡ Retake Test',       action: () => navigate('/form') },
+    { label: '⚡ Retake Test',       action: () => { sessionStorage.setItem('skope_retake_active', 'true'); navigate('/form') } },
     { label: '👤 Profile',           action: () => navigate('/profile') },
     { divider: true },
     { label: '🚪 Sign Out',          action: logout, danger: true },
@@ -310,7 +310,7 @@ export default function Navbar() {
               <>
                 {/* Retake Test — desktop only */}
                 <button
-                  onClick={() => navigate('/form')}
+                  onClick={() => { sessionStorage.setItem('skope_retake_active', 'true'); navigate('/form') }}
                   className="hidden sm:block"
                   style={{
                     fontFamily: 'Sora, sans-serif', fontSize: 12, fontWeight: 600,

@@ -334,16 +334,21 @@ const FAQ = [
 
 export default function LandingPage() {
   const navigate = useNavigate()
-  const { user } = useAuth()
+  const { user, pathReport } = useAuth()
 
   const handleStart = () => {
     if (user) {
-      navigate('/form')
+      if (pathReport) {
+        navigate('/result')
+      } else {
+        navigate('/form')
+      }
     } else {
       sessionStorage.setItem('initial_diagnostic_message', "Let's build your PathReport.")
       navigate('/login')
     }
   }
+
 
   return (
     <div style={{ background: 'var(--bg)', minHeight: '100vh', overflowX: 'hidden' }}>

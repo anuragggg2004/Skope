@@ -90,14 +90,14 @@ const btnPrimary = "w-full font-sora text-[14px] font-semibold bg-gradient-to-r 
 
 export default function LoginPage() {
   const navigate = useNavigate()
-  const { loginWithGoogle, loginWithEmail, signupWithEmail, loginAsGuest, resetPassword } = useAuth()
+  const { user, loading, pathReport, loginWithGoogle, loginWithEmail, signupWithEmail, loginAsGuest, resetPassword } = useAuth()
 
   const [viewMode, setViewMode] = useState('login') // login | forgot | phone | otp
   const [isSignup, setIsSignup] = useState(false)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [name, setName] = useState('')
-  const [loading, setLoading] = useState(false)
+  const [loadingForm, setLoadingForm] = useState(false)
   const [error, setError] = useState('')
   const [googleLoading, setGoogleLoading] = useState(false)
   const [guestLoading, setGuestLoading] = useState(false)
@@ -116,6 +116,16 @@ export default function LoginPage() {
   const [otpTimer, setOtpTimer] = useState(0)
 
   useEffect(() => {
+    if (!loading && user) {
+      if (pathReport) {
+        navigate('/result')
+      } else {
+        navigate('/form')
+      }
+    }
+  }, [user, loading, pathReport, navigate])
+
+  useEffect(() => {
     const t = setInterval(() => setActiveTestimonial(p => (p + 1) % TESTIMONIALS.length), 4500)
     return () => clearInterval(t)
   }, [])
@@ -130,7 +140,7 @@ export default function LoginPage() {
     setError(''); setGoogleLoading(true)
     try {
       await loginWithGoogle()
-      navigate('/form')
+      // Redirection is handled automatically by the useEffect
     } catch (err) {
       const msgs = {
         'auth/unauthorized-domain': 'Domain not authorized. Add it in Firebase Console → Authentication → Authorized Domains.',
@@ -155,11 +165,11 @@ export default function LoginPage() {
     e.preventDefault()
     if (!email.trim() || !password.trim()) { setError('Please fill in all fields.'); return }
     if (password.length < 6) { setError('Password must be at least 6 characters.'); return }
-    setError(''); setLoading(true)
+    setError(''); setLoadingForm(true)
     try {
       if (isSignup) await signupWithEmail(email, password, name)
       else await loginWithEmail(email, password)
-      navigate('/form')
+      // Redirection is handled automatically by the useEffect
     } catch (err) {
       const msgs = {
         'auth/user-not-found': 'No account with this email. Try signing up.',
@@ -170,7 +180,7 @@ export default function LoginPage() {
         'auth/too-many-requests': 'Too many attempts. Try again later.'
       }
       setError(msgs[err.code] || 'Something went wrong. Please try again.')
-    } finally { setLoading(false) }
+    } finally { setLoadingForm(false) }
   }
 
   const handleForgotSubmit = async (e) => {
@@ -229,7 +239,7 @@ export default function LoginPage() {
     setError(''); setOtpLoading(true)
     try {
       await confirmationResult.confirm(otp)
-      navigate('/form')
+      // Redirection is handled automatically by the useEffect
     } catch {
       setError('Incorrect OTP. Please check and try again.')
     } finally { setOtpLoading(false) }
@@ -237,7 +247,16 @@ export default function LoginPage() {
 
   const t = TESTIMONIALS[activeTestimonial]
 
+  if (loading && user) {
+    return (
+      <div className="min-h-screen flex items-center justify-center" style={{ background: '#080b14' }}>
+        <div className="w-8 h-8 border-2 border-[rgba(79,142,247,0.2)] border-t-[#4f8ef7] rounded-full animate-spin" />
+      </div>
+    )
+  }
+
   return (
+
     <>
       <div id="recaptcha-parent"><div id="recaptcha-container"></div></div>
 

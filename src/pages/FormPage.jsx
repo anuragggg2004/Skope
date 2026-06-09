@@ -1,7 +1,9 @@
 import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useAuth } from '../contexts/AuthContext'
 import Navbar from '../components/Navbar'
 import LoadingDots from '../components/LoadingDots'
+
 
 // ─── Phase 1 Questions Config ─────────────────────────
 
@@ -171,6 +173,7 @@ function ChatBubble({ message, index, isLatest, onType }) {
 
 export default function FormPage() {
   const navigate = useNavigate()
+  const { user, pathReport } = useAuth()
 
   // Load state from sessionStorage if it exists to survive page refreshes
   const getInitialChat = () => {
@@ -193,12 +196,22 @@ export default function FormPage() {
 
   // Clear report caches on mount so they can run fresh reports, but leave the chat session intact
   useEffect(() => {
+    // If they have a report and didn't explicitly trigger a retake, redirect to result
+    const isRetake = sessionStorage.getItem('skope_retake_active') === 'true'
+    if (pathReport && !isRetake) {
+      navigate('/result')
+      return
+    }
+
+    // Otherwise, clear the retake flag and clear report cache
+    sessionStorage.removeItem('skope_retake_active')
     sessionStorage.removeItem('pathreport')
     sessionStorage.removeItem('skope_preferences')
     sessionStorage.removeItem('skope_phase2')
     sessionStorage.removeItem('share_popup_shown')
 
     const initialChat = getInitialChat()
+
     if (initialChat.length === 0) {
       setLoading(true)
       fetch('/api/conversation-start', { method: 'POST' })
