@@ -46,85 +46,131 @@ const ARCHETYPE_EMOJIS = {
 
 // ─── Inline Sub-Components ────────────────────────────
 
-function StoryCard({ gradient, glowColor, icon, label, value, badge, delay, accentLine }) {
+function StoryCard({ config, delay }) {
   const [hovered, setHovered] = useState(false)
+  const { icon, label, value, badge, badgeIcon, bg, orb1, orb2, borderGlow, textAccent, pattern } = config
+
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20, scale: 0.95 }}
-      animate={{ opacity: 1, y: 0, scale: 1 }}
-      transition={{ duration: 0.45, delay, ease: [0.16, 1, 0.3, 1] }}
-      whileHover={{ y: -6, scale: 1.035 }}
+      initial={{ opacity: 0, y: 28, rotateX: 8 }}
+      animate={{ opacity: 1, y: 0, rotateX: 0 }}
+      transition={{ duration: 0.55, delay, ease: [0.16, 1, 0.3, 1] }}
+      whileHover={{ y: -8, scale: 1.04 }}
       onHoverStart={() => setHovered(true)}
       onHoverEnd={() => setHovered(false)}
-      className="shrink-0 w-[152px] sm:w-[168px] rounded-[20px] cursor-default relative overflow-hidden"
-      style={{
-        background: 'rgba(15,19,32,0.85)',
-        border: `1px solid ${hovered ? glowColor + '55' : 'rgba(255,255,255,0.07)'}`,
-        boxShadow: hovered ? `0 0 28px ${glowColor}33, inset 0 1px 0 rgba(255,255,255,0.08)` : 'inset 0 1px 0 rgba(255,255,255,0.04)',
-        backdropFilter: 'blur(20px)',
-        transition: 'border-color 0.3s ease, box-shadow 0.3s ease'
-      }}
+      className="shrink-0 w-[148px] sm:w-[162px] h-[210px] sm:h-[230px] rounded-[22px] cursor-default relative overflow-hidden snap-start"
+      style={{ perspective: 800 }}
     >
-      {/* Top accent line */}
-      <div style={{ height: 3, background: gradient, borderRadius: '20px 20px 0 0', opacity: hovered ? 1 : 0.7, transition: 'opacity 0.3s' }} />
-
-      {/* Ambient glow orb */}
-      <div style={{
-        position: 'absolute', top: -20, right: -20,
-        width: 80, height: 80, borderRadius: '50%',
-        background: glowColor + '20',
-        filter: 'blur(24px)',
-        pointerEvents: 'none',
-        opacity: hovered ? 1 : 0.5,
-        transition: 'opacity 0.3s'
-      }} />
-
-      <div className="p-4 flex flex-col gap-3 relative z-10">
-        {/* Icon container with gradient bg */}
-        <div style={{
-          width: 40, height: 40,
-          borderRadius: 12,
-          background: `linear-gradient(135deg, ${glowColor}25, ${glowColor}10)`,
-          border: `1px solid ${glowColor}30`,
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          fontSize: 20
-        }}>
-          {icon}
-        </div>
-
-        {/* Label */}
-        <span className="font-dm text-[9px] uppercase tracking-[2px]" style={{ color: glowColor, fontWeight: 700 }}>{label}</span>
-
-        {/* Value */}
-        <span className="font-sora text-[13.5px] font-bold text-white leading-snug">{value}</span>
-
-        {/* Badge */}
-        {badge && (
-          <div style={{
-            display: 'inline-flex', alignItems: 'center', gap: 4,
-            background: glowColor + '15',
-            border: `1px solid ${glowColor}30`,
-            borderRadius: 999, padding: '2px 8px', width: 'fit-content'
-          }}>
-            <span style={{ width: 5, height: 5, borderRadius: '50%', background: glowColor, display: 'inline-block' }} />
-            <span className="font-dm text-[9px] font-semibold" style={{ color: glowColor }}>{badge}</span>
-          </div>
-        )}
-      </div>
-
-      {/* Shimmer sweep on hover */}
+      {/* Rotating glow border ring */}
       <motion.div
-        animate={hovered ? { x: ['−100%', '200%'] } : { x: '-100%' }}
-        transition={{ duration: 0.7, ease: 'easeInOut' }}
+        animate={{ rotate: 360 }}
+        transition={{ duration: 4, repeat: Infinity, ease: 'linear' }}
         style={{
-          position: 'absolute', inset: 0,
-          background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent)',
-          pointerEvents: 'none'
+          position: 'absolute', inset: -2, borderRadius: 24, zIndex: 0,
+          background: `conic-gradient(from 0deg, transparent 60%, ${borderGlow}, transparent 80%)`,
+          opacity: hovered ? 1 : 0.5,
+          transition: 'opacity 0.4s'
         }}
       />
+
+      {/* Card body */}
+      <div
+        className="absolute inset-[2px] rounded-[21px] overflow-hidden flex flex-col"
+        style={{ background: bg, zIndex: 1 }}
+      >
+        {/* Floating orb 1 */}
+        <motion.div
+          animate={{ x: [0, 14, 0], y: [0, -10, 0] }}
+          transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+          style={{
+            position: 'absolute', top: -18, right: -18,
+            width: 100, height: 100, borderRadius: '50%',
+            background: orb1, filter: 'blur(32px)', opacity: 0.7
+          }}
+        />
+        {/* Floating orb 2 */}
+        <motion.div
+          animate={{ x: [0, -12, 0], y: [0, 15, 0] }}
+          transition={{ duration: 6.5, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
+          style={{
+            position: 'absolute', bottom: 40, left: -10,
+            width: 70, height: 70, borderRadius: '50%',
+            background: orb2, filter: 'blur(22px)', opacity: 0.5
+          }}
+        />
+
+        {/* Subtle dot pattern overlay */}
+        <div style={{
+          position: 'absolute', inset: 0, opacity: 0.06,
+          backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.8) 1px, transparent 1px)',
+          backgroundSize: '18px 18px'
+        }} />
+
+        {/* Main content */}
+        <div className="flex-1 flex flex-col justify-between p-4 relative z-10">
+          {/* Top: icon + badge */}
+          <div className="flex items-start justify-between">
+            {/* Icon box */}
+            <div style={{
+              width: 44, height: 44, borderRadius: 14,
+              background: 'rgba(255,255,255,0.1)',
+              backdropFilter: 'blur(8px)',
+              border: '1px solid rgba(255,255,255,0.18)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              fontSize: 22, flexShrink: 0
+            }}>
+              {icon}
+            </div>
+            {/* Badge */}
+            {badge && (
+              <motion.div
+                animate={{ scale: hovered ? [1, 1.08, 1] : 1 }}
+                transition={{ duration: 0.4 }}
+                style={{
+                  background: 'rgba(255,255,255,0.12)',
+                  backdropFilter: 'blur(10px)',
+                  border: '1px solid rgba(255,255,255,0.2)',
+                  borderRadius: 999, padding: '3px 8px',
+                  display: 'flex', alignItems: 'center', gap: 4
+                }}
+              >
+                {badgeIcon && <span style={{ fontSize: 10 }}>{badgeIcon}</span>}
+                <span className="font-mono text-[8.5px] font-bold text-white/80">{badge}</span>
+              </motion.div>
+            )}
+          </div>
+
+          {/* Center: large value */}
+          <div>
+            <div className="font-dm text-[9px] uppercase tracking-[2.5px] mb-1.5" style={{ color: textAccent }}>
+              {label}
+            </div>
+            <div className="font-sora text-[15px] font-extrabold text-white leading-snug drop-shadow-sm">
+              {value}
+            </div>
+          </div>
+        </div>
+
+        {/* Frosted bottom strip */}
+        <div style={{
+          background: 'rgba(0,0,0,0.28)',
+          backdropFilter: 'blur(12px)',
+          borderTop: '1px solid rgba(255,255,255,0.07)',
+          padding: '7px 14px',
+          display: 'flex', alignItems: 'center', gap: 6
+        }}>
+          <motion.div
+            animate={{ opacity: [1, 0.4, 1] }}
+            transition={{ duration: 2, repeat: Infinity }}
+            style={{ width: 6, height: 6, borderRadius: '50%', background: borderGlow, flexShrink: 0 }}
+          />
+          <span className="font-dm text-[9px] text-white/50 truncate">AI analysed</span>
+        </div>
+      </div>
     </motion.div>
   )
 }
+
 
 // ─── Animated progress bar (dashboard-inspired) ─────
 function AnimatedBar({ pct, color = 'from-[#4f8ef7] to-[#8b5cf6]', delay = 0 }) {
@@ -1035,52 +1081,62 @@ export default function ResultPage() {
               <div className="h-px flex-1 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
             </div>
 
-            <div className="flex gap-3 overflow-x-auto pb-3 -mx-4 px-4 snap-x snap-mandatory scrollbar-hide">
-              <StoryCard
-                gradient="linear-gradient(90deg, #4f8ef7, #8b5cf6)"
-                glowColor="#4f8ef7"
-                icon="🎯"
-                label="Top Career"
-                value={pathReport.careers?.[0]?.title || '—'}
-                badge={pathReport.careers?.[0]?.match_score ? `${pathReport.careers[0].match_score}% match` : 'AI Matched'}
-                delay={0.05}
-              />
-              <StoryCard
-                gradient="linear-gradient(90deg, #8b5cf6, #ec4899)"
-                glowColor="#8b5cf6"
-                icon="🏫"
-                label="Best Fit College"
-                value={pathReport.colleges?.[0]?.name?.split(' ').slice(0, 3).join(' ') || '—'}
-                badge={pathReport.colleges?.[0]?.classification?.toUpperCase() || 'Target'}
-                delay={0.1}
-              />
-              <StoryCard
-                gradient="linear-gradient(90deg, #22d3a0, #4f8ef7)"
-                glowColor="#22d3a0"
-                icon="💪"
-                label="Top Strength"
-                value={pathReport.strengths?.[0]?.split('(')[0]?.trim().slice(0, 40) || '—'}
-                badge="Your Edge"
-                delay={0.15}
-              />
-              <StoryCard
-                gradient="linear-gradient(90deg, #fbbf24, #f97316)"
-                glowColor="#fbbf24"
-                icon="⚡"
-                label="Reality Check"
-                value={pathReport.gaps?.[0]?.split('—')[0]?.trim().slice(0, 40) || '—'}
-                badge="Watch Out"
-                delay={0.2}
-              />
-              <StoryCard
-                gradient="linear-gradient(90deg, #ec4899, #8b5cf6)"
-                glowColor="#ec4899"
-                icon="🚀"
-                label="Emerging Role"
-                value={pathReport.emerging_roles?.[0]?.title || '—'}
-                badge="Future-Proof"
-                delay={0.25}
-              />
+            <div className="flex gap-3.5 overflow-x-auto pb-4 -mx-4 px-4 snap-x snap-mandatory scrollbar-hide">
+              <StoryCard delay={0.05} config={{
+                icon: '🎯', label: 'Top Career',
+                value: pathReport.careers?.[0]?.title || '—',
+                badge: pathReport.careers?.[0]?.match_score ? `${pathReport.careers[0].match_score}%` : 'AI Pick',
+                badgeIcon: '✦',
+                bg: 'linear-gradient(145deg, #0d1b3e 0%, #0f1a35 60%, #1a0d3e 100%)',
+                orb1: 'radial-gradient(circle, #4f8ef7, #6c63ff)',
+                orb2: 'radial-gradient(circle, #8b5cf6, transparent)',
+                borderGlow: '#4f8ef7',
+                textAccent: '#7eb3ff'
+              }} />
+              <StoryCard delay={0.1} config={{
+                icon: '🏛️', label: 'Best Fit College',
+                value: pathReport.colleges?.[0]?.name?.split(' ').slice(0, 3).join(' ') || '—',
+                badge: pathReport.colleges?.[0]?.classification || 'Target',
+                badgeIcon: '🎯',
+                bg: 'linear-gradient(145deg, #1a0d3e 0%, #160d38 60%, #2a0d4e 100%)',
+                orb1: 'radial-gradient(circle, #8b5cf6, #ec4899)',
+                orb2: 'radial-gradient(circle, #ec4899, transparent)',
+                borderGlow: '#a78bfa',
+                textAccent: '#c4b5fd'
+              }} />
+              <StoryCard delay={0.15} config={{
+                icon: '💪', label: 'Top Strength',
+                value: pathReport.strengths?.[0]?.split('(')[0]?.trim().slice(0, 38) || '—',
+                badge: 'Your Edge',
+                badgeIcon: '⚡',
+                bg: 'linear-gradient(145deg, #0d2e2a 0%, #0c2822 60%, #0d3a2a 100%)',
+                orb1: 'radial-gradient(circle, #22d3a0, #4f8ef7)',
+                orb2: 'radial-gradient(circle, #10b981, transparent)',
+                borderGlow: '#22d3a0',
+                textAccent: '#6ee7b7'
+              }} />
+              <StoryCard delay={0.2} config={{
+                icon: '⚡', label: 'Reality Check',
+                value: pathReport.gaps?.[0]?.split('—')[0]?.trim().slice(0, 38) || '—',
+                badge: 'Watch Out',
+                badgeIcon: '🔥',
+                bg: 'linear-gradient(145deg, #2e1a00 0%, #281500 60%, #3a1a00 100%)',
+                orb1: 'radial-gradient(circle, #fbbf24, #f97316)',
+                orb2: 'radial-gradient(circle, #f59e0b, transparent)',
+                borderGlow: '#fbbf24',
+                textAccent: '#fde68a'
+              }} />
+              <StoryCard delay={0.25} config={{
+                icon: '🚀', label: 'Emerging Role',
+                value: pathReport.emerging_roles?.[0]?.title || '—',
+                badge: '2026+',
+                badgeIcon: '🌐',
+                bg: 'linear-gradient(145deg, #2e0d1f 0%, #280a1a 60%, #3a0d2e 100%)',
+                orb1: 'radial-gradient(circle, #ec4899, #8b5cf6)',
+                orb2: 'radial-gradient(circle, #f472b6, transparent)',
+                borderGlow: '#ec4899',
+                textAccent: '#f9a8d4'
+              }} />
             </div>
           </div>
 
