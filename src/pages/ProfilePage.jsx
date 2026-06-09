@@ -178,7 +178,7 @@ export default function ProfilePage() {
       <div className="grid-bg" />
       <div className="orb-1" />
       <div className="orb-2" />
-      <div className="page-wrapper">
+      <div className="page-wrapper pt-[80px]">
         <Navbar />
         <div className="max-w-[600px] mx-auto px-6 py-12 max-sm:px-4">
 

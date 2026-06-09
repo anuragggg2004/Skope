@@ -711,7 +711,7 @@ export default function ResultPage() {
       <div className="orb-1" />
       <div className="orb-2" />
 
-      <div className="page-wrapper">
+      <div className="page-wrapper pt-[80px]">
         <Navbar />
 
         <div className="max-w-[820px] mx-auto px-6 py-10 sm:py-14 max-sm:px-4">

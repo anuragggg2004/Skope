@@ -78,7 +78,7 @@ export default function SharePage() {
       <div className="grid-bg" />
       <div className="orb-1" />
       <div className="orb-2" />
-      <div className="page-wrapper">
+      <div className="page-wrapper pt-[80px]">
         <Navbar />
         <div className="max-w-[680px] mx-auto px-6 py-14 max-sm:px-4">
 

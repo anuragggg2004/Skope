@@ -208,7 +208,7 @@ export default function PreferencesPage() {
       <div className="grid-bg" />
       <div className="orb-1" />
       <div className="orb-2" />
-      <div className="page-wrapper">
+      <div className="page-wrapper pt-[80px]">
         <Navbar />
         <ProgressBar progress={progress} />
 

@@ -329,7 +329,7 @@ export default function FormPage() {
       <div className="grid-bg" />
       <div className="orb-1" />
       <div className="orb-2" />
-      <div className="page-wrapper flex flex-col h-screen overflow-hidden">
+      <div className="page-wrapper flex flex-col h-screen overflow-hidden pt-[80px]">
         <Navbar />
 
         {/* Progress Bar */}
