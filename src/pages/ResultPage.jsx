@@ -220,117 +220,113 @@ function CareerCardRedesigned({ career, index }) {
   const [expanded, setExpanded] = useState(false)
   const cardRef = useRef(null)
   const inView = useInView(cardRef, { once: true, margin: '-10%' })
+  const [hovered, setHovered] = useState(false)
 
-  const gradients = [
-    'linear-gradient(135deg, rgba(79,142,247,0.12), rgba(108,99,255,0.06))',
-    'linear-gradient(135deg, rgba(108,99,255,0.12), rgba(236,72,153,0.06))',
-    'linear-gradient(135deg, rgba(107,203,119,0.1), rgba(79,142,247,0.06))'
+  const configs = [
+    { bg:'linear-gradient(145deg,#0d1b3e,#0f1428)', orb1:'radial-gradient(circle,#4f8ef755,transparent)', orb2:'radial-gradient(circle,#8b5cf640,transparent)', glow:'#4f8ef7', barColor:'from-[#4f8ef7] to-[#8b5cf6]', textAccent:'#7eb3ff' },
+    { bg:'linear-gradient(145deg,#1a0d3e,#160d38)', orb1:'radial-gradient(circle,#8b5cf755,transparent)', orb2:'radial-gradient(circle,#ec489940,transparent)', glow:'#a78bfa', barColor:'from-[#8b5cf6] to-[#ec4899]', textAccent:'#c4b5fd' },
+    { bg:'linear-gradient(145deg,#0d2e2a,#0c2822)', orb1:'radial-gradient(circle,#22d3a055,transparent)', orb2:'radial-gradient(circle,#4f8ef740,transparent)', glow:'#22d3a0', barColor:'from-[#22d3a0] to-[#4f8ef7]', textAccent:'#6ee7b7' },
   ]
-  const barColors = [
-    'from-[#4f8ef7] to-[#8b5cf6]',
-    'from-[#8b5cf6] to-[#ec4899]',
-    'from-[#6bcb77] to-[#4f8ef7]'
-  ]
+  const c = configs[index % 3]
   const matchScore = career.match_score || career.matchScore || (90 - index * 8)
 
   return (
     <div
       ref={cardRef}
-      className="rounded-[20px] border border-[rgba(255,255,255,0.06)] p-[1px] cursor-pointer group hover:border-[rgba(108,99,255,0.2)] transition-all duration-300"
+      className="relative rounded-[22px] overflow-hidden cursor-pointer mb-0"
       onClick={() => setExpanded(!expanded)}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
     >
-      <div
-        className="rounded-[19px] p-5 sm:p-6 h-full transition-all duration-300"
-        style={{ background: gradients[index % 3] }}
-      >
-        {/* Number + Title + Match Score */}
-        <div className="flex items-start gap-3 mb-3">
-          <span className="font-sora text-[32px] font-bold text-[rgba(255,255,255,0.08)] leading-none select-none">
-            {String(index + 1).padStart(2, '0')}
-          </span>
-          <div className="min-w-0 flex-1">
-            <div className="flex items-center justify-between gap-2 mb-0.5">
-              <h3 className="font-sora text-[17px] font-bold text-white leading-snug">{career.title}</h3>
-              <span className="font-mono text-[13px] font-bold text-white/80 shrink-0">
-                <CountUp to={matchScore} active={inView} suffix="%" />
-              </span>
+      {/* Rotating glow border */}
+      <motion.div
+        animate={{ rotate: 360 }}
+        transition={{ duration: 6, repeat: Infinity, ease: 'linear' }}
+        style={{
+          position:'absolute', inset:-2, borderRadius:24, zIndex:0,
+          background:`conic-gradient(from 0deg, transparent 60%, ${c.glow}, transparent 78%)`,
+          opacity: hovered ? 0.9 : 0.4, transition:'opacity 0.4s'
+        }}
+      />
+      <div className="absolute inset-[2px] rounded-[21px] overflow-hidden" style={{ background: c.bg, zIndex:1 }}>
+        {/* Floating orbs */}
+        <motion.div animate={{x:[0,16,0],y:[0,-12,0]}} transition={{duration:5,repeat:Infinity,ease:'easeInOut'}} style={{ position:'absolute',top:-20,right:-20,width:110,height:110,borderRadius:'50%',background:c.orb1,filter:'blur(30px)',opacity:0.8 }} />
+        <motion.div animate={{x:[0,-12,0],y:[0,14,0]}} transition={{duration:7,repeat:Infinity,ease:'easeInOut',delay:1.5}} style={{ position:'absolute',bottom:20,left:-15,width:80,height:80,borderRadius:'50%',background:c.orb2,filter:'blur(22px)',opacity:0.5 }} />
+        {/* Dot grid */}
+        <div style={{ position:'absolute',inset:0,opacity:0.04,backgroundImage:'radial-gradient(circle,rgba(255,255,255,0.9) 1px,transparent 1px)',backgroundSize:'18px 18px' }} />
+
+        {/* Content */}
+        <div className="relative z-10 p-5 sm:p-6">
+          {/* Number + Title + Match Score */}
+          <div className="flex items-start gap-3 mb-4">
+            <span className="font-sora text-[38px] font-bold leading-none select-none" style={{ color: c.glow + '20' }}>
+              {String(index + 1).padStart(2, '0')}
+            </span>
+            <div className="min-w-0 flex-1">
+              <div className="flex items-center justify-between gap-2 mb-1">
+                <h3 className="font-sora text-[17px] font-bold text-white leading-snug">{career.title}</h3>
+                <span className="font-mono text-[14px] font-extrabold shrink-0" style={{ color: c.glow }}>
+                  <CountUp to={matchScore} active={inView} suffix="%" />
+                </span>
+              </div>
+              {career.earning_range && (
+                <span className="font-dm text-[11px] block mb-2" style={{ color: c.textAccent + '99' }}>{career.earning_range}</span>
+              )}
+              {/* Animated Match Bar */}
+              <AnimatedBar pct={matchScore} color={c.barColor} delay={index * 0.15} />
+              <span className="font-dm text-[9px] uppercase tracking-[1.5px] mt-1 block" style={{ color: c.glow + '60' }}>Match Score</span>
             </div>
-            {career.earning_range && (
-              <span className="font-dm text-[12px] text-[rgba(240,242,255,0.45)] block mb-2">{career.earning_range}</span>
+          </div>
+
+          {/* Why it fits */}
+          <p className="font-dm text-[13px] leading-[1.68] mb-3" style={{ color:'rgba(240,242,255,0.62)' }}>
+            {career.why_it_fits}
+          </p>
+
+          {/* Exams */}
+          {career.entrance_exams && (
+            <div className="flex flex-wrap gap-1.5 mb-3">
+              {career.entrance_exams.map((exam, i) => (
+                <span key={i} className="font-dm text-[10px] font-medium px-2.5 py-1 rounded-full" style={{ color:c.textAccent, background:c.glow+'18', border:`1px solid ${c.glow}30` }}>
+                  {exam}
+                </span>
+              ))}
+            </div>
+          )}
+
+          {/* Expandable */}
+          <div className={`overflow-hidden transition-all duration-400 ${expanded ? 'max-h-[800px] opacity-100 mt-3' : 'max-h-0 opacity-0'}`}>
+            {career.pros && career.pros.length > 0 && (
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-3 mb-3" style={{ borderTop:`1px solid ${c.glow}18` }}>
+                <div>
+                  <span className="font-dm text-[10px] font-bold text-[#22d3a0] uppercase tracking-[1px] block mb-1.5">✓ Pros</span>
+                  <ul className="space-y-1">{career.pros.map((p,i) => <li key={i} className="font-dm text-[12px] text-white/60">• {p}</li>)}</ul>
+                </div>
+                <div>
+                  <span className="font-dm text-[10px] font-bold text-[#f87171] uppercase tracking-[1px] block mb-1.5">✗ Cons</span>
+                  <ul className="space-y-1">{career.cons && career.cons.map((co,i) => <li key={i} className="font-dm text-[12px] text-white/60">• {co}</li>)}</ul>
+                </div>
+              </div>
             )}
-            {/* Animated Match Bar */}
-            <AnimatedBar pct={matchScore} color={barColors[index % 3]} delay={index * 0.15} />
-            <span className="font-dm text-[9px] uppercase tracking-[1.5px] text-white/30 mt-1 block">Match Score</span>
-          </div>
-        </div>
-
-        {/* Why it fits */}
-        <p className="font-dm text-[13px] text-[rgba(240,242,255,0.55)] leading-[1.65] mb-3">
-          {career.why_it_fits}
-        </p>
-
-        {/* Exams */}
-        {career.entrance_exams && (
-          <div className="flex flex-wrap gap-1.5 mb-3">
-            {career.entrance_exams.map((exam, i) => (
-              <span
-                key={i}
-                className="font-dm text-[10px] font-medium text-blue bg-[rgba(79,142,247,0.08)] px-2.5 py-1 rounded-full border border-[rgba(79,142,247,0.15)]"
-              >
-                {exam}
-              </span>
-            ))}
-          </div>
-        )}
-
-        {/* Expandable Section */}
-        <div className={`overflow-hidden transition-all duration-300 ${expanded ? 'max-h-[800px] opacity-100 mt-4' : 'max-h-0 opacity-0'}`}>
-          {/* Pros & Cons */}
-          {career.pros && career.pros.length > 0 && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 border-t border-[rgba(255,255,255,0.04)] pt-3.5 mb-4">
-              <div>
-                <span className="font-dm text-[11px] font-bold text-[#22d3a0] uppercase tracking-[1px] block mb-1.5">✓ Pros</span>
-                <ul className="space-y-1">
-                  {career.pros.map((p, i) => (
-                    <li key={i} className="font-dm text-[12px] text-[rgba(240,242,255,0.65)]">• {p}</li>
-                  ))}
-                </ul>
+            {career.reality_check && (
+              <div className="rounded-[12px] px-4 py-3 mb-2" style={{ background:'rgba(251,191,36,0.06)', border:'1px solid rgba(251,191,36,0.18)' }}>
+                <span className="font-dm text-[12px] text-[#fbbf24] leading-relaxed block">⚡ <strong>Reality Check:</strong> {career.reality_check}</span>
               </div>
-              <div>
-                <span className="font-dm text-[11px] font-bold text-[#f87171] uppercase tracking-[1px] block mb-1.5">✗ Cons</span>
-                <ul className="space-y-1">
-                  {career.cons && career.cons.map((c, i) => (
-                    <li key={i} className="font-dm text-[12px] text-[rgba(240,242,255,0.65)]">• {c}</li>
-                  ))}
-                </ul>
+            )}
+            {career.what_nobody_tells_you && (
+              <div className="rounded-[12px] px-4 py-3" style={{ background:`${c.glow}0a`, border:`1px solid ${c.glow}20` }}>
+                <span className="font-dm text-[12px] leading-relaxed block" style={{ color:c.textAccent }}>🤫 <strong>What nobody tells you:</strong> {career.what_nobody_tells_you}</span>
               </div>
-            </div>
-          )}
+            )}
+          </div>
 
-          {/* Reality Check */}
-          {career.reality_check && (
-            <div className="bg-[rgba(251,191,36,0.06)] border border-[rgba(251,191,36,0.15)] rounded-[12px] px-4 py-3 mb-3">
-              <span className="font-dm text-[12px] text-[#fbbf24] leading-relaxed block">
-                ⚡ <strong className="font-semibold">Reality Check:</strong> {career.reality_check}
-              </span>
-            </div>
-          )}
-
-          {/* What nobody tells you */}
-          {career.what_nobody_tells_you && (
-            <div className="bg-[rgba(108,99,255,0.06)] border border-[rgba(108,99,255,0.15)] rounded-[12px] px-4 py-3">
-              <span className="font-dm text-[12px] text-[#9b8eff] leading-relaxed block">
-                🤫 <strong className="font-semibold">What nobody tells you:</strong> {career.what_nobody_tells_you}
-              </span>
-            </div>
-          )}
-        </div>
-
-        {/* Expand hint */}
-        <div className="flex items-center justify-end mt-2">
-          <span className={`font-dm text-[11px] text-[rgba(240,242,255,0.3)] transition-all duration-200 ${expanded ? 'opacity-0' : 'opacity-100'}`}>
-            tap for reality check & details →
-          </span>
+          {/* Frosted bottom strip hint */}
+          <div className="flex items-center justify-between mt-3">
+            <span className={`font-dm text-[10px] transition-opacity duration-200 ${expanded ? 'opacity-0' : 'opacity-60'}`} style={{ color:c.textAccent }}>
+              tap for details →
+            </span>
+            {expanded && <span className="font-dm text-[10px] opacity-50" style={{ color:c.textAccent }}>tap to collapse</span>}
+          </div>
         </div>
       </div>
     </div>
@@ -339,144 +335,122 @@ function CareerCardRedesigned({ career, index }) {
 
 function CollegeCardRedesigned({ college, index, isShortlisted, onToggleShortlist }) {
   const [expanded, setExpanded] = useState(false)
+  const [hovered, setHovered] = useState(false)
 
-  const getClassificationColor = (classification) => {
-    switch(classification) {
-      case 'safe': return 'text-[#22d3a0] bg-[rgba(34,211,160,0.1)] border-[rgba(34,211,160,0.25)]'
-      case 'realistic': return 'text-[#4f8ef7] bg-[rgba(79,142,247,0.1)] border-[rgba(79,142,247,0.25)]'
-      case 'aspirational': return 'text-[#fbbf24] bg-[rgba(251,191,36,0.1)] border-[rgba(251,191,36,0.25)]'
-      default: return 'text-[#9b8eff] bg-[rgba(108,99,255,0.1)] border-[rgba(108,99,255,0.25)]'
-    }
+  const classMap = {
+    safe:         { glow:'#22d3a0', bg:'linear-gradient(145deg,#0d2e2a,#0c2822)', orb:'radial-gradient(circle,#22d3a055,transparent)', label:'SAFE', textAccent:'#6ee7b7' },
+    realistic:    { glow:'#4f8ef7', bg:'linear-gradient(145deg,#0d1b3e,#0f1a35)', orb:'radial-gradient(circle,#4f8ef755,transparent)', label:'REALISTIC', textAccent:'#7eb3ff' },
+    aspirational: { glow:'#fbbf24', bg:'linear-gradient(145deg,#2e1a00,#281500)', orb:'radial-gradient(circle,#fbbf2455,transparent)', label:'REACH', textAccent:'#fde68a' },
   }
-
-  const getClassificationLabel = (classification) => {
-    return classification ? classification.toUpperCase() : 'UNKNOWN'
-  }
+  const c = classMap[college.classification] || { glow:'#8b5cf6', bg:'linear-gradient(145deg,#1a0d3e,#160d38)', orb:'radial-gradient(circle,#8b5cf655,transparent)', label:'TARGET', textAccent:'#c4b5fd' }
 
   return (
     <div
-      className="glass-card rounded-[20px] p-5 sm:p-6 cursor-pointer hover:border-[rgba(108,99,255,0.2)] transition-all duration-200"
+      className="relative rounded-[22px] overflow-hidden cursor-pointer"
       onClick={() => setExpanded(!expanded)}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
     >
-      {/* Top Row */}
-      <div className="flex items-start justify-between gap-3 mb-2">
-        <div className="min-w-0">
-          <div className="flex items-center gap-2 flex-wrap mb-1">
-            <button
-              onClick={(e) => {
-                e.stopPropagation()
-                onToggleShortlist(college)
-              }}
-              className="text-[16px] hover:scale-110 active:scale-95 transition-transform bg-transparent border-none cursor-pointer p-0 mr-1.5"
-            >
-              {isShortlisted ? '⭐' : '☆'}
-            </button>
-            <h4 className="font-sora text-[15px] font-bold text-white">{college.name}</h4>
-            {college.is_hidden_gem && (
-              <span className="font-dm text-[9px] font-bold bg-gradient-to-r from-[rgba(251,191,36,0.2)] to-[rgba(251,191,36,0.1)] text-[#fbbf24] px-2.5 py-0.5 rounded-full border border-[rgba(251,191,36,0.3)]">
-                💎 HIDDEN GEM
-              </span>
+      {/* Rotating glow border */}
+      <motion.div
+        animate={{ rotate: 360 }}
+        transition={{ duration: 7, repeat: Infinity, ease: 'linear' }}
+        style={{
+          position:'absolute', inset:-2, borderRadius:24, zIndex:0,
+          background:`conic-gradient(from 0deg, transparent 62%, ${c.glow}, transparent 80%)`,
+          opacity: hovered ? 0.85 : 0.35, transition:'opacity 0.4s'
+        }}
+      />
+      <div className="absolute inset-[2px] rounded-[21px] overflow-hidden" style={{ background: c.bg, zIndex:1 }}>
+        {/* Floating orbs */}
+        <motion.div animate={{x:[0,14,0],y:[0,-10,0]}} transition={{duration:5,repeat:Infinity,ease:'easeInOut'}} style={{ position:'absolute',top:-18,right:-18,width:100,height:100,borderRadius:'50%',background:c.orb,filter:'blur(28px)',opacity:0.75 }} />
+        <motion.div animate={{x:[0,-10,0],y:[0,12,0]}} transition={{duration:6.5,repeat:Infinity,ease:'easeInOut',delay:1}} style={{ position:'absolute',bottom:-10,left:-10,width:70,height:70,borderRadius:'50%',background:c.orb,filter:'blur(20px)',opacity:0.4 }} />
+        {/* Dot grid */}
+        <div style={{ position:'absolute',inset:0,opacity:0.04,backgroundImage:'radial-gradient(circle,rgba(255,255,255,0.9) 1px,transparent 1px)',backgroundSize:'18px 18px' }} />
+
+        {/* Content */}
+        <div className="relative z-10 p-5 sm:p-6">
+          {/* Top Row */}
+          <div className="flex items-start justify-between gap-3 mb-3">
+            <div className="min-w-0 flex-1">
+              <div className="flex items-center gap-2 flex-wrap mb-1">
+                <button
+                  onClick={(e) => { e.stopPropagation(); onToggleShortlist(college) }}
+                  className="text-[16px] hover:scale-110 active:scale-95 transition-transform bg-transparent border-none cursor-pointer p-0"
+                >
+                  {isShortlisted ? '⭐' : '☆'}
+                </button>
+                <h4 className="font-sora text-[15px] font-bold text-white">{college.name}</h4>
+                {college.is_hidden_gem && (
+                  <span className="font-dm text-[9px] font-bold px-2.5 py-0.5 rounded-full" style={{ background:'rgba(251,191,36,0.15)', color:'#fbbf24', border:'1px solid rgba(251,191,36,0.3)' }}>💎 GEM</span>
+                )}
+              </div>
+              <p className="font-dm text-[11px]" style={{ color:c.textAccent + '80' }}>{college.location || college.city} · {college.type}</p>
+            </div>
+            <div className="flex flex-col items-end gap-1.5 shrink-0">
+              {/* Classification badge */}
+              <div className="flex items-center gap-1.5 rounded-full px-3 py-1" style={{ background:c.glow+'20', border:`1px solid ${c.glow}40` }}>
+                <motion.div animate={{opacity:[1,0.4,1]}} transition={{duration:2,repeat:Infinity}} style={{ width:5, height:5, borderRadius:'50%', background:c.glow }} />
+                <span className="font-mono text-[9px] font-bold" style={{ color:c.glow }}>{c.label}</span>
+              </div>
+              {(college.annual_fee || college.approx_annual_fee) && (
+                <span className="font-sora text-[12px] font-bold" style={{ color:'#22d3a0' }}>{college.annual_fee || college.approx_annual_fee}</span>
+              )}
+            </div>
+          </div>
+
+          {/* Why fits */}
+          <p className="font-dm text-[13px] leading-[1.65] mb-2" style={{ color:'rgba(240,242,255,0.6)' }}>
+            {college.why_fits || college.why_this_fits}
+          </p>
+
+          {/* Internet verdict */}
+          {college.internet_verdict && (
+            <div className="mt-3 rounded-[12px] p-3" style={{ background:'rgba(251,191,36,0.05)', border:'1px solid rgba(251,191,36,0.15)' }}>
+              <div className="flex items-center gap-1.5 mb-1">
+                <span style={{ fontSize:11 }}>🌐</span>
+                <span className="font-dm text-[9px] font-bold uppercase tracking-wider text-[#fbbf24]">Live Internet Verdict</span>
+              </div>
+              <p className="font-dm text-[12px] text-white/65 leading-relaxed">{college.internet_verdict}</p>
+            </div>
+          )}
+
+          {/* Expandable */}
+          <div className={`overflow-hidden transition-all duration-300 ${expanded ? 'max-h-[400px] opacity-100 mt-4' : 'max-h-0 opacity-0'}`}>
+            {college.match_reasons && college.match_reasons.length > 0 && (
+              <div className="mb-3" style={{ borderTop:`1px solid ${c.glow}18`, paddingTop:12 }}>
+                <span className="font-dm text-[10px] font-bold uppercase tracking-[1.2px] text-white/40 block mb-2">Why it matches:</span>
+                <ul className="space-y-1">{college.match_reasons.map((r,i) => <li key={i} className="font-dm text-[12px] text-white/60 flex items-start gap-2"><span style={{color:c.glow}}>•</span><span>{r}</span></li>)}</ul>
+              </div>
+            )}
+            {college.caution && (
+              <div className="rounded-[12px] px-4 py-3 mb-2" style={{ background:'rgba(248,113,113,0.06)', border:'1px solid rgba(248,113,113,0.15)' }}>
+                <span className="font-dm text-[12px] text-[#f87171] leading-relaxed block">⚠️ <strong>Trade-off:</strong> {college.caution}</span>
+              </div>
+            )}
+            {college.reddit_verdict && (
+              <div className="rounded-[12px] px-4 py-3" style={{ background:'rgba(255,255,255,0.02)', border:'1px solid rgba(255,255,255,0.06)' }}>
+                <span className="font-dm text-[12px] text-white/65 leading-relaxed block">💬 <strong className="text-white">Student Verdict:</strong> "{college.reddit_verdict}"</span>
+              </div>
+            )}
+            {college.eligibilityWarning && (
+              <div className="rounded-[10px] px-3 py-2 mt-2" style={{ background:'rgba(248,113,113,0.06)', border:'1px solid rgba(248,113,113,0.15)' }}>
+                <span className="font-dm text-[11px] text-[#f87171] leading-relaxed block">⚠️ <strong>Guardrail:</strong> {college.eligibilityWarning}</span>
+              </div>
             )}
           </div>
-          <p className="font-dm text-[12px] text-[rgba(240,242,255,0.4)]">
-            {college.location || college.city} · {college.type}
-          </p>
+
+          <div className="flex items-center gap-1 mt-3">
+            <span className="font-dm text-[10px]" style={{ color: c.textAccent + '60' }}>{!expanded ? 'tap for details →' : 'tap to collapse'}</span>
+          </div>
         </div>
-        
-        <div className="flex flex-col items-end gap-1 shrink-0">
-          {college.classification && (
-            <div className={`flex items-center gap-1 border rounded-full px-2.5 py-0.5 ${getClassificationColor(college.classification)}`}>
-              <span className="font-mono text-[9px] font-bold tracking-wider">{getClassificationLabel(college.classification)}</span>
-            </div>
-          )}
-          {college.admissionProbability !== undefined && (
-            <div className="text-right mt-0.5">
-              <span className="font-sora text-[11px] font-semibold text-[rgba(240,242,255,0.5)]">Prob: {college.admissionProbability}%</span>
-            </div>
-          )}
-          {college.match_score && (
-            <div className="flex items-center gap-1 bg-[rgba(108,99,255,0.1)] border border-[rgba(108,99,255,0.25)] rounded-full px-2.5 py-0.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#6c63ff] animate-pulse" />
-              <span className="font-mono text-[11px] font-bold text-[#9b8eff]">{college.match_score}% Match</span>
-            </div>
-          )}
-          {(college.annual_fee || college.approx_annual_fee) && (
-            <div className="text-right mt-0.5">
-              <span className="font-sora text-[13px] font-semibold text-[#22d3a0]">{college.annual_fee || college.approx_annual_fee}</span>
-              <span className="font-dm text-[9px] text-[rgba(240,242,255,0.3)] block">/year</span>
-            </div>
-          )}
+
+        {/* Frosted bottom strip */}
+        <div style={{ background:'rgba(0,0,0,0.22)', backdropFilter:'blur(10px)', borderTop:`1px solid ${c.glow}15`, padding:'6px 20px', display:'flex', alignItems:'center', gap:6, position:'relative', zIndex:2 }}>
+          <motion.div animate={{opacity:[1,0.4,1]}} transition={{duration:2.5,repeat:Infinity}} style={{ width:5, height:5, borderRadius:'50%', background:c.glow, flexShrink:0 }} />
+          <span className="font-dm text-[9px] text-white/40">AI recommended</span>
         </div>
       </div>
-
-      {/* Why fits */}
-      <p className="font-dm text-[13px] text-[rgba(240,242,255,0.55)] leading-[1.65]">
-        {college.why_fits || college.why_this_fits}
-      </p>
-
-      {/* Live Internet Verdict */}
-      {college.internet_verdict && (
-        <div className="mt-3 bg-[rgba(251,191,36,0.05)] border border-[rgba(251,191,36,0.15)] rounded-lg p-3">
-          <div className="flex items-center gap-1.5 mb-1">
-            <span className="text-[12px]">🌐</span>
-            <span className="font-dm text-[10px] font-bold uppercase tracking-wider text-[#fbbf24]">Live Internet Verdict</span>
-          </div>
-          <p className="font-dm text-[12px] text-[rgba(240,242,255,0.7)] leading-relaxed">
-            {college.internet_verdict}
-          </p>
-        </div>
-      )}
-
-      {/* Eligibility Guardrail Warning */}
-      {college.eligibilityWarning && (
-        <div className="bg-[rgba(248,113,113,0.06)] border border-[rgba(248,113,113,0.15)] rounded-[10px] px-3 py-2 mt-2">
-          <span className="font-dm text-[11px] text-[#f87171] leading-relaxed block">
-            ⚠️ <strong className="font-semibold">Guardrail Warning:</strong> {college.eligibilityWarning}
-          </span>
-        </div>
-      )}
-
-      {/* Expandable Section */}
-      <div className={`overflow-hidden transition-all duration-300 ${expanded ? 'max-h-[400px] opacity-100 mt-4' : 'max-h-0 opacity-0'}`}>
-        {/* Match Reasons */}
-        {college.match_reasons && college.match_reasons.length > 0 && (
-          <div className="mb-3.5 border-t border-[rgba(255,255,255,0.04)] pt-3 flex flex-col gap-1.5">
-            <span className="font-dm text-[11px] font-bold uppercase tracking-[1.2px] text-[rgba(240,242,255,0.45)]">Why it matches:</span>
-            <ul className="space-y-1">
-              {college.match_reasons.map((r, i) => (
-                <li key={i} className="font-dm text-[12px] text-[rgba(240,242,255,0.65)] flex items-start gap-2">
-                  <span className="text-[#6c63ff]">•</span>
-                  <span>{r}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-
-        {/* Caution */}
-        {college.caution && (
-          <div className="bg-[rgba(248,113,113,0.06)] border border-[rgba(248,113,113,0.15)] rounded-[12px] px-4 py-3 mb-3">
-            <span className="font-dm text-[12px] text-[#f87171] leading-relaxed block">
-              ⚠️ <strong className="font-semibold">Trade-off:</strong> {college.caution}
-            </span>
-          </div>
-        )}
-
-        {/* Reddit verdict */}
-        {college.reddit_verdict && (
-          <div className="bg-[rgba(255,255,255,0.02)] border border-[rgba(255,255,255,0.06)] rounded-[12px] px-4 py-3">
-            <span className="font-dm text-[12px] text-[rgba(240,242,255,0.7)] leading-relaxed block">
-              💬 <strong className="font-semibold text-white">Student Verdict:</strong> "{college.reddit_verdict}"
-            </span>
-          </div>
-        )}
-      </div>
-
-      {!expanded && (
-        <div className="flex items-center gap-1 mt-2">
-          <span className="font-dm text-[11px] text-[rgba(240,242,255,0.25)]">tap for match details & trade-offs →</span>
-        </div>
-      )}
     </div>
   )
 }
@@ -623,49 +597,93 @@ function DashboardStatStrip({ pathReport }) {
 
   const stats = [
     {
-      label: 'Career Matches',
-      value: pathReport?.careers?.length || 0,
-      icon: '🎯',
-      color: 'from-[#4f8ef7] to-[#8b5cf6]',
-      ring: 'ring-[rgba(79,142,247,0.2)]'
+      label: 'Career Matches', value: pathReport?.careers?.length || 0,
+      icon: '🎯', glow: '#4f8ef7',
+      bg: 'linear-gradient(145deg,#0d1b3e,#0f1a35)',
+      orb: 'radial-gradient(circle,#4f8ef760,transparent)',
+      grad: 'linear-gradient(90deg,#4f8ef7,#8b5cf6)'
     },
     {
-      label: 'Colleges Found',
-      value: pathReport?.colleges?.length || 0,
-      icon: '🏫',
-      color: 'from-[#8b5cf6] to-[#ec4899]',
-      ring: 'ring-[rgba(139,92,246,0.2)]'
+      label: 'Colleges Found', value: pathReport?.colleges?.length || 0,
+      icon: '🏛️', glow: '#a78bfa',
+      bg: 'linear-gradient(145deg,#1a0d3e,#160d38)',
+      orb: 'radial-gradient(circle,#8b5cf660,transparent)',
+      grad: 'linear-gradient(90deg,#8b5cf6,#ec4899)'
     },
     {
-      label: 'Profile Score',
-      value: pathReport?.confidence_score?.score || 84,
-      suffix: '%',
-      icon: '⚡',
-      color: 'from-[#6bcb77] to-[#4f8ef7]',
-      ring: 'ring-[rgba(107,203,119,0.2)]'
+      label: 'Profile Score', value: pathReport?.confidence_score?.score || 84, suffix: '%',
+      icon: '⚡', glow: '#22d3a0',
+      bg: 'linear-gradient(145deg,#0d2e2a,#0c2822)',
+      orb: 'radial-gradient(circle,#22d3a060,transparent)',
+      grad: 'linear-gradient(90deg,#22d3a0,#4f8ef7)'
     },
     {
-      label: 'Action Items',
-      value: pathReport?.confidence_score?.actions?.length || 3,
-      icon: '📋',
-      color: 'from-[#fbbf24] to-[#f97316]',
-      ring: 'ring-[rgba(251,191,36,0.2)]'
+      label: 'Action Items', value: pathReport?.confidence_score?.actions?.length || 3,
+      icon: '📋', glow: '#fbbf24',
+      bg: 'linear-gradient(145deg,#2e1a00,#281500)',
+      orb: 'radial-gradient(circle,#fbbf2460,transparent)',
+      grad: 'linear-gradient(90deg,#fbbf24,#f97316)'
     }
   ]
 
   return (
-    <div ref={ref} className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8 animate-fadeUp" style={{ animationDelay: '0.18s' }}>
+    <div ref={ref} className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8" style={{ animationDelay: '0.18s' }}>
       {stats.map((s, i) => (
-        <div
+        <motion.div
           key={i}
-          className={`glass-card rounded-[16px] p-4 ring-1 ${s.ring} flex flex-col items-center text-center gap-1.5 hover:scale-[1.02] transition-transform duration-200`}
+          initial={{ opacity: 0, y: 16 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ delay: i * 0.08, duration: 0.45, ease: [0.16,1,0.3,1] }}
+          whileHover={{ y: -4, scale: 1.03 }}
+          className="relative rounded-[18px] overflow-hidden cursor-default"
+          style={{ background: s.bg, minHeight: 120 }}
         >
-          <span className="text-[24px]">{s.icon}</span>
-          <div className={`font-sora text-[28px] font-extrabold text-transparent bg-clip-text bg-gradient-to-r ${s.color}`}>
-            <CountUp to={s.value} active={inView} suffix={s.suffix || ''} />
+          {/* Rotating border ring */}
+          <motion.div
+            animate={{ rotate: 360 }}
+            transition={{ duration: 5, repeat: Infinity, ease: 'linear' }}
+            style={{
+              position: 'absolute', inset: -1.5, borderRadius: 20, zIndex: 0,
+              background: `conic-gradient(from 0deg, transparent 65%, ${s.glow}, transparent 82%)`,
+              opacity: 0.6
+            }}
+          />
+          {/* Inner card */}
+          <div className="absolute inset-[1.5px] rounded-[17px] overflow-hidden" style={{ background: s.bg }}>
+            {/* Floating orb */}
+            <motion.div
+              animate={{ x: [0,10,0], y: [0,-8,0] }}
+              transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+              style={{
+                position: 'absolute', top: -16, right: -16, width: 70, height: 70,
+                borderRadius: '50%', background: s.orb, filter: 'blur(18px)', opacity: 0.8
+              }}
+            />
+            {/* Dot grid */}
+            <div style={{
+              position: 'absolute', inset: 0, opacity: 0.05,
+              backgroundImage: 'radial-gradient(circle,rgba(255,255,255,0.9) 1px,transparent 1px)',
+              backgroundSize: '16px 16px'
+            }} />
+            {/* Content */}
+            <div className="relative z-10 p-4 h-full flex flex-col justify-between">
+              <div className="flex items-center justify-between">
+                <span style={{ fontSize: 22 }}>{s.icon}</span>
+                <motion.div
+                  animate={{ opacity: [1,0.4,1] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                  style={{ width: 6, height: 6, borderRadius: '50%', background: s.glow }}
+                />
+              </div>
+              <div>
+                <div className="font-sora font-extrabold text-[28px] text-transparent bg-clip-text" style={{ backgroundImage: s.grad }}>
+                  <CountUp to={s.value} active={inView} suffix={s.suffix || ''} />
+                </div>
+                <div className="font-dm text-[9px] uppercase tracking-[1.8px] mt-0.5" style={{ color: s.glow + 'bb' }}>{s.label}</div>
+              </div>
+            </div>
           </div>
-          <span className="font-dm text-[10px] uppercase tracking-[1.5px] text-white/40">{s.label}</span>
-        </div>
+        </motion.div>
       ))}
     </div>
   )
@@ -681,71 +699,92 @@ function ActionPlanSection({ pathReport }) {
   ]
   const actions = rawActions.length > 0 ? rawActions : defaultActions
   const [checked, setChecked] = useState({})
-
   const completedCount = Object.values(checked).filter(Boolean).length
   const pct = actions.length > 0 ? Math.round((completedCount / actions.length) * 100) : 0
 
   return (
-    <div className="glass-card rounded-[20px] p-6 mb-6 border border-[rgba(108,99,255,0.1)] bg-gradient-to-br from-[rgba(108,99,255,0.04)] to-transparent animate-fadeUp" style={{ animationDelay: '0.28s' }}>
-      {/* Header */}
-      <div className="flex items-center justify-between gap-4 mb-4">
-        <div className="flex items-center gap-2.5">
-          <span className="text-[20px]">📅</span>
-          <div>
-            <span className="font-dm text-[10px] font-bold uppercase tracking-[1.5px] text-purple block">Action Plan</span>
-            <h3 className="font-sora text-[16px] font-bold text-white">Your Next 30 Days</h3>
-          </div>
-        </div>
-        <div className="flex flex-col items-end gap-1">
-          <span className="font-mono text-[12px] font-bold text-white/70">{completedCount}/{actions.length} done</span>
-          <div className="w-24 h-1.5 rounded-full bg-white/[0.07] overflow-hidden">
-            <motion.div
-              className="h-full rounded-full bg-gradient-to-r from-[#8b5cf6] to-[#4f8ef7]"
-              initial={{ width: 0 }}
-              animate={{ width: `${pct}%` }}
-              transition={{ duration: 0.6, ease: 'easeOut' }}
-            />
-          </div>
-        </div>
-      </div>
+    <div className="relative rounded-[22px] overflow-hidden mb-6">
+      {/* Rotating border */}
+      <motion.div
+        animate={{ rotate: 360 }}
+        transition={{ duration: 8, repeat: Infinity, ease: 'linear' }}
+        style={{
+          position: 'absolute', inset: -2, borderRadius: 24, zIndex: 0,
+          background: 'conic-gradient(from 0deg, transparent 60%, #8b5cf6, transparent 80%)',
+          opacity: 0.5
+        }}
+      />
+      <div
+        className="relative z-10 rounded-[21px] p-6 overflow-hidden"
+        style={{ background: 'linear-gradient(145deg,#100d28,#0d0d20,#0d1a28)' }}
+      >
+        {/* Floating orbs */}
+        <motion.div
+          animate={{ x:[0,20,0], y:[0,-14,0] }}
+          transition={{ duration:6, repeat:Infinity, ease:'easeInOut' }}
+          style={{ position:'absolute', top:-24, right:-24, width:120, height:120, borderRadius:'50%', background:'radial-gradient(circle,#8b5cf640,transparent)', filter:'blur(30px)' }}
+        />
+        <motion.div
+          animate={{ x:[0,-15,0], y:[0,18,0] }}
+          transition={{ duration:8, repeat:Infinity, ease:'easeInOut', delay:2 }}
+          style={{ position:'absolute', bottom:-20, left:-20, width:90, height:90, borderRadius:'50%', background:'radial-gradient(circle,#4f8ef730,transparent)', filter:'blur(24px)' }}
+        />
+        {/* Dot grid */}
+        <div style={{ position:'absolute', inset:0, opacity:0.04, backgroundImage:'radial-gradient(circle,rgba(255,255,255,0.9) 1px,transparent 1px)', backgroundSize:'18px 18px' }} />
 
-      {/* Steps */}
-      <div className="space-y-2.5">
-        {actions.slice(0, 5).map((act, i) => (
-          <motion.div
-            key={i}
-            layout
-            className={`flex items-start gap-3 rounded-[12px] px-4 py-3 border transition-all duration-200 cursor-pointer ${
-              checked[i]
-                ? 'bg-[rgba(34,211,160,0.05)] border-[rgba(34,211,160,0.15)]'
-                : 'bg-white/[0.02] border-white/[0.05] hover:bg-white/[0.04] hover:border-[rgba(108,99,255,0.15)]'
-            }`}
-            onClick={() => setChecked(prev => ({ ...prev, [i]: !prev[i] }))}
-          >
-            {/* Checkbox */}
-            <div className={`w-5 h-5 rounded-full border-2 shrink-0 mt-0.5 flex items-center justify-center transition-all duration-200 ${
-              checked[i] ? 'bg-[#22d3a0] border-[#22d3a0]' : 'border-white/20'
-            }`}>
-              {checked[i] && (
-                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                  <polyline points="20 6 9 17 4 12" />
-                </svg>
-              )}
+        {/* Header */}
+        <div className="relative z-10 flex items-center justify-between gap-4 mb-5">
+          <div className="flex items-center gap-3">
+            <div style={{ width:42, height:42, borderRadius:12, background:'rgba(139,92,246,0.15)', border:'1px solid rgba(139,92,246,0.3)', display:'flex', alignItems:'center', justifyContent:'center', fontSize:20 }}>📅</div>
+            <div>
+              <div className="font-dm text-[9px] uppercase tracking-[2px] text-purple font-bold">Action Plan</div>
+              <div className="font-sora text-[16px] font-bold text-white">Your Next 30 Days</div>
             </div>
-            <span className={`font-dm text-[13px] leading-snug transition-colors duration-200 ${
-              checked[i] ? 'text-white/35 line-through' : 'text-white/75'
-            }`}>
-              {act}
-            </span>
-          </motion.div>
-        ))}
-      </div>
-
-      {pct === 100 && (
-        <div className="mt-4 text-center p-3 bg-[rgba(34,211,160,0.08)] border border-[rgba(34,211,160,0.2)] rounded-[12px]">
-          <span className="font-sora text-[14px] font-bold text-[#22d3a0]">🎉 All done! You're ahead of the curve.</span>
+          </div>
+          <div className="flex flex-col items-end gap-1.5">
+            <span className="font-mono text-[12px] font-bold" style={{ color: pct === 100 ? '#22d3a0' : 'rgba(255,255,255,0.6)' }}>{completedCount}/{actions.length}</span>
+            <div className="w-20 h-1.5 rounded-full overflow-hidden" style={{ background:'rgba(255,255,255,0.07)' }}>
+              <motion.div
+                className="h-full rounded-full"
+                style={{ background:'linear-gradient(90deg,#8b5cf6,#4f8ef7)' }}
+                initial={{ width: 0 }}
+                animate={{ width: `${pct}%` }}
+                transition={{ duration: 0.7, ease: 'easeOut' }}
+              />
+            </div>
+          </div>
         </div>
-      )}
+
+        {/* Steps */}
+        <div className="relative z-10 space-y-2">
+          {actions.slice(0, 5).map((act, i) => (
+            <motion.div
+              key={i} layout
+              className="flex items-start gap-3 rounded-[13px] px-4 py-3 cursor-pointer transition-all duration-200"
+              style={{
+                background: checked[i] ? 'rgba(34,211,160,0.07)' : 'rgba(255,255,255,0.03)',
+                border: `1px solid ${checked[i] ? 'rgba(34,211,160,0.2)' : 'rgba(255,255,255,0.06)'}`,
+              }}
+              whileHover={{ scale: 1.01, borderColor: 'rgba(139,92,246,0.25)' }}
+              onClick={() => setChecked(prev => ({ ...prev, [i]: !prev[i] }))}
+            >
+              <div style={{
+                width:20, height:20, borderRadius:'50%', border:`2px solid ${checked[i]?'#22d3a0':'rgba(255,255,255,0.2)'}`,
+                background: checked[i]?'#22d3a0':'transparent', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0, marginTop:2
+              }}>
+                {checked[i] && <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>}
+              </div>
+              <span className="font-dm text-[13px] leading-snug" style={{ color: checked[i]?'rgba(255,255,255,0.3)':'rgba(255,255,255,0.75)', textDecoration:checked[i]?'line-through':'none' }}>{act}</span>
+            </motion.div>
+          ))}
+        </div>
+
+        {pct === 100 && (
+          <motion.div initial={{ opacity:0, scale:0.95 }} animate={{ opacity:1, scale:1 }} className="relative z-10 mt-4 text-center p-3 rounded-[14px]" style={{ background:'rgba(34,211,160,0.08)', border:'1px solid rgba(34,211,160,0.2)' }}>
+            <span className="font-sora text-[14px] font-bold text-[#22d3a0]">🎉 All done! You're ahead of the curve.</span>
+          </motion.div>
+        )}
+      </div>
     </div>
   )
 }
