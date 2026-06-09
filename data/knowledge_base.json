@@ -1,162 +1,3283 @@
 {
   "colleges": [
     {
-      "keywords": ["iit bombay", "iitb", "iit b"],
-      "name": "Indian Institute of Technology, Bombay (IIT Bombay)",
-      "fees": "Tuition fee is around ₹2.2 - 2.5 Lakhs per year. Total 4-year B.Tech cost including hostel, mess, and campus amenities is around ₹10-12 Lakhs.",
-      "placements": "Average package overall is ₹21.8 LPA. Computer Science (CSE) average is around ₹28 LPA. Design (B.Des) average package is around ₹16 LPA.",
-      "admission": "B.Tech requires JEE Advanced rank. B.Des requires UCEED rank.",
-      "caution": "Extreme academic competition. Relative grading means you are constantly compared to peers. The workload is heavy and pressure can build up.",
-      "reddit_verdict": "Unmatched brand status, startup network, and cultural life in India, but requires high mental resilience."
+      "id": "iit_delhi",
+      "name": "Indian Institute of Technology (IIT), Delhi",
+      "location": {
+        "city": "New Delhi",
+        "region": "Delhi NCR"
+      },
+      "type": "Central Government",
+      "tier": "aspirational",
+      "admission": {
+        "exams": [
+          "JEE Advanced"
+        ],
+        "process": "JoSAA Counseling",
+        "cutoff_general_estimate": "Rank < 5000"
+      },
+      "financials": {
+        "approx_annual_fee": "₹2,50,000",
+        "hidden_costs": "Hostel & Mess approx ₹80,000/yr"
+      },
+      "placements": {
+        "avg_package": "₹20+ LPA",
+        "reality_check": "Incredible brand value and alumni network. Placements are heavily skewed by top international offers, but even median is superb."
+      },
+      "vibe_and_culture": {
+        "student_life": "Extremely competitive but highly rewarding. Massive campus in the heart of South Delhi.",
+        "reddit_verdict": "The best you can get in NCR. Pressure is high but the tag stays for life."
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Innovator",
+        "The Strategist"
+      ]
     },
     {
-      "keywords": ["iit delhi", "iitd", "iit d"],
-      "name": "Indian Institute of Technology, Delhi (IIT Delhi)",
-      "fees": "Tuition is ₹2.2 Lakhs per year. Total 4-year B.Tech cost including accommodation is around ₹10-11 Lakhs.",
-      "placements": "Average B.Tech package is ₹20-22 LPA. Heavy placement presence from global giants like Google, Microsoft, McKinsey, and top hedge funds.",
-      "admission": "B.Tech requires a top rank in JEE Advanced. B.Des requires a top rank in UCEED.",
-      "caution": "Highly crowded, intense peer pressure, and Delhi's winter air pollution can be a challenge.",
-      "reddit_verdict": "Excellent tech ecosystem, strong entrepreneurial support, and prime location for networking."
+      "id": "dtu_delhi",
+      "name": "Delhi Technological University (DTU)",
+      "location": {
+        "city": "New Delhi",
+        "region": "Delhi NCR"
+      },
+      "type": "State University",
+      "tier": "realistic",
+      "admission": {
+        "exams": [
+          "JEE Main"
+        ],
+        "process": "JAC Delhi Counseling",
+        "cutoff_general_estimate": "97-99 Percentile (Delhi Region Quota)"
+      },
+      "financials": {
+        "approx_annual_fee": "₹2,29,000",
+        "hidden_costs": "Hostel approx ₹60,000/yr"
+      },
+      "placements": {
+        "avg_package": "₹15 LPA",
+        "reality_check": "Top branches get 20+, lower branches struggle slightly more but still decent."
+      },
+      "vibe_and_culture": {
+        "student_life": "Huge campus, very active tech and cultural societies.",
+        "reddit_verdict": "Great ROI if you have Delhi quota, but batch sizes are massive now."
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Builder",
+        "The Explorer"
+      ]
     },
     {
-      "keywords": ["nid ahmedabad", "nid", "nids"],
-      "name": "National Institute of Design, Ahmedabad (NID Ahmedabad)",
-      "fees": "Approx. ₹3.8 Lakhs per year. Total 4-year B.Des cost around ₹15-16 Lakhs.",
-      "placements": "Average package ranges from ₹8-12 LPA. Top interaction design/UX packages can go up to ₹20-25 LPA.",
-      "admission": "NID Design Aptitude Test (DAT) - Prelims and Mains (Studio Test).",
-      "caution": "Extremely selective (only ~100-125 general seats in B.Des nationwide). It is a pure design school, not a tech school; there is no coding or CS in the syllabus.",
-      "reddit_verdict": "The gold standard for design in India. If you want pure product design or animation, NID has no equal."
+      "id": "nsut_delhi",
+      "name": "Netaji Subhas University of Technology (NSUT)",
+      "location": {
+        "city": "New Delhi",
+        "region": "Delhi NCR"
+      },
+      "type": "State University",
+      "tier": "realistic",
+      "admission": {
+        "exams": [
+          "JEE Main"
+        ],
+        "process": "JAC Delhi Counseling",
+        "cutoff_general_estimate": "97-99 Percentile (Delhi Region Quota)"
+      },
+      "financials": {
+        "approx_annual_fee": "₹2,20,000",
+        "hidden_costs": "Hostel approx ₹65,000/yr"
+      },
+      "placements": {
+        "avg_package": "₹16 LPA",
+        "reality_check": "Historically incredible for CS/IT placements, rivaling some IITs."
+      },
+      "vibe_and_culture": {
+        "student_life": "Strict attendance compared to DTU, but excellent coding culture.",
+        "reddit_verdict": "If you want pure tech placements, NSUT is often preferred over DTU."
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Builder",
+        "The Analyst"
+      ]
     },
     {
-      "keywords": ["bits pilani", "bits", "bits goa", "bits hyderabad"],
-      "name": "Birla Institute of Technology and Science, Pilani (Pilani, Goa, and Hyderabad Campuses)",
-      "fees": "Fees are high, approx. ₹5.5 - 6 Lakhs per year. Total 4-year B.Tech cost is around ₹24-26 Lakhs.",
-      "placements": "Average package is ₹18-20 LPA overall across campuses. CS branch average is ₹25-27 LPA. Strongest startup culture in India alongside IITs.",
-      "admission": "Requires a high score in BITSAT exam.",
-      "caution": "No reservation quota (100% merit-based), resulting in very high academic cutoff peers. The fast-paced semester fee hikes are a common student grievance.",
-      "reddit_verdict": "Excellent private alternative to IITs. The zero-attendance policy allows students freedom to build startups and side-projects."
+      "id": "iiit_delhi",
+      "name": "Indraprastha Institute of Information Technology (IIIT-D)",
+      "location": {
+        "city": "New Delhi",
+        "region": "Delhi NCR"
+      },
+      "type": "State University",
+      "tier": "aspirational",
+      "admission": {
+        "exams": [
+          "JEE Main"
+        ],
+        "process": "JAC Delhi Counseling",
+        "cutoff_general_estimate": "98-99 Percentile"
+      },
+      "financials": {
+        "approx_annual_fee": "₹4,00,000",
+        "hidden_costs": "Hostel approx ₹80,000/yr"
+      },
+      "placements": {
+        "avg_package": "₹23 LPA",
+        "reality_check": "Exceptional placements, often surpassing DTU/NSUT, but coursework is famously brutal."
+      },
+      "vibe_and_culture": {
+        "student_life": "Research-focused, immense academic pressure, extremely modern infrastructure.",
+        "reddit_verdict": "Take it if you genuinely love CS. Don't take it just for placements if you want an easy college life."
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Analyst",
+        "The Innovator"
+      ]
     },
     {
-      "keywords": ["symbiosis", "sid", "sid pune"],
-      "name": "Symbiosis Institute of Design, Pune (SID Pune)",
-      "fees": "Approx. ₹4.2 Lakhs per year (tuition) + hostel/mess of ₹1.5-2 Lakhs per year. Total 4-year B.Des cost around ₹23-25 Lakhs.",
-      "placements": "Average package is ₹6-8 LPA. Top placements reach ₹14-16 LPA, mostly in UX/UI design, graphic design, and user research.",
-      "admission": "Symbiosis Entrance Exam for Design (SEED) + Portfolio Review and Personal Interview.",
-      "caution": "Very high fees for a private design institute. Placement outcomes depend heavily on the strength of your personal design portfolio rather than the college brand name alone.",
-      "reddit_verdict": "Great campus infrastructure and curriculum for UX/UI design if budget is not an obstacle."
+      "id": "igdtuw_delhi",
+      "name": "Indira Gandhi Delhi Technical University for Women (IGDTUW)",
+      "location": {
+        "city": "New Delhi",
+        "region": "Delhi NCR"
+      },
+      "type": "State University (Women Only)",
+      "tier": "realistic",
+      "admission": {
+        "exams": [
+          "JEE Main"
+        ],
+        "process": "JAC Delhi Counseling",
+        "cutoff_general_estimate": "90-95 Percentile (Delhi Region Quota)"
+      },
+      "financials": {
+        "approx_annual_fee": "₹1,15,000",
+        "hidden_costs": "Hostel approx ₹50,000/yr"
+      },
+      "placements": {
+        "avg_package": "₹19 LPA",
+        "reality_check": "One of the highest placement-to-cutoff ratios in the country due to diversity hiring drives by FAANG."
+      },
+      "vibe_and_culture": {
+        "student_life": "Safe, supportive, but campus is relatively small.",
+        "reddit_verdict": "Unbelievable ROI for female candidates. Diversity hiring makes placements exceptional."
+      },
+      "is_hidden_gem": true,
+      "best_for_archetypes": [
+        "The Builder",
+        "The Creator"
+      ]
     },
     {
-      "keywords": ["vit vellore", "vit", "vit chennai"],
-      "name": "Vellore Institute of Technology (VIT)",
-      "fees": "Structured in 5 categories based on exam rank. Category 1 is ₹2 Lakhs/year; Category 5 is ₹5 Lakhs/year. Hostel is ₹1-1.5 Lakhs/year.",
-      "placements": "Average package is ₹8-9 LPA. Computer Science (CSE) average is around ₹10-12 LPA. Recruiting is massive with 800+ companies visiting.",
-      "admission": "VITEEE entrance exam rank.",
-      "caution": "Massive student intake (thousands in CS alone) leads to extreme competition during placements. Campus rules are famously strict (strict curfews, biometrics, rules for interaction).",
-      "reddit_verdict": "A reliable backup option with decent placement statistics, but feels like an extension of school rules with strict supervision."
+      "id": "snu_greater_noida",
+      "name": "Shiv Nadar University (SNU)",
+      "location": {
+        "city": "Greater Noida",
+        "region": "Delhi NCR"
+      },
+      "type": "Private University",
+      "tier": "safe",
+      "admission": {
+        "exams": [
+          "SNUSAT",
+          "JEE Main"
+        ],
+        "process": "Direct Application / Interview",
+        "cutoff_general_estimate": "80-90 Percentile in JEE / Good SNUSAT"
+      },
+      "financials": {
+        "approx_annual_fee": "₹3,50,000",
+        "hidden_costs": "Mandatory fully residential. Total cost approx 20L for 4 years."
+      },
+      "placements": {
+        "avg_package": "₹10 LPA",
+        "reality_check": "Very good for a private university. Backed by HCL, so tech placements are solid."
+      },
+      "vibe_and_culture": {
+        "student_life": "Beautiful, massive residential campus. Multidisciplinary approach.",
+        "reddit_verdict": "One of the best private universities in NCR if you can afford it. Better peer group than Amity."
+      },
+      "is_hidden_gem": true,
+      "best_for_archetypes": [
+        "The Explorer",
+        "The Creator"
+      ]
     },
     {
-      "keywords": ["manipal", "mit manipal", "mit"],
-      "name": "Manipal Institute of Technology (MIT Manipal)",
-      "fees": "Approx. ₹4.5 - 5 Lakhs per year. Total 4-year B.Tech cost is around ₹20-22 Lakhs including hostel.",
-      "placements": "Average package is ₹10-12 LPA. CSE and IT branch averages are around ₹14-16 LPA.",
-      "admission": "Manipal Entrance Test (MET).",
-      "caution": "High cost of living and expensive tuition. The student lifestyle and social options in Manipal require self-discipline to avoid distractions from studies.",
-      "reddit_verdict": "Phenomenal campus life, liberal culture, and strong tech/coding clubs. Great placement opportunities for CS/IT branches."
+      "id": "jiit_noida",
+      "name": "Jaypee Institute of Information Technology (JIIT)",
+      "location": {
+        "city": "Noida",
+        "region": "Delhi NCR"
+      },
+      "type": "Private Deemed University",
+      "tier": "safe",
+      "admission": {
+        "exams": [
+          "JEE Main"
+        ],
+        "process": "Direct Counseling based on JEE",
+        "cutoff_general_estimate": "85-94 Percentile"
+      },
+      "financials": {
+        "approx_annual_fee": "₹2,60,000",
+        "hidden_costs": "Hostel approx ₹1,00,000/yr"
+      },
+      "placements": {
+        "avg_package": "₹8-10 LPA",
+        "reality_check": "Consistent IT placements. Strict academic environment."
+      },
+      "vibe_and_culture": {
+        "student_life": "Known to be strict (school-like) with high focus on attendance and exams.",
+        "reddit_verdict": "Good fallback if you miss out on DTU/NSUT, but campus life is strict."
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Builder",
+        "The Analyst"
+      ]
     },
     {
-      "keywords": ["shiv nadar", "snu", "snu delhi"],
-      "name": "Shiv Nadar University, Delhi NCR",
-      "fees": "Approx. ₹4.5 Lakhs per year. Total 4-year B.Tech cost is ₹18-20 Lakhs.",
-      "placements": "Average package is ₹10-12 LPA. CS branch average is around ₹15 LPA.",
-      "admission": "SNUSAT entrance exam and subsequent personal interview.",
-      "caution": "Located in Dadri/Greater Noida, which is relatively isolated from central Delhi. Strict academic rigor and grade standards.",
-      "reddit_verdict": "A hidden gem. Great research funding, top-tier lab facilities, and highly flexible multidisciplinary majors/minors (like B.Tech with Design minor)."
+      "id": "ashoka_university",
+      "name": "Ashoka University",
+      "location": {
+        "city": "Sonipat",
+        "region": "Delhi NCR"
+      },
+      "type": "Private University",
+      "tier": "aspirational",
+      "admission": {
+        "exams": [
+          "AAT (Ashoka Aptitude Test)",
+          "SAT"
+        ],
+        "process": "Holistic Profile Evaluation & Interview",
+        "cutoff_general_estimate": "High academic + extracurricular requirement"
+      },
+      "financials": {
+        "approx_annual_fee": "₹10,00,000",
+        "hidden_costs": "Fully residential. Total cost can exceed 40L, but extremely generous financial aid exists."
+      },
+      "placements": {
+        "avg_package": "₹10-12 LPA",
+        "reality_check": "Not an engineering college. Best for Economics, CS, Liberal Arts. Top consulting/finance placements."
+      },
+      "vibe_and_culture": {
+        "student_life": "Ivy-league style liberal arts culture. Incredible peer group and faculty.",
+        "reddit_verdict": "If you want a liberal arts approach to CS or Econ, it's the best in India. Very expensive without aid."
+      },
+      "is_hidden_gem": true,
+      "best_for_archetypes": [
+        "The Strategist",
+        "The Communicator"
+      ]
     },
     {
-      "keywords": ["ashoka university", "ashoka"],
-      "name": "Ashoka University, Sonipat",
-      "fees": "Approx. ₹10 Lakhs per year including residence. Note: Generous need-based financial aid is provided to over 45% of students.",
-      "placements": "Average package is ₹10-12 LPA. Recruiting is strong from global consulting firms (McKinsey, Bain, BCG), analytics companies, and tech startups.",
-      "admission": "Ashoka Aptitude Test (AAT), essays, and personal interview.",
-      "caution": "Not a traditional engineering or vocational college. The focus is on Liberal Arts, critical thinking, and multidisciplinary education.",
-      "reddit_verdict": "Top-tier humanities and liberal arts network in India, offering Ivy-League style academic rigor and networking."
+      "id": "mdu_rohtak",
+      "name": "Maharshi Dayanand University (MDU)",
+      "location": {
+        "city": "Rohtak",
+        "region": "Delhi NCR (Haryana)"
+      },
+      "type": "State University",
+      "tier": "safe",
+      "admission": {
+        "exams": [
+          "HSTES",
+          "JEE Main"
+        ],
+        "process": "Haryana State Counseling",
+        "cutoff_general_estimate": "60-80 Percentile"
+      },
+      "financials": {
+        "approx_annual_fee": "₹70,000",
+        "hidden_costs": "Very affordable. Low cost of living."
+      },
+      "placements": {
+        "avg_package": "₹4-6 LPA",
+        "reality_check": "Service-based mass recruiters mostly. You have to hustle off-campus for top tech jobs."
+      },
+      "vibe_and_culture": {
+        "student_life": "Standard state university life. Very politically active campus.",
+        "reddit_verdict": "A solid safety net for Haryana/NCR students with lower ranks, but don't expect spoon-fed placements."
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Builder"
+      ]
     },
     {
-      "keywords": ["plaksha", "plaksha university"],
-      "name": "Plaksha University, Mohali",
-      "fees": "Approx. ₹8-9 Lakhs per year. Scholarships are available based on merit and financial need.",
-      "placements": "Recent graduating batches have average packages around ₹12-14 LPA. Strong recruiting ties with modern tech firms and startups.",
-      "admission": "Comprehensive application review, writing test, and personal interview.",
-      "caution": "Very new university (founded in 2021). The brand name is still establishing itself among traditional public sector and conservative corporate employers.",
-      "reddit_verdict": "Highly modern, interdisciplinary engineering curriculum (major focus on AI, Data Science, and Robotics) backed by top Indian business leaders."
+      "id": "amity_noida",
+      "name": "Amity University",
+      "location": {
+        "city": "Noida",
+        "region": "Delhi NCR"
+      },
+      "type": "Private University",
+      "tier": "safe",
+      "admission": {
+        "exams": [
+          "Direct Admission (Merit)"
+        ],
+        "process": "Board Marks / Direct Interview",
+        "cutoff_general_estimate": "60%+ in Boards"
+      },
+      "financials": {
+        "approx_annual_fee": "₹3,50,000",
+        "hidden_costs": "High living expenses if participating in the social culture."
+      },
+      "placements": {
+        "avg_package": "₹5-6 LPA",
+        "reality_check": "Massive batch sizes. Top 10% get great packages, the rest get mass recruiters."
+      },
+      "vibe_and_culture": {
+        "student_life": "Incredible infrastructure and high social life. 'Work hard, play hard' applies if you stay focused.",
+        "reddit_verdict": "You can have a great career if you ignore the distractions. Easy to get in, hard to stand out."
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Connector",
+        "The Creator"
+      ]
     },
     {
-      "keywords": ["tiss", "tiss mumbai"],
-      "name": "Tata Institute of Social Sciences, Mumbai (TISS)",
-      "fees": "Extremely low fees, approx. ₹60,000 - 1 Lakh per year including hostel accommodations.",
-      "placements": "Famous for its MA in Human Resource Management (equivalent to MBA) with average packages around ₹25-27 LPA. Undergraduate programs average ₹6-8 LPA.",
-      "admission": "CUET scores or specific university test.",
-      "caution": "Historically politically active campus with a strong focus on social sciences and activism. Extremely few undergraduate seats.",
-      "reddit_verdict": "Incredible value for money. The absolute best college in India for Human Resources and Development Studies."
+      "id": "coep_pune",
+      "name": "College of Engineering Pune (COEP)",
+      "location": {
+        "city": "Pune",
+        "region": "Maharashtra"
+      },
+      "type": "State Government Autonomous",
+      "tier": "aspirational",
+      "admission": {
+        "exams": [
+          "MHT-CET",
+          "JEE Main"
+        ],
+        "process": "CAP Counseling",
+        "cutoff_general_estimate": "99+ Percentile in MHT-CET"
+      },
+      "financials": {
+        "approx_annual_fee": "₹90,000",
+        "hidden_costs": "Hostel is cheap but hard to get."
+      },
+      "placements": {
+        "avg_package": "₹11-13 LPA",
+        "reality_check": "Top-notch placements in both IT and core sectors. Huge alumni base."
+      },
+      "vibe_and_culture": {
+        "student_life": "Iconic campus, massive clubs (like Baja SAE), highly driven peer group.",
+        "reddit_verdict": "The absolute best state college in Maharashtra. Almost impossible to get in without top scores."
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Builder",
+        "The Innovator"
+      ]
     },
     {
-      "keywords": ["nift", "nift delhi"],
-      "name": "National Institute of Fashion Technology, Delhi (NIFT Delhi)",
-      "fees": "Approx. ₹2.8 - 3 Lakhs per year. Total 4-year B.Des cost is around ₹12-13 Lakhs.",
-      "placements": "Average package is ₹5-8 LPA. Top fashion brands, retail companies, and design houses recruit here.",
-      "admission": "NIFT Entrance Exam (consisting of General Ability Test, Creative Ability Test, and Situation Test).",
-      "caution": "Workloads are intense with daily hands-on submissions, model building, and fashion show deadlines. Starting packages in fashion retail can be low compared to tech fields.",
-      "reddit_verdict": "The premier fashion and communication design institute in India, but requires a strong portfolio and patience to grow your salary."
-    }
-  ],
-  "exams": [
-    {
-      "keywords": ["jee main", "jee", "jeemains"],
-      "name": "Joint Entrance Examination (JEE) Main",
-      "eligibility": "Class 12 pass with Physics, Chemistry, and Mathematics (PCM). Max 3 attempts in consecutive years.",
-      "structure": "3-hour computer-based test containing MCQs and Numerical Value questions in Physics, Chemistry, and Math (300 marks total).",
-      "difficulty": "Extremely high competition due to sheer numbers. Over 14 Lakh students appear for ~55,000 seats across NITs, IIITs, and government colleges.",
-      "colleges_accepting": "All National Institutes of Technology (NITs), Indian Institutes of Information Technology (IIITs), and state government engineering colleges."
+      "id": "pict_pune",
+      "name": "Pune Institute of Computer Technology (PICT)",
+      "location": {
+        "city": "Pune",
+        "region": "Maharashtra"
+      },
+      "type": "Private Aided",
+      "tier": "realistic",
+      "admission": {
+        "exams": [
+          "MHT-CET",
+          "JEE Main"
+        ],
+        "process": "CAP Counseling",
+        "cutoff_general_estimate": "98+ Percentile in MHT-CET"
+      },
+      "financials": {
+        "approx_annual_fee": "₹1,00,000",
+        "hidden_costs": "Pune cost of living."
+      },
+      "placements": {
+        "avg_package": "₹11-12 LPA",
+        "reality_check": "Unbelievable coding culture. Placements rival or beat COEP for purely CS/IT roles."
+      },
+      "vibe_and_culture": {
+        "student_life": "Very small campus, school-like strictness, but insanely competitive coding environment.",
+        "reddit_verdict": "If you just want to code and get a 15+ LPA job, PICT is the place. Don't expect a fun campus life."
+      },
+      "is_hidden_gem": true,
+      "best_for_archetypes": [
+        "The Analyst",
+        "The Builder"
+      ]
     },
     {
-      "keywords": ["jee advanced", "jee adv", "jeeadvanced"],
-      "name": "Joint Entrance Examination (JEE) Advanced",
-      "eligibility": "Must be in the top 2.5 Lakh rank holders of JEE Main. Max 2 attempts in consecutive years.",
-      "structure": "Two mandatory papers of 3 hours each on the same day. Highly unpredictable pattern, multiple-correct questions, list-matches, and negative marking.",
-      "difficulty": "One of the toughest exams globally. Requires deep conceptual logic, analytical deduction, and strong advanced calculus. Only ~17,000 total seats in IITs.",
-      "colleges_accepting": "All 23 Indian Institutes of Technology (IITs) and Rajiv Gandhi Institute of Petroleum Technology (RGIPT)."
+      "id": "vit_pune",
+      "name": "Vishwakarma Institute of Technology (VIT Pune)",
+      "location": {
+        "city": "Pune",
+        "region": "Maharashtra"
+      },
+      "type": "Private Autonomous",
+      "tier": "realistic",
+      "admission": {
+        "exams": [
+          "MHT-CET",
+          "JEE Main"
+        ],
+        "process": "CAP Counseling",
+        "cutoff_general_estimate": "96-98 Percentile in MHT-CET"
+      },
+      "financials": {
+        "approx_annual_fee": "₹1,80,000",
+        "hidden_costs": "Standard Pune living costs."
+      },
+      "placements": {
+        "avg_package": "₹8-10 LPA",
+        "reality_check": "Solid mid-tier placements. Good mix of core and IT."
+      },
+      "vibe_and_culture": {
+        "student_life": "Balanced life. Good clubs, decent campus, but not as intense as COEP/PICT.",
+        "reddit_verdict": "A great balance of academics, placements, and college life in Pune."
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer",
+        "The Builder"
+      ]
     },
     {
-      "keywords": ["uceed", "uceed exam"],
-      "name": "Undergraduate Common Entrance Examination for Design (UCEED)",
-      "eligibility": "Class 12 pass in any stream (Science, Commerce, or Arts). Max 2 attempts in consecutive years.",
-      "structure": "Part A (2 hours, Computer-based): Visualization, spatial ability, observation, design concepts. Part B (1 hour, Paper-based): Drawing and design sketching.",
-      "difficulty": "Low conceptual math/physics load, but highly competitive. Only ~150-180 general seats are available in the top IIT B.Des programs, making the drawing evaluation cutoff very selective.",
-      "colleges_accepting": "IIT Bombay, IIT Delhi, IIT Guwahati, IIT Hyderabad, IIITDM Jabalpur, and several private design colleges (as partners)."
+      "id": "mit_wpu_pune",
+      "name": "MIT World Peace University (MIT-WPU)",
+      "location": {
+        "city": "Pune",
+        "region": "Maharashtra"
+      },
+      "type": "Private University",
+      "tier": "safe",
+      "admission": {
+        "exams": [
+          "JEE Main",
+          "MHT-CET",
+          "MIT-WPU MEET"
+        ],
+        "process": "Direct Application",
+        "cutoff_general_estimate": "70-85 Percentile"
+      },
+      "financials": {
+        "approx_annual_fee": "₹3,50,000",
+        "hidden_costs": "High living costs if participating in social life."
+      },
+      "placements": {
+        "avg_package": "₹6-7 LPA",
+        "reality_check": "Good for CS, but very large batch sizes mean high competition internally."
+      },
+      "vibe_and_culture": {
+        "student_life": "Beautiful campus, massive crowds, known for strong cultural events.",
+        "reddit_verdict": "Very expensive. Good if you can afford it and stay away from distractions."
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Connector",
+        "The Creator"
+      ]
     },
     {
-      "keywords": ["nid dat", "nid exam", "nid entrance"],
-      "name": "National Institute of Design - Design Aptitude Test (NID DAT)",
-      "eligibility": "Class 12 pass in any stream (Science, Commerce, Arts).",
-      "structure": "Stage 1 (Prelims): Written exam on design theory, visual spatial logic, and sketching. Stage 2 (Mains): Studio test involving 3D model making, material handling, audio-visual tests, and interview.",
-      "difficulty": "Very high. Rote learning won't work here. The exam tests creative problem solving, hand-eye coordination, and spatial logic.",
-      "colleges_accepting": "All NID campuses (Ahmedabad, Bangalore, Kurukshetra, Vijayawada, Bhopal, Jorhat)."
+      "id": "sit_pune",
+      "name": "Symbiosis Institute of Technology (SIT)",
+      "location": {
+        "city": "Pune",
+        "region": "Maharashtra"
+      },
+      "type": "Private Deemed",
+      "tier": "safe",
+      "admission": {
+        "exams": [
+          "SITEEE",
+          "JEE Main"
+        ],
+        "process": "Direct Application / SITEEE",
+        "cutoff_general_estimate": "Moderate cutoff, high fee barrier"
+      },
+      "financials": {
+        "approx_annual_fee": "₹3,00,000",
+        "hidden_costs": "Hostel approx ₹1.5L/yr"
+      },
+      "placements": {
+        "avg_package": "₹8 LPA",
+        "reality_check": "Decent placements, heavily leaning on the strong Symbiosis brand name."
+      },
+      "vibe_and_culture": {
+        "student_life": "Excellent campus at Lavale. Very cosmopolitan peer group.",
+        "reddit_verdict": "Great campus life and decent academics. It's expensive but provides a premium experience."
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Strategist",
+        "The Communicator"
+      ]
     },
     {
-      "keywords": ["clat", "clat exam"],
-      "name": "Common Law Admission Test (CLAT)",
-      "eligibility": "Class 12 pass with minimum 45% marks (40% for SC/ST). No upper age limit.",
-      "structure": "2-hour offline test containing 120 multiple-choice questions focusing on Reading Comprehension, Current Affairs, Legal Reasoning, Logical Reasoning, and Quantitative Techniques.",
-      "difficulty": "Moderately high. It is a speed-reading and comprehension test. Success depends heavily on vocabulary, scanning ability, and legal logic under time constraints.",
-      "colleges_accepting": "24 National Law Universities (NLUs) across India."
+      "id": "ait_pune",
+      "name": "Army Institute of Technology (AIT)",
+      "location": {
+        "city": "Pune",
+        "region": "Maharashtra"
+      },
+      "type": "Private (Army Wards Only)",
+      "tier": "realistic",
+      "admission": {
+        "exams": [
+          "JEE Main"
+        ],
+        "process": "Special Counseling for Wards of Army Personnel",
+        "cutoff_general_estimate": "85-94 Percentile (Army Quota)"
+      },
+      "financials": {
+        "approx_annual_fee": "₹1,80,000",
+        "hidden_costs": "Mandatory Hostel."
+      },
+      "placements": {
+        "avg_package": "₹12-14 LPA",
+        "reality_check": "Incredible placements. Companies love the disciplined mindset of the students."
+      },
+      "vibe_and_culture": {
+        "student_life": "Strict, disciplined, high focus on sports and academics.",
+        "reddit_verdict": "If your parent is in the Army, this is an absolute hidden gem. Better ROI than most private colleges."
+      },
+      "is_hidden_gem": true,
+      "best_for_archetypes": [
+        "The Strategist",
+        "The Builder"
+      ]
     },
     {
-      "keywords": ["cuet", "cuet ug"],
-      "name": "Common University Entrance Test (CUET) UG",
-      "eligibility": "Class 12 pass in any stream.",
-      "structure": "Section 1: Languages, Section 2: Domain-specific subjects (PCM/Arts/Commerce), Section 3: General Test (General Knowledge, Aptitude). Computer-based test.",
-      "difficulty": "Moderate. Tests based directly on NCERT Class 12 syllabus, but high percentiles are required due to massive application numbers for top central universities.",
-      "colleges_accepting": "Central Universities (like Delhi University, BHU, JNU) and several state/private universities."
+      "id": "pec_chandigarh",
+      "name": "Punjab Engineering College (PEC)",
+      "location": {
+        "city": "Chandigarh",
+        "region": "Chandigarh"
+      },
+      "type": "Deemed University",
+      "tier": "aspirational",
+      "admission": {
+        "exams": [
+          "JEE Main"
+        ],
+        "process": "JoSAA / JAC Chandigarh",
+        "cutoff_general_estimate": "96-98 Percentile"
+      },
+      "financials": {
+        "approx_annual_fee": "₹1,80,000",
+        "hidden_costs": "Hostel approx ₹60,000/yr"
+      },
+      "placements": {
+        "avg_package": "₹15-16 LPA",
+        "reality_check": "Legacy institute (Kalpana Chawla's alma mater). Phenomenal alumni network and top tech placements."
+      },
+      "vibe_and_culture": {
+        "student_life": "Beautiful campus in Sector 12, great city to live in, balanced college life.",
+        "reddit_verdict": "Often preferred over newer NITs due to its legacy, location, and alumni network."
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Builder",
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "uiet_chandigarh",
+      "name": "University Institute of Engineering and Technology (UIET, PU)",
+      "location": {
+        "city": "Chandigarh",
+        "region": "Chandigarh"
+      },
+      "type": "State University",
+      "tier": "realistic",
+      "admission": {
+        "exams": [
+          "JEE Main"
+        ],
+        "process": "JAC Chandigarh",
+        "cutoff_general_estimate": "92-95 Percentile"
+      },
+      "financials": {
+        "approx_annual_fee": "₹1,00,000",
+        "hidden_costs": "Low costs overall."
+      },
+      "placements": {
+        "avg_package": "₹8-9 LPA",
+        "reality_check": "Good ROI. Top students grab excellent off-campus offers."
+      },
+      "vibe_and_culture": {
+        "student_life": "Located inside Panjab University. Incredibly vibrant student politics and culture.",
+        "reddit_verdict": "Great exposure because of PU's diverse campus. Academics are average but peer group is good."
+      },
+      "is_hidden_gem": true,
+      "best_for_archetypes": [
+        "The Connector",
+        "The Strategist"
+      ]
+    },
+    {
+      "id": "ccet_chandigarh",
+      "name": "Chandigarh College of Engineering and Technology (CCET)",
+      "location": {
+        "city": "Chandigarh",
+        "region": "Chandigarh"
+      },
+      "type": "State Government",
+      "tier": "safe",
+      "admission": {
+        "exams": [
+          "JEE Main"
+        ],
+        "process": "JAC Chandigarh",
+        "cutoff_general_estimate": "88-92 Percentile"
+      },
+      "financials": {
+        "approx_annual_fee": "₹60,000",
+        "hidden_costs": "Very affordable."
+      },
+      "placements": {
+        "avg_package": "₹6-7 LPA",
+        "reality_check": "Mostly mass recruiters, but the degree holds value as it's affiliated to PU."
+      },
+      "vibe_and_culture": {
+        "student_life": "Small campus, strict academics, not much college life compared to UIET.",
+        "reddit_verdict": "Good backup if you want to stay in Chandigarh and want an affordable government degree."
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Builder"
+      ]
+    },
+    {
+      "id": "cu_chandigarh",
+      "name": "Chandigarh University (CU)",
+      "location": {
+        "city": "Gharuan",
+        "region": "Punjab (Near Chandigarh)"
+      },
+      "type": "Private University",
+      "tier": "safe",
+      "admission": {
+        "exams": [
+          "CUCET"
+        ],
+        "process": "Direct Admission",
+        "cutoff_general_estimate": "Easy to get in, CUCET gives scholarships."
+      },
+      "financials": {
+        "approx_annual_fee": "₹2,50,000",
+        "hidden_costs": "Hostel approx ₹1,20,000/yr"
+      },
+      "placements": {
+        "avg_package": "₹6 LPA",
+        "reality_check": "Extreme mass recruiter hub. They bring hundreds of companies, but batch size is enormous (10,000+ engineers)."
+      },
+      "vibe_and_culture": {
+        "student_life": "Huge diverse campus, very vibrant, students from all over India and Africa.",
+        "reddit_verdict": "You will get placed, but you have to fight thousands of others to get a package above 10 LPA."
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Connector",
+        "The Creator"
+      ]
+    },
+    {
+      "id": "chitkara_rajpura",
+      "name": "Chitkara University",
+      "location": {
+        "city": "Rajpura",
+        "region": "Punjab (Near Chandigarh)"
+      },
+      "type": "Private University",
+      "tier": "safe",
+      "admission": {
+        "exams": [
+          "JEE Main",
+          "Boards"
+        ],
+        "process": "Direct / Merit based",
+        "cutoff_general_estimate": "70%+ in Boards"
+      },
+      "financials": {
+        "approx_annual_fee": "₹2,00,000",
+        "hidden_costs": "Hostel is mandatory for many courses."
+      },
+      "placements": {
+        "avg_package": "₹7-8 LPA",
+        "reality_check": "Known for having slightly better academic rigor and placements per capita than Chandigarh University."
+      },
+      "vibe_and_culture": {
+        "student_life": "Strict rules (almost school-like), high focus on attendance.",
+        "reddit_verdict": "Better academics and discipline than CU, making it a slightly better choice for serious students."
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Analyst"
+      ]
+    },
+    {
+      "id": "plaksha_mohali",
+      "name": "Plaksha University",
+      "location": {
+        "city": "Mohali",
+        "region": "Chandigarh NCR"
+      },
+      "type": "Private University",
+      "tier": "aspirational",
+      "admission": {
+        "exams": [
+          "JEE Main",
+          "SAT",
+          "Own Tech Test"
+        ],
+        "process": "Holistic Profile + Interview",
+        "cutoff_general_estimate": "High academic requirement + strong profile"
+      },
+      "financials": {
+        "approx_annual_fee": "₹8,00,000",
+        "hidden_costs": "Total cost for 4 years is around 35-40 Lakhs. Need-based scholarships available."
+      },
+      "placements": {
+        "avg_package": "₹16 LPA (First Batch)",
+        "reality_check": "Founded by tech CEOs and VC leaders. Extremely strong industry connect."
+      },
+      "vibe_and_culture": {
+        "student_life": "Like Ashoka, but for Tech and Engineering. Heavy focus on entrepreneurship.",
+        "reddit_verdict": "A massive hidden gem if you can afford it. It's building the 'Stanford of India' model."
+      },
+      "is_hidden_gem": true,
+      "best_for_archetypes": [
+        "The Innovator",
+        "The Strategist"
+      ]
+    },
+    {
+      "id": "iiit_bangalore",
+      "name": "International Institute of Information Technology (IIIT-B)",
+      "location": {
+        "city": "Bangalore",
+        "region": "Karnataka"
+      },
+      "type": "Deemed University",
+      "tier": "aspirational",
+      "admission": {
+        "exams": [
+          "JEE Main"
+        ],
+        "process": "Direct Counseling based on JEE",
+        "cutoff_general_estimate": "98-99 Percentile"
+      },
+      "financials": {
+        "approx_annual_fee": "₹4,00,000",
+        "hidden_costs": "Hostel approx ₹1,00,000/yr"
+      },
+      "placements": {
+        "avg_package": "₹24 LPA",
+        "reality_check": "One of the best CS colleges in India. Known for its iMTech (5-year integrated) course."
+      },
+      "vibe_and_culture": {
+        "student_life": "Located in Electronic City. Heavy academic workload, lots of research and projects.",
+        "reddit_verdict": "Unbelievable placements. Choose this over lower-tier IITs if you strictly want a tech career."
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Analyst",
+        "The Innovator"
+      ]
+    },
+    {
+      "id": "rvce_bangalore",
+      "name": "RV College of Engineering (RVCE)",
+      "location": {
+        "city": "Bangalore",
+        "region": "Karnataka"
+      },
+      "type": "Private Autonomous",
+      "tier": "aspirational",
+      "admission": {
+        "exams": [
+          "COMEDK",
+          "KCET"
+        ],
+        "process": "State / Consortium Counseling",
+        "cutoff_general_estimate": "Top 1000 in COMEDK, Top 300 in KCET"
+      },
+      "financials": {
+        "approx_annual_fee": "₹1,00,000 (KCET) / ₹2,60,000 (COMEDK)",
+        "hidden_costs": "Management quota fees can go up to 10-15 Lakhs per year."
+      },
+      "placements": {
+        "avg_package": "₹12-14 LPA",
+        "reality_check": "Best private engineering college in Bangalore. Excellent placements across branches."
+      },
+      "vibe_and_culture": {
+        "student_life": "Strict academics (85% attendance rule usually heavily enforced), highly competitive.",
+        "reddit_verdict": "Academically exhausting but the placements justify the grind."
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Builder"
+      ]
+    },
+    {
+      "id": "bmsce_bangalore",
+      "name": "BMS College of Engineering",
+      "location": {
+        "city": "Bangalore",
+        "region": "Karnataka"
+      },
+      "type": "Private Autonomous",
+      "tier": "realistic",
+      "admission": {
+        "exams": [
+          "COMEDK",
+          "KCET"
+        ],
+        "process": "State / Consortium Counseling",
+        "cutoff_general_estimate": "Top 2500 in COMEDK"
+      },
+      "financials": {
+        "approx_annual_fee": "₹1,00,000 (KCET) / ₹2,60,000 (COMEDK)",
+        "hidden_costs": "Similar to RVCE, management quota is highly expensive."
+      },
+      "placements": {
+        "avg_package": "₹10-11 LPA",
+        "reality_check": "Second only to RVCE in Bangalore. Very strong alumni network."
+      },
+      "vibe_and_culture": {
+        "student_life": "Great location (Basavanagudi), more relaxed than RVCE, better college life.",
+        "reddit_verdict": "Many prefer BMS over RVCE simply because the campus life is far better while placements are almost similar."
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer",
+        "The Connector"
+      ]
+    },
+    {
+      "id": "pes_bangalore",
+      "name": "PES University",
+      "location": {
+        "city": "Bangalore",
+        "region": "Karnataka"
+      },
+      "type": "Private University",
+      "tier": "realistic",
+      "admission": {
+        "exams": [
+          "PESSAT",
+          "KCET",
+          "JEE Main"
+        ],
+        "process": "Direct University Counseling",
+        "cutoff_general_estimate": "High rank in PESSAT"
+      },
+      "financials": {
+        "approx_annual_fee": "₹4,50,000",
+        "hidden_costs": "Very expensive compared to VTU colleges unless you get KCET quota."
+      },
+      "placements": {
+        "avg_package": "₹12-13 LPA",
+        "reality_check": "Phenomenal CS placements. They focus heavily on coding and algorithms."
+      },
+      "vibe_and_culture": {
+        "student_life": "Known as a 'school'. Very strict, frequent exams, high pressure.",
+        "reddit_verdict": "You will get placed well, but you will have absolutely no social life for 4 years."
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Analyst",
+        "The Builder"
+      ]
+    },
+    {
+      "id": "msrit_bangalore",
+      "name": "M.S. Ramaiah Institute of Technology (MSRIT)",
+      "location": {
+        "city": "Bangalore",
+        "region": "Karnataka"
+      },
+      "type": "Private Autonomous",
+      "tier": "realistic",
+      "admission": {
+        "exams": [
+          "COMEDK",
+          "KCET"
+        ],
+        "process": "State / Consortium Counseling",
+        "cutoff_general_estimate": "Top 3500 in COMEDK"
+      },
+      "financials": {
+        "approx_annual_fee": "₹1,00,000 (KCET) / ₹2,60,000 (COMEDK)",
+        "hidden_costs": "Living in Mathikere is slightly expensive."
+      },
+      "placements": {
+        "avg_package": "₹9-10 LPA",
+        "reality_check": "Consistent IT placements. Completes the 'top 3' trio of Bangalore (RV, BMS, MSRIT)."
+      },
+      "vibe_and_culture": {
+        "student_life": "Great infrastructure, very active student clubs, good balance of fun and studies.",
+        "reddit_verdict": "A solid, safe, reliable choice for engineering in Bangalore."
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer",
+        "The Creator"
+      ]
+    },
+    {
+      "id": "dsce_bangalore",
+      "name": "Dayananda Sagar College of Engineering (DSCE)",
+      "location": {
+        "city": "Bangalore",
+        "region": "Karnataka"
+      },
+      "type": "Private Autonomous",
+      "tier": "safe",
+      "admission": {
+        "exams": [
+          "COMEDK",
+          "KCET"
+        ],
+        "process": "State / Consortium Counseling",
+        "cutoff_general_estimate": "Top 8000-12000 in COMEDK depending on branch"
+      },
+      "financials": {
+        "approx_annual_fee": "₹1,00,000 (KCET) / ₹2,60,000 (COMEDK)",
+        "hidden_costs": "Management quota is heavily promoted."
+      },
+      "placements": {
+        "avg_package": "₹7-8 LPA",
+        "reality_check": "Good placements for CS/IT, but batch sizes are very large."
+      },
+      "vibe_and_culture": {
+        "student_life": "Huge campus shared with multiple other institutes, very diverse crowd.",
+        "reddit_verdict": "Good fallback college in Bangalore if you miss the top 3."
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Connector"
+      ]
+    },
+    {
+      "id": "bit_bangalore",
+      "name": "Bangalore Institute of Technology (BIT)",
+      "location": {
+        "city": "Bangalore",
+        "region": "Karnataka"
+      },
+      "type": "Private Aided",
+      "tier": "safe",
+      "admission": {
+        "exams": [
+          "COMEDK",
+          "KCET"
+        ],
+        "process": "State / Consortium Counseling",
+        "cutoff_general_estimate": "Top 6000 in COMEDK"
+      },
+      "financials": {
+        "approx_annual_fee": "₹1,00,000 (KCET) / ₹2,60,000 (COMEDK)",
+        "hidden_costs": "Located in the heart of the city, so living costs can vary."
+      },
+      "placements": {
+        "avg_package": "₹6-8 LPA",
+        "reality_check": "Decent placements, primarily service-based IT companies with some core."
+      },
+      "vibe_and_culture": {
+        "student_life": "Very small campus, basically a few buildings. Lack of open grounds.",
+        "reddit_verdict": "Choose it only for placements and central location. Don't expect a 'campus life'."
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Builder"
+      ]
+    },
+    {
+      "id": "acharya-narendra-dev-college",
+      "name": "Acharya Narendra Dev College",
+      "location": "Delhi NCR",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "action-for-ability-development-and-inclusion-aadi-",
+      "name": "Action for Ability Development and Inclusion (AADI)",
+      "location": "Delhi NCR",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "action-for-autism",
+      "name": "Action For Autism",
+      "location": "Delhi NCR",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "aditi-mahavidyalaya",
+      "name": "Aditi Mahavidyalaya",
+      "location": "Delhi NCR",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "aditya-institute-of-technology-vasant-kunj",
+      "name": "Aditya Institute of Technology , Vasant Kunj",
+      "location": "Delhi NCR",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "ahilya-bai-college-of-nursing-delhi",
+      "name": "Ahilya Bai College of Nursing , Delhi",
+      "location": "Delhi NCR",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "akshay-pratiahtan",
+      "name": "Akshay Pratiahtan",
+      "location": "Delhi NCR",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "all-india-institute-of-medical-sciences",
+      "name": "All India Institute Of Medical Sciences",
+      "location": "Delhi NCR",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "amar-jyoti-rehabilitation-and-research-centre-karkardooma",
+      "name": "Amar Jyoti Rehabilitation and Research Centre, Karkardooma",
+      "location": "Delhi NCR",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "ambedkar-institute-of-technology",
+      "name": "Ambedkar Institute of Technology",
+      "location": "Delhi NCR",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "amity-law-school",
+      "name": "Amity Law School",
+      "location": "Delhi NCR",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "amity-university-delhi",
+      "name": "Amity University Delhi",
+      "location": "Delhi NCR",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "apeejay-school-of-management",
+      "name": "APEEJAY SCHOOL OF MANAGEMENT",
+      "location": "Delhi NCR",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "army-college-of-medical-science-new-delhi",
+      "name": "Army College of Medical Science, New Delhi",
+      "location": "Delhi NCR",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "army-hospital-research-referral-new-delhi",
+      "name": "Army Hospital Research & Referral,New Delhi",
+      "location": "Delhi NCR",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "army-hospital-research-and-referral-delhi-cantt-delhi",
+      "name": "Army Hospital Research and Referral Delhi Cantt, Delhi",
+      "location": "Delhi NCR",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "atma-ram-sanatan-dharma-college",
+      "name": "Atma Ram Sanatan Dharma College",
+      "location": "Delhi NCR",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "b-v-institute-of-mgt-res",
+      "name": "B.V. INSTITUTE OF MGT & RES",
+      "location": "Delhi NCR",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "baba-hari-dass-college-ofpharmacy-technology-jharoda-kalan",
+      "name": "Baba Hari Dass College ofPharmacy & Technology, Jharoda Kalan",
+      "location": "Delhi NCR",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "baba-hari-dass-institute-of-nursing-education-delhi",
+      "name": "Baba Hari Dass Institute Of Nursing Education , Delhi",
+      "location": "Delhi NCR",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "banarsidas-chandiwala-institute-of-professional",
+      "name": "BANARSIDAS CHANDIWALA INSTITUTE OF PROFESSIONAL",
+      "location": "Delhi NCR",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "bbd-northern-india-institute-of-technology",
+      "name": "BBD Northern India Institute of Technology",
+      "location": "Delhi NCR",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "bhagini-nivedita-college",
+      "name": "Bhagini Nivedita College",
+      "location": "Delhi NCR",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "bhai-kanihya-insttute-of-nursing-delhi",
+      "name": "Bhai Kanihya Insttute Of Nursing , Delhi",
+      "location": "Delhi NCR",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "bharati-college",
+      "name": "Bharati College",
+      "location": "Delhi NCR",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "bharati-vidyapeeth-s-college-of-engineering",
+      "name": "Bharati vidyapeeth's college of Engineering",
+      "location": "Delhi NCR",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "bhartiya-vidya-bhvavan-usha-lakhmi-mittal-institute-of-mgt",
+      "name": "BHARTIYA VIDYA BHVAVAN, USHA & LAKHMI MITTAL INSTITUTE OF MGT",
+      "location": "Delhi NCR",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "bhaskaracharya-college-of-applied-sciences",
+      "name": "Bhaskaracharya College Of Applied Sciences",
+      "location": "Delhi NCR",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "bhim-rao-ambedkar-college",
+      "name": "Bhim Rao Ambedkar College",
+      "location": "Delhi NCR",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "blind-relief-association",
+      "name": "Blind Relief Association",
+      "location": "Delhi NCR",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "a-b-m-s-p-y-rao-chavan-law-college",
+      "name": "A. B. M. S. P. Y. Rao Chavan Law College",
+      "location": "Pune",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "a-k-khan-law-college",
+      "name": "A. K. Khan Law College",
+      "location": "Pune",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "abhinav-education-society-college-of-pharmacy-pune",
+      "name": "Abhinav Education Society College of Pharmacy , Pune",
+      "location": "Pune",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "alard-institute-of-management-sciences",
+      "name": "ALARD INSTITUTE OF MANAGEMENT SCIENCES",
+      "location": "Pune",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "anand-medical-foundations-nursing-institue-pune",
+      "name": "Anand Medical Foundations Nursing Institue,Pune",
+      "location": "Pune",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "anantrao-kanse-homoeopathic-medical-college-hospital",
+      "name": "Anantrao Kanse Homoeopathic Medical College Hospital",
+      "location": "Pune",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "armed-forces-medical-college",
+      "name": "Armed Forces Medical College",
+      "location": "Pune",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "armed-forces-medical-college-hospital-college-of-nursing-pune",
+      "name": "Armed Forces Medical College & Hospital, College Of Nursing , Pune",
+      "location": "Pune",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "association-for-the-mentally-retarded-and-cerebral-palsy-children-savali",
+      "name": "Association for the Mentally Retarded and Cerebral Palsy Children SAVALI",
+      "location": "Pune",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "audhogik-shikshan-mandal-institute-of-professional-studies",
+      "name": "AUDHOGIK SHIKSHAN MANDAL INSTITUTE OF PROFESSIONAL STUDIES",
+      "location": "Pune",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "ayodhya-charitable-trusts-college-of-special-education",
+      "name": "Ayodhya Charitable Trusts College of Special Education",
+      "location": "Pune",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "balaji-institute-of-management-human-resource-development-pune",
+      "name": "BALAJI INSTITUTE OF MANAGEMENT & HUMAN RESOURCE DEVELOPMENT, PUNE",
+      "location": "Pune",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "balaji-institute-of-telecom-management-pune",
+      "name": "BALAJI INSTITUTE OF TELECOM & MANAGEMENT,  PUNE",
+      "location": "Pune",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "balaji-law-college",
+      "name": "Balaji Law College",
+      "location": "Pune",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "bharathi-vidyapeeths-new-law-college",
+      "name": "Bharathi Vidyapeeths New Law College",
+      "location": "Pune",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "bharati-vidyapeeth-college-of-nursing-pune",
+      "name": "Bharati Vidyapeeth College Of Nursing , Pune",
+      "location": "Pune",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "bharati-vidyapeeth-dental-college-hospital-pune",
+      "name": "Bharati Vidyapeeth Dental College & Hospital, Pune",
+      "location": "Pune",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "bharati-vidyapeeth-institute-of-management-entrepreneurship-development",
+      "name": "BHARATI VIDYAPEETH INSTITUTE OF MANAGEMENT & ENTREPRENEURSHIP DEVELOPMENT",
+      "location": "Pune",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "bharati-vidyapeeth-instituteof-pharmacy-pune",
+      "name": "Bharati Vidyapeeth Instituteof Pharmacy , PUNE",
+      "location": "Pune",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "bharati-vidyapeeth-medical-college",
+      "name": "Bharati Vidyapeeth Medical College",
+      "location": "Pune",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "bharati-vidyapeeth-university-college-of-nursing-pune",
+      "name": "Bharati Vidyapeeth University, College Of Nursing , Pune",
+      "location": "Pune",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "bharati-vidyapeeth-s-college-of-engineerin-pune",
+      "name": "Bharati Vidyapeeth's College Of Engineerin Pune",
+      "location": "Pune",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "bharati-vidyapeeth-s-college-of-engineering-maharastra",
+      "name": "Bharati Vidyapeeth's College of Engineering Maharastra",
+      "location": "Pune",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "bharati-vidyapeeths-new-law-college",
+      "name": "Bharati Vidyapeeths New Law College",
+      "location": "Pune",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "c-y-d-patil-institute-of-nursing-pune",
+      "name": "C Y D Patil Institute Of Nursing,Pune",
+      "location": "Pune",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "centre-for-management-research-development",
+      "name": "CENTRE FOR MANAGEMENT RESEARCH & DEVELOPMENT",
+      "location": "Pune",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "college-of-engineering-maharastra",
+      "name": "College of Engineering Maharastra",
+      "location": "Pune",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "college-of-nursing-armed-forces-medical-college-pune",
+      "name": "College Of Nursing, Armed Forces Medical College , Pune",
+      "location": "Pune",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "cusrow-wadia-institute-of-technology-",
+      "name": "Cusrow Wadia Institute Of Technology,",
+      "location": "Pune",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "d-e-s-college-of-nursing-pune",
+      "name": "D E S College Of Nursing , Pune",
+      "location": "Pune",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "academy-of-clinical-intelligence-aci-",
+      "name": "Academy of Clinical Intelligence (ACI)",
+      "location": "Chandigarh",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "brahmrishi-yoga-training-college",
+      "name": "BRAHMRISHI YOGA TRAINING COLLEGE",
+      "location": "Chandigarh",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "chandigarh-college-of-engineering-and-technology",
+      "name": "Chandigarh College of Engineering and Technology",
+      "location": "Chandigarh",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "college-architecture-sector",
+      "name": "College Architecture Sector",
+      "location": "Chandigarh",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "college-nursing-chandigarh",
+      "name": "College Nursing Chandigarh",
+      "location": "Chandigarh",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "dolphin-pg-college-of-life-sciences",
+      "name": "Dolphin (PG) College of Life Sciences",
+      "location": "Chandigarh",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "dr-ambedkar-institute-of-hotel-management-chandigarh",
+      "name": "Dr. Ambedkar Institute of Hotel Management, Chandigarh",
+      "location": "Chandigarh",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "goswami-ganesh-dutta-s-d-college",
+      "name": "Goswami Ganesh Dutta S D College",
+      "location": "Chandigarh",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "government-college-arts",
+      "name": "Government College Arts",
+      "location": "Chandigarh",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "government-college-education",
+      "name": "Government College Education",
+      "location": "Chandigarh",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "government-college-of-art-craft",
+      "name": "Government College of Art & Craft",
+      "location": "Chandigarh",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "government-home-science-college-chandigarh",
+      "name": "Government Home Science College Chandigarh",
+      "location": "Chandigarh",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "government-institute-for-the-mentally-handicapped-",
+      "name": "Government Institute for the Mentally Handicapped,",
+      "location": "Chandigarh",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "government-medical-college-hospital",
+      "name": "Government Medical College & Hospital",
+      "location": "Chandigarh",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "government-medical-college-chandigarh",
+      "name": "Government Medical College, Chandigarh",
+      "location": "Chandigarh",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "government-polytechnic-for-women",
+      "name": "Government Polytechnic for Women",
+      "location": "Chandigarh",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "govt-college-for-girls",
+      "name": "Govt College For Girls",
+      "location": "Chandigarh",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "govt-college-for-girls-chandigarh",
+      "name": "Govt College For Girls Chandigarh",
+      "location": "Chandigarh",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "govt-medical-college",
+      "name": "Govt. Medical College",
+      "location": "Chandigarh",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "govt-polytechnic-forwomen-chandigarh",
+      "name": "Govt. Polytechnic forWomen,Chandigarh",
+      "location": "Chandigarh",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "gracious-college-of-nursing-raipur",
+      "name": "Gracious College Of Nursing ,Raipur",
+      "location": "Chandigarh",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "guru-gobind-singh-college-chandigarh",
+      "name": "Guru Gobind Singh College Chandigarh",
+      "location": "Chandigarh",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "homoeopathic-medical-college-and-hospital",
+      "name": "Homoeopathic Medical College and Hospital",
+      "location": "Chandigarh",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "indian-national-portage-association",
+      "name": "Indian National Portage Association",
+      "location": "Chandigarh",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "institute-of-management",
+      "name": "INSTITUTE OF MANAGEMENT",
+      "location": "Chandigarh",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "l-b-s-institute-of-management-studies-research",
+      "name": "L.B.S. INSTITUTE OF MANAGEMENT STUDIES & RESEARCH",
+      "location": "Chandigarh",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "mehr-chand-mahajan-d-a-v-college-for-women",
+      "name": "Mehr Chand Mahajan D A V College For Women",
+      "location": "Chandigarh",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "national-institute-of-nursing-education-chandigarh",
+      "name": "National Institute Of Nursing Education , Chandigarh",
+      "location": "Chandigarh",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "national-institute-of-nursing-education-chandigarh",
+      "name": "National Institute Of Nursing Education, Chandigarh",
+      "location": "Chandigarh",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "national-institute-of-nursing-education-chandigarh",
+      "name": "National Institute Of Nursing Education,Chandigarh",
+      "location": "Chandigarh",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "a-e-c-s-maaruti-school-of-nursing-bangalore",
+      "name": "A E C S Maaruti School Of Nursing , Bangalore",
+      "location": "Bangalore",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "a-v-school-of-nursing-bangalore",
+      "name": "A V School Of Nursing , Bangalore",
+      "location": "Bangalore",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "acharya-b-m-reddy-college-of-pharmacy-bangalore",
+      "name": "Acharya & B.M. Reddy College of Pharmacy , Bangalore",
+      "location": "Bangalore",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "acharya-b-m-reddycollege-of-pharmacy-bangalore",
+      "name": "Acharya & B.M. ReddyCollege of Pharmacy , Bangalore",
+      "location": "Bangalore",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "acharya-college-of-nursing-bangalore-",
+      "name": "Acharya College Of Nursing , Bangalore .",
+      "location": "Bangalore",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "acharya-institute-of-management-science",
+      "name": "ACHARYA INSTITUTE OF MANAGEMENT & SCIENCE",
+      "location": "Bangalore",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "acharya-institute-of-technology",
+      "name": "Acharya institute of Technology",
+      "location": "Bangalore",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "acharya-s-bangalore-b-school",
+      "name": "ACHARYA'S BANGALORE B. SCHOOL",
+      "location": "Bangalore",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "acharyas-n-r-school-of-nursing-bangalore",
+      "name": "Acharyas N R School Of Nursing , Bangalore",
+      "location": "Bangalore",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "adarsha-college-of-nursing-bangalore",
+      "name": "Adarsha College Of Nursing , Bangalore",
+      "location": "Bangalore",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "adarsha-college-of-nursing-bangalore",
+      "name": "Adarsha College Of Nursing,Bangalore",
+      "location": "Bangalore",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "aditya-bangalore-institute-for-pharmacy-education-research-bangalore",
+      "name": "Aditya Bangalore Institute for Pharmacy Education & Research , Bangalore",
+      "location": "Bangalore",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "aditya-college-of-nursing-bangalore",
+      "name": "Aditya College Of Nursing , Bangalore",
+      "location": "Bangalore",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "aditya-college-of-nursing-bangalore-",
+      "name": "Aditya College Of Nursing , Bangalore.",
+      "location": "Bangalore",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "advanced-management-college",
+      "name": "ADVANCED MANAGEMENT COLLEGE",
+      "location": "Bangalore",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "adventist-college-of-nursing-bangalore-",
+      "name": "Adventist College Of Nursing , Bangalore.",
+      "location": "Bangalore",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "aishwarya-institute-of-management-and-research",
+      "name": "AISHWARYA INSTITUTE OF MANAGEMENT AND RESEARCH",
+      "location": "Bangalore",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "aishwarya-school-of-nurisng-bangalore",
+      "name": "Aishwarya School Of Nurisng , Bangalore",
+      "location": "Bangalore",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "akkamahadevi-school-of-nursing-bangalore",
+      "name": "Akkamahadevi School Of Nursing , Bangalore",
+      "location": "Bangalore",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "al-ameen-law-college",
+      "name": "Al Ameen Law College",
+      "location": "Bangalore",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "alameen-college-of-pharmacy-bangalore",
+      "name": "AlAmeen College of Pharmacy , Bangalore",
+      "location": "Bangalore",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "alliance-business-academy",
+      "name": "ALLIANCE BUSINESS ACADEMY",
+      "location": "Bangalore",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "alliance-university",
+      "name": "Alliance University",
+      "location": "Bangalore",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "alpha-college-of-engineering",
+      "name": "Alpha College of Engineering",
+      "location": "Bangalore",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "ambigara-chowdaiah-college-of-msc-nursing-bangalore-",
+      "name": "Ambigara Chowdaiah College Of Msc Nursing , Bangalore,",
+      "location": "Bangalore",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "ambigara-chowdaiah-college-of-nursing-bangalore",
+      "name": "Ambigara Chowdaiah College Of Nursing ,Bangalore",
+      "location": "Bangalore",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "ambika-college-of-nursing-bangalore",
+      "name": "Ambika College Of Nursing, Bangalore",
+      "location": "Bangalore",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "ambika-school-of-nursing-bangalore",
+      "name": "Ambika School Of Nursing , Bangalore",
+      "location": "Bangalore",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "amc-engineering-college",
+      "name": "AMC Engineering College",
+      "location": "Bangalore",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
+    },
+    {
+      "id": "amrith-educational-cultural-society-maaruti-college-of-pharmacy-bangalore",
+      "name": "Amrith Educational & Cultural Society Maaruti College of Pharmacy , Bangalore",
+      "location": "Bangalore",
+      "type": "Scraped College",
+      "difficulty": "Target",
+      "average_fees": "₹2L - ₹6L (Estimated)",
+      "average_placement": "Data Unavailable",
+      "cutoffs": "Varies",
+      "exam_accepted": [
+        "State Entrance",
+        "Merit"
+      ],
+      "reddit_verdict": "A scraped directory college. Deeper research needed.",
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer"
+      ]
     }
   ]
 }

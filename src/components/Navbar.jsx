@@ -1,185 +1,407 @@
-import { useState, useRef, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useState, useEffect, useRef } from 'react'
+import { useNavigate, useLocation } from 'react-router-dom'
+import { motion, AnimatePresence } from 'framer-motion'
 import { useAuth } from '../contexts/AuthContext'
 
-export default function Navbar() {
+// ─── Logo ──────────────────────────────────────────────
+function Logo() {
   const navigate = useNavigate()
-  const { user, logout, pathReport } = useAuth()
-  const [showDropdown, setShowDropdown] = useState(false)
-  const dropdownRef = useRef(null)
+  return (
+    <button
+      onClick={() => navigate('/')}
+      className="flex items-center gap-0"
+      style={{ background: 'none', border: 'none', padding: 0 }}
+    >
+      <span style={{ fontFamily: "'Clash Display', sans-serif", fontSize: 22, fontWeight: 700, color: '#f1f5f9', letterSpacing: '-0.5px' }}>Sk</span>
+      <motion.span
+        style={{ fontFamily: "'Clash Display', sans-serif", fontSize: 22, fontWeight: 700, color: '#6366f1', letterSpacing: '-0.5px', display: 'inline-block' }}
+        whileHover={{ rotate: [0, -12, 12, 0], scale: [1, 1.25, 1.25, 1] }}
+        transition={{ duration: 0.45 }}
+      >
+        o
+      </motion.span>
+      <span style={{ fontFamily: "'Clash Display', sans-serif", fontSize: 22, fontWeight: 700, color: '#f1f5f9', letterSpacing: '-0.5px' }}>pe</span>
+    </button>
+  )
+}
 
-  const handleLogout = async () => {
-    try {
-      await logout()
-      setShowDropdown(false)
-      navigate('/')
-    } catch (err) {
-      console.error("Logout failed:", err)
-    }
-  }
+// ─── Avatar Dropdown ───────────────────────────────────
+function AvatarDropdown({ user, logout }) {
+  const navigate = useNavigate()
+  const [open, setOpen] = useState(false)
+  const dropRef = useRef(null)
 
-  // Close dropdown on click outside
+  const initials = (user?.displayName || user?.email || 'U')
+    .split(' ').map(n => n[0]).slice(0, 2).join('').toUpperCase()
+
   useEffect(() => {
-    function handleClickOutside(event) {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setShowDropdown(false)
-      }
+    const handler = (e) => {
+      if (dropRef.current && !dropRef.current.contains(e.target)) setOpen(false)
     }
-    document.addEventListener('mousedown', handleClickOutside)
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside)
-    }
+    document.addEventListener('mousedown', handler)
+    return () => document.removeEventListener('mousedown', handler)
   }, [])
 
-  const hasReport = !!pathReport
-
-  const getInitials = () => {
-    if (user?.displayName) return user.displayName.charAt(0).toUpperCase()
-    if (user?.email) return user.email.charAt(0).toUpperCase()
-    return 'U'
-  }
+  const items = [
+    { label: '🎯 My PathReport',    action: () => navigate('/result') },
+    { label: '⚡ Retake Test',       action: () => navigate('/form') },
+    { label: '👤 Profile',           action: () => navigate('/profile') },
+    { divider: true },
+    { label: '🚪 Sign Out',          action: logout, danger: true },
+  ]
 
   return (
-    <nav className="sticky top-0 z-50 border-b border-[rgba(79,142,247,0.08)] backdrop-blur-[16px] bg-[rgba(8,11,20,0.75)]">
-      <div className="max-w-[1100px] mx-auto px-6 py-3 flex items-center justify-between">
-        {/* Logo */}
-        <div className="flex items-center gap-2.5 cursor-pointer group" onClick={() => navigate('/')}>
-          {/* Icon mark */}
-          <div className="w-8 h-8 rounded-[9px] bg-gradient-to-br from-blue to-purple flex items-center justify-center shadow-[0_2px_10px_rgba(79,142,247,0.2)] group-hover:shadow-[0_2px_18px_rgba(79,142,247,0.35)] transition-shadow duration-300">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-              <circle cx="10" cy="10" r="7" stroke="white" strokeWidth="2.5" fill="none" />
-              <line x1="15" y1="15" x2="21" y2="21" stroke="white" strokeWidth="2.5" strokeLinecap="round" />
-            </svg>
-          </div>
-          {/* Wordmark */}
-          <span className="font-sora text-[18px] font-bold tracking-[-0.5px]">
-            <span className="text-white">Sk</span>
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue to-purple">o</span>
-            <span className="text-white">pe</span>
-          </span>
-        </div>
+    <div ref={dropRef} style={{ position: 'relative' }}>
+      <button
+        onClick={() => setOpen(v => !v)}
+        title="Your account"
+        style={{
+          width: 36, height: 36,
+          borderRadius: '50%',
+          background: 'linear-gradient(135deg, #6366f1, #a855f7)',
+          border: `2px solid ${open ? 'rgba(99,102,241,0.7)' : 'rgba(99,102,241,0.3)'}`,
+          color: '#fff',
+          fontFamily: 'Sora, sans-serif',
+          fontSize: 13,
+          fontWeight: 700,
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          cursor: 'pointer',
+          transition: 'all 0.2s ease',
+          boxShadow: open ? '0 0 20px rgba(99,102,241,0.45)' : 'none',
+          overflow: 'hidden',
+          flexShrink: 0,
+        }}
+      >
+        {user?.photoURL
+          ? <img src={user.photoURL} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '50%' }} />
+          : initials
+        }
+      </button>
 
-        {/* Auth / CTA Container */}
-        <div className="flex items-center gap-4">
-          {user ? (
-            <div className="flex items-center gap-4 relative" ref={dropdownRef}>
-              {/* Conditional Nav Buttons */}
-              {hasReport && (
-                <button
-                  onClick={() => navigate('/result')}
-                  className="font-dm text-[12px] font-semibold text-[rgba(240,242,255,0.65)] hover:text-white px-3 py-2 cursor-pointer transition-colors duration-200"
-                >
-                  My Report
-                </button>
-              )}
-              
-              <button
-                onClick={() => navigate('/form')}
-                className="font-sora text-[12px] font-semibold bg-[rgba(255,255,255,0.03)] border border-[rgba(255,255,255,0.08)] hover:bg-[rgba(255,255,255,0.06)] text-white px-4 py-2 rounded-[10px] cursor-pointer transition-all duration-300"
-              >
-                Retake Test
-              </button>
-
-              {/* Avatar Button */}
-              <button
-                onClick={() => setShowDropdown(!showDropdown)}
-                className="w-9 h-9 rounded-full bg-gradient-to-br from-blue to-purple p-[1.5px] flex items-center justify-center cursor-pointer shadow-[0_2px_8px_rgba(79,142,247,0.15)] hover:shadow-[0_2px_15px_rgba(79,142,247,0.3)] transition-all duration-300 overflow-hidden"
-              >
-                <div className="w-full h-full rounded-full bg-[#0f1320] flex items-center justify-center overflow-hidden">
-                  {user.photoURL ? (
-                    <img src={user.photoURL} alt={user.displayName || "User avatar"} className="w-full h-full object-cover" />
-                  ) : (
-                    <span className="font-sora text-[13px] font-bold text-white tracking-[-0.5px]">
-                      {getInitials()}
-                    </span>
-                  )}
-                </div>
-              </button>
-
-              {/* Dropdown Menu */}
-              {showDropdown && (
-                <div className="absolute right-0 top-12 w-64 rounded-[16px] p-4 bg-[#0c1019] shadow-[0_10px_40px_rgba(0,0,0,0.65)] border border-[rgba(255,255,255,0.12)] z-50 animate-fadeUp">
-                  {/* User Profile Summary */}
-                  <div className="border-b border-[rgba(255,255,255,0.06)] pb-3 mb-3">
-                    <p className="font-sora text-[13px] font-semibold text-white truncate">
-                      {user.displayName || 'Skope Explorer'}
-                    </p>
-                    <p className="font-dm text-[11px] text-[rgba(240,242,255,0.65)] truncate mt-0.5">
-                      {user.email}
-                    </p>
-                  </div>
-
-                  {/* Links */}
-                  <ul className="space-y-1">
-                    {hasReport && (
-                      <li>
-                        <button
-                          onClick={() => { setShowDropdown(false); navigate('/result') }}
-                          className="w-full text-left font-dm text-[13px] text-[rgba(240,242,255,0.92)] hover:text-white hover:bg-[rgba(255,255,255,0.04)] px-3 py-2 rounded-[8px] cursor-pointer transition-colors"
-                        >
-                          📈 View PathReport
-                        </button>
-                      </li>
-                    )}
-                    <li>
-                      <button
-                        onClick={() => { setShowDropdown(false); navigate('/form') }}
-                        className="w-full text-left font-dm text-[13px] text-[rgba(240,242,255,0.92)] hover:text-white hover:bg-[rgba(255,255,255,0.04)] px-3 py-2 rounded-[8px] cursor-pointer transition-colors"
-                      >
-                        ⚡ Retake Test
-                      </button>
-                    </li>
-                    <li>
-                      <button
-                        onClick={() => { setShowDropdown(false); navigate('/profile') }}
-                        className="w-full text-left font-dm text-[13px] text-[rgba(240,242,255,0.92)] hover:text-white hover:bg-[rgba(255,255,255,0.04)] px-3 py-2 rounded-[8px] cursor-pointer transition-colors"
-                      >
-                        👤 My Profile
-                      </button>
-                    </li>
-                    <li>
-                      <button
-                        onClick={() => { setShowDropdown(false); navigate('/share') }}
-                        className="w-full text-left font-dm text-[13px] text-[rgba(240,242,255,0.92)] hover:text-white hover:bg-[rgba(255,255,255,0.04)] px-3 py-2 rounded-[8px] cursor-pointer transition-colors"
-                      >
-                        📤 Share Skope
-                      </button>
-                    </li>
-                    <li>
-                      <button
-                        onClick={handleLogout}
-                        className="w-full text-left font-dm text-[13px] text-[#ff8a8a] hover:bg-[rgba(255,107,107,0.06)] px-3 py-2 rounded-[8px] cursor-pointer transition-colors flex items-center gap-2 mt-2 pt-2 border-t border-[rgba(255,255,255,0.04)]"
-                      >
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
-                          <polyline points="16 17 21 12 16 7" />
-                          <line x1="21" y1="12" x2="9" y2="12" />
-                        </svg>
-                        Log Out
-                      </button>
-                    </li>
-                  </ul>
-                </div>
-              )}
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.92, y: -8 }}
+            animate={{ opacity: 1, scale: 1,    y: 0  }}
+            exit={{    opacity: 0, scale: 0.92, y: -8 }}
+            transition={{ duration: 0.2, ease: [0.16,1,0.3,1] }}
+            style={{
+              position: 'absolute', right: 0, top: 'calc(100% + 10px)',
+              width: 210, borderRadius: 16, overflow: 'hidden', zIndex: 100,
+              background: 'rgba(17,17,24,0.97)',
+              backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)',
+              border: '1px solid rgba(255,255,255,0.08)',
+              boxShadow: '0 20px 60px rgba(0,0,0,0.6), 0 0 0 1px rgba(99,102,241,0.08)',
+            }}
+          >
+            {/* User info */}
+            <div style={{ padding: '12px 16px', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+              <p style={{ fontFamily: 'Sora, sans-serif', fontSize: 13, fontWeight: 600, color: 'rgba(241,245,249,0.9)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                {user?.displayName || 'Student'}
+              </p>
+              <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 11, color: 'rgba(241,245,249,0.3)', marginTop: 2, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                {user?.email || user?.phoneNumber || 'Guest'}
+              </p>
             </div>
-          ) : (
-            <>
+
+            {/* Menu items */}
+            <div style={{ padding: '6px 0' }}>
+              {items.map((item, i) => item.divider ? (
+                <div key={i} style={{ height: 1, background: 'rgba(255,255,255,0.05)', margin: '4px 12px' }} />
+              ) : (
+                <button
+                  key={i}
+                  onClick={() => { setOpen(false); item.action() }}
+                  style={{
+                    width: '100%', textAlign: 'left',
+                    padding: '10px 16px',
+                    background: 'none', border: 'none',
+                    fontFamily: 'Inter, sans-serif', fontSize: 13,
+                    color: item.danger ? '#f87171' : 'rgba(241,245,249,0.75)',
+                    cursor: 'pointer',
+                    transition: 'background 0.15s ease, color 0.15s ease',
+                  }}
+                  onMouseEnter={e => e.currentTarget.style.background = 'rgba(255,255,255,0.04)'}
+                  onMouseLeave={e => e.currentTarget.style.background = 'none'}
+                >
+                  {item.label}
+                </button>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  )
+}
+
+// ─── Mobile Menu Sheet ─────────────────────────────────
+function MobileMenu({ open, onClose, user, logout }) {
+  const navigate = useNavigate()
+  const go = (path) => { onClose(); navigate(path) }
+
+  return (
+    <AnimatePresence>
+      {open && (
+        <>
+          {/* Backdrop */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={onClose}
+            style={{
+              position: 'fixed', inset: 0, zIndex: 90,
+              background: 'rgba(0,0,0,0.6)',
+              backdropFilter: 'blur(4px)', WebkitBackdropFilter: 'blur(4px)',
+            }}
+          />
+
+          {/* Sheet */}
+          <motion.div
+            initial={{ y: '100%' }}
+            animate={{ y: 0 }}
+            exit={{ y: '100%' }}
+            transition={{ duration: 0.4, ease: [0.16,1,0.3,1] }}
+            style={{
+              position: 'fixed', bottom: 0, left: 0, right: 0,
+              zIndex: 95, borderRadius: '28px 28px 0 0',
+              padding: '24px 24px 40px',
+              background: 'rgba(12,12,20,0.98)',
+              backdropFilter: 'blur(32px)', WebkitBackdropFilter: 'blur(32px)',
+              border: '1px solid rgba(255,255,255,0.06)',
+            }}
+          >
+            {/* Drag handle */}
+            <div style={{ width: 40, height: 4, borderRadius: 2, background: 'rgba(255,255,255,0.1)', margin: '0 auto 24px' }} />
+
+            {[
+              { label: 'Home',              path: '/' },
+              { label: 'Find My Career Vibe', path: user ? '/form' : '/login' },
+              { label: 'My PathReport',       path: user ? '/result' : '/login' },
+              user && { label: 'Profile',     path: '/profile' },
+            ].filter(Boolean).map(item => (
               <button
-                onClick={() => navigate('/login')}
-                className="font-dm text-[12px] font-semibold text-[rgba(240,242,255,0.65)] hover:text-white px-3 py-2 cursor-pointer transition-colors duration-200"
+                key={item.path}
+                onClick={() => go(item.path)}
+                style={{
+                  display: 'block', width: '100%', textAlign: 'left',
+                  padding: '16px 0',
+                  background: 'none', border: 'none',
+                  borderBottom: '1px solid rgba(255,255,255,0.05)',
+                  fontFamily: "'Clash Display', sans-serif", fontSize: 22, fontWeight: 600,
+                  color: 'rgba(241,245,249,0.8)',
+                  cursor: 'pointer',
+                  transition: 'color 0.15s ease',
+                }}
+                onMouseEnter={e => e.currentTarget.style.color = '#f1f5f9'}
+                onMouseLeave={e => e.currentTarget.style.color = 'rgba(241,245,249,0.8)'}
               >
-                Sign In
+                {item.label}
               </button>
+            ))}
+
+            {user && (
               <button
-                onClick={() => navigate('/form')}
-                className="font-sora text-[12px] font-semibold bg-gradient-to-r from-blue to-purple text-white px-5 py-2.5 rounded-[10px] border-none cursor-pointer hover:-translate-y-0.5 hover:shadow-[0_4px_20px_rgba(139,92,246,0.25)] transition-all duration-300"
+                onClick={() => { onClose(); logout() }}
+                style={{
+                  marginTop: 16, width: '100%', textAlign: 'center',
+                  padding: '12px 0',
+                  background: 'rgba(239,68,68,0.07)',
+                  border: '1px solid rgba(239,68,68,0.2)',
+                  borderRadius: 12,
+                  fontFamily: 'Inter, sans-serif', fontSize: 13,
+                  color: '#f87171', cursor: 'pointer',
+                }}
               >
-                Find My Scope →
+                Sign Out
               </button>
-            </>
+            )}
+          </motion.div>
+        </>
+      )}
+    </AnimatePresence>
+  )
+}
+
+// ─── Main Navbar ───────────────────────────────────────
+export default function Navbar() {
+  const navigate = useNavigate()
+  const location = useLocation()
+  const { user, logout } = useAuth()
+  const [scrolled, setScrolled] = useState(false)
+  const [mobileOpen, setMobileOpen] = useState(false)
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 50)
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  const isActive = (path) => location.pathname === path
+
+  return (
+    <>
+      <motion.nav
+        initial={{ y: -80, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.6, delay: 0.1, ease: [0.16,1,0.3,1] }}
+        style={{
+          position: 'fixed', top: 0, left: 0, right: 0,
+          zIndex: 30, display: 'flex', alignItems: 'center',
+          justifyContent: 'center', padding: '20px 16px 0',
+        }}
+      >
+        <div
+          style={{
+            display: 'flex', alignItems: 'center',
+            justifyContent: 'space-between',
+            width: '100%', maxWidth: 960,
+            padding: '10px 20px',
+            borderRadius: 100,
+            background: scrolled ? 'rgba(12,12,20,0.88)' : 'rgba(12,12,20,0.35)',
+            backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)',
+            border: scrolled ? '1px solid rgba(255,255,255,0.09)' : '1px solid rgba(255,255,255,0.05)',
+            boxShadow: scrolled ? '0 8px 32px rgba(0,0,0,0.4)' : 'none',
+            transition: 'all 0.4s cubic-bezier(0.16,1,0.3,1)',
+          }}
+        >
+          {/* Logo */}
+          <Logo />
+
+          {/* Desktop center nav — only when logged in */}
+          {user && (
+            <div style={{ display: 'flex', alignItems: 'center', gap: 28 }} className="hidden-mobile">
+              {[
+                { label: 'Home',       path: '/' },
+                { label: 'PathReport', path: '/result' },
+              ].map(item => (
+                <button
+                  key={item.path}
+                  onClick={() => navigate(item.path)}
+                  style={{
+                    background: 'none', border: 'none',
+                    fontFamily: 'Inter, sans-serif', fontSize: 13, fontWeight: 500,
+                    color: isActive(item.path) ? '#f1f5f9' : 'rgba(241,245,249,0.45)',
+                    cursor: 'pointer',
+                    transition: 'color 0.2s ease',
+                    position: 'relative', paddingBottom: 2,
+                  }}
+                  onMouseEnter={e => { if (!isActive(item.path)) e.currentTarget.style.color = 'rgba(241,245,249,0.85)' }}
+                  onMouseLeave={e => { if (!isActive(item.path)) e.currentTarget.style.color = 'rgba(241,245,249,0.45)' }}
+                  className="hidden md:block"
+                >
+                  {item.label}
+                  {isActive(item.path) && (
+                    <span style={{
+                      position: 'absolute', bottom: 0, left: 0, right: 0,
+                      height: 1.5, borderRadius: 2,
+                      background: 'linear-gradient(90deg, #6366f1, #a855f7)',
+                    }} />
+                  )}
+                </button>
+              ))}
+            </div>
           )}
+
+          {/* Right side */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+            {user ? (
+              <>
+                {/* Retake Test — desktop only */}
+                <button
+                  onClick={() => navigate('/form')}
+                  className="hidden sm:block"
+                  style={{
+                    fontFamily: 'Sora, sans-serif', fontSize: 12, fontWeight: 600,
+                    color: 'rgba(241,245,249,0.6)',
+                    background: 'none',
+                    border: '1px solid rgba(255,255,255,0.08)',
+                    padding: '7px 16px', borderRadius: 100,
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease',
+                  }}
+                  onMouseEnter={e => { e.currentTarget.style.color = '#f1f5f9'; e.currentTarget.style.background = 'rgba(255,255,255,0.05)' }}
+                  onMouseLeave={e => { e.currentTarget.style.color = 'rgba(241,245,249,0.6)'; e.currentTarget.style.background = 'none' }}
+                >
+                  Retake Test
+                </button>
+
+                {/* Avatar */}
+                <AvatarDropdown user={user} logout={logout} />
+              </>
+            ) : (
+              <>
+                {/* Sign in link — desktop */}
+                <button
+                  onClick={() => navigate('/login')}
+                  className="hidden sm:block"
+                  style={{
+                    background: 'none', border: 'none',
+                    fontFamily: 'Inter, sans-serif', fontSize: 13, fontWeight: 500,
+                    color: 'rgba(241,245,249,0.45)',
+                    cursor: 'pointer',
+                    transition: 'color 0.2s ease',
+                    marginRight: 4,
+                  }}
+                  onMouseEnter={e => e.currentTarget.style.color = '#f1f5f9'}
+                  onMouseLeave={e => e.currentTarget.style.color = 'rgba(241,245,249,0.45)'}
+                >
+                  Sign in
+                </button>
+
+                {/* Get Started CTA */}
+                <button
+                  onClick={() => navigate('/login')}
+                  style={{
+                    fontFamily: 'Sora, sans-serif', fontSize: 13, fontWeight: 600,
+                    color: '#fff',
+                    background: 'linear-gradient(135deg, #6366f1, #a855f7)',
+                    border: 'none',
+                    padding: '9px 20px', borderRadius: 100,
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease',
+                    boxShadow: '0 0 0 rgba(99,102,241,0)',
+                  }}
+                  onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-1px)'; e.currentTarget.style.boxShadow = '0 0 24px rgba(99,102,241,0.4)' }}
+                  onMouseLeave={e => { e.currentTarget.style.transform = ''; e.currentTarget.style.boxShadow = '0 0 0 rgba(99,102,241,0)' }}
+                >
+                  Get Started
+                </button>
+              </>
+            )}
+
+            {/* Mobile hamburger */}
+            <button
+              onClick={() => setMobileOpen(true)}
+              style={{
+                display: 'none', flexDirection: 'column', gap: 5,
+                padding: 8, background: 'none', border: 'none', cursor: 'pointer',
+              }}
+              className="hamburger-btn"
+            >
+              {[0,1,2].map(i => (
+                <span key={i} style={{ display: 'block', width: 20, height: 1.5, background: 'rgba(241,245,249,0.6)', borderRadius: 2 }} />
+              ))}
+            </button>
+          </div>
         </div>
-      </div>
-    </nav>
+      </motion.nav>
+
+      {/* Hamburger mobile-only via CSS */}
+      <style>{`
+        @media (max-width: 640px) {
+          .hamburger-btn { display: flex !important; }
+        }
+      `}</style>
+
+      {/* Mobile menu */}
+      <MobileMenu
+        open={mobileOpen}
+        onClose={() => setMobileOpen(false)}
+        user={user}
+        logout={logout}
+      />
+    </>
   )
 }

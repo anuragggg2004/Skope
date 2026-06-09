@@ -124,21 +124,28 @@ const PORT = process.env.PORT || 3000
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY
 const MODELS = ['gemini-2.5-flash', 'gemini-1.5-flash', 'gemini-1.5-pro']
 
-// Helper: fetch with retry on 429 (respects Gemini rate limits)
-async function fetchWithRetry(url, options, retries = 3) {
+// Helper: fetch with retry on 429 (respects Gemini rate limits, but fails fast to fallback)
+async function fetchWithRetry(url, options, retries = 2) {
   for (let i = 0; i < retries; i++) {
     const response = await fetch(url, options)
     if (response.status === 429 && i < retries - 1) {
-      // Try to parse Gemini's suggested retry delay
-      let waitMs = (i + 1) * 3000 // default: 3s, 6s
+      // Fail fast for user experience: max 5 seconds wait
+      let waitMs = 2000 
       try {
         const errBody = await response.clone().json()
         const retryDetail = errBody?.error?.details?.find(d => d['@type']?.includes('RetryInfo'))
         if (retryDetail?.retryDelay) {
           const parsed = parseInt(retryDetail.retryDelay)
-          if (parsed > 0) waitMs = (parsed + 1) * 1000 // add 1s buffer
+          if (parsed > 0) waitMs = (parsed + 1) * 1000
         }
       } catch {}
+      
+      // If delay is too long, skip retry and throw to trigger OpenRouter fallback immediately
+      if (waitMs > 5000) {
+        console.log(`Rate limit delay is too long (${waitMs}ms), failing fast to trigger fallback...`)
+        return response
+      }
+
       console.log(`Rate limited, retrying in ${Math.round(waitMs / 1000)}s (attempt ${i + 2}/${retries})...`)
       await new Promise(r => setTimeout(r, waitMs))
       continue
@@ -212,45 +219,62 @@ async function callAIBase(payload) {
         })
       }
       
-      // 2. Build OpenRouter request payload
-      const openRouterModel = 'meta-llama/llama-3.3-70b-instruct:free'
-      const openRouterPayload = {
-        model: openRouterModel,
-        messages: messages,
-        temperature: payload.generationConfig?.temperature || 0.7
-      }
-      
-      // If original requested JSON response type, enforce it for OpenRouter too
-      if (payload.generationConfig?.responseMimeType === 'application/json') {
-        openRouterPayload.response_format = { type: 'json_object' }
-      }
+      // 2. Build OpenRouter request payload with fallbacks
+      const openRouterModels = [
+        'meta-llama/llama-3.3-70b-instruct',
+        'google/gemini-2.5-flash',
+        'deepseek/deepseek-chat',
+        'meta-llama/llama-3.3-70b-instruct:free'
+      ]
 
-      console.log(`[AI] Querying OpenRouter model: ${openRouterModel}`)
-      const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${OPENROUTER_API_KEY}`,
-          'HTTP-Referer': 'https://anuraggg.tech',
-          'X-Title': 'Skope Platform'
-        },
-        body: JSON.stringify(openRouterPayload)
-      })
+      let openRouterError = null
+      for (const openRouterModel of openRouterModels) {
+        console.log(`[AI] Querying OpenRouter model: ${openRouterModel}`)
+        try {
+          const openRouterPayload = {
+            model: openRouterModel,
+            messages: messages,
+            temperature: payload.generationConfig?.temperature || 0.7
+          }
+          
+          if (payload.generationConfig?.responseMimeType === 'application/json') {
+            openRouterPayload.response_format = { type: 'json_object' }
+          }
+          
+          const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${OPENROUTER_API_KEY}`,
+              'HTTP-Referer': 'https://anuraggg.tech',
+              'X-Title': 'Skope Platform'
+            },
+            body: JSON.stringify(openRouterPayload)
+          })
 
-      if (!response.ok) {
-        const errText = await response.text()
-        console.error(`[AI] OpenRouter API returned error status ${response.status}:`, errText)
-        throw new Error(`OpenRouter returned status ${response.status}: ${errText}`)
+          if (!response.ok) {
+            const errText = await response.text()
+            console.error(`[AI] OpenRouter model ${openRouterModel} returned error status ${response.status}:`, errText)
+            openRouterError = new Error(`OpenRouter returned status ${response.status}: ${errText}`)
+            continue
+          }
+
+          const responseBody = await response.json()
+          const text = responseBody.choices?.[0]?.message?.content
+          if (!text) {
+            console.error(`[AI] OpenRouter model ${openRouterModel} returned empty text`)
+            openRouterError = new Error(`Empty message returned from OpenRouter model ${openRouterModel}`)
+            continue
+          }
+
+          console.log(`[AI] Successful response from OpenRouter (${openRouterModel})`)
+          return text
+        } catch (err) {
+          console.error(`[AI] OpenRouter error for model ${openRouterModel}:`, err.message)
+          openRouterError = err
+        }
       }
-
-      const responseBody = await response.json()
-      const text = responseBody.choices?.[0]?.message?.content
-      if (!text) {
-        throw new Error("Empty message returned from OpenRouter")
-      }
-
-      console.log(`[AI] Successful response from OpenRouter (${openRouterModel})`)
-      return text
+      throw openRouterError || new Error("All OpenRouter models failed.")
     } catch (openRouterErr) {
       console.error(`[AI] OpenRouter fallback failed:`, openRouterErr.message)
       lastError = new Error(`Both Gemini and OpenRouter failed. Last OpenRouter error: ${openRouterErr.message}`)
@@ -261,7 +285,7 @@ async function callAIBase(payload) {
 }
 
 // Reusable Gemini helper (single turn)
-async function callAI(systemPrompt, userPrompt) {
+async function callAI(systemPrompt, userPrompt, useSearch = false) {
   const payload = {
     system_instruction: {
       parts: [{ text: systemPrompt }]
@@ -278,6 +302,11 @@ async function callAI(systemPrompt, userPrompt) {
       responseMimeType: 'application/json'
     }
   }
+
+  if (useSearch) {
+    payload.tools = [{ googleSearch: {} }]
+  }
+
   return await callAIBase(payload)
 }
 
@@ -321,6 +350,109 @@ async function callAIChat(systemPrompt, messages) {
   }
   return await callAIBase(payload)
 }
+
+// =============================================
+// COLLEGE ELIGIBILITY GUARDRAILS
+// =============================================
+const COLLEGE_ELIGIBILITY = {
+  'IIT': { minJEEAdvancedRank: 15000, minJEEMainPercentile: 97, minBoard: 75, tier: 'aspirational' },
+  'NIT_top': { minJEEMainPercentile: 92, minBoard: 75, tier: 'aspirational' },
+  'NIT_mid': { minJEEMainPercentile: 82, minBoard: 70, tier: 'realistic' },
+  'BITS': { minBITSATScore: 280, minBoard: 75, tier: 'aspirational' },
+  'IIIT_top': { minJEEMainPercentile: 92, minBoard: 70, tier: 'aspirational' },
+  'DAIICT': { minJEEMainPercentile: 75, minBoard: 70, tier: 'realistic' },
+  'central_univ': { minCUETPercentile: 85, minBoard: 75, tier: 'realistic' },
+  'private_top': { minBoard: 65, tier: 'safe' },
+  'private_mid': { minBoard: 55, tier: 'safe' }
+}
+
+function getEligibilityRule(name, type) {
+  const n = (name || '').toLowerCase()
+  const t = (type || '').toLowerCase()
+  if (n.includes('iit') || t.includes('iit')) return COLLEGE_ELIGIBILITY['IIT']
+  if (n.includes('bits') || n.includes('birla institute')) return COLLEGE_ELIGIBILITY['BITS']
+  if (n.includes('nit ') || t.includes('nit')) {
+    if (n.includes('trichy') || n.includes('warangal') || n.includes('surathkal')) return COLLEGE_ELIGIBILITY['NIT_top']
+    return COLLEGE_ELIGIBILITY['NIT_mid']
+  }
+  if (n.includes('iiit ') || t.includes('iiit')) {
+    if (n.includes('hyderabad') || n.includes('bangalore') || n.includes('delhi')) return COLLEGE_ELIGIBILITY['IIIT_top']
+  }
+  if (n.includes('daiict')) return COLLEGE_ELIGIBILITY['DAIICT']
+  if (n.includes('vit ') || n.includes('manipal') || n.includes('srm') || n.includes('thapar')) return COLLEGE_ELIGIBILITY['private_top']
+  return null
+}
+
+function estimateProbability(profile, rule) {
+  let score = 100
+  if (profile.boardPercentage && profile.boardPercentage < rule.minBoard) {
+    score -= (rule.minBoard - profile.boardPercentage) * 3
+  }
+  if (rule.minJEEMainPercentile && profile.jeePercentile) {
+    if (profile.jeePercentile < rule.minJEEMainPercentile) {
+      score -= (rule.minJEEMainPercentile - profile.jeePercentile) * 2
+    }
+  }
+  if (rule.minJEEMainPercentile && !profile.jeePercentile) {
+    score -= 40
+  }
+  return Math.max(0, Math.min(100, Math.round(score)))
+}
+
+function buildWarning(profile, rule, college) {
+  const warnings = []
+  if (rule.minBoard && profile.boardPercentage && profile.boardPercentage < rule.minBoard) {
+    warnings.push(`Board eligibility cutoff is ${rule.minBoard}%. Your current boards are ${profile.boardPercentage}%.`)
+  }
+  if (rule.minJEEMainPercentile && (!profile.jeePercentile || profile.jeePercentile < rule.minJEEMainPercentile)) {
+    warnings.push(`${college.name} requires JEE Main ~${rule.minJEEMainPercentile}th percentile. ${profile.jeePercentile ? 'Significant gap to close.' : 'Exam score needed.'}`)
+  }
+  return warnings.join(' ')
+}
+
+function validateColleges(colleges, profile) {
+  return colleges.map(college => {
+    const rule = getEligibilityRule(college.name, college.type)
+    if (!rule) {
+      return { ...college, classification: 'realistic', admissionProbability: 50, eligibilityWarning: null }
+    }
+    
+    const meetsBoard = !rule.minBoard || (profile.boardPercentage >= rule.minBoard)
+    const meetsJEE = !rule.minJEEMainPercentile || (profile.jeePercentile >= rule.minJEEMainPercentile)
+    
+    if (!meetsBoard || !meetsJEE) {
+      return {
+        ...college,
+        classification: 'aspirational',
+        eligibilityWarning: buildWarning(profile, rule, college),
+        admissionProbability: estimateProbability(profile, rule),
+        isImpossible: true
+      }
+    }
+    
+    return {
+      ...college,
+      classification: rule.tier,
+      admissionProbability: estimateProbability(profile, rule),
+      isImpossible: false
+    }
+  })
+}
+
+// =============================================
+// ENDPOINT 0: POST /api/conversation-start
+// =============================================
+app.post('/api/conversation-start', async (req, res) => {
+  try {
+    const systemPrompt = `You are opening a conversation with an Indian Class 12 student. Ask exactly ONE question that will give you the most useful information first. The question should be open enough that their answer reveals multiple facts at once. Start with stream, marks, and immediate situation combined. Do NOT ask multiple things. Do NOT greet them with fluff. Get straight to the most useful question.`
+    
+    const responseText = await callAIText(systemPrompt, 'Generate the first question to start the career counseling session.')
+    res.json({ question: responseText.trim().replace(/^"|"$/g, '') })
+  } catch (error) {
+    console.error('Error in /api/conversation-start:', error)
+    res.status(500).json({ error: 'Failed to start conversation.' })
+  }
+})
 
 // =============================================
 // ENDPOINT 1: POST /api/adaptive-questions
@@ -383,6 +515,11 @@ NEVER SOUNDS LIKE:
 - 'That is interesting.'
 - 'All paths are valid!'
 - Anything motivational or generic
+- 'You have great potential'
+- 'With hard work, anything is possible'
+- 'You are on the right track'
+- 'Great choice'
+- 'Excellent foundation'
 
 RULES — NON NEGOTIABLE:
 - Ask exactly ONE sharp question. Never two.
@@ -465,6 +602,19 @@ NEVER:
 - 'Follow your passion!'
 - 'All paths are valid!'
 - Generic college praise without specific evidence
+- 'You have great potential'
+- 'With hard work, anything is possible'
+- 'You're on the right track'
+- 'Great choice'
+- 'Excellent foundation'
+- Every positive statement MUST be followed by specific evidence.
+
+MARKS-BASED RESTRICTION — NON-NEGOTIABLE:
+- IIT (any campus): ONLY if JEE Advanced rank is very high or likely. If no JEE score is provided or percentile < 97, classify as aspirational with an explicit warning.
+- Top NITs: ONLY if JEE percentile > 90. Otherwise aspirational.
+- BITS: ONLY if BITSAT score > 280 or student explicitly mentioned taking BITSAT.
+- If board percentage < 65%, do NOT include any college requiring JEE Advanced as realistic.
+Violating these rules will produce a report that destroys user trust.
 
 COLLEGE SELECTION — STRICT RULES:
 Return EXACTLY 15 colleges with this mandatory mix:
@@ -567,6 +717,21 @@ ${preferencesText}
 
 Return this exact JSON structure:
 {
+  "profile_metrics": {
+    "boardPercentage": 75,
+    "jeePercentile": 67,
+    "estimatedBudget": 500000
+  },
+  "preparedness_reality": {
+    "score": 38,
+    "label": "Underprepared",
+    "what_it_means": "A score of 38/100 means your current preparation level does not match your stated goal. The gap is not impossible to close but requires a specific plan.",
+    "what_needs_to_change": [
+      "Specific change 1",
+      "Specific change 2"
+    ],
+    "timeline": "If current trajectory continues without change, realistic colleges will be private universities."
+  },
   "archetype": {
     "name": "One of: The Builder / The Explorer / The Creator / The Strategist / The Analyst / The Innovator / The Connector",
     "description": "2 sentences describing this profile's mindset.",
@@ -600,8 +765,12 @@ Return this exact JSON structure:
       "caution": "exactly 1 sentence naming the real downside or trade-off.",
       "is_hidden_gem": false,
       "reddit_verdict": "exactly 1 sentence insider opinion from Reddit/Quora. Not marketing copy.",
+      "internet_verdict": "Use Google Search to find out what people are currently saying about this college online in 1-2 sentences. Compare it against our database context.",
       "match_score": 92,
-      "match_reasons": ["Reason 1 why it fits", "Reason 2"]
+      "match_reasons": ["Reason 1 why it fits", "Reason 2"],
+      "classification": "Will be populated by server, leave blank",
+      "eligibilityWarning": "Will be populated by server, leave blank",
+      "admissionProbability": 0
     }
   ],
   "recommended_courses": [
@@ -659,11 +828,20 @@ Return EXACTLY 15 colleges with EXACTLY this mix:
 - 2 unconventional fits for their specific profile
 - 1 realistic safety given their actual marks and budget
 
+CRITICAL INTERNET GROUNDING INSTRUCTION:
+For EVERY college you select from the database, YOU MUST use your Google Search capability to find out what the internet is CURRENTLY saying about them (e.g., student reviews, Reddit threads, recent news). Summarize this live internet sentiment in the "internet_verdict" field and compare it to the database context.
+
 Return exactly 3 careers, exactly 15 colleges, exactly 15 regular recommended_courses, exactly 5 hidden_courses, exactly 5 hidden_careers, exactly 2 emerging roles.`
 
-    const responseText = await callAI(systemPrompt, userPrompt)
+    const responseText = await callAI(systemPrompt, userPrompt, true)
     const cleaned = responseText.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim()
     const parsed = JSON.parse(cleaned)
+
+    // Apply College Guardrails
+    if (parsed.colleges && parsed.profile_metrics) {
+      parsed.colleges = validateColleges(parsed.colleges, parsed.profile_metrics)
+    }
+
     res.json(parsed)
   } catch (error) {
     console.error('Error in /api/generate-report:', error)

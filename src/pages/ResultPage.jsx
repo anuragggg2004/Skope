@@ -179,6 +179,19 @@ function CareerCardRedesigned({ career, index }) {
 function CollegeCardRedesigned({ college, index, isShortlisted, onToggleShortlist }) {
   const [expanded, setExpanded] = useState(false)
 
+  const getClassificationColor = (classification) => {
+    switch(classification) {
+      case 'safe': return 'text-[#22d3a0] bg-[rgba(34,211,160,0.1)] border-[rgba(34,211,160,0.25)]'
+      case 'realistic': return 'text-[#4f8ef7] bg-[rgba(79,142,247,0.1)] border-[rgba(79,142,247,0.25)]'
+      case 'aspirational': return 'text-[#fbbf24] bg-[rgba(251,191,36,0.1)] border-[rgba(251,191,36,0.25)]'
+      default: return 'text-[#9b8eff] bg-[rgba(108,99,255,0.1)] border-[rgba(108,99,255,0.25)]'
+    }
+  }
+
+  const getClassificationLabel = (classification) => {
+    return classification ? classification.toUpperCase() : 'UNKNOWN'
+  }
+
   return (
     <div
       className="glass-card rounded-[20px] p-5 sm:p-6 cursor-pointer hover:border-[rgba(108,99,255,0.2)] transition-all duration-200"
@@ -210,6 +223,16 @@ function CollegeCardRedesigned({ college, index, isShortlisted, onToggleShortlis
         </div>
         
         <div className="flex flex-col items-end gap-1 shrink-0">
+          {college.classification && (
+            <div className={`flex items-center gap-1 border rounded-full px-2.5 py-0.5 ${getClassificationColor(college.classification)}`}>
+              <span className="font-mono text-[9px] font-bold tracking-wider">{getClassificationLabel(college.classification)}</span>
+            </div>
+          )}
+          {college.admissionProbability !== undefined && (
+            <div className="text-right mt-0.5">
+              <span className="font-sora text-[11px] font-semibold text-[rgba(240,242,255,0.5)]">Prob: {college.admissionProbability}%</span>
+            </div>
+          )}
           {college.match_score && (
             <div className="flex items-center gap-1 bg-[rgba(108,99,255,0.1)] border border-[rgba(108,99,255,0.25)] rounded-full px-2.5 py-0.5">
               <span className="w-1.5 h-1.5 rounded-full bg-[#6c63ff] animate-pulse" />
@@ -229,6 +252,28 @@ function CollegeCardRedesigned({ college, index, isShortlisted, onToggleShortlis
       <p className="font-dm text-[13px] text-[rgba(240,242,255,0.55)] leading-[1.65]">
         {college.why_fits || college.why_this_fits}
       </p>
+
+      {/* Live Internet Verdict */}
+      {college.internet_verdict && (
+        <div className="mt-3 bg-[rgba(251,191,36,0.05)] border border-[rgba(251,191,36,0.15)] rounded-lg p-3">
+          <div className="flex items-center gap-1.5 mb-1">
+            <span className="text-[12px]">🌐</span>
+            <span className="font-dm text-[10px] font-bold uppercase tracking-wider text-[#fbbf24]">Live Internet Verdict</span>
+          </div>
+          <p className="font-dm text-[12px] text-[rgba(240,242,255,0.7)] leading-relaxed">
+            {college.internet_verdict}
+          </p>
+        </div>
+      )}
+
+      {/* Eligibility Guardrail Warning */}
+      {college.eligibilityWarning && (
+        <div className="bg-[rgba(248,113,113,0.06)] border border-[rgba(248,113,113,0.15)] rounded-[10px] px-3 py-2 mt-2">
+          <span className="font-dm text-[11px] text-[#f87171] leading-relaxed block">
+            ⚠️ <strong className="font-semibold">Guardrail Warning:</strong> {college.eligibilityWarning}
+          </span>
+        </div>
+      )}
 
       {/* Expandable Section */}
       <div className={`overflow-hidden transition-all duration-300 ${expanded ? 'max-h-[400px] opacity-100 mt-4' : 'max-h-0 opacity-0'}`}>

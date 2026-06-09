@@ -1,7 +1,10 @@
+import { useState } from 'react'
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import { AuthProvider } from './contexts/AuthContext'
 import ProtectedRoute from './components/ProtectedRoute'
 import HelpBot from './components/HelpBot'
+import CustomCursor from './components/CustomCursor'
+import Loader from './components/Loader'
 import LandingPage from './pages/LandingPage'
 import LoginPage from './pages/LoginPage'
 import FormPage from './pages/FormPage'
@@ -18,25 +21,43 @@ function ConditionalHelpBot() {
 }
 
 export default function App() {
+  // Show loader only once per session
+  const [loaderDone, setLoaderDone] = useState(
+    () => sessionStorage.getItem('skope_loaded') === '1'
+  )
+
+  const handleLoaderComplete = () => {
+    sessionStorage.setItem('skope_loaded', '1')
+    setLoaderDone(true)
+  }
+
   return (
-    <BrowserRouter>
-      <AuthProvider>
-        <Routes>
-          {/* Public routes */}
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/share" element={<SharePage />} />
+    <>
+      {/* Custom cursor — desktop only, self-disables on touch */}
+      <CustomCursor />
 
-          {/* Protected routes */}
-          <Route path="/form" element={<ProtectedRoute><FormPage /></ProtectedRoute>} />
-          <Route path="/preferences" element={<ProtectedRoute><PreferencesPage /></ProtectedRoute>} />
-          <Route path="/result" element={<ProtectedRoute><ResultPage /></ProtectedRoute>} />
-          <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
-        </Routes>
+      {/* Premium loader — first visit per session only */}
+      {!loaderDone && <Loader onComplete={handleLoaderComplete} />}
 
-        {/* HelpBot only on landing page */}
-        <ConditionalHelpBot />
-      </AuthProvider>
-    </BrowserRouter>
+      <BrowserRouter>
+        <AuthProvider>
+          <Routes>
+            {/* Public routes */}
+            <Route path="/"      element={<LandingPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/share" element={<SharePage />} />
+
+            {/* Protected routes */}
+            <Route path="/form"        element={<ProtectedRoute><FormPage /></ProtectedRoute>} />
+            <Route path="/preferences" element={<ProtectedRoute><PreferencesPage /></ProtectedRoute>} />
+            <Route path="/result"      element={<ProtectedRoute><ResultPage /></ProtectedRoute>} />
+            <Route path="/profile"     element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
+          </Routes>
+
+          {/* HelpBot only on landing page */}
+          <ConditionalHelpBot />
+        </AuthProvider>
+      </BrowserRouter>
+    </>
   )
 }

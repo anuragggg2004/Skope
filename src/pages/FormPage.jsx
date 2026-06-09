@@ -166,31 +166,19 @@ function ChatBubble({ message, index, isLatest, onType }) {
 
 // ─── Main Form Page ───────────────────────────────────
 
-const INITIAL_QUESTIONS = [
-  "Hey! I'm Skope, your AI career strategist. Let's find your career vibe. First, what stream are you in and what are your ACTUAL marks?",
-  "What have you actually built, made, or done outside school? (If nothing, say that.)",
-  "What career are you thinking, and honestly, whose idea is it?",
-  "What are your ACTUAL marks or exam scores? (No dreams, give me the real numbers on your sheet.)",
-  "Which exams are you preparing for? Be specific about what you are studying for right now."
-]
-
 export default function FormPage() {
   const navigate = useNavigate()
 
   // Load state from sessionStorage if it exists to survive page refreshes
   const getInitialChat = () => {
     const saved = sessionStorage.getItem('skope_chatHistory')
-    return saved ? JSON.parse(saved) : [{ role: 'assistant', content: INITIAL_QUESTIONS[0] }]
+    return saved ? JSON.parse(saved) : []
   }
 
   const [chatHistory, setChatHistory] = useState(getInitialChat)
-  const [phase1, setPhase1] = useState(() => {
-    const saved = sessionStorage.getItem('skope_phase1')
-    return saved ? JSON.parse(saved) : { q1: '', q2: '', q3: '', q4: '', q5: '' }
-  })
 
   const completedSteps = chatHistory.filter(m => m.role === 'user').length
-  const initialIndex = Math.min(completedSteps, 5)
+  const initialIndex = completedSteps
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(initialIndex)
 
   const [chatInput, setChatInput] = useState('')
@@ -207,28 +195,28 @@ export default function FormPage() {
     sessionStorage.removeItem('skope_phase2')
     sessionStorage.removeItem('share_popup_shown')
 
-    // Recovery if page was refreshed while AI was thinking / generating the next question
     const initialChat = getInitialChat()
-    if (initialChat.length % 2 === 0 && initialChat.length > 0) {
+    if (initialChat.length === 0) {
       setLoading(true)
-      const completed = initialChat.filter(m => m.role === 'user').length
-      if (completed < 5) {
-        const nextIdx = completed
-        setTimeout(() => {
-          setChatHistory(prev => {
-            const next = [...prev, { role: 'assistant', content: INITIAL_QUESTIONS[nextIdx] }]
-            sessionStorage.setItem('skope_chatHistory', JSON.stringify(next))
-            return next
-          })
-          setLoading(false)
-        }, 800)
-      } else {
-        const savedPhase1 = sessionStorage.getItem('skope_phase1')
-        const currentPhase1 = savedPhase1 ? JSON.parse(savedPhase1) : { q1: '', q2: '', q3: '', q4: '', q5: '' }
-        fetchNextAdaptiveQuestion(initialChat, currentPhase1).then(() => {
+      fetch('/api/conversation-start', { method: 'POST' })
+        .then(r => r.json())
+        .then(data => {
+          const next = [{ role: 'assistant', content: data.question }]
+          setChatHistory(next)
+          sessionStorage.setItem('skope_chatHistory', JSON.stringify(next))
           setLoading(false)
         })
-      }
+        .catch(err => {
+          console.error(err)
+          setError('Failed to start conversation. Please refresh.')
+          setLoading(false)
+        })
+    } else if (initialChat.length % 2 === 0 && initialChat.length > 0) {
+      // User sent something, AI hasn't responded.
+      setLoading(true)
+      fetchNextAdaptiveQuestion(initialChat).then(() => {
+        setLoading(false)
+      })
     }
   }, [])
 
@@ -242,7 +230,7 @@ export default function FormPage() {
     textareaRef.current?.focus()
   }, [])
 
-  const totalSteps = 5 + 3 // 5 initial + 3 adaptive = 8 questions total (16 messages)
+  const totalSteps = 6 // Target number of questions
   const progress = Math.round((completedSteps / totalSteps) * 100)
 
   const handleTextareaResize = (e) => {
@@ -258,21 +246,30 @@ export default function FormPage() {
     if (window.confirm("Are you sure you want to restart the test? All your current answers will be cleared.")) {
       sessionStorage.removeItem('skope_phase1')
       sessionStorage.removeItem('skope_chatHistory')
-      setPhase1({ q1: '', q2: '', q3: '', q4: '', q5: '' })
-      setChatHistory([{ role: 'assistant', content: INITIAL_QUESTIONS[0] }])
+      setChatHistory([])
       setCurrentQuestionIndex(0)
       setError('')
       setChatInput('')
+      
+      setLoading(true)
+      fetch('/api/conversation-start', { method: 'POST' })
+        .then(r => r.json())
+        .then(data => {
+          const next = [{ role: 'assistant', content: data.question }]
+          setChatHistory(next)
+          sessionStorage.setItem('skope_chatHistory', JSON.stringify(next))
+          setLoading(false)
+        })
     }
   }
 
-  const fetchNextAdaptiveQuestion = async (history, currentPhase1, attempt = 1) => {
+  const fetchNextAdaptiveQuestion = async (history, attempt = 1) => {
     const MAX_ATTEMPTS = 3
     try {
       const res = await fetch('/api/next-question', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ answers: currentPhase1, chatHistory: history })
+        body: JSON.stringify({ answers: { q1: 'Dynamic Mode Active' }, chatHistory: history })
       })
       if (!res.ok) {
         const errData = await res.json().catch(() => ({}))
@@ -291,7 +288,7 @@ export default function FormPage() {
         setError(`Connection issue — retrying in ${delay / 1000}s... (attempt ${attempt}/${MAX_ATTEMPTS})`)
         await new Promise(r => setTimeout(r, delay))
         setError('')
-        return fetchNextAdaptiveQuestion(history, currentPhase1, attempt + 1)
+        return fetchNextAdaptiveQuestion(history, attempt + 1)
       }
       setError('Could not reach the AI. Check your connection and tap retry.')
     }
@@ -310,43 +307,13 @@ export default function FormPage() {
     setLoading(true)
     setError('')
 
-    const updatedPhase1 = { ...phase1 }
-
-    if (currentQuestionIndex < 5) {
-      // Store in phase1 variables
-      const qKey = `q${currentQuestionIndex + 1}`
-      updatedPhase1[qKey] = msg
-      setPhase1(updatedPhase1)
-      sessionStorage.setItem('skope_phase1', JSON.stringify(updatedPhase1))
-
-      const nextIdx = currentQuestionIndex + 1
-      setCurrentQuestionIndex(nextIdx)
-
-      if (nextIdx < 5) {
-        // Prompt next static question
-        setTimeout(() => {
-          setChatHistory(prev => {
-            const next = [...prev, { role: 'assistant', content: INITIAL_QUESTIONS[nextIdx] }]
-            sessionStorage.setItem('skope_chatHistory', JSON.stringify(next))
-            return next
-          })
-          setLoading(false)
-        }, 1000)
-      } else {
-        // Completed initial questions -> call first adaptive
-        await fetchNextAdaptiveQuestion(newHistory, updatedPhase1)
-        setLoading(false)
-      }
+    // Complete after 6 User messages (12 messages total)
+    if (newHistory.filter(m => m.role === 'user').length >= 6) {
+      sessionStorage.setItem('skope_phase1', JSON.stringify({ q1: 'Dynamic', q2: 'Dynamic', q3: 'Dynamic', q4: 'Dynamic', q5: 'Dynamic' }))
+      navigate('/preferences')
     } else {
-      // In adaptive phase
-      if (newHistory.length >= 16) {
-        sessionStorage.setItem('skope_phase1', JSON.stringify(phase1))
-        sessionStorage.setItem('skope_chatHistory', JSON.stringify(newHistory))
-        navigate('/preferences')
-      } else {
-        await fetchNextAdaptiveQuestion(newHistory, phase1)
-        setLoading(false)
-      }
+      await fetchNextAdaptiveQuestion(newHistory)
+      setLoading(false)
     }
   }
 
@@ -468,16 +435,16 @@ export default function FormPage() {
                   className="w-full bg-transparent border-none px-4 py-3 text-white font-dm text-[14px] outline-none placeholder:text-[rgba(240,242,255,0.18)] resize-none leading-[1.65]"
                   rows={1}
                   style={{ maxHeight: '100px' }}
-                  placeholder={chatHistory.length >= 16 ? "Interview complete! Moving to preferences..." : "Be honest — there are no wrong answers..."}
+                  placeholder={completedSteps >= 6 ? "Interview complete! Moving to preferences..." : "Be honest — there are no wrong answers..."}
                   value={chatInput}
-                  disabled={loading || chatHistory.length >= 16}
+                  disabled={loading || completedSteps >= 6}
                   onChange={(e) => { setChatInput(e.target.value); handleTextareaResize(e) }}
                   onKeyDown={handleChatKeyDown}
                 />
               </div>
               <button
                 onClick={handleSendMessage}
-                disabled={loading || !chatInput.trim() || chatHistory.length >= 16}
+                disabled={loading || !chatInput.trim() || completedSteps >= 6}
                 className="w-11 h-11 rounded-[12px] bg-gradient-to-br from-[#6c63ff] to-[#4f8ef7] flex items-center justify-center cursor-pointer border-none hover:shadow-[0_4px_20px_rgba(108,99,255,0.3)] transition-all duration-200 disabled:opacity-25 disabled:cursor-not-allowed shrink-0"
               >
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
