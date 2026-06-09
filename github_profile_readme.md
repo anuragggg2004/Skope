@@ -1,135 +1,161 @@
 # Hey there, I'm Anurag Tiwary! 👋
 
 <div align="center">
-  <img src="https://readme-typing-svg.herokuapp.com?font=Sora&weight=700&size=24&duration=3000&pause=1000&color=9b8eff&center=true&vCenter=true&width=650&height=50&lines=BBA+Operations+%26+Strategy;Scm+Intern+%40+Welspun;Vibe+Coder+%26+Builder;Founder+%40+Skope" alt="Typing SVG" />
+  <img src="https://readme-typing-svg.herokuapp.com?font=Sora&weight=700&size=24&duration=3000&pause=1000&color=4F8EF7&center=true&vCenter=true&width=650&height=50&lines=BBA+Operations+%26+Strategy;Scm+Intern+%40+Welspun;Vibe+Coder+%26+Builder;Founder+%40+Skope" alt="Typing SVG" />
 </div>
 
 <p align="center">
-  <a href="https://anuraggg.tech"><img src="https://img.shields.io/badge/Portfolio-anuraggg.tech-6C63FF?style=for-the-badge&logo=google-chrome&logoColor=white" alt="Portfolio" /></a>
-  <a href="https://linkedin.com/in/anurag-tiwary" target="_blank"><img src="https://img.shields.io/badge/LinkedIn-Anurag-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn" /></a>
-  <a href="mailto:off.anuragtiwary@gmail.com"><img src="https://img.shields.io/badge/Email-off.anuragtiwary-D14836?style=for-the-badge&logo=gmail&logoColor=white" alt="Email" /></a>
+  <a href="https://anuraggg.tech"><img src="https://img.shields.io/badge/Portfolio-anuraggg.tech-3b82f6?style=for-the-badge&logo=google-chrome&logoColor=white" alt="Portfolio" /></a>
+  <a href="https://linkedin.com/in/anurag-tiwary" target="_blank"><img src="https://img.shields.io/badge/LinkedIn-Anurag-0a66c2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn" /></a>
+  <a href="mailto:off.anuragtiwary@gmail.com"><img src="https://img.shields.io/badge/Email-off.anuragtiwary-ea4335?style=for-the-badge&logo=gmail&logoColor=white" alt="Email" /></a>
 </p>
 
 ---
 
-### 🧠 My Vibe: BBA by Day, Vibe Coding by Night
+## ⚡ The Vibe Coder's Terminal
 
-I’m a BBA candidate (2023–2026) at **Lloyd Business School** specializing in **Operations & Strategy** who realized that waitlists and MVPs shouldn't wait for developers. I'm a **Vibe Coder**—I don't compile code, I compile prompts. I use AI (Claude, Copilot, n8n) to build, launch, and automate systems.
-
-```text
-  ┌──────────────────────────────────────────────────────────┐
-  │  "I write prompts, not bugs. Claude writes code,         │
-  │   I approve the vibes. We are not the same."             │
-  └──────────────────────────────────────────────────────────┘
+```shell
+$ npx execute-profile --user=anurag
+> Loading BBA Business Logic (Operations & Strategy)...  [OK]
+> Initializing prompt compiler (Claude 3.5 Sonnet)...     [OK]
+> Bootstrapping automation engines (n8n + Gemini)...      [OK]
+> Verifying Welspun SCM P2P workflow parameters...       [OK]
+> System Status: Shipping production-ready MVPs. ✨
 ```
-
-*   📦 **Operations & SCM**: Procurement intern at **Welspun Enterprises Ltd**, processing P2P workflows and Purchase Orders in **SAP MM**.
-*   ⚡ **Waitlist Shipping**: Shipped **Skope** (AI Career Discovery) with zero prior software engineering training by prompting Claude to write the React frontend & Express backend.
-*   🤖 **AI Automation**: Built an automated **AI Resume Screener** using **n8n** and **Gemini API** in 48 hours just to see if I could.
 
 ---
 
-### 🛠️ The Vibe Coder Stack
+## 🧠 My Story: Business Sense meets AI Orchestration
+
+I’m a **BBA candidate (2023–2026)** at **Lloyd Business School** specializing in **Operations & Strategy**. I don't wait around for software engineers to build my ideas. I'm a **Vibe Coder**—I compile prompts instead of writing boilerplate, leveraging LLMs and workflow engines to ship complete software platforms and automated pipelines. 
+
+```mermaid
+graph LR
+    A[Business / Ops Idea] --> B[System Specification]
+    B --> C[AI Prompt Swarm]
+    C --> D[Vibe Check & Debug]
+    D --> E[Production Launch]
+    style A fill:#4f8ef7,stroke:#fff,stroke-width:2px,color:#fff
+    style C fill:#8b5cf6,stroke:#fff,stroke-width:2px,color:#fff
+    style E fill:#22d3a0,stroke:#fff,stroke-width:2px,color:#fff
+```
+
+### 💼 Operations & SCM Expertise
+* **Procurement Intern @ Welspun Enterprises Ltd**: Managed procure-to-pay (P2P) workflows and generated Purchase Orders inside SAP MM.
+* **Data-Driven Analysis**: Built interactive dashboards and safety models using advanced Microsoft Excel tools.
+
+### 🤖 AI Engineering & Product Shipping
+* **Skope (Founder)**: Shipped an AI Career Discovery platform for Class 12 students in India with zero formal programming training. Prompted the entire React client and Express backend to life.
+* **AI Pipelines**: Built automated HR screeners using n8n and the Gemini API, linking directly with Google Sheets for tracking.
+
+---
+
+## 🛠️ The Tech & Automation Swarm
 
 <table>
   <tr>
     <td valign="top" width="50%">
-      <h4>🧠 AI Co-Founders & Prompters</h4>
-      <img src="https://img.shields.io/badge/Claude_3.5_Sonnet-D97706?style=flat-square&logo=anthropic&logoColor=white" alt="Claude" />
-      <img src="https://img.shields.io/badge/GitHub_Copilot-181717?style=flat-square&logo=githubcopilot&logoColor=white" alt="Copilot" />
-      <img src="https://img.shields.io/badge/ChatGPT_Plus-10a37f?style=flat-square&logo=openai&logoColor=white" alt="ChatGPT" />
+      <h3>🤖 AI Co-Pilots & Prompting</h3>
+      <img src="https://img.shields.io/badge/Claude_3.5_Sonnet-D97706?style=for-the-badge&logo=anthropic&logoColor=white" alt="Claude" />
+      <img src="https://img.shields.io/badge/GitHub_Copilot-181717?style=for-the-badge&logo=githubcopilot&logoColor=white" alt="Copilot" />
+      <img src="https://img.shields.io/badge/ChatGPT_Plus-10a37f?style=for-the-badge&logo=openai&logoColor=white" alt="ChatGPT" />
     </td>
     <td valign="top" width="50%">
-      <h4>⚡ No-Code / Automation Hub</h4>
-      <img src="https://img.shields.io/badge/n8n_Automation-FF6C37?style=flat-square&logo=n8n&logoColor=white" alt="n8n" />
-      <img src="https://img.shields.io/badge/Google_Sheets_DB-217346?style=flat-square&logo=googlesheets&logoColor=white" alt="Sheets" />
-      <img src="https://img.shields.io/badge/Canva_AI_/_Design-00C4CC?style=flat-square&logo=canva&logoColor=white" alt="Canva" />
+      <h3>⚡ Automation & Integration</h3>
+      <img src="https://img.shields.io/badge/n8n_Automation-FF6C37?style=for-the-badge&logo=n8n&logoColor=white" alt="n8n" />
+      <img src="https://img.shields.io/badge/Google_Sheets_DB-217346?style=for-the-badge&logo=googlesheets&logoColor=white" alt="Sheets" />
+      <img src="https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=black" alt="Firebase" />
     </td>
   </tr>
   <tr>
     <td valign="top" width="50%">
-      <h4>📦 Operations Core</h4>
-      <img src="https://img.shields.io/badge/SAP_MM_/_ERP-008FD3?style=flat-square&logo=sap&logoColor=white" alt="SAP MM" />
-      <img src="https://img.shields.io/badge/MS_Excel_(Pivots_/_VLOOKUP)-217346?style=flat-square&logo=microsoftexcel&logoColor=white" alt="Excel" />
-      <img src="https://img.shields.io/badge/P2P_Procurement-4B0082?style=flat-square" alt="P2P" />
+      <h3>📦 Operations Core</h3>
+      <img src="https://img.shields.io/badge/SAP_MM_/_ERP-008FD3?style=for-the-badge&logo=sap&logoColor=white" alt="SAP MM" />
+      <img src="https://img.shields.io/badge/MS_Excel-217346?style=for-the-badge&logo=microsoftexcel&logoColor=white" alt="Excel" />
+      <img src="https://img.shields.io/badge/Operations_Strategy-4B0082?style=for-the-badge" alt="Ops Strategy" />
     </td>
     <td valign="top" width="50%">
-      <h4>💻 Languages I Prompt In</h4>
-      <img src="https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=node.js&logoColor=white" alt="Node" />
-      <img src="https://img.shields.io/badge/Express-000000?style=flat-square&logo=express&logoColor=white" alt="Express" />
-      <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black" alt="JS" />
-      <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=flat-square&logo=tailwindcss&logoColor=white" alt="Tailwind" />
+      <h3>💻 Languages I Prompt In</h3>
+      <img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white" alt="Node" />
+      <img src="https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=express&logoColor=white" alt="Express" />
+      <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black" alt="React" />
+      <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" alt="JS" />
     </td>
   </tr>
 </table>
 
 ---
 
-### 🌟 Project Spotlights
+## 🚀 Featured Shipments
 
 <table>
   <tr>
     <td width="50%" valign="top">
-      <h4>🏫 <a href="https://github.com/anuragggg2004/skope">Skope Platform</a></h4>
-      <p>An AI-powered diagnostic and college mapping platform that helps Class 12 students discover their career archetypes. <i>(Zero formal coding classes; 100% build-and-learn vibe).</i></p>
-      <img src="https://img.shields.io/badge/Front--End-React_/_Tailwind-61DAFB?style=flat-square" alt="React" />
-      <img src="https://img.shields.io/badge/Back--End-Express_/_Gemini-FF6C37?style=flat-square" alt="Backend" />
+      <h3>🏫 <a href="https://github.com/anuragggg2004/skope">Skope Platform</a></h3>
+      <p>AI career advisor diagnostic. Connects students with real-world Indian colleges, entrance exams, and career matches based on a dynamic 8-question conversational assessment.</p>
+      <br/>
+      <img src="https://img.shields.io/badge/React-Interactive_Client-61DAFB?style=flat-square" alt="React" />
+      <img src="https://img.shields.io/badge/Express-Gemini_API-FF6C37?style=flat-square" alt="Backend" />
+      <img src="https://img.shields.io/badge/Status-Live_&_Shipping-22d3a0?style=flat-square" alt="Status" />
     </td>
     <td width="50%" valign="top">
-      <h4>⚡ <a href="#">AI Resume Screener</a></h4>
-      <p>An automated HR screening pipeline built for a 48-hour challenge. Ingests candidate resumes, scores them with Gemini, and records results directly inside Google Sheets.</p>
-      <img src="https://img.shields.io/badge/Pipeline-n8n_Workflows-FF6C37?style=flat-square" alt="n8n" />
-      <img src="https://img.shields.io/badge/AI_Engine-Gemini_Flash-4285F4?style=flat-square" alt="Gemini" />
+      <h3>⚡ <a href="#">AI Resume Screener</a></h3>
+      <p>HR processing automation. Automatically screens incoming resumes via PDF parsing, scores them through Gemini Flash, and saves the analytical score directly inside Google Sheets.</p>
+      <br/>
+      <img src="https://img.shields.io/badge/n8n-Workflow_Pipeline-FF6C37?style=flat-square" alt="n8n" />
+      <img src="https://img.shields.io/badge/Gemini_Flash-AI_Screening-4285F4?style=flat-square" alt="Gemini" />
     </td>
   </tr>
   <tr>
     <td width="50%" valign="top">
-      <h4>📊 <a href="#">Excel Road Accident Dashboard</a></h4>
-      <p>Interactive Excel dashboard analyzing traffic safety patterns. Built with Pivot tables, slicers, and dynamic charts for structured reporting.</p>
-      <img src="https://img.shields.io/badge/Engine-MS_Excel-217346?style=flat-square" alt="Excel" />
+      <h3>📊 <a href="#">Excel Road Accident Dashboard</a></h3>
+      <p>Interactive dashboard analyzing national road safety statistics. Uses Pivot tables, custom timelines, and interactive slicers to find pattern hotspots.</p>
+      <br/>
+      <img src="https://img.shields.io/badge/MS_Excel-Data_Modeling-217346?style=flat-square" alt="Excel" />
+      <img src="https://img.shields.io/badge/Data_Viz-Reporting-blue?style=flat-square" alt="Viz" />
     </td>
     <td width="50%" valign="top">
-      <h4>📈 <a href="#">Founder's Feed</a></h4>
-      <p>Demonstrated growth brand scaling. Grew a digital content brand focused on early-stage startup founders to 600+ organic followers in 90 days.</p>
-      <img src="https://img.shields.io/badge/Domain-Growth_Strategy-green?style=flat-square" alt="Strategy" />
+      <h3>📈 <a href="#">Founder's Feed</a></h3>
+      <p>Demonstrated growth marketing and community building. Scaled an organic media channel providing resources to early-stage founders to 600+ target followers in 90 days.</p>
+      <br/>
+      <img src="https://img.shields.io/badge/Growth-Brand_Scaling-green?style=flat-square" alt="Growth" />
+      <img src="https://img.shields.io/badge/Organic-Marketing-orange?style=flat-square" alt="Marketing" />
     </td>
   </tr>
 </table>
 
 ---
 
-### 📊 Vibe Code Stats
+## 📈 System Metrics
 
 ```text
-  ┌────────────────────────────────────────────────────────┐
-  │  ☕ Coffee Consumed:  [ ██████████████████ ] Stack    │
-  │  🤖 Claude Prompts:   [ ██████████████████ ] 9000+     │
-  │  🐛 Bugs Fixed:       [ ████████░░░░░░░░░░ ] By Claude │
-  │  ✨ Vibe level:       [ ██████████████████ ] Maximum   │
-  └────────────────────────────────────────────────────────┘
+  Prompt Engineering:    [ ██████████████████ ] 98% (Peak Vibes)
+  Operations Strategy:   [ ███████████████░░░ ] 85% (BBA Specialization)
+  Automation Logic:      [ ████████████████░░ ] 90% (n8n + APIs)
+  Coffee Input Level:    [ ██████████████████ ] 100% (High Fuel)
 ```
 
 ---
 
-### 📊 GitHub Stats
+## 📊 GitHub Analytics
 
 <p align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=anuragggg2004&show_icons=true&theme=radical&hide_border=true&bg_color=0D1117&title_color=6C63FF&icon_color=4F8EF7&text_color=F0F2FF" alt="GitHub Stats" width="48%" />
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=anuragggg2004&layout=compact&theme=radical&hide_border=true&bg_color=0D1117&title_color=6C63FF&text_color=F0F2FF" alt="Top Languages" width="48%" />
+  <img src="https://github-readme-stats.vercel.app/api?username=anuragggg2004&show_icons=true&theme=radical&hide_border=true&bg_color=080b14&title_color=4F8EF7&icon_color=8b5cf6&text_color=F0F4FF" alt="GitHub Stats" width="48%" />
+  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=anuragggg2004&layout=compact&theme=radical&hide_border=true&bg_color=080b14&title_color=4F8EF7&text_color=F0F4FF" alt="Top Languages" width="48%" />
 </p>
 
 <p align="center">
-  <img src="https://github-readme-streak-stats.herokuapp.com/?user=anuragggg2004&theme=radical&hide_border=true&background=0D1117&ring=6C63FF&fire=4F8EF7&stroke=0D1117" alt="GitHub Streak" width="97%" />
+  <img src="https://github-readme-streak-stats.herokuapp.com/?user=anuragggg2004&theme=radical&hide_border=true&background=080b14&ring=4F8EF7&fire=8b5cf6&stroke=080b14" alt="GitHub Streak" width="97%" />
 </p>
 
 <br/>
 
 <div align="center">
-  <img src="https://raw.githubusercontent.com/anuragggg2004/anuragggg2004/github-pages/github-contribution-grid-snake.svg" alt="Snake animation" />
+  <img src="https://raw.githubusercontent.com/anuragggg2004/anuragggg2004/github-pages/github-contribution-grid-snake.svg" alt="Contribution Snake" />
 </div>
 
 ---
 
 <div align="center">
-  <sub>Built with 💜 and Claude by Anurag · BBA Operations Candidate & Vibe Coder</sub>
+  <sub>Built with 💜 and AI by Anurag · Operations Candidate & Vibe Coder</sub>
 </div>
