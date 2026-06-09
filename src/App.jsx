@@ -12,6 +12,7 @@ import PreferencesPage from './pages/PreferencesPage'
 import ResultPage from './pages/ResultPage'
 import ProfilePage from './pages/ProfilePage'
 import SharePage from './pages/SharePage'
+import Dashboard from './pages/Dashboard'
 
 // Only show HelpBot on the landing page
 function ConditionalHelpBot() {
@@ -52,6 +53,7 @@ export default function App() {
             <Route path="/preferences" element={<ProtectedRoute><PreferencesPage /></ProtectedRoute>} />
             <Route path="/result"      element={<ProtectedRoute><ResultPage /></ProtectedRoute>} />
             <Route path="/profile"     element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
+            <Route path="/dashboard"   element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
           </Routes>
 
           {/* HelpBot only on landing page */}
