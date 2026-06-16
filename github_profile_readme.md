@@ -1,18 +1,53 @@
-# Hey there, I'm Anurag Tiwary! 👋
+<!-- HEADER ANIMATION -->
+<div align="center">
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:6C63FF,100:4F8EF7&height=220&section=header&text=Anurag%20Tiwary&fontSize=46&fontColor=ffffff&animation=fadeIn&fontAlignY=38&desc=BBA%20Marketing%20%26%20Ops%20Candidate%20%C3%97%20Prompt%20Engineer&descAlignY=58&descSize=18" width="100%" />
+</div>
+
+<!-- TYPING ANIMATION -->
+<div align="center">
+  <a href="https://github.com/anuragggg2004">
+    <img src="https://readme-typing-svg.herokuapp.com/?font=Inter&weight=600&size=20&duration=3000&pause=1000&color=6C63FF&center=true&vCenter=true&width=800&lines=BBA+Marketing+%26+Ops+Candidate+%7C+Prompt-Native+Builder;CEO+%40+A.IX+%7C+Founder+%40+Skope;Growth+%26+Brand+%E2%80%94+Founder%27s+Feed;Shipping+CineVault+(React+%2B+Liquid+Glass+UI);I+Don't+Brief+Designers,+I+Prompt+AI" alt="Typing SVG" />
+  </a>
+</div>
+
+<br/>
+
+<div align="center">
+  <a href="mailto:off.anuragtiwary@gmail.com"><img src="https://img.shields.io/badge/Email-Contact_Me-6C63FF?style=for-the-badge&logo=gmail&logoColor=white" alt="Email" /></a>
+  <a href="https://linkedin.com/in/anurag-tiwary" target="_blank"><img src="https://img.shields.io/badge/LinkedIn-Connect-4F8EF7?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn" /></a>
+  <a href="https://instagram.com/foundersfeed" target="_blank"><img src="https://img.shields.io/badge/Instagram-Founder's_Feed-E4405F?style=for-the-badge&logo=instagram&logoColor=white" alt="Instagram" /></a>
+</div>
+
+---
+
+### 🎯 The Vibe: Marketing Strategist Who Prompts
+
+I am a BBA candidate specializing in marketing and operations, but I don't just write copy or study theory. I use advanced AI prompting to build, brand, and distribute digital products. **Execution > Ideas.**
+
+- 🧠 **Prompt-Driven Output:** Leveraging AI to generate brand systems, high-retention content frameworks, and functional code architectures.
+- 📈 **Growth Focus:** Scaling organic reach through sharp hooks and bootstrapped case studies.
+- 🎨 **Aesthetic Discipline:** Strict adherence to modern UI trends (Liquid Glass, glassmorphism) and seamless loop animations.
 
 <p align="center">
   <img src="./liquid_glass_banner.png" alt="Anurag's Liquid Glass Marketing Dashboard" width="100%" style="border-radius: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);" />
 </p>
 
-<div align="center">
-  <img src="https://readme-typing-svg.herokuapp.com?font=Sora&weight=700&size=24&duration=3000&pause=1000&color=4F8EF7&center=true&vCenter=true&width=650&height=50&lines=BBA+Operations+%26+Strategy;Scm+Intern+%40+Welspun;Vibe+Coder+%26+Builder;Founder+%40+Founder's+Feed" alt="Typing SVG" />
-</div>
+---
 
-<p align="center">
-  <a href="https://anuraggg.tech"><img src="https://img.shields.io/badge/Portfolio-anuraggg.tech-3b82f6?style=for-the-badge&logo=google-chrome&logoColor=white" alt="Portfolio" /></a>
-  <a href="https://linkedin.com/in/anurag-tiwary" target="_blank"><img src="https://img.shields.io/badge/LinkedIn-Anurag-0a66c2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn" /></a>
-  <a href="mailto:off.anuragtiwary@gmail.com"><img src="https://img.shields.io/badge/Email-off.anuragtiwary-ea4335?style=for-the-badge&logo=gmail&logoColor=white" alt="Email" /></a>
-</p>
+### 🚀 What I'm Building (Marketing × AI)
+
+| Project | Focus Area | Impact / Tech |
+| :--- | :--- | :--- |
+| **[Founder's Feed](https://instagram.com/foundersfeed)** | **Content & Growth** | Scaling organic reach via bootstrapped Indian founder case studies. High-engagement carousel strategies with sharp, uncomfortable hooks. (Grew to 600+ network, 25%+ engagement). |
+| **[Skope](https://github.com/anuragggg2004/skope)** | **Brand Positioning** | AI career counselor diagnostics. Built complete brand identity, typography, and positioning. Core tagline: *"Find your scope in life."* |
+| **[CineVault](#)** | **Product & UI** | Prompt-engineered a functional React movie database utilizing TMDB API, emphasizing state management and a "Liquid Glass" aesthetic. |
+| **A.IX** | **Multi-Industry Strategy** | Overarching company framework directing multiple sub-projects and operational structures. |
+
+---
+
+### 📦 The Marketing & Operations Pipeline (Animated)
+
+To coordinate SCM operations (Welspun procurement) and marketing campaigns (Founder's Feed), I align workflows into a single conversion funnel. Here is the active data flow of my digital ecosystem:
 
 <p align="center">
   <img src="./profile-funnel.svg" alt="Anurag's Marketing &amp; Operations Funnel" width="100%" style="max-width: 800px; border-radius: 24px;" />
@@ -20,141 +55,48 @@
 
 ---
 
-## ⚡ The Vibe Coder's Terminal
-
-```shell
-$ npx execute-profile --user="Anurag Tiwary"
-> Location: Noida, Uttar Pradesh, India 📍
-> Specialization: Process Planning & System Coordination
-> Current: BBA Candidate @ Lloyd Business School
-> Latest Intern: Supply Chain Intern @ Welspun Enterprises Ltd
-> Status: Shipping digital MVPs and automating operations. ✨
-```
-
----
-
-## 🧠 My Story: Business Operations & AI Automation
-
-I am a **Bachelor of Business Administration (BBA) Candidate (2023–Present)** at **Lloyd Business School**, focusing on **Process Planning & System Coordination**. I bridge the gap between business management and AI integration—engineering prompts, building automation pipelines with **n8n**, and deploying web platforms like **Skope** to streamline workflows and unlock scale.
-
-```mermaid
-graph TD
-    A[Business & Operations Needs] --> B[Data Analysis & Process Mapping]
-    B --> C[AI Automation & Workflows]
-    C --> D[Operational Excellence & Scale]
-    style A fill:#4f8ef7,stroke:#fff,stroke-width:2px,color:#fff
-    style C fill:#8b5cf6,stroke:#fff,stroke-width:2px,color:#fff
-    style D fill:#22d3a0,stroke:#fff,stroke-width:2px,color:#fff
-```
-
----
-
-## 💼 Work Experience
-
-### 📦 Supply Chain Intern
-**Welspun Enterprises Ltd** | *Jul 2025 – Jul 2025 (1 month)*
-* **Department**: Worked in the **Procurement** division under senior leadership.
-* **Core Tasks**: Gained hands-on experience in end-to-end procurement processes, vendor coordination, and transactional operations inside **SAP MM**.
-* **Impact**: Contributed to data analysis, supplier evaluation, and cost optimization initiatives to maintain smooth supply chain workflows.
-* **Skills**: Refined organizational compliance, supplier auditing, and detailed process documentation.
-
-### 📈 Founder & Brand Owner
-**Founder’s Feed** | *Aug 2024 – Nov 2024 (2 months)*
-* **Core Tasks**: Launched and scaled a digital content brand tailored for startup founders and young entrepreneurs.
-* **Outreach**: Cultivated an organic audience of **400+ followers on Instagram** and **200+ followers on LinkedIn** within 90 days.
-* **Content Engine**: Designed weekly content calendars, utilizing **Canva AI** and engagement analytics to boost reach by **40%** and maintain a **25%+ engagement rate**.
-
-### 🤝 Fundraising Intern
-**Tare Zameen Foundation** | *Oct 2023 – Nov 2023 (2 months)*
-* **Core Tasks**: Aided social impact campaigns supporting **300+ underserved students**.
-* **Impact**: Managed donor relations, created outreach marketing assets, and raised **₹15,000+** in micro-donations.
-
----
-
-## 🏫 Education
-
-* **Lloyd Business School** (2023 – Present)  
-  *Bachelor of Business Administration (BBA)*  
-  *Focus*: Process Planning, System Coordination. Participated in live business process improvement case studies.
-* **Apeejay Public School** (2021 – 2023)  
-  *High School Commerce*: Studied financial accounting, marketing, and business management fundamentals.
-
----
-
-## 🛠️ Skills & Certifications
-
-<table>
-  <tr>
-    <td valign="top" width="50%">
-      <h3>🤖 AI & Digital Tools</h3>
-      <img src="https://img.shields.io/badge/ChatGPT-10a37f?style=for-the-badge&logo=openai&logoColor=white" alt="ChatGPT" />
-      <img src="https://img.shields.io/badge/Canva_AI-00C4CC?style=for-the-badge&logo=canva&logoColor=white" alt="Canva" />
-      <img src="https://img.shields.io/badge/n8n_Automation-FF6C37?style=for-the-badge&logo=n8n&logoColor=white" alt="n8n" />
-      <img src="https://img.shields.io/badge/Copy.ai-blueviolet?style=for-the-badge" alt="Copy.ai" />
-    </td>
-    <td valign="top" width="50%">
-      <h3>📊 Business & Tech Core</h3>
-      <img src="https://img.shields.io/badge/SAP_MM_/_ERP-008FD3?style=for-the-badge&logo=sap&logoColor=white" alt="SAP MM" />
-      <img src="https://img.shields.io/badge/MS_Excel-217346?style=for-the-badge&logo=microsoftexcel&logoColor=white" alt="Excel" />
-      <img src="https://img.shields.io/badge/PowerPoint-D04424?style=for-the-badge&logo=microsoftpowerpoint&logoColor=white" alt="Powerpoint" />
-      <img src="https://img.shields.io/badge/Process_Improvement-4B0082?style=for-the-badge" alt="Process Improvement" />
-    </td>
-  </tr>
-  <tr>
-    <td valign="top" width="50%">
-      <h3>📢 Content & Outreach</h3>
-      <ul>
-        <li>Social Media Marketing</li>
-        <li>Content Planning & Calendars</li>
-        <li>Brand Storytelling</li>
-        <li>Donor Engagement</li>
-      </ul>
-    </td>
-    <td valign="top" width="50%">
-      <h3>👥 Soft Skills</h3>
-      <ul>
-        <li>Public Speaking</li>
-        <li>Project Coordination</li>
-        <li>Stakeholder Communication</li>
-        <li>Vendor Alignment</li>
-      </ul>
-    </td>
-  </tr>
-</table>
-
-### 🏅 Certifications
-* **Connected Leadership** – Yale University
-* **LinkedIn Marketing Solutions Fundamentals** – LinkedIn Learning
-* **Building Your Power Brand** – Udemy
-* **Canva: Web and Digital Design** – Canva Training
-
----
-
-## 🚀 Projects & Achievements
-
-* **Skope Platform (Founder)**: Built a conversational career diagnostic portal for Class 12 students in India, utilizing React, Node.js, Express, and the Gemini API to construct personalized career matching.
-* **Excel Road Accident Dashboard**: Constructed a data visualization dashboard on traffic accidents using pivot tables, custom charts, and slicers.
-* **Shri Ram Trading Challenge (2024)**: Simulated strategic portfolio management and stock trading.
-* **Inbox Impression Competition (2024)**: Winner of the campaign strategy challenge.
-* **IIT Delhi SPARC Workshop**: Participated in a specialized academic workshop on *"Emerging ICT: Blockchain and its Implications"*.
-
----
-
-## 📊 GitHub Analytics
-
-<p align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=anuragggg2004&show_icons=true&theme=radical&hide_border=true&bg_color=080b14&title_color=4F8EF7&icon_color=8b5cf6&text_color=F0F4FF" alt="GitHub Stats" width="48%" />
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=anuragggg2004&layout=compact&theme=radical&hide_border=true&bg_color=080b14&title_color=4F8EF7&text_color=F0F4FF" alt="Top Languages" width="48%" />
-</p>
-
-<br/>
+### 🛠️ The Stack: Tools & Prompts
 
 <div align="center">
-  <img src="https://raw.githubusercontent.com/anuragggg2004/anuragggg2004/github-pages/github-contribution-grid-snake.svg" alt="Contribution Snake" />
+  
+  **Marketing & Analytics** <br/>
+  <img src="https://img.shields.io/badge/Canva-%2300C4CC.svg?style=flat-square&logo=Canva&logoColor=white" alt="Canva" />
+  <img src="https://img.shields.io/badge/Google%20Analytics-E37400?style=flat-square&logo=google%20analytics&logoColor=white" alt="Analytics" />
+  <img src="https://img.shields.io/badge/Notion-%23000000.svg?style=flat-square&logo=notion&logoColor=white" alt="Notion" />
+  <img src="https://img.shields.io/badge/Figma-F24E1E?style=flat-square&logo=figma&logoColor=white" alt="Figma" />
+  <img src="https://img.shields.io/badge/SAP_MM-008FD3?style=flat-square&logo=sap&logoColor=white" alt="SAP" />
+  
+  <br/>**AI & Vibe Coding**<br/>
+  <img src="https://img.shields.io/badge/Claude_3-D97757?style=flat-square&logo=anthropic&logoColor=white" alt="Claude" />
+  <img src="https://img.shields.io/badge/ChatGPT-74aa9c?style=flat-square&logo=openai&logoColor=white" alt="ChatGPT" />
+  <img src="https://img.shields.io/badge/n8n-FF6C37?style=flat-square&logo=n8n&logoColor=white" alt="n8n" />
+  <img src="https://img.shields.io/badge/React-%2320232a.svg?style=flat-square&logo=react&logoColor=%2361DAFB" alt="React" />
+  <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black" alt="JS" />
+
 </div>
 
 ---
 
+### 📊 The Metrics
+
 <div align="center">
-  <sub>Built with 💜 and AI by Anurag Tiwary</sub>
+  <img src="https://github-readme-stats.vercel.app/api?username=anuragggg2004&show_icons=true&theme=radical&hide_border=true&bg_color=0D1117&title_color=6C63FF&icon_color=4F8EF7" width="48%" alt="GitHub Stats" />
+  <img src="https://github-readme-streak-stats.herokuapp.com/?user=anuragggg2004&theme=radical&hide_border=true&background=0D1117&ring=6C63FF&fire=4F8EF7&currStreakNum=ffffff" width="48%" alt="GitHub Streak" />
+</div>
+
+<br/>
+
+<!-- SNAKE ANIMATION -->
+<div align="center">
+  <h4>🐍 Code Contributions</h4>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/anuragggg2004/anuragggg2004/output/github-contribution-grid-snake-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/anuragggg2004/anuragggg2004/output/github-contribution-grid-snake.svg">
+    <img alt="github contribution grid snake animation" src="https://raw.githubusercontent.com/anuragggg2004/anuragggg2004/output/github-contribution-grid-snake.svg">
+  </picture>
+</div>
+
+<!-- FOOTER ANIMATION -->
+<div align="center">
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:6C63FF,100:4F8EF7&height=100&section=footer" width="100%" />
 </div>
