@@ -1,5 +1,9 @@
 # Hey there, I'm Anurag Tiwary! 👋
 
+<p align="center">
+  <img src="./liquid_glass_banner.png" alt="Anurag's Liquid Glass Marketing Dashboard" width="100%" style="border-radius: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);" />
+</p>
+
 <div align="center">
   <img src="https://readme-typing-svg.herokuapp.com?font=Sora&weight=700&size=24&duration=3000&pause=1000&color=4F8EF7&center=true&vCenter=true&width=650&height=50&lines=BBA+Operations+%26+Strategy;Scm+Intern+%40+Welspun;Vibe+Coder+%26+Builder;Founder+%40+Founder's+Feed" alt="Typing SVG" />
 </div>
