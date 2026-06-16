@@ -10,6 +10,10 @@
   <a href="mailto:off.anuragtiwary@gmail.com"><img src="https://img.shields.io/badge/Email-off.anuragtiwary-ea4335?style=for-the-badge&logo=gmail&logoColor=white" alt="Email" /></a>
 </p>
 
+<p align="center">
+  <img src="./profile-funnel.svg" alt="Anurag's Marketing &amp; Operations Funnel" width="100%" style="max-width: 800px; border-radius: 24px;" />
+</p>
+
 ---
 
 ## ⚡ The Vibe Coder's Terminal
