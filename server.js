@@ -29,6 +29,13 @@ import dotenv from 'dotenv'
 import mongoose from 'mongoose'
 import Report from './models/Report.js'
 import fs from 'fs'
+import helmet from 'helmet'
+import rateLimit from 'express-rate-limit'
+import mongoSanitize from 'express-mongo-sanitize'
+import compression from 'compression'
+import { z } from 'zod'
+import { authenticateFirebaseUser } from './firebaseAuth.js'
+
 dotenv.config()
 
 // =============================================
@@ -117,8 +124,160 @@ if (MONGODB_URI && !MONGODB_URI.includes('<password>')) {
 }
 
 const app = express()
-app.use(cors())
-app.use(express.json())
+
+// 1. Enable secure HTTP headers with Helmet
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'", "https://cdnjs.cloudflare.com"],
+      styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com", "https://api.fontshare.com"],
+      imgSrc: ["'self'", "data:", "https://hoirqrkdgbmvpwutwuwj-all.supabase.co", "https://capsule-render.vercel.app", "https://readme-typing-svg.herokuapp.com", "https://img.shields.io"],
+      connectSrc: ["'self'", "https://generativelanguage.googleapis.com", "https://openrouter.ai", "https://www.googleapis.com", "https://identitytoolkit.googleapis.com"],
+      fontSrc: ["'self'", "https://fonts.gstatic.com", "https://api.fontshare.com"],
+      objectSrc: ["'none'"],
+      upgradeInsecureRequests: [],
+    },
+  },
+  crossOriginEmbedderPolicy: false,
+}))
+
+// 2. Enable response compression (gzip)
+app.use(compression())
+
+// 3. Prevent NoSQL query injection attacks
+app.use(mongoSanitize())
+
+// 4. Hardened CORS policy
+const allowedOrigins = [
+  'http://localhost:5173',
+  'http://localhost:3000',
+]
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin) return callback(null, true)
+    if (allowedOrigins.indexOf(origin) !== -1 || origin.endsWith('.ngrok-free.dev')) {
+      return callback(null, true)
+    }
+    return callback(new Error('CORS policy does not allow access from this origin'), false)
+  },
+  credentials: true
+}))
+
+// 5. Parse request payloads with size limits
+app.use(express.json({ limit: '50kb' }))
+
+// 6. Rate Limiting Setup (Standard & AI-specific)
+const globalLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 200,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: 'Too many requests from this IP, please try again later.' }
+})
+app.use('/api/', globalLimiter)
+
+const aiLimiter = rateLimit({
+  windowMs: 10 * 60 * 1000,
+  max: 15,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: 'AI request limit exceeded. Please wait a few minutes before trying again.' }
+})
+app.use('/api/generate-report', aiLimiter)
+app.use('/api/what-if', aiLimiter)
+app.use('/api/chat', aiLimiter)
+app.use('/api/next-question', aiLimiter)
+
+// Robust JSON parser with regex recovery for AI outputs
+function parseAIResponseJSON(text) {
+  const cleaned = text.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim()
+  try {
+    return JSON.parse(cleaned)
+  } catch (err) {
+    console.warn('[AI] JSON.parse failed on direct text. Attempting regex extraction...')
+    const match = cleaned.match(/\{[\s\S]*\}/)
+    if (match) {
+      try {
+        return JSON.parse(match[0])
+      } catch (subErr) {
+        console.error('[AI] Regex JSON extraction failed:', subErr.message)
+      }
+    }
+    throw new Error('Failed to parse AI response as JSON: ' + err.message)
+  }
+}
+
+// Zod request payload schemas
+const AdaptiveQuestionsSchema = z.object({
+  answers: z.object({
+    q1: z.string().min(1, 'q1 answer is required'),
+    q2: z.string().min(1, 'q2 answer is required'),
+    q3: z.string().min(1, 'q3 answer is required')
+  })
+})
+
+const NextQuestionSchema = z.object({
+  answers: z.object({
+    q1: z.string().min(1),
+    q2: z.string().optional(),
+    q3: z.string().optional(),
+    q4: z.string().optional(),
+    q5: z.string().optional()
+  }).passthrough(),
+  chatHistory: z.array(
+    z.object({
+      role: z.enum(['user', 'assistant', 'model']),
+      content: z.string().min(1)
+    })
+  ).optional()
+})
+
+const GenerateReportSchema = z.object({
+  phase1: z.object({
+    q1: z.string().min(1),
+    q2: z.string().min(1),
+    q3: z.string().min(1),
+    q4: z.string().optional(),
+    q5: z.string().optional()
+  }).passthrough(),
+  phase2: z.record(z.string()).optional(),
+  chatHistory: z.array(
+    z.object({
+      role: z.enum(['user', 'assistant', 'model']),
+      content: z.string().min(1)
+    })
+  ).optional(),
+  preferences: z.object({
+    budget: z.string().min(1),
+    cities: z.array(z.string()),
+    ai_relevance: z.string().min(1),
+    additional_note: z.string().optional()
+  }).optional(),
+  brutally_honest: z.boolean().optional()
+})
+
+const ChatSchema = z.object({
+  message: z.string().min(1),
+  pathreport: z.record(z.any()),
+  history: z.array(
+    z.object({
+      role: z.enum(['user', 'assistant', 'model']),
+      content: z.string().min(1)
+    })
+  ).optional()
+})
+
+const WhatIfSchema = z.object({
+  scenario: z.string().min(1),
+  pathreport: z.record(z.any())
+})
+
+const SaveReportSchema = z.object({
+  userId: z.string().min(1),
+  email: z.string().email(),
+  reportData: z.record(z.any())
+})
 
 const PORT = process.env.PORT || 3000
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY
@@ -443,28 +602,24 @@ function validateColleges(colleges, profile) {
 // =============================================
 // ENDPOINT 0: POST /api/conversation-start
 // =============================================
-app.post('/api/conversation-start', async (req, res) => {
+app.post('/api/conversation-start', async (req, res, next) => {
   try {
     const systemPrompt = `You are opening a conversation with an Indian Class 12 student. Ask exactly ONE question that will give you the most useful information first. The question should be open enough that their answer reveals multiple facts at once. Start with stream, marks, and immediate situation combined. Do NOT ask multiple things. Do NOT greet them with fluff. Get straight to the most useful question.`
     
     const responseText = await callAIText(systemPrompt, 'Generate the first question to start the career counseling session.')
     res.json({ question: responseText.trim().replace(/^"|"$/g, '') })
   } catch (error) {
-    console.error('Error in /api/conversation-start:', error)
-    res.status(500).json({ error: 'Failed to start conversation.' })
+    next(error)
   }
 })
 
 // =============================================
 // ENDPOINT 1: POST /api/adaptive-questions
 // =============================================
-app.post('/api/adaptive-questions', async (req, res) => {
+app.post('/api/adaptive-questions', async (req, res, next) => {
   try {
-    const { answers } = req.body
-
-    if (!answers || !answers.q1 || !answers.q2 || !answers.q3) {
-      return res.status(400).json({ error: 'All three answers are required.' })
-    }
+    const parsedBody = AdaptiveQuestionsSchema.parse(req.body)
+    const { answers } = parsedBody
 
     const systemPrompt = `You are an expert Indian college and career counsellor with 20 years of experience. Generate exactly 5 deeply personalized follow-up questions based on the student's initial answers. Questions must feel conversational and specific to what this student said — never generic. Return ONLY valid JSON: { "questions": ["q1", "q2", "q3", "q4", "q5"] }`
 
@@ -479,25 +634,20 @@ If they mentioned confusion, address that tension.
 Return as JSON: { "questions": ["...","...","...","...","..."] }`
 
     const responseText = await callAI(systemPrompt, userPrompt)
-    const cleaned = responseText.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim()
-    const parsed = JSON.parse(cleaned)
+    const parsed = parseAIResponseJSON(responseText)
     res.json(parsed)
   } catch (error) {
-    console.error('Error in /api/adaptive-questions:', error)
-    res.status(500).json({ error: 'Failed to generate adaptive questions. Please try again.' })
+    next(error)
   }
 })
 
 // =============================================
 // ENDPOINT 1.5: POST /api/next-question
 // =============================================
-app.post('/api/next-question', async (req, res) => {
+app.post('/api/next-question', async (req, res, next) => {
   try {
-    const { answers, chatHistory } = req.body
-
-    if (!answers) {
-      return res.status(400).json({ error: 'Phase 1 answers are required.' })
-    }
+    const parsedBody = NextQuestionSchema.parse(req.body)
+    const { answers, chatHistory } = parsedBody
 
     const systemPrompt = `You are an Indian career counsellor who has seen 10,000 students. You have zero patience for vague answers, false modesty, or students who have not thought about their own lives. You are the mirror they need, not the cheerleader they want.
 
@@ -552,21 +702,17 @@ Generate the next ONE question:`
     const responseText = await callAIText(systemPrompt, userPrompt)
     res.json({ question: responseText.trim().replace(/^"|"$/g, '') })
   } catch (error) {
-    console.error('Error in /api/next-question:', error)
-    res.status(500).json({ error: 'Failed to generate next question.' })
+    next(error)
   }
 })
 
 // =============================================
 // ENDPOINT 2: POST /api/generate-report
 // =============================================
-app.post('/api/generate-report', async (req, res) => {
+app.post('/api/generate-report', async (req, res, next) => {
   try {
-    const { phase1, phase2, chatHistory, preferences, brutally_honest } = req.body
-
-    if (!phase1) {
-      return res.status(400).json({ error: 'Phase1 data is required.' })
-    }
+    const parsedBody = GenerateReportSchema.parse(req.body)
+    const { phase1, phase2, chatHistory, preferences, brutally_honest } = parsedBody
 
     let phase2Text = ''
     if (chatHistory && chatHistory.length > 0) {
@@ -835,8 +981,7 @@ For EVERY college you select from the database, YOU MUST use your Google Search 
 Return exactly 3 careers, exactly 15 colleges, exactly 15 regular recommended_courses, exactly 5 hidden_courses, exactly 5 hidden_careers, exactly 2 emerging roles.`
 
     const responseText = await callAI(systemPrompt, userPrompt, true)
-    const cleaned = responseText.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim()
-    const parsed = JSON.parse(cleaned)
+    const parsed = parseAIResponseJSON(responseText)
 
     // Apply College Guardrails
     if (parsed.colleges && parsed.profile_metrics) {
@@ -845,21 +990,17 @@ Return exactly 3 careers, exactly 15 colleges, exactly 15 regular recommended_co
 
     res.json(parsed)
   } catch (error) {
-    console.error('Error in /api/generate-report:', error)
-    res.status(500).json({ error: 'Failed to generate PathReport. Please try again.' })
+    next(error)
   }
 })
 
 // =============================================
 // ENDPOINT 3: POST /api/chat
 // =============================================
-app.post('/api/chat', async (req, res) => {
+app.post('/api/chat', async (req, res, next) => {
   try {
-    const { message, pathreport, history } = req.body
-
-    if (!message) {
-      return res.status(400).json({ error: 'Message is required.' })
-    }
+    const parsedBody = ChatSchema.parse(req.body)
+    const { message, pathreport, history } = parsedBody
 
     const messages = [
       ...(history || []),
@@ -876,21 +1017,17 @@ ${JSON.stringify(pathreport)}`
     const responseText = await callAIChat(systemPrompt, messages)
     res.json({ reply: responseText })
   } catch (error) {
-    console.error('Error in /api/chat:', error)
-    res.status(500).json({ error: 'Failed to get a response. Please try again.' })
+    next(error)
   }
 })
 
 // =============================================
 // ENDPOINT 3.5: POST /api/what-if
 // =============================================
-app.post('/api/what-if', async (req, res) => {
+app.post('/api/what-if', async (req, res, next) => {
   try {
-    const { scenario, pathreport } = req.body
-
-    if (!scenario || !pathreport) {
-      return res.status(400).json({ error: 'scenario and pathreport are required.' })
-    }
+    const parsedBody = WhatIfSchema.parse(req.body)
+    const { scenario, pathreport } = parsedBody
 
     const systemPrompt = `You are an expert Indian career counsellor. The student has previously generated a PathReport, which is provided below.
 The student wants to simulate a 'What-If' scenario: "${scenario}"
@@ -907,24 +1044,28 @@ ${JSON.stringify(pathreport)}`
 What colleges, careers, and courses change? Return ONLY valid JSON in the same schema.`
 
     const responseText = await callAI(systemPrompt, userPrompt)
-    const cleaned = responseText.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim()
-    const parsed = JSON.parse(cleaned)
+    const parsed = parseAIResponseJSON(responseText)
     res.json(parsed)
   } catch (error) {
-    console.error('Error in /api/what-if:', error)
-    res.status(500).json({ error: 'Failed to simulate scenario. Please try again.' })
+    next(error)
   }
 })
 
 // =============================================
 // ENDPOINT 4: POST /api/save-report
 // =============================================
-app.post('/api/save-report', async (req, res) => {
+app.post('/api/save-report', authenticateFirebaseUser, async (req, res, next) => {
   try {
-    const { userId, email, reportData } = req.body
+    if (mongoose.connection.readyState !== 1) {
+      return res.status(503).json({ error: 'Database is currently unavailable. Please try again later.' })
+    }
 
-    if (!userId || !email || !reportData) {
-      return res.status(400).json({ error: 'userId, email, and reportData are required.' })
+    const parsedBody = SaveReportSchema.parse(req.body)
+    const { userId, email, reportData } = parsedBody
+
+    // Security: enforce that authenticated user can only save their own data
+    if (req.user.uid !== userId) {
+      return res.status(403).json({ error: 'Forbidden: You can only save your own report' })
     }
 
     // Upsert (update if exists, insert if new)
@@ -937,20 +1078,24 @@ app.post('/api/save-report', async (req, res) => {
     console.log(`PathReport saved successfully for user: ${email} (${userId})`)
     res.json({ success: true, report })
   } catch (error) {
-    console.error('Error in /api/save-report:', error)
-    res.status(500).json({ error: 'Failed to save PathReport.' })
+    next(error)
   }
 })
 
 // =============================================
 // ENDPOINT 5: GET /api/get-report/:userId
 // =============================================
-app.get('/api/get-report/:userId', async (req, res) => {
+app.get('/api/get-report/:userId', authenticateFirebaseUser, async (req, res, next) => {
   try {
-    const { userId } = req.params
+    if (mongoose.connection.readyState !== 1) {
+      return res.status(503).json({ error: 'Database is currently unavailable. Please try again later.' })
+    }
 
-    if (!userId) {
-      return res.status(400).json({ error: 'userId is required.' })
+    const { userId } = req.params
+    
+    // Security: enforce that authenticated user can only access their own data
+    if (req.user.uid !== userId) {
+      return res.status(403).json({ error: 'Forbidden: You can only access your own report' })
     }
 
     const report = await Report.findOne({ userId })
@@ -961,8 +1106,7 @@ app.get('/api/get-report/:userId', async (req, res) => {
 
     res.json({ success: true, found: true, reportData: report.reportData })
   } catch (error) {
-    console.error('Error in /api/get-report:', error)
-    res.status(500).json({ error: 'Failed to fetch PathReport.' })
+    next(error)
   }
 })
 
@@ -976,6 +1120,28 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'dist', 'index.html'))
 })
 
-app.listen(PORT, () => {
-  console.log(`Skope server running on port ${PORT}`)
+// Centralized Express Error Handling Middleware
+app.use((err, req, res, next) => {
+  if (err.name === 'ZodError' || err instanceof z.ZodError) {
+    const issues = err.errors || err.issues || []
+    return res.status(400).json({
+      error: 'Invalid request payload format',
+      details: issues.map(e => ({ field: e.path.join('.'), message: e.message }))
+    })
+  }
+  
+  if (err.status === 400 || err.type === 'entity.parse.failed') {
+    return res.status(400).json({ error: 'Malformed JSON payload' })
+  }
+  
+  console.error('[Error Handler] Unhandled error:', err)
+  res.status(500).json({ error: 'An unexpected internal server error occurred.' })
 })
+
+if (process.env.NODE_ENV !== 'test') {
+  app.listen(PORT, () => {
+    console.log(`Skope server running on port ${PORT}`)
+  })
+}
+
+export default app

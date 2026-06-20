@@ -823,15 +823,25 @@ export default function ResultPage() {
       navigate('/form')
       return
     }
-    const parsed = JSON.parse(stored)
-    setPathReport(parsed)
+    try {
+      const parsed = JSON.parse(stored)
+      setPathReport(parsed)
+    } catch (e) {
+      console.error('Failed to parse cached pathreport:', e)
+      navigate('/form')
+      return
+    }
     
     const isHonest = sessionStorage.getItem('brutally_honest') === 'true'
     setBrutallyHonest(isHonest)
 
     // Load shortlist
-    const shortlist = JSON.parse(localStorage.getItem('skope_shortlist') || '[]')
-    setShortlistedColleges(shortlist)
+    try {
+      const shortlist = JSON.parse(localStorage.getItem('skope_shortlist') || '[]')
+      setShortlistedColleges(shortlist)
+    } catch {
+      setShortlistedColleges([])
+    }
   }, [navigate])
 
   // Custom trigger for generic share recommendation pop-up after 2 seconds

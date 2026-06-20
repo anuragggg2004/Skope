@@ -177,8 +177,12 @@ export default function FormPage() {
 
   // Load state from sessionStorage if it exists to survive page refreshes
   const getInitialChat = () => {
-    const saved = sessionStorage.getItem('skope_chatHistory')
-    return saved ? JSON.parse(saved) : []
+    try {
+      const saved = sessionStorage.getItem('skope_chatHistory')
+      return saved ? JSON.parse(saved) : []
+    } catch {
+      return []
+    }
   }
 
   const [chatHistory, setChatHistory] = useState(getInitialChat)
@@ -325,7 +329,15 @@ export default function FormPage() {
 
     // Complete after 6 User messages (12 messages total)
     if (newHistory.filter(m => m.role === 'user').length >= 6) {
-      sessionStorage.setItem('skope_phase1', JSON.stringify({ q1: 'Dynamic', q2: 'Dynamic', q3: 'Dynamic', q4: 'Dynamic', q5: 'Dynamic' }))
+      const userAnswers = newHistory.filter(m => m.role === 'user').map(m => m.content)
+      const phase1Data = {
+        q1: userAnswers[0] || 'Dynamic',
+        q2: userAnswers[1] || 'Dynamic',
+        q3: userAnswers[2] || 'Dynamic',
+        q4: userAnswers[3] || 'Dynamic',
+        q5: userAnswers[4] || 'Dynamic'
+      }
+      sessionStorage.setItem('skope_phase1', JSON.stringify(phase1Data))
       navigate('/preferences')
     } else {
       await fetchNextAdaptiveQuestion(newHistory)

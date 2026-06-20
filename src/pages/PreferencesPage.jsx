@@ -157,15 +157,20 @@ export default function PreferencesPage() {
       if (setPathReport) setPathReport(data)
 
       if (user && !user.isAnonymous) {
-        fetch('/api/save-report', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            userId: user.uid,
-            email: user.email,
-            reportData: data
-          })
-        }).catch(e => console.error('Background report save failed:', e))
+        user.getIdToken().then(token => {
+          fetch('/api/save-report', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({
+              userId: user.uid,
+              email: user.email,
+              reportData: data
+            })
+          }).catch(e => console.error('Background report save failed:', e))
+        }).catch(e => console.error('Failed to get Firebase token:', e))
       }
 
       setProgress(100)

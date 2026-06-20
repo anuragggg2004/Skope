@@ -21,8 +21,12 @@ export function useAuth() {
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(() => {
-    const guest = sessionStorage.getItem('skope_guest_user')
-    return guest ? JSON.parse(guest) : null
+    try {
+      const guest = sessionStorage.getItem('skope_guest_user')
+      return guest ? JSON.parse(guest) : null
+    } catch {
+      return null
+    }
   })
   const [loading, setLoading] = useState(true)
   const [pathReport, setPathReport] = useState(null)
@@ -39,7 +43,12 @@ export function AuthProvider({ children }) {
       setUser(firebaseUser)
       if (firebaseUser && !firebaseUser.isAnonymous) {
         try {
-          const res = await fetch(`/api/get-report/${firebaseUser.uid}`)
+          const token = await firebaseUser.getIdToken()
+          const res = await fetch(`/api/get-report/${firebaseUser.uid}`, {
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+          })
           if (res.ok) {
             const data = await res.json()
             if (data.success && data.found) {

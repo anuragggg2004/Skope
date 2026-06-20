@@ -1,17 +1,20 @@
-import { useState } from 'react'
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
+import React, { useState, Suspense } from 'react'
+import { BrowserRouter, Routes, Route, useLocation, Navigate } from 'react-router-dom'
 import { AuthProvider } from './contexts/AuthContext'
 import ProtectedRoute from './components/ProtectedRoute'
 import HelpBot from './components/HelpBot'
 import CustomCursor from './components/CustomCursor'
 import Loader from './components/Loader'
-import LandingPage from './pages/LandingPage'
-import LoginPage from './pages/LoginPage'
-import FormPage from './pages/FormPage'
-import PreferencesPage from './pages/PreferencesPage'
-import ResultPage from './pages/ResultPage'
-import ProfilePage from './pages/ProfilePage'
-import SharePage from './pages/SharePage'
+
+// Lazy load page components for code-splitting & performance optimization
+const LandingPage = React.lazy(() => import('./pages/LandingPage'))
+const LoginPage = React.lazy(() => import('./pages/LoginPage'))
+const FormPage = React.lazy(() => import('./pages/FormPage'))
+const PreferencesPage = React.lazy(() => import('./pages/PreferencesPage'))
+const ResultPage = React.lazy(() => import('./pages/ResultPage'))
+const ProfilePage = React.lazy(() => import('./pages/ProfilePage'))
+const SharePage = React.lazy(() => import('./pages/SharePage'))
+const NotFoundPage = React.lazy(() => import('./pages/NotFoundPage'))
 
 // Only show HelpBot on the landing page
 function ConditionalHelpBot() {
@@ -19,6 +22,41 @@ function ConditionalHelpBot() {
   if (pathname !== '/') return null
   return <HelpBot />
 }
+
+// Smart URL Normalizer / Redirector to handle mistyped, uppercase, and legacy paths
+function SmartRouteRedirector({ children }) {
+  const { pathname } = useLocation()
+  const cleanPath = pathname.replace(/\/+/g, '/').trim()
+  const lowerPath = cleanPath.toLowerCase()
+
+  // Dynamic redirects for mistyped homepage aliases
+  if (['/home', '/index', '/dashboard-home'].includes(lowerPath)) {
+    return <Navigate to="/" replace />
+  }
+
+  // Handle case mismatches (e.g. /Result -> /result)
+  const knownPaths = ['/result', '/profile', '/login', '/form', '/preferences', '/share']
+  if (cleanPath !== '/' && cleanPath !== lowerPath && knownPaths.includes(lowerPath)) {
+    return <Navigate to={lowerPath} replace />
+  }
+
+  return children
+}
+
+// Fallback spinner during route transitions
+const RouteSpinner = () => (
+  <>
+    <div className="grid-bg" />
+    <div className="orb-1" />
+    <div className="orb-2" />
+    <div className="page-wrapper min-h-screen flex items-center justify-center bg-[#050508]">
+      <div className="text-center">
+        <div className="w-10 h-10 border-2 border-[rgba(99,102,241,0.15)] border-t-[#6366f1] rounded-full animate-spin mx-auto mb-4" />
+        <p className="font-dm text-[11px] text-[rgba(241,245,249,0.35)] uppercase tracking-[1.5px]">Loading skope...</p>
+      </div>
+    </div>
+  </>
+)
 
 export default function App() {
   // Show loader only once per session
@@ -41,18 +79,25 @@ export default function App() {
 
       <BrowserRouter>
         <AuthProvider>
-          <Routes>
-            {/* Public routes */}
-            <Route path="/"      element={<LandingPage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/share" element={<SharePage />} />
+          <Suspense fallback={<RouteSpinner />}>
+            <SmartRouteRedirector>
+              <Routes>
+                {/* Public routes */}
+                <Route path="/"      element={<LandingPage />} />
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/share" element={<SharePage />} />
 
-            {/* Protected routes */}
-            <Route path="/form"        element={<ProtectedRoute><FormPage /></ProtectedRoute>} />
-            <Route path="/preferences" element={<ProtectedRoute><PreferencesPage /></ProtectedRoute>} />
-            <Route path="/result"      element={<ProtectedRoute><ResultPage /></ProtectedRoute>} />
-            <Route path="/profile"     element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
-          </Routes>
+                {/* Protected routes */}
+                <Route path="/form"        element={<ProtectedRoute><FormPage /></ProtectedRoute>} />
+                <Route path="/preferences" element={<ProtectedRoute><PreferencesPage /></ProtectedRoute>} />
+                <Route path="/result"      element={<ProtectedRoute><ResultPage /></ProtectedRoute>} />
+                <Route path="/profile"     element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
+
+                {/* Wildcard 404 Fallback */}
+                <Route path="*"            element={<NotFoundPage />} />
+              </Routes>
+            </SmartRouteRedirector>
+          </Suspense>
 
           {/* HelpBot only on landing page */}
           <ConditionalHelpBot />
