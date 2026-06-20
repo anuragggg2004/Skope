@@ -1244,6 +1244,34 @@ app.post('/api/admin/change-password', authenticateAdmin, async (req, res, next)
   } catch (err) { next(err) }
 })
 
+// POST /api/admin/firebase-login-exchange
+// Exchange a Firebase ID token for an admin session token if the Google account belongs to the founder
+app.post('/api/admin/firebase-login-exchange', authenticateFirebaseUser, async (req, res, next) => {
+  try {
+    const userEmail = req.user.email?.toLowerCase()
+    if (userEmail !== 'atiwary253@gmail.com') {
+      return res.status(403).json({ error: 'Forbidden: Insufficient permissions for admin exchange' })
+    }
+
+    // Find the founder admin record
+    const admin = await Admin.findOne({ email: userEmail })
+    if (!admin || !admin.isActive) {
+      return res.status(403).json({ error: 'Forbidden: Admin profile not active or not found' })
+    }
+
+    admin.lastLogin = new Date()
+    await admin.save()
+
+    const token = signAdminToken({ email: admin.email, role: admin.role, displayName: admin.displayName })
+    
+    res.json({
+      success: true,
+      token,
+      admin: { email: admin.email, role: admin.role, displayName: admin.displayName }
+    })
+  } catch (err) { next(err) }
+})
+
 // GET /api/admin/overview
 app.get('/api/admin/overview', authenticateAdmin, requireRole('analytics'), async (req, res, next) => {
   try {

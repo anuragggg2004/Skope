@@ -26,7 +26,7 @@ function Logo() {
 }
 
 // ─── Avatar Dropdown ───────────────────────────────────
-function AvatarDropdown({ user, logout }) {
+function AvatarDropdown({ user, logout, handleAdminRedirect }) {
   const navigate = useNavigate()
   const [open, setOpen] = useState(false)
   const dropRef = useRef(null)
@@ -46,9 +46,14 @@ function AvatarDropdown({ user, logout }) {
     { label: '🎯 My PathReport',    action: () => navigate('/result') },
     { label: '⚡ Retake Test',       action: () => { sessionStorage.setItem('skope_retake_active', 'true'); navigate('/form') } },
     { label: '👤 Profile',           action: () => navigate('/profile') },
-    { divider: true },
-    { label: '🚪 Sign Out',          action: logout, danger: true },
   ]
+
+  if (user?.email?.toLowerCase() === 'atiwary253@gmail.com') {
+    items.push({ label: '🔑 Admin Dashboard', action: handleAdminRedirect })
+  }
+
+  items.push({ divider: true })
+  items.push({ label: '🚪 Sign Out',          action: logout, danger: true })
 
   return (
     <div ref={dropRef} style={{ position: 'relative' }}>
@@ -136,7 +141,7 @@ function AvatarDropdown({ user, logout }) {
 }
 
 // ─── Mobile Menu Sheet ─────────────────────────────────
-function MobileMenu({ open, onClose, user, logout }) {
+function MobileMenu({ open, onClose, user, logout, handleAdminRedirect }) {
   const navigate = useNavigate()
   const go = (path) => { onClose(); navigate(path) }
 
@@ -201,6 +206,24 @@ function MobileMenu({ open, onClose, user, logout }) {
               </button>
             ))}
 
+            {user && user.email?.toLowerCase() === 'atiwary253@gmail.com' && (
+              <button
+                onClick={() => { onClose(); handleAdminRedirect() }}
+                style={{
+                  display: 'block', width: '100%', textAlign: 'left',
+                  padding: '16px 0',
+                  background: 'none', border: 'none',
+                  borderBottom: '1px solid rgba(255,255,255,0.05)',
+                  fontFamily: "'Clash Display', sans-serif", fontSize: 22, fontWeight: 600,
+                  color: '#6366f1',
+                  cursor: 'pointer',
+                  transition: 'color 0.15s ease',
+                }}
+              >
+                🔑 Admin Dashboard
+              </button>
+            )}
+
             {user && (
               <button
                 onClick={() => { onClose(); logout() }}
@@ -229,6 +252,27 @@ export default function Navbar() {
   const navigate = useNavigate()
   const location = useLocation()
   const { user, logout } = useAuth()
+
+  const handleAdminRedirect = async () => {
+    try {
+      const idToken = await user.getIdToken()
+      const res = await fetch('/api/admin/firebase-login-exchange', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${idToken}`
+        }
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || 'Failed to exchange token')
+      
+      sessionStorage.setItem('skope_admin_token', data.token)
+      sessionStorage.setItem('skope_admin_user', JSON.stringify(data.admin))
+      navigate('/admin/dashboard')
+    } catch (err) {
+      alert(`Admin Access Error: ${err.message}`)
+    }
+  }
   const [scrolled, setScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
 
@@ -328,7 +372,7 @@ export default function Navbar() {
                 </button>
 
                 {/* Avatar */}
-                <AvatarDropdown user={user} logout={logout} />
+                <AvatarDropdown user={user} logout={logout} handleAdminRedirect={handleAdminRedirect} />
               </>
             ) : (
               <>
@@ -401,6 +445,7 @@ export default function Navbar() {
         onClose={() => setMobileOpen(false)}
         user={user}
         logout={logout}
+        handleAdminRedirect={handleAdminRedirect}
       />
     </>
   )
