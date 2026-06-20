@@ -145,7 +145,9 @@ export default function LoginPage() {
       const msgs = {
         'auth/unauthorized-domain': 'Domain not authorized. Add it in Firebase Console → Authentication → Authorized Domains.',
         'auth/popup-blocked': 'Popup was blocked. Enable popups for this site.',
-        'auth/popup-closed-by-user': 'Sign-in cancelled.'
+        'auth/popup-closed-by-user': 'Sign-in cancelled.',
+        'auth/internal-error': 'Firebase internal error. Ensure Google sign-in is enabled in Firebase Console → Authentication → Sign-in method, and the project support email is configured in Settings.',
+        'auth/configuration-not-found': 'Google provider not configured in Firebase Console. Enable it in Authentication → Sign-in method.'
       }
       setError(msgs[err.code] || `Google sign-in failed: ${err.message}`)
     } finally { setGoogleLoading(false) }

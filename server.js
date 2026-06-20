@@ -1215,6 +1215,35 @@ app.post('/api/admin/login', adminAuthLimiter, async (req, res, next) => {
   } catch (err) { next(err) }
 })
 
+// POST /api/admin/change-password
+app.post('/api/admin/change-password', authenticateAdmin, async (req, res, next) => {
+  try {
+    const { currentPassword, newPassword } = req.body
+    if (!currentPassword || !newPassword) {
+      return res.status(400).json({ error: 'Current password and new password required' })
+    }
+
+    const admin = await Admin.findOne({ email: req.admin.email })
+    if (!admin) return res.status(404).json({ error: 'Admin not found' })
+
+    const valid = await admin.comparePassword(currentPassword)
+    if (!valid) return res.status(400).json({ error: 'Incorrect current password' })
+
+    admin.password = newPassword // pre-save hook will hash it
+    await admin.save()
+
+    await logAudit({
+      req,
+      action: 'CHANGE_PASSWORD',
+      resource: 'admin',
+      resourceId: admin._id,
+      details: { email: admin.email }
+    })
+
+    res.json({ success: true, message: 'Password changed successfully' })
+  } catch (err) { next(err) }
+})
+
 // GET /api/admin/overview
 app.get('/api/admin/overview', authenticateAdmin, requireRole('analytics'), async (req, res, next) => {
   try {
@@ -1579,7 +1608,7 @@ if (process.env.NODE_ENV !== 'test') {
     path: '/socket.io'
   })
 
-  io.on('connection', (socket) => {
+  io.on('connection', async (socket) => {
     const token = socket.handshake.auth?.token
     // Only allow valid admin tokens to receive real-time events
     try {

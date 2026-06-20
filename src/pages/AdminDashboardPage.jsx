@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { io } from 'socket.io-client'
 
 // ─── Palette & tokens ──────────────────────────────
 const C = {
@@ -851,6 +852,12 @@ function SettingsSection() {
   const [saved, setSaved] = useState(false)
   const [form, setForm] = useState({})
 
+  // Password change states
+  const [pwdForm, setPwdForm] = useState({ currentPassword: '', newPassword: '', confirmPassword: '' })
+  const [pwdLoading, setPwdLoading] = useState(false)
+  const [pwdError, setPwdError] = useState('')
+  const [pwdSuccess, setPwdSuccess] = useState('')
+
   useEffect(() => {
     fetch('/api/admin/settings', { headers: authHeaders() })
       .then(r => r.json()).then(d => {
@@ -865,6 +872,43 @@ function SettingsSection() {
     await fetch('/api/admin/settings', { method: 'PUT', headers: authHeaders(), body: JSON.stringify(form) })
     setSaving(false); setSaved(true)
     setTimeout(() => setSaved(false), 3000)
+  }
+
+  const changePassword = async () => {
+    setPwdError('')
+    setPwdSuccess('')
+    if (!pwdForm.currentPassword || !pwdForm.newPassword) {
+      setPwdError('All fields are required')
+      return
+    }
+    if (pwdForm.newPassword !== pwdForm.confirmPassword) {
+      setPwdError('New passwords do not match')
+      return
+    }
+    if (pwdForm.newPassword.length < 6) {
+      setPwdError('Password must be at least 6 characters')
+      return
+    }
+
+    setPwdLoading(true)
+    try {
+      const res = await fetch('/api/admin/change-password', {
+        method: 'POST',
+        headers: authHeaders(),
+        body: JSON.stringify({
+          currentPassword: pwdForm.currentPassword,
+          newPassword: pwdForm.newPassword
+        })
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || 'Failed to change password')
+      setPwdSuccess('Password changed successfully!')
+      setPwdForm({ currentPassword: '', newPassword: '', confirmPassword: '' })
+    } catch (err) {
+      setPwdError(err.message)
+    } finally {
+      setPwdLoading(false)
+    }
   }
 
   const toggle = (key) => setForm(f => ({ ...f, [key]: !f[key] }))
@@ -934,6 +978,27 @@ function SettingsSection() {
               🔑 API keys can be updated by setting <code style={{ color: C.indigo }}>GEMINI_API_KEY</code> and <code style={{ color: C.indigo }}>OPENROUTER_API_KEY</code> in the server <code style={{ color: C.indigo }}>.env</code> file and restarting.
             </div>
           </div>
+        </Card>
+
+        <Card>
+          <div style={{ fontSize: 14, fontWeight: 700, color: C.pink, marginBottom: 16 }}>🔑 Change Password</div>
+          <div style={{ marginBottom: 12 }}>
+            <label style={{ display: 'block', fontSize: 11, color: C.muted, marginBottom: 6, fontWeight: 600, textTransform: 'uppercase' }}>Current Password</label>
+            <Input type="password" value={pwdForm.currentPassword} onChange={e => setPwdForm(f => ({ ...f, currentPassword: e.target.value }))} style={{ width: '100%', boxSizing: 'border-box' }} />
+          </div>
+          <div style={{ marginBottom: 12 }}>
+            <label style={{ display: 'block', fontSize: 11, color: C.muted, marginBottom: 6, fontWeight: 600, textTransform: 'uppercase' }}>New Password</label>
+            <Input type="password" value={pwdForm.newPassword} onChange={e => setPwdForm(f => ({ ...f, newPassword: e.target.value }))} style={{ width: '100%', boxSizing: 'border-box' }} />
+          </div>
+          <div style={{ marginBottom: 16 }}>
+            <label style={{ display: 'block', fontSize: 11, color: C.muted, marginBottom: 6, fontWeight: 600, textTransform: 'uppercase' }}>Confirm New Password</label>
+            <Input type="password" value={pwdForm.confirmPassword} onChange={e => setPwdForm(f => ({ ...f, confirmPassword: e.target.value }))} style={{ width: '100%', boxSizing: 'border-box' }} />
+          </div>
+          {pwdError && <div style={{ color: C.red, fontSize: 12, marginBottom: 12, fontWeight: 600 }}>⚠️ {pwdError}</div>}
+          {pwdSuccess && <div style={{ color: C.green, fontSize: 12, marginBottom: 12, fontWeight: 600 }}>✓ {pwdSuccess}</div>}
+          <Btn color={C.pink} onClick={changePassword} disabled={pwdLoading}>
+            {pwdLoading ? 'Updating…' : 'Update Password'}
+          </Btn>
         </Card>
       </div>
     </div>
@@ -1047,11 +1112,49 @@ export default function AdminDashboardPage() {
   const navigate = useNavigate()
   const [active, setActive] = useState('overview')
   const [sidebarOpen, setSidebarOpen] = useState(true)
+  const [toasts, setToasts] = useState([])
   const admin = getAdmin()
 
+  const addToast = useCallback((message, type = 'info') => {
+    const id = Date.now() + Math.random()
+    setToasts(prev => [...prev, { id, message, type }])
+    setTimeout(() => {
+      setToasts(prev => prev.filter(t => t.id !== id))
+    }, 4500)
+  }, [])
+
   useEffect(() => {
-    if (!getToken()) navigate('/admin/login')
-  }, [navigate])
+    if (!getToken()) {
+      navigate('/admin/login')
+      return
+    }
+
+    const token = getToken()
+    const socket = io({
+      auth: { token },
+      path: '/socket.io'
+    })
+
+    socket.on('connect', () => {
+      console.log('[WS] Connected to server successfully')
+    })
+
+    socket.on('new-signup', (data) => {
+      addToast(`New Student: ${data.displayName || data.email} (${data.stream || 'PCM'}) signed up from ${data.city || 'India'}`, 'signup')
+    })
+
+    socket.on('new-report', (data) => {
+      addToast(`PathReport Generated for ${data.email}`, 'report')
+    })
+
+    socket.on('new-feedback', (data) => {
+      addToast(`Feedback [${data.type}] from ${data.userName} (Priority: ${data.priority})`, 'feedback')
+    })
+
+    return () => {
+      socket.disconnect()
+    }
+  }, [navigate, addToast])
 
   const logout = () => {
     sessionStorage.removeItem('skope_admin_token')
@@ -1063,6 +1166,23 @@ export default function AdminDashboardPage() {
 
   return (
     <div style={{ minHeight: '100vh', background: C.bg, display: 'flex', fontFamily: "'Inter','DM Sans',sans-serif", color: C.white }}>
+      {/* Toast container */}
+      <div style={{ position: 'fixed', bottom: 24, right: 24, zIndex: 9999, display: 'flex', flexDirection: 'column', gap: 8, maxWidth: 320 }}>
+        {toasts.map(t => (
+          <div key={t.id} style={{
+            background: 'rgba(15, 19, 32, 0.85)',
+            border: `1px solid ${t.type === 'signup' ? C.blue : t.type === 'report' ? C.purple : C.yellow}88`,
+            borderRadius: 10, padding: '12px 16px', boxShadow: '0 8px 30px rgba(0,0,0,0.5)',
+            backdropFilter: 'blur(10px)',
+            animation: 'fadeUp 0.25s ease', display: 'flex', alignItems: 'center', gap: 10, color: C.white, fontSize: 13
+          }}>
+            <span style={{ fontSize: 16 }}>
+              {t.type === 'signup' ? '👤' : t.type === 'report' ? '📊' : '💬'}
+            </span>
+            <div>{t.message}</div>
+          </div>
+        ))}
+      </div>
       {/* Global keyframes */}
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');

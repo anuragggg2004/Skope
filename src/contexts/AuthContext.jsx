@@ -44,6 +44,22 @@ export function AuthProvider({ children }) {
       if (firebaseUser && !firebaseUser.isAnonymous) {
         try {
           const token = await firebaseUser.getIdToken()
+
+          // Sync user to MongoDB on login/auth change
+          await fetch('/api/admin/sync-user', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({
+              uid: firebaseUser.uid,
+              email: firebaseUser.email,
+              displayName: firebaseUser.displayName,
+              provider: firebaseUser.providerData?.[0]?.providerId || 'email'
+            })
+          }).catch(err => console.error("Sync user failed:", err))
+
           const res = await fetch(`/api/get-report/${firebaseUser.uid}`, {
             headers: {
               'Authorization': `Bearer ${token}`
