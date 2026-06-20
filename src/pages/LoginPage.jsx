@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import { auth } from '../firebase'
-import { RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth'
+import { getRedirectResult } from 'firebase/auth'
 
 // ─── SVG Icon Components ────────────────────────────────
 const IconGoogle = () => (
@@ -26,11 +26,7 @@ const IconEye = ({ open }) => open ? (
   </svg>
 )
 
-const IconPhone = () => (
-  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.09 9.81 19.79 19.79 0 01.01 1.21 2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92v2z"/>
-  </svg>
-)
+
 
 const IconGuest = () => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -108,12 +104,7 @@ export default function LoginPage() {
   const [forgotLoading, setForgotLoading] = useState(false)
   const [forgotSuccess, setForgotSuccess] = useState(false)
 
-  const [phone, setPhone] = useState('')
-  const [otp, setOtp] = useState('')
-  const [confirmationResult, setConfirmationResult] = useState(null)
-  const [phoneLoading, setPhoneLoading] = useState(false)
-  const [otpLoading, setOtpLoading] = useState(false)
-  const [otpTimer, setOtpTimer] = useState(0)
+
 
   useEffect(() => {
     if (!loading && user) {
@@ -131,10 +122,26 @@ export default function LoginPage() {
   }, [])
 
   useEffect(() => {
-    if (otpTimer <= 0) return
-    const interval = setInterval(() => setOtpTimer(p => p - 1), 1000)
-    return () => clearInterval(interval)
-  }, [otpTimer])
+    // Check for redirect sign-in results (cancellations/errors on mobile/popups)
+    getRedirectResult(auth)
+      .then((result) => {
+        if (result) {
+          console.log('[Auth] Redirect sign-in success:', result.user)
+        }
+      })
+      .catch((err) => {
+        console.error('[Auth] Redirect sign-in error:', err)
+        const msgs = {
+          'auth/unauthorized-domain': 'Domain not authorized. Add it in Firebase Console → Authentication → Authorized Domains.',
+          'auth/popup-blocked': 'Popup was blocked. Enable popups for this site.',
+          'auth/popup-closed-by-user': 'Sign-in cancelled.',
+          'auth/cancelled-popup-request': 'Sign-in cancelled.',
+          'auth/internal-error': 'Firebase internal error. Ensure Google sign-in is enabled in Firebase Console → Authentication → Sign-in method, and the project support email is configured in Settings.',
+          'auth/configuration-not-found': 'Google provider not configured in Firebase Console. Enable it in Authentication → Sign-in method.'
+        }
+        setError(msgs[err.code] || `Google sign-in failed: ${err.message}`)
+      })
+  }, [])
 
   const handleGoogleLogin = async () => {
     setError(''); setGoogleLoading(true)
@@ -198,54 +205,7 @@ export default function LoginPage() {
     } finally { setForgotLoading(false) }
   }
 
-  const initRecaptcha = () => {
-    if (window.recaptchaVerifier) {
-      try { window.recaptchaVerifier.clear() } catch {}
-      window.recaptchaVerifier = null
-    }
-    const parent = document.getElementById('recaptcha-parent')
-    if (parent) parent.innerHTML = '<div id="recaptcha-container"></div>'
-    window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
-      size: 'invisible',
-      callback: () => {},
-      'expired-callback': () => setError('reCAPTCHA expired. Try again.')
-    })
-    return window.recaptchaVerifier
-  }
 
-  const handlePhoneSubmit = async (e) => {
-    e?.preventDefault()
-    const cleaned = phone.replace(/\D/g, '')
-    if (cleaned.length !== 10) { setError('Enter a valid 10-digit Indian number.'); return }
-    setError(''); setPhoneLoading(true)
-    try {
-      const appVerifier = initRecaptcha()
-      const confirmation = await signInWithPhoneNumber(auth, `+91${cleaned}`, appVerifier)
-      setConfirmationResult(confirmation)
-      setViewMode('otp')
-      setOtpTimer(30)
-    } catch (err) {
-      const msgs = {
-        'auth/operation-not-allowed': 'Phone auth is not enabled in Firebase Console.',
-        'auth/invalid-phone-number': 'Invalid phone number.',
-        'auth/too-many-requests': 'Too many attempts. Wait and try again.'
-      }
-      setError(msgs[err.code] || `SMS failed: ${err.message}`)
-      if (window.recaptchaVerifier) { window.recaptchaVerifier.clear(); window.recaptchaVerifier = null }
-    } finally { setPhoneLoading(false) }
-  }
-
-  const handleOtpSubmit = async (e) => {
-    e.preventDefault()
-    if (otp.length !== 6) { setError('Enter the 6-digit OTP.'); return }
-    setError(''); setOtpLoading(true)
-    try {
-      await confirmationResult.confirm(otp)
-      // Redirection is handled automatically by the useEffect
-    } catch {
-      setError('Incorrect OTP. Please check and try again.')
-    } finally { setOtpLoading(false) }
-  }
 
   const t = TESTIMONIALS[activeTestimonial]
 
@@ -260,7 +220,6 @@ export default function LoginPage() {
   return (
 
     <>
-      <div id="recaptcha-parent"><div id="recaptcha-container"></div></div>
 
       <div className="min-h-screen flex" style={{ background: '#080b14' }}>
 
@@ -461,15 +420,6 @@ export default function LoginPage() {
                     {loading ? (isSignup ? 'Creating account...' : 'Logging in...') : (isSignup ? 'Create Account' : 'Log In with Email')}
                   </button>
                 </form>
-
-                {/* Phone OTP link */}
-                <div className="text-center mt-5 pt-5 border-t border-[rgba(255,255,255,0.05)]">
-                  <button type="button" onClick={() => { setViewMode('phone'); setError('') }}
-                    className="font-dm text-[12px] font-medium text-[rgba(240,242,255,0.45)] hover:text-[#4f8ef7] bg-transparent border-none cursor-pointer flex items-center justify-center gap-2 mx-auto transition-colors">
-                    <IconPhone />
-                    Sign in with Phone OTP instead
-                  </button>
-                </div>
               </>
             )}
 
@@ -511,69 +461,7 @@ export default function LoginPage() {
               </div>
             )}
 
-            {/* ─── PHONE NUMBER ────────────────────────── */}
-            {viewMode === 'phone' && (
-              <form onSubmit={handlePhoneSubmit} className="space-y-4">
-                <div>
-                  <label className="font-dm text-[12px] text-[rgba(240,242,255,0.4)] block mb-1.5">Mobile Number</label>
-                  <div className="flex gap-2">
-                    <div className="flex items-center gap-2 bg-[rgba(255,255,255,0.04)] border border-[rgba(255,255,255,0.08)] rounded-[12px] px-3 py-3.5 text-white font-dm text-[14px] select-none whitespace-nowrap">
-                      <svg width="16" height="12" viewBox="0 0 36 24" fill="none">
-                        <rect width="36" height="24" rx="2" fill="#FF9933"/>
-                        <rect y="8" width="36" height="8" fill="white"/>
-                        <rect y="16" width="36" height="8" fill="#138808"/>
-                        <circle cx="18" cy="12" r="3.5" stroke="#000080" strokeWidth="0.5" fill="none"/>
-                      </svg>
-                      <span>+91</span>
-                    </div>
-                    <input type="tel" value={phone} onChange={e => setPhone(e.target.value.replace(/\D/g, '').slice(0, 10))}
-                      placeholder="10-digit number" className={inputCls + ' flex-1'} autoFocus />
-                  </div>
-                  <p className="font-dm text-[11px] text-[rgba(240,242,255,0.25)] mt-2 flex items-center gap-1.5">
-                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
-                    Secured with invisible reCAPTCHA
-                  </p>
-                </div>
-                <button type="submit" disabled={phoneLoading} className={btnPrimary}>
-                  {phoneLoading ? <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : <IconPhone />}
-                  {phoneLoading ? 'Sending OTP...' : 'Send OTP Code'}
-                </button>
-                <button type="button" onClick={() => { setViewMode('login'); setError('') }}
-                  className="w-full font-dm text-[12px] text-[rgba(240,242,255,0.4)] hover:text-white bg-transparent border-none cursor-pointer text-center hover:underline flex items-center justify-center gap-2 transition-colors">
-                  <IconBack /> Back to other options
-                </button>
-              </form>
-            )}
 
-            {/* ─── OTP VERIFY ──────────────────────────── */}
-            {viewMode === 'otp' && (
-              <form onSubmit={handleOtpSubmit} className="space-y-4">
-                <div>
-                  <label className="font-dm text-[12px] text-[rgba(240,242,255,0.4)] block mb-1.5">6-Digit OTP</label>
-                  <input type="text" value={otp} onChange={e => setOtp(e.target.value.replace(/\D/g, '').slice(0, 6))}
-                    placeholder="• • • • • •" maxLength="6"
-                    className={inputCls + ' tracking-[10px] text-center font-sora text-[24px] font-bold'} autoFocus />
-                </div>
-                <button type="submit" disabled={otpLoading} className={btnPrimary}>
-                  {otpLoading ? <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : null}
-                  {otpLoading ? 'Verifying...' : 'Verify & Sign In'}
-                </button>
-                <div className="flex items-center justify-between text-[11px] font-dm">
-                  <button type="button" onClick={() => { setViewMode('phone'); setError('') }}
-                    className="text-[#4f8ef7] hover:underline bg-transparent border-none cursor-pointer flex items-center gap-1.5">
-                    <IconBack /> Change number
-                  </button>
-                  {otpTimer > 0 ? (
-                    <span className="text-[rgba(240,242,255,0.3)]">Resend in {otpTimer}s</span>
-                  ) : (
-                    <button type="button" onClick={handlePhoneSubmit}
-                      className="text-[#4f8ef7] hover:underline bg-transparent border-none cursor-pointer">
-                      Resend OTP
-                    </button>
-                  )}
-                </div>
-              </form>
-            )}
 
             {/* Toggle login/signup */}
             {viewMode === 'login' && (
