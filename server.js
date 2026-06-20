@@ -1116,20 +1116,41 @@ app.post('/api/save-report', authenticateFirebaseUser, async (req, res, next) =>
     const parsedBody = SaveReportSchema.parse(req.body)
     const { userId, email, reportData } = parsedBody
 
-    // Security: enforce that authenticated user can only save their own data
     if (req.user.uid !== userId) {
       return res.status(403).json({ error: 'Forbidden: You can only save your own report' })
     }
 
-    // Upsert (update if exists, insert if new)
-    const report = await Report.findOneAndUpdate(
-      { userId },
-      { email, reportData, updatedAt: Date.now() },
-      { new: true, upsert: true }
-    )
+    // ── TRANSACTION: Save report + sync user record atomically ──
+    const session = await mongoose.startSession()
+    let savedReport
+    try {
+      session.startTransaction()
 
-    console.log(`PathReport saved successfully for user: ${email} (${userId})`)
-    res.json({ success: true, report })
+      // 1. Upsert the PathReport
+      savedReport = await Report.findOneAndUpdate(
+        { userId },
+        { email, reportData, updatedAt: new Date() },
+        { new: true, upsert: true, session }
+      )
+
+      // 2. Sync user record — mark report as generated
+      await User.findOneAndUpdate(
+        { userId },
+        { $set: { email, lastActive: new Date() }, $inc: { reportsGenerated: 1 } },
+        { upsert: true, session }
+      )
+
+      await session.commitTransaction()
+      console.log(`[TX] PathReport saved atomically for: ${email} (${userId})`)
+    } catch (txErr) {
+      await session.abortTransaction()
+      console.error('[TX] Transaction aborted — rolling back:', txErr.message)
+      throw txErr
+    } finally {
+      session.endSession()
+    }
+
+    res.json({ success: true, report: savedReport })
   } catch (error) {
     next(error)
   }
@@ -1543,8 +1564,88 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: 'An unexpected internal server error occurred.' })
 })
 
+// =============================================
+// SERVER STARTUP + SOCKET.IO + CHANGE STREAMS
+// =============================================
+import { createServer } from 'http'
+import { Server as SocketIO } from 'socket.io'
+
 if (process.env.NODE_ENV !== 'test') {
-  app.listen(PORT, () => {
+  const httpServer = createServer(app)
+
+  // Socket.IO — only accept connections from admin dashboard
+  const io = new SocketIO(httpServer, {
+    cors: { origin: allowedOrigins, credentials: true },
+    path: '/socket.io'
+  })
+
+  io.on('connection', (socket) => {
+    const token = socket.handshake.auth?.token
+    // Only allow valid admin tokens to receive real-time events
+    try {
+      if (!token) throw new Error('No token')
+      const jwt = await import('jsonwebtoken')
+      jwt.default.verify(token, process.env.ADMIN_JWT_SECRET)
+      console.log('[WS] Admin connected:', socket.id)
+      socket.join('admins')
+    } catch {
+      socket.disconnect(true)
+    }
+  })
+
+  // ── CHANGE STREAMS (real-time admin events) ──
+  // Only start if MongoDB is connected (replica set required)
+  mongoose.connection.once('open', () => {
+    try {
+      // Watch new user signups
+      const userStream = User.watch([{ $match: { operationType: 'insert' } }], { fullDocument: 'updateLookup' })
+      userStream.on('change', (change) => {
+        const doc = change.fullDocument
+        io.to('admins').emit('new-signup', {
+          email: doc?.email,
+          displayName: doc?.displayName,
+          stream: doc?.stream,
+          city: doc?.city,
+          timestamp: new Date().toISOString()
+        })
+        console.log('[ChangeStream] New signup:', doc?.email)
+      })
+      userStream.on('error', () => {}) // silently ignore if not replica set
+
+      // Watch new reports generated
+      const reportStream = Report.watch([{ $match: { operationType: { $in: ['insert', 'update'] } } }], { fullDocument: 'updateLookup' })
+      reportStream.on('change', (change) => {
+        const doc = change.fullDocument
+        io.to('admins').emit('new-report', {
+          email: doc?.email,
+          userId: doc?.userId,
+          timestamp: new Date().toISOString()
+        })
+        console.log('[ChangeStream] Report saved:', doc?.email)
+      })
+      reportStream.on('error', () => {})
+
+      // Watch feedback submissions
+      const feedbackStream = Feedback.watch([{ $match: { operationType: 'insert' } }], { fullDocument: 'updateLookup' })
+      feedbackStream.on('change', (change) => {
+        const doc = change.fullDocument
+        io.to('admins').emit('new-feedback', {
+          type: doc?.type,
+          priority: doc?.priority,
+          userName: doc?.userName,
+          timestamp: new Date().toISOString()
+        })
+      })
+      feedbackStream.on('error', () => {})
+
+      console.log('[ChangeStream] Real-time event streams active')
+    } catch (err) {
+      // Change streams require a replica set — Atlas free tier supports this
+      console.log('[ChangeStream] Note:', err.message)
+    }
+  })
+
+  httpServer.listen(PORT, () => {
     console.log(`Skope server running on port ${PORT}`)
   })
 }
