@@ -93,14 +93,6 @@ export function AuthProvider({ children }) {
   const loginWithGoogle = async () => {
     sessionStorage.removeItem('skope_guest_mode')
     sessionStorage.removeItem('skope_guest_user')
-    
-    // Detect mobile or touch devices (popup does not work on mobile in-app browsers)
-    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
-    if (isMobile) {
-      sessionStorage.setItem('skope_google_redirect_active', 'true')
-      await signInWithRedirect(auth, googleProvider)
-      return null
-    }
 
     try {
       const result = await signInWithPopup(auth, googleProvider)

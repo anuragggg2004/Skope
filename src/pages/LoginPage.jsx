@@ -140,6 +140,7 @@ export default function LoginPage() {
             'auth/popup-blocked': 'Popup was blocked. Enable popups for this site.',
             'auth/popup-closed-by-user': 'Sign-in cancelled.',
             'auth/cancelled-popup-request': 'Sign-in cancelled.',
+            'auth/missing-initial-state': 'Sign-in blocked by browser storage restrictions. Try disabling incognito/private mode or allowing third-party cookies/cross-site tracking.',
             'auth/internal-error': 'Firebase internal error. Ensure Google sign-in is enabled in Firebase Console → Authentication → Sign-in method, and the project support email is configured in Settings.',
             'auth/configuration-not-found': 'Google provider not configured in Firebase Console. Enable it in Authentication → Sign-in method.'
           }
@@ -160,6 +161,7 @@ export default function LoginPage() {
         'auth/unauthorized-domain': 'Domain not authorized. Add it in Firebase Console → Authentication → Authorized Domains.',
         'auth/popup-blocked': 'Popup was blocked. Enable popups for this site.',
         'auth/popup-closed-by-user': 'Sign-in cancelled.',
+        'auth/missing-initial-state': 'Sign-in blocked by browser storage restrictions. Try disabling incognito/private mode or allowing third-party cookies/cross-site tracking.',
         'auth/internal-error': 'Firebase internal error. Ensure Google sign-in is enabled in Firebase Console → Authentication → Sign-in method, and the project support email is configured in Settings.',
         'auth/configuration-not-found': 'Google provider not configured in Firebase Console. Enable it in Authentication → Sign-in method.'
       }
