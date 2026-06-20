@@ -28,6 +28,7 @@ export function AuthProvider({ children }) {
       return null
     }
   })
+  // Start loading = true so the UI waits for Firebase to resolve auth state
   const [loading, setLoading] = useState(true)
   const [pathReport, setPathReport] = useState(null)
 
@@ -40,8 +41,15 @@ export function AuthProvider({ children }) {
         return
       }
 
+      if (firebaseUser) {
+        setLoading(true)
+      }
+
       setUser(firebaseUser)
+
       if (firebaseUser && !firebaseUser.isAnonymous) {
+        // Keep loading = true until ALL async operations complete
+        // This prevents premature redirect before the report is fetched
         try {
           const token = await firebaseUser.getIdToken()
 
@@ -58,12 +66,11 @@ export function AuthProvider({ children }) {
               displayName: firebaseUser.displayName,
               provider: firebaseUser.providerData?.[0]?.providerId || 'email'
             })
-          }).catch(err => console.error("Sync user failed:", err))
+          }).catch(err => console.error('Sync user failed:', err))
 
+          // Fetch existing report so we can route to /result vs /form
           const res = await fetch(`/api/get-report/${firebaseUser.uid}`, {
-            headers: {
-              'Authorization': `Bearer ${token}`
-            }
+            headers: { 'Authorization': `Bearer ${token}` }
           })
           if (res.ok) {
             const data = await res.json()
@@ -75,7 +82,7 @@ export function AuthProvider({ children }) {
             }
           }
         } catch (err) {
-          console.error("Failed to pre-fetch user report from database:", err)
+          console.error('Failed to pre-fetch user report from database:', err)
           setPathReport(null)
         }
       } else {
@@ -84,33 +91,56 @@ export function AuthProvider({ children }) {
           sessionStorage.removeItem('pathreport')
         }
       }
+
+      // Only set loading = false AFTER everything is complete
       setLoading(false)
     })
     return unsubscribe
   }, [])
 
+  // ─── Auth Methods ──────────────────────────────────────
+
   const loginWithGoogle = async () => {
+    setLoading(true)
     sessionStorage.removeItem('skope_guest_mode')
     sessionStorage.removeItem('skope_guest_user')
-    const result = await signInWithPopup(auth, googleProvider)
-    return result.user
+    try {
+      // Use popup-only — avoids cross-origin storage issues on custom domains (Render, Vercel, etc.)
+      const result = await signInWithPopup(auth, googleProvider)
+      return result.user
+    } catch (err) {
+      setLoading(false)
+      throw err
+    }
   }
 
   const loginWithEmail = async (email, password) => {
+    setLoading(true)
     sessionStorage.removeItem('skope_guest_mode')
     sessionStorage.removeItem('skope_guest_user')
-    const result = await signInWithEmailAndPassword(auth, email, password)
-    return result.user
+    try {
+      const result = await signInWithEmailAndPassword(auth, email, password)
+      return result.user
+    } catch (err) {
+      setLoading(false)
+      throw err
+    }
   }
 
   const signupWithEmail = async (email, password, displayName) => {
+    setLoading(true)
     sessionStorage.removeItem('skope_guest_mode')
     sessionStorage.removeItem('skope_guest_user')
-    const result = await createUserWithEmailAndPassword(auth, email, password)
-    if (displayName) {
-      await updateProfile(result.user, { displayName })
+    try {
+      const result = await createUserWithEmailAndPassword(auth, email, password)
+      if (displayName) {
+        await updateProfile(result.user, { displayName })
+      }
+      return result.user
+    } catch (err) {
+      setLoading(false)
+      throw err
     }
-    return result.user
   }
 
   const loginAsGuest = async () => {
