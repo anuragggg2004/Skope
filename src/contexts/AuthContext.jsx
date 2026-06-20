@@ -3,7 +3,6 @@ import { auth, googleProvider } from '../firebase'
 import {
   onAuthStateChanged,
   signInWithPopup,
-  signInWithRedirect,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   signInAnonymously,
@@ -93,20 +92,8 @@ export function AuthProvider({ children }) {
   const loginWithGoogle = async () => {
     sessionStorage.removeItem('skope_guest_mode')
     sessionStorage.removeItem('skope_guest_user')
-
-    try {
-      const result = await signInWithPopup(auth, googleProvider)
-      return result.user
-    } catch (err) {
-      // Fallback to redirect if popup fails or is blocked/closed
-      if (err.code === 'auth/popup-blocked' || err.code === 'auth/popup-closed-by-user' || err.code === 'auth/internal-error') {
-        console.log('[Auth] Popup failed, falling back to redirect sign-in...')
-        sessionStorage.setItem('skope_google_redirect_active', 'true')
-        await signInWithRedirect(auth, googleProvider)
-        return null
-      }
-      throw err
-    }
+    const result = await signInWithPopup(auth, googleProvider)
+    return result.user
   }
 
   const loginWithEmail = async (email, password) => {

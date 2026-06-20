@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import { auth } from '../firebase'
-import { getRedirectResult, fetchSignInMethodsForEmail } from 'firebase/auth'
+import { fetchSignInMethodsForEmail } from 'firebase/auth'
 
 // ─── SVG Icon Components ────────────────────────────────
 const IconGoogle = () => (
@@ -121,44 +121,15 @@ export default function LoginPage() {
     return () => clearInterval(t)
   }, [])
 
-  useEffect(() => {
-    // Check for redirect sign-in results (cancellations/errors on mobile/popups)
-    getRedirectResult(auth)
-      .then((result) => {
-        if (result) {
-          console.log('[Auth] Redirect sign-in success:', result.user)
-        }
-        sessionStorage.removeItem('skope_google_redirect_active')
-      })
-      .catch((err) => {
-        console.error('[Auth] Redirect sign-in error:', err)
-        sessionStorage.removeItem('skope_google_redirect_active')
-        const msgs = {
-          'auth/unauthorized-domain': 'Domain not authorized. Add it in Firebase Console → Authentication → Authorized Domains.',
-          'auth/popup-blocked': 'Popup was blocked. Enable popups for this site.',
-          'auth/popup-closed-by-user': 'Sign-in cancelled.',
-          'auth/cancelled-popup-request': 'Sign-in cancelled.',
-          'auth/missing-initial-state': 'Sign-in blocked by browser storage restrictions. Try disabling incognito/private mode or allowing third-party cookies/cross-site tracking.',
-          'auth/internal-error': 'Firebase internal error. Ensure Google sign-in is enabled in Firebase Console → Authentication → Sign-in method, and the project support email is configured in Settings.',
-          'auth/configuration-not-found': 'Google provider not configured in Firebase Console. Enable it in Authentication → Sign-in method.'
-        }
-        setError(msgs[err.code] || `Google sign-in failed: ${err.message}`)
-      })
-  }, [])
-
   const handleGoogleLogin = async () => {
     setError(''); setGoogleLoading(true)
-    sessionStorage.setItem('skope_google_redirect_active', 'true')
     try {
       await loginWithGoogle()
-      // Redirection is handled automatically by the useEffect
     } catch (err) {
-      sessionStorage.removeItem('skope_google_redirect_active')
       const msgs = {
         'auth/unauthorized-domain': 'Domain not authorized. Add it in Firebase Console → Authentication → Authorized Domains.',
         'auth/popup-blocked': 'Popup was blocked. Enable popups for this site.',
         'auth/popup-closed-by-user': 'Sign-in cancelled.',
-        'auth/missing-initial-state': 'Sign-in blocked by browser storage restrictions. Try disabling incognito/private mode or allowing third-party cookies/cross-site tracking.',
         'auth/internal-error': 'Firebase internal error. Ensure Google sign-in is enabled in Firebase Console → Authentication → Sign-in method, and the project support email is configured in Settings.',
         'auth/configuration-not-found': 'Google provider not configured in Firebase Console. Enable it in Authentication → Sign-in method.'
       }
