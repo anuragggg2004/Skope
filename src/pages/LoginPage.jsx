@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import { auth } from '../firebase'
-import { getRedirectResult } from 'firebase/auth'
+import { getRedirectResult, fetchSignInMethodsForEmail } from 'firebase/auth'
 
 // ─── SVG Icon Components ────────────────────────────────
 const IconGoogle = () => (
@@ -123,7 +123,6 @@ export default function LoginPage() {
 
   useEffect(() => {
     // Check for redirect sign-in results (cancellations/errors on mobile/popups)
-    const redirectActive = sessionStorage.getItem('skope_google_redirect_active')
     getRedirectResult(auth)
       .then((result) => {
         if (result) {
@@ -134,18 +133,16 @@ export default function LoginPage() {
       .catch((err) => {
         console.error('[Auth] Redirect sign-in error:', err)
         sessionStorage.removeItem('skope_google_redirect_active')
-        if (redirectActive) {
-          const msgs = {
-            'auth/unauthorized-domain': 'Domain not authorized. Add it in Firebase Console → Authentication → Authorized Domains.',
-            'auth/popup-blocked': 'Popup was blocked. Enable popups for this site.',
-            'auth/popup-closed-by-user': 'Sign-in cancelled.',
-            'auth/cancelled-popup-request': 'Sign-in cancelled.',
-            'auth/missing-initial-state': 'Sign-in blocked by browser storage restrictions. Try disabling incognito/private mode or allowing third-party cookies/cross-site tracking.',
-            'auth/internal-error': 'Firebase internal error. Ensure Google sign-in is enabled in Firebase Console → Authentication → Sign-in method, and the project support email is configured in Settings.',
-            'auth/configuration-not-found': 'Google provider not configured in Firebase Console. Enable it in Authentication → Sign-in method.'
-          }
-          setError(msgs[err.code] || `Google sign-in failed: ${err.message}`)
+        const msgs = {
+          'auth/unauthorized-domain': 'Domain not authorized. Add it in Firebase Console → Authentication → Authorized Domains.',
+          'auth/popup-blocked': 'Popup was blocked. Enable popups for this site.',
+          'auth/popup-closed-by-user': 'Sign-in cancelled.',
+          'auth/cancelled-popup-request': 'Sign-in cancelled.',
+          'auth/missing-initial-state': 'Sign-in blocked by browser storage restrictions. Try disabling incognito/private mode or allowing third-party cookies/cross-site tracking.',
+          'auth/internal-error': 'Firebase internal error. Ensure Google sign-in is enabled in Firebase Console → Authentication → Sign-in method, and the project support email is configured in Settings.',
+          'auth/configuration-not-found': 'Google provider not configured in Firebase Console. Enable it in Authentication → Sign-in method.'
         }
+        setError(msgs[err.code] || `Google sign-in failed: ${err.message}`)
       })
   }, [])
 
@@ -185,10 +182,36 @@ export default function LoginPage() {
     if (password.length < 6) { setError('Password must be at least 6 characters.'); return }
     setError(''); setLoadingForm(true)
     try {
-      if (isSignup) await signupWithEmail(email, password, name)
-      else await loginWithEmail(email, password)
+      if (isSignup) {
+        // Check if email already has associated auth providers (like Google)
+        try {
+          const providers = await fetchSignInMethodsForEmail(auth, email)
+          if (providers.includes('google.com')) {
+            setError('This email is already registered using Google Sign-In. Please click "Continue with Google" to log in.')
+            setLoadingForm(false)
+            return
+          }
+        } catch (checkErr) {
+          console.warn('Failed provider checks:', checkErr)
+        }
+        await signupWithEmail(email, password, name)
+      } else {
+        await loginWithEmail(email, password)
+      }
       // Redirection is handled automatically by the useEffect
     } catch (err) {
+      if (!isSignup && (err.code === 'auth/wrong-password' || err.code === 'auth/invalid-credential')) {
+        try {
+          const providers = await fetchSignInMethodsForEmail(auth, email)
+          if (providers.includes('google.com') && !providers.includes('password')) {
+            setError('This email is registered via Google Sign-In. Please click "Continue with Google" above to log in, or reset your password to enable password login.')
+            setLoadingForm(false)
+            return
+          }
+        } catch (checkErr) {
+          console.warn('Failed provider checks:', checkErr)
+        }
+      }
       const msgs = {
         'auth/user-not-found': 'No account with this email. Try signing up.',
         'auth/wrong-password': 'Incorrect password.',
