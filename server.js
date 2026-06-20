@@ -187,7 +187,7 @@ app.use(helmet({
       styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com", "https://api.fontshare.com", "https://www.gstatic.com"],
       imgSrc: ["'self'", "data:", "https://hoirqrkdgbmvpwutwuwj-all.supabase.co", "https://capsule-render.vercel.app", "https://readme-typing-svg.herokuapp.com", "https://img.shields.io"],
       connectSrc: ["'self'", "https://generativelanguage.googleapis.com", "https://openrouter.ai", "https://*.googleapis.com", "https://*.firebaseapp.com", "https://*.firebaseio.com", "wss://*.firebaseio.com"],
-      fontSrc: ["'self'", "https://fonts.gstatic.com", "https://api.fontshare.com"],
+      fontSrc: ["'self'", "https://fonts.gstatic.com", "https://api.fontshare.com", "https://cdn.fontshare.com"],
       frameSrc: ["'self'", "https://*.firebaseapp.com", "https://www.google.com", "https://recaptcha.google.com"],
       objectSrc: ["'none'"],
       upgradeInsecureRequests: [],
