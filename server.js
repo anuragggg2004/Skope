@@ -183,11 +183,12 @@ app.use(helmet({
   contentSecurityPolicy: {
     directives: {
       defaultSrc: ["'self'"],
-      scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'", "https://cdnjs.cloudflare.com"],
-      styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com", "https://api.fontshare.com"],
+      scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'", "https://cdnjs.cloudflare.com", "https://www.google.com", "https://www.gstatic.com", "https://apis.google.com"],
+      styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com", "https://api.fontshare.com", "https://www.gstatic.com"],
       imgSrc: ["'self'", "data:", "https://hoirqrkdgbmvpwutwuwj-all.supabase.co", "https://capsule-render.vercel.app", "https://readme-typing-svg.herokuapp.com", "https://img.shields.io"],
-      connectSrc: ["'self'", "https://generativelanguage.googleapis.com", "https://openrouter.ai", "https://www.googleapis.com", "https://identitytoolkit.googleapis.com"],
+      connectSrc: ["'self'", "https://generativelanguage.googleapis.com", "https://openrouter.ai", "https://*.googleapis.com", "https://*.firebaseapp.com", "https://*.firebaseio.com", "wss://*.firebaseio.com"],
       fontSrc: ["'self'", "https://fonts.gstatic.com", "https://api.fontshare.com"],
+      frameSrc: ["'self'", "https://*.firebaseapp.com", "https://www.google.com", "https://recaptcha.google.com"],
       objectSrc: ["'none'"],
       upgradeInsecureRequests: [],
     },
@@ -209,9 +210,20 @@ const allowedOrigins = [
 app.use(cors({
   origin: function (origin, callback) {
     if (!origin) return callback(null, true)
-    if (allowedOrigins.indexOf(origin) !== -1 || origin.endsWith('.ngrok-free.dev')) {
-      return callback(null, true)
-    }
+    try {
+      const url = new URL(origin)
+      const hostname = url.hostname
+      const isAllowed = 
+        allowedOrigins.includes(origin) ||
+        hostname === 'localhost' ||
+        hostname === '127.0.0.1' ||
+        hostname.endsWith('.ngrok-free.dev') ||
+        hostname.endsWith('anuraggg.tech') ||
+        hostname.endsWith('onrender.com')
+      if (isAllowed) {
+        return callback(null, true)
+      }
+    } catch {}
     return callback(new Error('CORS policy does not allow access from this origin'), false)
   },
   credentials: true
