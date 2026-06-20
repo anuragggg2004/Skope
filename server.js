@@ -28,6 +28,12 @@ import { fileURLToPath } from 'url'
 import dotenv from 'dotenv'
 import mongoose from 'mongoose'
 import Report from './models/Report.js'
+import Admin from './models/Admin.js'
+import AuditLog from './models/AuditLog.js'
+import Feedback from './models/Feedback.js'
+import SystemSettings from './models/SystemSettings.js'
+import College from './models/College.js'
+import User from './models/User.js'
 import fs from 'fs'
 import helmet from 'helmet'
 import rateLimit from 'express-rate-limit'
@@ -35,6 +41,7 @@ import mongoSanitize from 'express-mongo-sanitize'
 import compression from 'compression'
 import { z } from 'zod'
 import { authenticateFirebaseUser } from './firebaseAuth.js'
+import { authenticateAdmin, requireRole, signAdminToken, logAudit } from './adminAuth.js'
 
 dotenv.config()
 
@@ -117,10 +124,56 @@ function retrieveRAGContext(userMessage) {
 const MONGODB_URI = process.env.MONGODB_URI
 if (MONGODB_URI && !MONGODB_URI.includes('<password>')) {
   mongoose.connect(MONGODB_URI)
-    .then(() => console.log('Connected to MongoDB Atlas successfully.'))
+    .then(async () => {
+      console.log('Connected to MongoDB Atlas successfully.')
+      await seedAdminData()
+    })
     .catch((err) => console.error('MongoDB Atlas connection error:', err))
 } else {
   console.log('MongoDB connection skipped: MONGODB_URI is not set or still has <password> placeholder.')
+}
+
+// =============================================
+// STARTUP SEEDING — Admin, Settings, Colleges
+// =============================================
+async function seedAdminData() {
+  try {
+    // Seed founder admin account if none exists
+    const adminCount = await Admin.countDocuments()
+    if (adminCount === 0) {
+      await Admin.create({
+        email: 'atiwary253@gmail.com',
+        password: 'admin123',
+        role: 'founder',
+        displayName: 'Anurag Tiwary'
+      })
+      console.log('[Seed] Founder admin account created: atiwary253@gmail.com')
+    }
+
+    // Seed global system settings singleton
+    const settingsCount = await SystemSettings.countDocuments()
+    if (settingsCount === 0) {
+      await SystemSettings.create({ key: 'global' })
+      console.log('[Seed] Default system settings created.')
+    }
+
+    // Seed colleges from RAG knowledge base
+    const collegeCount = await College.countDocuments()
+    if (collegeCount === 0 && knowledgeBase?.colleges?.length) {
+      const docs = knowledgeBase.colleges.map(c => ({
+        name: c.name || 'Unknown',
+        state: c.state || '',
+        city: c.location || c.city || '',
+        type: c.type || 'Other',
+        status: c.tier === 'hidden-gem' ? 'hidden_gem' : 'verified',
+        importedFromRAG: true
+      }))
+      await College.insertMany(docs, { ordered: false }).catch(() => {})
+      console.log(`[Seed] Seeded ${docs.length} colleges from knowledge base.`)
+    }
+  } catch (err) {
+    console.error('[Seed] Error during startup seeding:', err.message)
+  }
 }
 
 const app = express()
@@ -1108,6 +1161,358 @@ app.get('/api/get-report/:userId', authenticateFirebaseUser, async (req, res, ne
   } catch (error) {
     next(error)
   }
+})
+
+// =============================================
+// ADMIN API ROUTES
+// =============================================
+
+// Rate limiter for admin auth endpoint
+const adminAuthLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 20,
+  message: { error: 'Too many login attempts. Please wait.' }
+})
+
+// POST /api/admin/login
+app.post('/api/admin/login', adminAuthLimiter, async (req, res, next) => {
+  try {
+    const { email, password } = req.body
+    if (!email || !password) return res.status(400).json({ error: 'Email and password required' })
+
+    const admin = await Admin.findOne({ email: email.toLowerCase() })
+    if (!admin || !admin.isActive) return res.status(401).json({ error: 'Invalid credentials' })
+
+    const valid = await admin.comparePassword(password)
+    if (!valid) return res.status(401).json({ error: 'Invalid credentials' })
+
+    admin.lastLogin = new Date()
+    await admin.save()
+
+    const token = signAdminToken({ email: admin.email, role: admin.role, displayName: admin.displayName })
+    res.json({ success: true, token, admin: { email: admin.email, role: admin.role, displayName: admin.displayName } })
+  } catch (err) { next(err) }
+})
+
+// GET /api/admin/overview
+app.get('/api/admin/overview', authenticateAdmin, requireRole('analytics'), async (req, res, next) => {
+  try {
+    const now = new Date()
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+    const weekAgo = new Date(now - 7 * 24 * 60 * 60 * 1000)
+    const thirtyDaysAgo = new Date(now - 30 * 24 * 60 * 60 * 1000)
+
+    const [totalUsers, activeToday, activeWeek, totalReports, recentUsers, recentReports, recentFeedback, settings] = await Promise.all([
+      User.countDocuments(),
+      User.countDocuments({ lastActive: { $gte: today } }),
+      User.countDocuments({ lastActive: { $gte: weekAgo } }),
+      Report.countDocuments(),
+      User.find().sort({ signupDate: -1 }).limit(10).select('displayName email stream city signupDate'),
+      Report.find().sort({ createdAt: -1 }).limit(10).select('email createdAt'),
+      Feedback.find({ status: 'new' }).sort({ createdAt: -1 }).limit(5).select('userName type message createdAt priority'),
+      SystemSettings.findOne({ key: 'global' })
+    ])
+
+    // Signup trend (last 30 days)
+    const signupTrend = await User.aggregate([
+      { $match: { signupDate: { $gte: thirtyDaysAgo } } },
+      { $group: { _id: { $dateToString: { format: '%Y-%m-%d', date: '$signupDate' } }, count: { $sum: 1 } } },
+      { $sort: { _id: 1 } }
+    ])
+
+    // Stream distribution
+    const streamDist = await User.aggregate([
+      { $group: { _id: '$stream', count: { $sum: 1 } } }
+    ])
+
+    res.json({
+      metrics: {
+        totalUsers,
+        activeToday,
+        activeWeek,
+        totalReports,
+        reportsThisWeek: await Report.countDocuments({ createdAt: { $gte: weekAgo } }),
+        panicMode: settings?.panicMode || false
+      },
+      signupTrend,
+      streamDistribution: streamDist,
+      recentActivity: {
+        users: recentUsers,
+        reports: recentReports,
+        feedback: recentFeedback
+      }
+    })
+  } catch (err) { next(err) }
+})
+
+// GET /api/admin/users
+app.get('/api/admin/users', authenticateAdmin, requireRole('analytics'), async (req, res, next) => {
+  try {
+    const { stream, status, search, page = 1, limit = 50 } = req.query
+    const query = {}
+    if (stream && stream !== 'all') query.stream = stream
+    if (status && status !== 'all') query.status = status
+    if (search) {
+      const re = new RegExp(search, 'i')
+      query.$or = [{ displayName: re }, { email: re }, { city: re }]
+    }
+    const skip = (Number(page) - 1) * Number(limit)
+    const [users, total] = await Promise.all([
+      User.find(query).sort({ signupDate: -1 }).skip(skip).limit(Number(limit)),
+      User.countDocuments(query)
+    ])
+    res.json({ success: true, users, total, page: Number(page), pages: Math.ceil(total / Number(limit)) })
+  } catch (err) { next(err) }
+})
+
+// GET /api/admin/users/:id
+app.get('/api/admin/users/:id', authenticateAdmin, requireRole('analytics'), async (req, res, next) => {
+  try {
+    const user = await User.findOne({ userId: req.params.id })
+    if (!user) return res.status(404).json({ error: 'User not found' })
+    const report = await Report.findOne({ userId: req.params.id }).select('createdAt updatedAt')
+    res.json({ success: true, user, hasReport: !!report, reportDate: report?.createdAt })
+  } catch (err) { next(err) }
+})
+
+// POST /api/admin/users/:id/ban
+app.post('/api/admin/users/:id/ban', authenticateAdmin, requireRole('founder'), async (req, res, next) => {
+  try {
+    const user = await User.findOne({ userId: req.params.id })
+    if (!user) return res.status(404).json({ error: 'User not found' })
+    const before = { status: user.status }
+    user.status = user.status === 'banned' ? 'active' : 'banned'
+    await user.save()
+    await logAudit({ req, action: user.status === 'banned' ? 'BAN_USER' : 'UNBAN_USER', resource: 'user', resourceId: req.params.id, before, after: { status: user.status } })
+    res.json({ success: true, user })
+  } catch (err) { next(err) }
+})
+
+// DELETE /api/admin/users/:id
+app.delete('/api/admin/users/:id', authenticateAdmin, requireRole('founder'), async (req, res, next) => {
+  try {
+    const user = await User.findOneAndDelete({ userId: req.params.id })
+    if (!user) return res.status(404).json({ error: 'User not found' })
+    await Report.deleteOne({ userId: req.params.id })
+    await logAudit({ req, action: 'DELETE_USER', resource: 'user', resourceId: req.params.id, before: { email: user.email }, after: null })
+    res.json({ success: true, message: 'User and associated report deleted' })
+  } catch (err) { next(err) }
+})
+
+// GET /api/admin/reports
+app.get('/api/admin/reports', authenticateAdmin, requireRole('analytics'), async (req, res, next) => {
+  try {
+    const { search, page = 1, limit = 50 } = req.query
+    const query = {}
+    if (search) {
+      const re = new RegExp(search, 'i')
+      query.$or = [{ email: re }, { userId: re }]
+    }
+    const skip = (Number(page) - 1) * Number(limit)
+    const [reports, total] = await Promise.all([
+      Report.find(query).sort({ createdAt: -1 }).skip(skip).limit(Number(limit)).select('userId email createdAt updatedAt'),
+      Report.countDocuments(query)
+    ])
+    res.json({ success: true, reports, total })
+  } catch (err) { next(err) }
+})
+
+// GET /api/admin/reports/:id
+app.get('/api/admin/reports/:id', authenticateAdmin, requireRole('analytics'), async (req, res, next) => {
+  try {
+    const report = await Report.findById(req.params.id)
+    if (!report) return res.status(404).json({ error: 'Report not found' })
+    res.json({ success: true, report })
+  } catch (err) { next(err) }
+})
+
+// PUT /api/admin/reports/:id
+app.put('/api/admin/reports/:id', authenticateAdmin, requireRole('founder'), async (req, res, next) => {
+  try {
+    const old = await Report.findById(req.params.id)
+    if (!old) return res.status(404).json({ error: 'Report not found' })
+    const updated = await Report.findByIdAndUpdate(req.params.id, { reportData: req.body.reportData, updatedAt: new Date() }, { new: true })
+    await logAudit({ req, action: 'EDIT_REPORT', resource: 'report', resourceId: req.params.id, before: { keys: Object.keys(old.reportData || {}) }, after: { keys: Object.keys(req.body.reportData || {}) } })
+    res.json({ success: true, report: updated })
+  } catch (err) { next(err) }
+})
+
+// DELETE /api/admin/reports/:id
+app.delete('/api/admin/reports/:id', authenticateAdmin, requireRole('founder'), async (req, res, next) => {
+  try {
+    const report = await Report.findByIdAndDelete(req.params.id)
+    if (!report) return res.status(404).json({ error: 'Report not found' })
+    await logAudit({ req, action: 'DELETE_REPORT', resource: 'report', resourceId: req.params.id, before: { email: report.email }, after: null })
+    res.json({ success: true, message: 'Report deleted' })
+  } catch (err) { next(err) }
+})
+
+// GET /api/admin/colleges
+app.get('/api/admin/colleges', authenticateAdmin, requireRole('content'), async (req, res, next) => {
+  try {
+    const { state, type, status, search, page = 1, limit = 100 } = req.query
+    const query = {}
+    if (state && state !== 'all') query.state = new RegExp(state, 'i')
+    if (type && type !== 'all') query.type = type
+    if (status && status !== 'all') query.status = status
+    if (search) query.name = new RegExp(search, 'i')
+    const skip = (Number(page) - 1) * Number(limit)
+    const [colleges, total] = await Promise.all([
+      College.find(query).sort({ name: 1 }).skip(skip).limit(Number(limit)),
+      College.countDocuments(query)
+    ])
+    res.json({ success: true, colleges, total })
+  } catch (err) { next(err) }
+})
+
+// POST /api/admin/colleges
+app.post('/api/admin/colleges', authenticateAdmin, requireRole('content'), async (req, res, next) => {
+  try {
+    const college = await College.create(req.body)
+    await logAudit({ req, action: 'CREATE_COLLEGE', resource: 'college', resourceId: college._id, after: { name: college.name } })
+    res.status(201).json({ success: true, college })
+  } catch (err) { next(err) }
+})
+
+// PUT /api/admin/colleges/:id
+app.put('/api/admin/colleges/:id', authenticateAdmin, requireRole('content'), async (req, res, next) => {
+  try {
+    const old = await College.findById(req.params.id)
+    if (!old) return res.status(404).json({ error: 'College not found' })
+    const updated = await College.findByIdAndUpdate(req.params.id, req.body, { new: true })
+    await logAudit({ req, action: 'EDIT_COLLEGE', resource: 'college', resourceId: req.params.id, before: { name: old.name, status: old.status }, after: { name: updated.name, status: updated.status } })
+    res.json({ success: true, college: updated })
+  } catch (err) { next(err) }
+})
+
+// DELETE /api/admin/colleges/:id
+app.delete('/api/admin/colleges/:id', authenticateAdmin, requireRole('founder'), async (req, res, next) => {
+  try {
+    const college = await College.findByIdAndDelete(req.params.id)
+    if (!college) return res.status(404).json({ error: 'College not found' })
+    await logAudit({ req, action: 'DELETE_COLLEGE', resource: 'college', resourceId: req.params.id, before: { name: college.name }, after: null })
+    res.json({ success: true, message: 'College deleted' })
+  } catch (err) { next(err) }
+})
+
+// GET /api/admin/analytics
+app.get('/api/admin/analytics', authenticateAdmin, requireRole('analytics'), async (req, res, next) => {
+  try {
+    const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)
+    const [streamDist, cityDist, dailySignups, totalUsers, totalReports, feedbackByType] = await Promise.all([
+      User.aggregate([{ $group: { _id: '$stream', count: { $sum: 1 } } }, { $sort: { count: -1 } }]),
+      User.aggregate([{ $group: { _id: '$city', count: { $sum: 1 } } }, { $sort: { count: -1 } }, { $limit: 10 }]),
+      User.aggregate([
+        { $match: { signupDate: { $gte: thirtyDaysAgo } } },
+        { $group: { _id: { $dateToString: { format: '%Y-%m-%d', date: '$signupDate' } }, count: { $sum: 1 } } },
+        { $sort: { _id: 1 } }
+      ]),
+      User.countDocuments(),
+      Report.countDocuments(),
+      Feedback.aggregate([{ $group: { _id: '$type', count: { $sum: 1 } } }])
+    ])
+    const conversionRate = totalUsers > 0 ? Math.round((totalReports / totalUsers) * 100) : 0
+    res.json({ streamDistribution: streamDist, topCities: cityDist, dailySignups, totalUsers, totalReports, conversionRate, feedbackByType })
+  } catch (err) { next(err) }
+})
+
+// GET /api/admin/feedback
+app.get('/api/admin/feedback', authenticateAdmin, requireRole('support'), async (req, res, next) => {
+  try {
+    const { status, type, priority, page = 1, limit = 50 } = req.query
+    const query = {}
+    if (status && status !== 'all') query.status = status
+    if (type && type !== 'all') query.type = type
+    if (priority && priority !== 'all') query.priority = priority
+    const skip = (Number(page) - 1) * Number(limit)
+    const [feedback, total] = await Promise.all([
+      Feedback.find(query).sort({ createdAt: -1 }).skip(skip).limit(Number(limit)),
+      Feedback.countDocuments(query)
+    ])
+    res.json({ success: true, feedback, total })
+  } catch (err) { next(err) }
+})
+
+// PUT /api/admin/feedback/:id
+app.put('/api/admin/feedback/:id', authenticateAdmin, requireRole('support'), async (req, res, next) => {
+  try {
+    const { status, priority, internalNotes } = req.body
+    const old = await Feedback.findById(req.params.id)
+    if (!old) return res.status(404).json({ error: 'Feedback not found' })
+    const updates = {}
+    if (status) { updates.status = status; if (status === 'resolved') updates.resolvedAt = new Date() }
+    if (priority) updates.priority = priority
+    if (internalNotes !== undefined) updates.internalNotes = internalNotes
+    const updated = await Feedback.findByIdAndUpdate(req.params.id, updates, { new: true })
+    await logAudit({ req, action: 'UPDATE_FEEDBACK', resource: 'feedback', resourceId: req.params.id, before: { status: old.status, priority: old.priority }, after: { status: updated.status, priority: updated.priority } })
+    res.json({ success: true, feedback: updated })
+  } catch (err) { next(err) }
+})
+
+// GET /api/admin/settings
+app.get('/api/admin/settings', authenticateAdmin, requireRole('founder'), async (req, res, next) => {
+  try {
+    const settings = await SystemSettings.findOne({ key: 'global' })
+    if (!settings) return res.status(404).json({ error: 'Settings not found' })
+    const safe = settings.toObject()
+    if (safe.geminiApiKey) safe.geminiApiKey = '••••••••' + safe.geminiApiKey.slice(-4)
+    if (safe.openRouterApiKey) safe.openRouterApiKey = '••••••••' + safe.openRouterApiKey.slice(-4)
+    res.json({ success: true, settings: safe })
+  } catch (err) { next(err) }
+})
+
+// PUT /api/admin/settings
+app.put('/api/admin/settings', authenticateAdmin, requireRole('founder'), async (req, res, next) => {
+  try {
+    const old = await SystemSettings.findOne({ key: 'global' })
+    const allowed = ['aiRateLimitPerTenMin', 'panicMode', 'ragSearchEnabled', 'pdfDownloadEnabled', 'collegeRecommendationsEnabled', 'aiConversationEnabled', 'userSignupsEnabled', 'maxConversationExchanges', 'moderationKeywords', 'adminEmail', 'ipWhitelist']
+    const updates = {}
+    for (const k of allowed) { if (req.body[k] !== undefined) updates[k] = req.body[k] }
+    const updated = await SystemSettings.findOneAndUpdate({ key: 'global' }, updates, { new: true })
+    await logAudit({ req, action: 'UPDATE_SETTINGS', resource: 'settings', before: old ? Object.fromEntries(allowed.map(k => [k, old[k]])) : {}, after: updates })
+    res.json({ success: true, settings: updated })
+  } catch (err) { next(err) }
+})
+
+// GET /api/admin/audit-log
+app.get('/api/admin/audit-log', authenticateAdmin, requireRole('founder'), async (req, res, next) => {
+  try {
+    const { adminEmail, action, resource, page = 1, limit = 100 } = req.query
+    const query = {}
+    if (adminEmail) query.adminEmail = new RegExp(adminEmail, 'i')
+    if (action) query.action = new RegExp(action, 'i')
+    if (resource && resource !== 'all') query.resource = resource
+    const skip = (Number(page) - 1) * Number(limit)
+    const [logs, total] = await Promise.all([
+      AuditLog.find(query).sort({ createdAt: -1 }).skip(skip).limit(Number(limit)),
+      AuditLog.countDocuments(query)
+    ])
+    res.json({ success: true, logs, total })
+  } catch (err) { next(err) }
+})
+
+// POST /api/feedback (Public — student feedback submission)
+app.post('/api/feedback', async (req, res, next) => {
+  try {
+    const { userName, email, userId, type, message } = req.body
+    if (!message || message.trim().length < 5) return res.status(400).json({ error: 'Message is too short' })
+    const fb = await Feedback.create({ userName: userName || 'Anonymous', email: email || '', userId: userId || null, type: type || 'general', message: message.trim() })
+    res.status(201).json({ success: true, id: fb._id })
+  } catch (err) { next(err) }
+})
+
+// POST /api/admin/sync-user — Called after student login to sync user record
+app.post('/api/admin/sync-user', authenticateFirebaseUser, async (req, res, next) => {
+  try {
+    const { uid, email, displayName, provider } = req.body
+    if (!uid || !email) return res.status(400).json({ error: 'uid and email required' })
+    await User.findOneAndUpdate(
+      { userId: uid },
+      { userId: uid, email, displayName: displayName || '', provider: provider || 'email', lastActive: new Date() },
+      { upsert: true, new: true }
+    )
+    res.json({ success: true })
+  } catch (err) { next(err) }
 })
 
 // =============================================

@@ -15,6 +15,8 @@ const ResultPage = React.lazy(() => import('./pages/ResultPage'))
 const ProfilePage = React.lazy(() => import('./pages/ProfilePage'))
 const SharePage = React.lazy(() => import('./pages/SharePage'))
 const NotFoundPage = React.lazy(() => import('./pages/NotFoundPage'))
+const AdminLoginPage = React.lazy(() => import('./pages/AdminLoginPage'))
+const AdminDashboardPage = React.lazy(() => import('./pages/AdminDashboardPage'))
 
 // Only show HelpBot on the landing page
 function ConditionalHelpBot() {
@@ -29,17 +31,22 @@ function SmartRouteRedirector({ children }) {
   const cleanPath = pathname.replace(/\/+/g, '/').trim()
   const lowerPath = cleanPath.toLowerCase()
 
-  // Dynamic redirects for mistyped homepage aliases
   if (['/home', '/index', '/dashboard-home'].includes(lowerPath)) {
     return <Navigate to="/" replace />
   }
 
-  // Handle case mismatches (e.g. /Result -> /result)
   const knownPaths = ['/result', '/profile', '/login', '/form', '/preferences', '/share']
   if (cleanPath !== '/' && cleanPath !== lowerPath && knownPaths.includes(lowerPath)) {
     return <Navigate to={lowerPath} replace />
   }
 
+  return children
+}
+
+// Admin route guard — redirects to /admin/login if no valid session token
+function AdminRoute({ children }) {
+  const token = sessionStorage.getItem('skope_admin_token')
+  if (!token) return <Navigate to="/admin/login" replace />
   return children
 }
 
@@ -94,7 +101,12 @@ export default function App() {
                 <Route path="/profile"     element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
 
                 {/* Wildcard 404 Fallback */}
-                <Route path="*"            element={<NotFoundPage />} />
+                <Route path="*" element={<NotFoundPage />} />
+
+                {/* Admin routes */}
+                <Route path="/admin/login"     element={<AdminLoginPage />} />
+                <Route path="/admin/dashboard" element={<AdminRoute><AdminDashboardPage /></AdminRoute>} />
+                <Route path="/admin"           element={<Navigate to="/admin/login" replace />} />
               </Routes>
             </SmartRouteRedirector>
           </Suspense>
