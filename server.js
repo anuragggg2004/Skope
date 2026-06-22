@@ -21,6 +21,7 @@
 // Get free API key at: https://aistudio.google.com/apikey
 // =============================================
 
+import './env.js'
 import express from 'express'
 import cors from 'cors'
 import path from 'path'
@@ -43,7 +44,6 @@ import { z } from 'zod'
 import { authenticateFirebaseUser } from './firebaseAuth.js'
 import { authenticateAdmin, requireRole, signAdminToken, logAudit } from './adminAuth.js'
 
-dotenv.config()
 
 // =============================================
 // LOCAL RAG KNOWLEDGE BASE INITIALIZATION
@@ -123,7 +123,7 @@ function retrieveRAGContext(userMessage) {
 // Connect to MongoDB Atlas (if URI is provided)
 const MONGODB_URI = process.env.MONGODB_URI
 if (MONGODB_URI && !MONGODB_URI.includes('<password>')) {
-  mongoose.connect(MONGODB_URI)
+  mongoose.connect(MONGODB_URI, { family: 4 })
     .then(async () => {
       console.log('Connected to MongoDB Atlas successfully.')
       await seedAdminData()
@@ -183,12 +183,12 @@ app.use(helmet({
   contentSecurityPolicy: {
     directives: {
       defaultSrc: ["'self'"],
-      scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'", "https://cdnjs.cloudflare.com", "https://www.google.com", "https://www.gstatic.com", "https://apis.google.com"],
+      scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'", "https://cdnjs.cloudflare.com", "https://www.google.com", "https://www.gstatic.com", "https://apis.google.com", "https://accounts.google.com"],
       styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com", "https://api.fontshare.com", "https://www.gstatic.com"],
       imgSrc: ["'self'", "data:", "https://hoirqrkdgbmvpwutwuwj-all.supabase.co", "https://capsule-render.vercel.app", "https://readme-typing-svg.herokuapp.com", "https://img.shields.io"],
-      connectSrc: ["'self'", "https://generativelanguage.googleapis.com", "https://openrouter.ai", "https://*.googleapis.com", "https://*.firebaseapp.com", "https://*.firebaseio.com", "wss://*.firebaseio.com"],
+      connectSrc: ["'self'", "https://generativelanguage.googleapis.com", "https://openrouter.ai", "https://*.googleapis.com", "https://www.googleapis.com", "https://identitytoolkit.googleapis.com", "https://securetoken.googleapis.com", "https://accounts.google.com", "https://*.firebaseapp.com", "https://*.firebaseio.com", "wss://*.firebaseio.com"],
       fontSrc: ["'self'", "https://fonts.gstatic.com", "https://api.fontshare.com", "https://cdn.fontshare.com"],
-      frameSrc: ["'self'", "https://*.firebaseapp.com", "https://www.google.com", "https://recaptcha.google.com"],
+      frameSrc: ["'self'", "https://*.firebaseapp.com", "https://www.google.com", "https://recaptcha.google.com", "https://accounts.google.com"],
       objectSrc: ["'none'"],
       upgradeInsecureRequests: [],
     },
@@ -1629,6 +1629,12 @@ app.use((err, req, res, next) => {
     return res.status(400).json({ error: 'Malformed JSON payload' })
   }
   
+  if (err.name === 'MongooseError' || err.message?.includes('buffering timed out') || err.name === 'MongooseServerSelectionError') {
+    return res.status(503).json({
+      error: 'Database Connection Error: The database query timed out. Please check if your current IP is whitelisted on your MongoDB Atlas cluster.'
+    })
+  }
+
   console.error('[Error Handler] Unhandled error:', err)
   res.status(500).json({ error: 'An unexpected internal server error occurred.' })
 })

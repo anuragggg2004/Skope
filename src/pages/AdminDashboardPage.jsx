@@ -1129,6 +1129,21 @@ export default function AdminDashboardPage() {
       return
     }
 
+    // Intercept fetch calls to handle session expiration (401/403)
+    const originalFetch = window.fetch
+    window.fetch = async (...args) => {
+      const res = await originalFetch(...args)
+      if (res.status === 401 || res.status === 403) {
+        const url = typeof args[0] === 'string' ? args[0] : args[0]?.url
+        if (url && url.includes('/api/admin/')) {
+          sessionStorage.removeItem('skope_admin_token')
+          sessionStorage.removeItem('skope_admin_user')
+          navigate('/admin/login')
+        }
+      }
+      return res
+    }
+
     const token = getToken()
     const socket = io({
       auth: { token },
@@ -1153,6 +1168,7 @@ export default function AdminDashboardPage() {
 
     return () => {
       socket.disconnect()
+      window.fetch = originalFetch
     }
   }, [navigate, addToast])
 

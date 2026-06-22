@@ -1,6 +1,6 @@
 import React, { useState, Suspense } from 'react'
 import { BrowserRouter, Routes, Route, useLocation, Navigate } from 'react-router-dom'
-import { AuthProvider } from './contexts/AuthContext'
+import { AuthProvider, useAuth } from './contexts/AuthContext'
 import ProtectedRoute from './components/ProtectedRoute'
 import HelpBot from './components/HelpBot'
 import CustomCursor from './components/CustomCursor'
@@ -35,11 +35,61 @@ function SmartRouteRedirector({ children }) {
     return <Navigate to="/" replace />
   }
 
+  // Legacy/Helper URLs mapping
+  if (lowerPath === '/questions') {
+    return <Navigate to="/form" replace />
+  }
+  if (lowerPath === '/results') {
+    return <Navigate to="/result" replace />
+  }
+  if (lowerPath === '/recommendations') {
+    return <Navigate to="/preferences" replace />
+  }
+  if (lowerPath === '/dashboard') {
+    return <Navigate to="/admin/dashboard" replace />
+  }
+
   const knownPaths = ['/result', '/profile', '/login', '/form', '/preferences', '/share']
   if (cleanPath !== '/' && cleanPath !== lowerPath && knownPaths.includes(lowerPath)) {
     return <Navigate to={lowerPath} replace />
   }
 
+  return children
+}
+
+// Form route guard — requires starting an assessment
+function FormRoute({ children }) {
+  const { pathReport } = useAuth()
+  const isStarted = sessionStorage.getItem('skope_assessment_started') === 'true' ||
+                    sessionStorage.getItem('skope_chatHistory') ||
+                    sessionStorage.getItem('skope_retake_active') === 'true'
+
+  const isRetake = sessionStorage.getItem('skope_retake_active') === 'true'
+  if (pathReport && !isRetake) {
+    return <Navigate to="/result" replace />
+  }
+
+  if (!isStarted) {
+    return <Navigate to="/" replace />
+  }
+  return children
+}
+
+// Preferences route guard — requires completing phase 1 questions
+function PreferencesRoute({ children }) {
+  const phase1 = sessionStorage.getItem('skope_phase1')
+  if (!phase1) {
+    return <Navigate to="/form" replace />
+  }
+  return children
+}
+
+// Result route guard — requires having a generated report
+function ResultRoute({ children }) {
+  const storedReport = sessionStorage.getItem('pathreport')
+  if (!storedReport) {
+    return <Navigate to="/form" replace />
+  }
   return children
 }
 
@@ -95,9 +145,9 @@ export default function App() {
                 <Route path="/share" element={<SharePage />} />
 
                 {/* Protected routes */}
-                <Route path="/form"        element={<ProtectedRoute><FormPage /></ProtectedRoute>} />
-                <Route path="/preferences" element={<ProtectedRoute><PreferencesPage /></ProtectedRoute>} />
-                <Route path="/result"      element={<ProtectedRoute><ResultPage /></ProtectedRoute>} />
+                <Route path="/form"        element={<ProtectedRoute><FormRoute><FormPage /></FormRoute></ProtectedRoute>} />
+                <Route path="/preferences" element={<ProtectedRoute><PreferencesRoute><PreferencesPage /></PreferencesRoute></ProtectedRoute>} />
+                <Route path="/result"      element={<ProtectedRoute><ResultRoute><ResultPage /></ResultRoute></ProtectedRoute>} />
                 <Route path="/profile"     element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
 
                 {/* Wildcard 404 Fallback */}

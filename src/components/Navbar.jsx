@@ -44,7 +44,7 @@ function AvatarDropdown({ user, logout, handleAdminRedirect }) {
 
   const items = [
     { label: '🎯 My PathReport',    action: () => navigate('/result') },
-    { label: '⚡ Retake Test',       action: () => { sessionStorage.setItem('skope_retake_active', 'true'); navigate('/form') } },
+    { label: '⚡ Retake Test',       action: () => { sessionStorage.setItem('skope_retake_active', 'true'); sessionStorage.setItem('skope_assessment_started', 'true'); navigate('/form') } },
     { label: '👤 Profile',           action: () => navigate('/profile') },
   ]
 

@@ -12,7 +12,7 @@
 import jwt from 'jsonwebtoken'
 import AuditLog from './models/AuditLog.js'
 
-const ADMIN_JWT_SECRET = process.env.ADMIN_JWT_SECRET || 'skope-admin-secret-change-in-prod'
+const getAdminSecret = () => process.env.ADMIN_JWT_SECRET || 'skope-admin-secret-change-in-prod'
 
 // Role hierarchy (higher = more access)
 const ROLE_LEVELS = {
@@ -32,7 +32,7 @@ export function authenticateAdmin(req, res, next) {
   }
   const token = authHeader.slice(7)
   try {
-    const decoded = jwt.verify(token, ADMIN_JWT_SECRET)
+    const decoded = jwt.verify(token, getAdminSecret())
     req.admin = decoded
     next()
   } catch (err) {
@@ -45,7 +45,7 @@ export function authenticateAdmin(req, res, next) {
 
 /**
  * Require a minimum role level.
- * Usage: requireRole('analytics') — allows analytics, support, founder
+ * Usage: requireRole('analytics') — allows analytics, founder
  * Usage: requireRole('founder') — allows only founder
  */
 export function requireRole(minRole) {
@@ -67,7 +67,7 @@ export function requireRole(minRole) {
  * Sign a new admin JWT token (1 hour expiry)
  */
 export function signAdminToken(payload) {
-  return jwt.sign(payload, ADMIN_JWT_SECRET, { expiresIn: '1h' })
+  return jwt.sign(payload, getAdminSecret(), { expiresIn: '1h' })
 }
 
 /**

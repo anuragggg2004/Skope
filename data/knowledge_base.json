@@ -3278,6 +3278,3894 @@
       "best_for_archetypes": [
         "The Explorer"
       ]
+    },
+    {
+      "id": "university_of_delhi",
+      "name": "University of Delhi",
+      "location": {
+        "city": "Delhi",
+        "region": "Delhi NCR"
+      },
+      "type": "Central University",
+      "tier": "aspirational",
+      "admission": {
+        "exams": [
+          "CUET"
+        ],
+        "process": "CUET",
+        "cutoff_general_estimate": "See website for details"
+      },
+      "financials": {
+        "approx_annual_fee": "₹10,000–₹50,000",
+        "hidden_costs": "Hostel, mess, and exam fees are extra."
+      },
+      "placements": {
+        "avg_package": "₹6–12 LPA",
+        "reality_check": "Highest package: ₹40 LPA. Industry demand is high."
+      },
+      "vibe_and_culture": {
+        "student_life": "Active student groups, year-round events, and dynamic campus culture.",
+        "reddit_verdict": "Highly regarded. Established in 1922."
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Builder",
+        "The Innovator"
+      ],
+      "keywords": [
+        "University of Delhi",
+        "university_of_delhi"
+      ]
+    },
+    {
+      "id": "south_asian_university",
+      "name": "South Asian University",
+      "location": {
+        "city": "New Delhi",
+        "region": "Delhi NCR"
+      },
+      "type": "Central University",
+      "tier": "realistic",
+      "admission": {
+        "exams": [
+          "Entrance Exam"
+        ],
+        "process": "Entrance Exam",
+        "cutoff_general_estimate": "See website for details"
+      },
+      "financials": {
+        "approx_annual_fee": "₹50,000–₹1,00,000",
+        "hidden_costs": "Hostel, mess, and exam fees are extra."
+      },
+      "placements": {
+        "avg_package": "Not surfaced",
+        "reality_check": "Highest package: Not surfaced. Industry demand is high."
+      },
+      "vibe_and_culture": {
+        "student_life": "Active student groups, year-round events, and dynamic campus culture.",
+        "reddit_verdict": "Highly regarded. Established in 2010."
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Builder",
+        "The Innovator"
+      ],
+      "keywords": [
+        "South Asian University",
+        "south_asian_university"
+      ]
+    },
+    {
+      "id": "indira_gandhi_national_open_university_ignou",
+      "name": "Indira Gandhi National Open University (IGNOU)",
+      "location": {
+        "city": "South Delhi",
+        "region": "Delhi NCR"
+      },
+      "type": "Central University",
+      "tier": "realistic",
+      "admission": {
+        "exams": [
+          "Direct/Entrance"
+        ],
+        "process": "Direct/Entrance",
+        "cutoff_general_estimate": "See website for details"
+      },
+      "financials": {
+        "approx_annual_fee": "₹5,000–₹30,000",
+        "hidden_costs": "Hostel, mess, and exam fees are extra."
+      },
+      "placements": {
+        "avg_package": "Not surfaced",
+        "reality_check": "Highest package: Not surfaced. Industry demand is high."
+      },
+      "vibe_and_culture": {
+        "student_life": "Active student groups, year-round events, and dynamic campus culture.",
+        "reddit_verdict": "Highly regarded. Established in 1985."
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Creator",
+        "The Connector"
+      ],
+      "keywords": [
+        "Indira Gandhi National Open University (IGNOU)",
+        "indira_gandhi_national_open_university_ignou"
+      ]
+    },
+    {
+      "id": "guru_gobind_singh_indraprastha_university_ggsipu",
+      "name": "Guru Gobind Singh Indraprastha University (GGSIPU)",
+      "location": {
+        "city": "South West Delhi",
+        "region": "Delhi NCR"
+      },
+      "type": "State University",
+      "tier": "realistic",
+      "admission": {
+        "exams": [
+          "IPU CET"
+        ],
+        "process": "IPU CET",
+        "cutoff_general_estimate": "See website for details"
+      },
+      "financials": {
+        "approx_annual_fee": "₹80,000–₹2,50,000",
+        "hidden_costs": "Hostel, mess, and exam fees are extra."
+      },
+      "placements": {
+        "avg_package": "₹5–8 LPA",
+        "reality_check": "Highest package: ₹35 LPA. Industry demand is high."
+      },
+      "vibe_and_culture": {
+        "student_life": "Active student groups, year-round events, and dynamic campus culture.",
+        "reddit_verdict": "Highly regarded. Established in 1998."
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Builder",
+        "The Innovator"
+      ],
+      "keywords": [
+        "Guru Gobind Singh Indraprastha University (GGSIPU)",
+        "guru_gobind_singh_indraprastha_university_ggsipu"
+      ]
+    },
+    {
+      "id": "igdtuw_indira_gandhi_delhi_technical_university_for_women",
+      "name": "IGDTUW (Indira Gandhi Delhi Technical University for Women)",
+      "location": {
+        "city": "Central North Delhi",
+        "region": "Delhi NCR"
+      },
+      "type": "State University",
+      "tier": "realistic",
+      "admission": {
+        "exams": [
+          "JEE Main"
+        ],
+        "process": "JEE Main",
+        "cutoff_general_estimate": "See website for details"
+      },
+      "financials": {
+        "approx_annual_fee": "₹1,20,000–₹1,60,000",
+        "hidden_costs": "Hostel, mess, and exam fees are extra."
+      },
+      "placements": {
+        "avg_package": "₹7–10 LPA",
+        "reality_check": "Highest package: ₹40 LPA. Industry demand is high."
+      },
+      "vibe_and_culture": {
+        "student_life": "Active student groups, year-round events, and dynamic campus culture.",
+        "reddit_verdict": "Highly regarded. Established in 1998."
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Builder",
+        "The Innovator"
+      ],
+      "keywords": [
+        "IGDTUW (Indira Gandhi Delhi Technical University for Women)",
+        "igdtuw_indira_gandhi_delhi_technical_university_for_women"
+      ]
+    },
+    {
+      "id": "iiit_delhi_iiit_d",
+      "name": "IIIT Delhi (IIIT-D)",
+      "location": {
+        "city": "South East Delhi",
+        "region": "Delhi NCR"
+      },
+      "type": "State University",
+      "tier": "aspirational",
+      "admission": {
+        "exams": [
+          "JEE Main"
+        ],
+        "process": "JEE Main/IIIT-D Exam",
+        "cutoff_general_estimate": "See website for details"
+      },
+      "financials": {
+        "approx_annual_fee": "₹2,10,000–₹2,25,000",
+        "hidden_costs": "Hostel, mess, and exam fees are extra."
+      },
+      "placements": {
+        "avg_package": "₹14–20 LPA",
+        "reality_check": "Highest package: ₹60 LPA+. Industry demand is high."
+      },
+      "vibe_and_culture": {
+        "student_life": "Active student groups, year-round events, and dynamic campus culture.",
+        "reddit_verdict": "Highly regarded. Established in 2008."
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Builder",
+        "The Innovator"
+      ],
+      "keywords": [
+        "IIIT Delhi (IIIT-D)",
+        "iiit_delhi_iiit_d"
+      ]
+    },
+    {
+      "id": "ambedkar_university_delhi_aud",
+      "name": "Ambedkar University Delhi (AUD)",
+      "location": {
+        "city": "Delhi",
+        "region": "Delhi NCR"
+      },
+      "type": "State University",
+      "tier": "realistic",
+      "admission": {
+        "exams": [
+          "Entrance Test"
+        ],
+        "process": "Entrance Test",
+        "cutoff_general_estimate": "See website for details"
+      },
+      "financials": {
+        "approx_annual_fee": "₹15,000–₹50,000",
+        "hidden_costs": "Hostel, mess, and exam fees are extra."
+      },
+      "placements": {
+        "avg_package": "Not surfaced",
+        "reality_check": "Highest package: Not surfaced. Industry demand is high."
+      },
+      "vibe_and_culture": {
+        "student_life": "Active student groups, year-round events, and dynamic campus culture.",
+        "reddit_verdict": "Highly regarded. Established in 2007."
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Builder",
+        "The Innovator"
+      ],
+      "keywords": [
+        "Ambedkar University Delhi (AUD)",
+        "ambedkar_university_delhi_aud"
+      ]
+    },
+    {
+      "id": "national_law_university_delhi_nlu_delhi",
+      "name": "National Law University Delhi (NLU Delhi)",
+      "location": {
+        "city": "South West Delhi",
+        "region": "Delhi NCR"
+      },
+      "type": "State University",
+      "tier": "aspirational",
+      "admission": {
+        "exams": [
+          "CLAT"
+        ],
+        "process": "CLAT",
+        "cutoff_general_estimate": "See website for details"
+      },
+      "financials": {
+        "approx_annual_fee": "₹2,00,000–₹2,50,000",
+        "hidden_costs": "Hostel, mess, and exam fees are extra."
+      },
+      "placements": {
+        "avg_package": "₹12–20 LPA",
+        "reality_check": "Highest package: ₹50 LPA+. Industry demand is high."
+      },
+      "vibe_and_culture": {
+        "student_life": "Active student groups, year-round events, and dynamic campus culture.",
+        "reddit_verdict": "Highly regarded. Established in 2008."
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Connector",
+        "The Analyst"
+      ],
+      "keywords": [
+        "National Law University Delhi (NLU Delhi)",
+        "national_law_university_delhi_nlu_delhi"
+      ]
+    },
+    {
+      "id": "delhi_pharmaceutical_sciences_and_research_university_dpsru",
+      "name": "Delhi Pharmaceutical Sciences and Research University (DPSRU)",
+      "location": {
+        "city": "South Delhi",
+        "region": "Delhi NCR"
+      },
+      "type": "State University",
+      "tier": "realistic",
+      "admission": {
+        "exams": [
+          "Entrance Test/GPAT"
+        ],
+        "process": "Entrance Test/GPAT",
+        "cutoff_general_estimate": "See website for details"
+      },
+      "financials": {
+        "approx_annual_fee": "₹50,000–₹1,20,000",
+        "hidden_costs": "Hostel, mess, and exam fees are extra."
+      },
+      "placements": {
+        "avg_package": "Not surfaced",
+        "reality_check": "Highest package: Not surfaced. Industry demand is high."
+      },
+      "vibe_and_culture": {
+        "student_life": "Active student groups, year-round events, and dynamic campus culture.",
+        "reddit_verdict": "Highly regarded. Established in 1964."
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Builder",
+        "The Innovator"
+      ],
+      "keywords": [
+        "Delhi Pharmaceutical Sciences and Research University (DPSRU)",
+        "delhi_pharmaceutical_sciences_and_research_university_dpsru"
+      ]
+    },
+    {
+      "id": "delhi_sports_university",
+      "name": "Delhi Sports University",
+      "location": {
+        "city": "Central Delhi",
+        "region": "Delhi NCR"
+      },
+      "type": "State University",
+      "tier": "realistic",
+      "admission": {
+        "exams": [
+          "Entrance Test"
+        ],
+        "process": "Entrance Test",
+        "cutoff_general_estimate": "See website for details"
+      },
+      "financials": {
+        "approx_annual_fee": "Not surfaced",
+        "hidden_costs": "Hostel, mess, and exam fees are extra."
+      },
+      "placements": {
+        "avg_package": "Not surfaced",
+        "reality_check": "Highest package: Not surfaced. Industry demand is high."
+      },
+      "vibe_and_culture": {
+        "student_life": "Active student groups, year-round events, and dynamic campus culture.",
+        "reddit_verdict": "Highly regarded. Established in 2020."
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Connector",
+        "The Creator"
+      ],
+      "keywords": [
+        "Delhi Sports University",
+        "delhi_sports_university"
+      ]
+    },
+    {
+      "id": "delhi_skill_and_entrepreneurship_university_dseu",
+      "name": "Delhi Skill and Entrepreneurship University (DSEU)",
+      "location": {
+        "city": "South West Delhi",
+        "region": "Delhi NCR"
+      },
+      "type": "State University",
+      "tier": "realistic",
+      "admission": {
+        "exams": [
+          "Merit/Entrance"
+        ],
+        "process": "Merit/Entrance",
+        "cutoff_general_estimate": "See website for details"
+      },
+      "financials": {
+        "approx_annual_fee": "₹15,000–₹60,000",
+        "hidden_costs": "Hostel, mess, and exam fees are extra."
+      },
+      "placements": {
+        "avg_package": "Not surfaced",
+        "reality_check": "Highest package: Not surfaced. Industry demand is high."
+      },
+      "vibe_and_culture": {
+        "student_life": "Active student groups, year-round events, and dynamic campus culture.",
+        "reddit_verdict": "Highly regarded. Established in 2020."
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Creator",
+        "The Connector"
+      ],
+      "keywords": [
+        "Delhi Skill and Entrepreneurship University (DSEU)",
+        "delhi_skill_and_entrepreneurship_university_dseu"
+      ]
+    },
+    {
+      "id": "delhi_teachers_university",
+      "name": "Delhi Teachers University",
+      "location": {
+        "city": "Outer North Delhi",
+        "region": "Delhi NCR"
+      },
+      "type": "State University",
+      "tier": "realistic",
+      "admission": {
+        "exams": [
+          "Entrance Test"
+        ],
+        "process": "Entrance Test",
+        "cutoff_general_estimate": "See website for details"
+      },
+      "financials": {
+        "approx_annual_fee": "Not surfaced",
+        "hidden_costs": "Hostel, mess, and exam fees are extra."
+      },
+      "placements": {
+        "avg_package": "Not surfaced",
+        "reality_check": "Highest package: Not surfaced. Industry demand is high."
+      },
+      "vibe_and_culture": {
+        "student_life": "Active student groups, year-round events, and dynamic campus culture.",
+        "reddit_verdict": "Highly regarded. Established in 2022."
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Creator",
+        "The Connector"
+      ],
+      "keywords": [
+        "Delhi Teachers University",
+        "delhi_teachers_university"
+      ]
+    },
+    {
+      "id": "gurugram_university",
+      "name": "Gurugram University",
+      "location": {
+        "city": "Gurugram",
+        "region": "Delhi NCR"
+      },
+      "type": "State University",
+      "tier": "realistic",
+      "admission": {
+        "exams": [
+          "Merit/Entrance"
+        ],
+        "process": "Merit/Entrance",
+        "cutoff_general_estimate": "See website for details"
+      },
+      "financials": {
+        "approx_annual_fee": "₹30,000–₹80,000",
+        "hidden_costs": "Hostel, mess, and exam fees are extra."
+      },
+      "placements": {
+        "avg_package": "Not surfaced",
+        "reality_check": "Highest package: Not surfaced. Industry demand is high."
+      },
+      "vibe_and_culture": {
+        "student_life": "Active student groups, year-round events, and dynamic campus culture.",
+        "reddit_verdict": "Highly regarded. Established in 2017."
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Builder",
+        "The Innovator"
+      ],
+      "keywords": [
+        "Gurugram University",
+        "gurugram_university"
+      ]
+    },
+    {
+      "id": "shri_vishwakarma_skill_university",
+      "name": "Shri Vishwakarma Skill University",
+      "location": {
+        "city": "Gurugram",
+        "region": "Delhi NCR"
+      },
+      "type": "State University",
+      "tier": "realistic",
+      "admission": {
+        "exams": [
+          "Direct"
+        ],
+        "process": "Merit",
+        "cutoff_general_estimate": "See website for details"
+      },
+      "financials": {
+        "approx_annual_fee": "₹20,000–₹50,000",
+        "hidden_costs": "Hostel, mess, and exam fees are extra."
+      },
+      "placements": {
+        "avg_package": "Not surfaced",
+        "reality_check": "Highest package: Not surfaced. Industry demand is high."
+      },
+      "vibe_and_culture": {
+        "student_life": "Active student groups, year-round events, and dynamic campus culture.",
+        "reddit_verdict": "Highly regarded. Established in 2016."
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Creator",
+        "The Connector"
+      ],
+      "keywords": [
+        "Shri Vishwakarma Skill University",
+        "shri_vishwakarma_skill_university"
+      ]
+    },
+    {
+      "id": "indian_agricultural_research_institute_iari",
+      "name": "Indian Agricultural Research Institute (IARI)",
+      "location": {
+        "city": "New Delhi",
+        "region": "Delhi NCR"
+      },
+      "type": "Deemed University",
+      "tier": "realistic",
+      "admission": {
+        "exams": [
+          "Entrance Exam"
+        ],
+        "process": "Entrance Exam",
+        "cutoff_general_estimate": "See website for details"
+      },
+      "financials": {
+        "approx_annual_fee": "₹10,000–₹30,000",
+        "hidden_costs": "Hostel, mess, and exam fees are extra."
+      },
+      "placements": {
+        "avg_package": "Not surfaced",
+        "reality_check": "Highest package: Not surfaced. Industry demand is high."
+      },
+      "vibe_and_culture": {
+        "student_life": "Active student groups, year-round events, and dynamic campus culture.",
+        "reddit_verdict": "Highly regarded. Established in 1902."
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Builder",
+        "The Innovator"
+      ],
+      "keywords": [
+        "Indian Agricultural Research Institute (IARI)",
+        "indian_agricultural_research_institute_iari"
+      ]
+    },
+    {
+      "id": "indian_institute_of_foreign_trade_iift",
+      "name": "Indian Institute of Foreign Trade (IIFT)",
+      "location": {
+        "city": "South Delhi",
+        "region": "Delhi NCR"
+      },
+      "type": "Deemed University",
+      "tier": "realistic",
+      "admission": {
+        "exams": [
+          "CAT"
+        ],
+        "process": "CAT/IIFT Exam",
+        "cutoff_general_estimate": "See website for details"
+      },
+      "financials": {
+        "approx_annual_fee": "₹7,00,000–₹8,00,000",
+        "hidden_costs": "Hostel, mess, and exam fees are extra."
+      },
+      "placements": {
+        "avg_package": "₹20 LPA",
+        "reality_check": "Highest package: ₹50 LPA+. Industry demand is high."
+      },
+      "vibe_and_culture": {
+        "student_life": "Active student groups, year-round events, and dynamic campus culture.",
+        "reddit_verdict": "Highly regarded. Established in 1963."
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Creator",
+        "The Connector"
+      ],
+      "keywords": [
+        "Indian Institute of Foreign Trade (IIFT)",
+        "indian_institute_of_foreign_trade_iift"
+      ]
+    },
+    {
+      "id": "indian_law_institute_ili",
+      "name": "Indian Law Institute (ILI)",
+      "location": {
+        "city": "New Delhi",
+        "region": "Delhi NCR"
+      },
+      "type": "Deemed University",
+      "tier": "realistic",
+      "admission": {
+        "exams": [
+          "Entrance Test"
+        ],
+        "process": "Entrance Test",
+        "cutoff_general_estimate": "See website for details"
+      },
+      "financials": {
+        "approx_annual_fee": "₹30,000–₹60,000",
+        "hidden_costs": "Hostel, mess, and exam fees are extra."
+      },
+      "placements": {
+        "avg_package": "Not surfaced",
+        "reality_check": "Highest package: Not surfaced. Industry demand is high."
+      },
+      "vibe_and_culture": {
+        "student_life": "Active student groups, year-round events, and dynamic campus culture.",
+        "reddit_verdict": "Highly regarded. Established in 1956."
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Connector",
+        "The Analyst"
+      ],
+      "keywords": [
+        "Indian Law Institute (ILI)",
+        "indian_law_institute_ili"
+      ]
+    },
+    {
+      "id": "indian_statistical_institute_isi_delhi",
+      "name": "Indian Statistical Institute (ISI Delhi)",
+      "location": {
+        "city": "South Delhi",
+        "region": "Delhi NCR"
+      },
+      "type": "Deemed University",
+      "tier": "realistic",
+      "admission": {
+        "exams": [
+          "ISI Entrance Exam"
+        ],
+        "process": "ISI Entrance Exam",
+        "cutoff_general_estimate": "See website for details"
+      },
+      "financials": {
+        "approx_annual_fee": "₹10,000–₹50,000",
+        "hidden_costs": "Hostel, mess, and exam fees are extra."
+      },
+      "placements": {
+        "avg_package": "Not surfaced",
+        "reality_check": "Highest package: Not surfaced. Industry demand is high."
+      },
+      "vibe_and_culture": {
+        "student_life": "Active student groups, year-round events, and dynamic campus culture.",
+        "reddit_verdict": "Highly regarded. Established in 1974."
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Builder",
+        "The Innovator"
+      ],
+      "keywords": [
+        "Indian Statistical Institute (ISI Delhi)",
+        "indian_statistical_institute_isi_delhi"
+      ]
+    },
+    {
+      "id": "santosh_university",
+      "name": "Santosh University",
+      "location": {
+        "city": "Ghaziabad",
+        "region": "Delhi NCR"
+      },
+      "type": "Deemed University",
+      "tier": "safe",
+      "admission": {
+        "exams": [
+          "NEET"
+        ],
+        "process": "NEET",
+        "cutoff_general_estimate": "See website for details"
+      },
+      "financials": {
+        "approx_annual_fee": "₹4,00,000–₹12,00,000",
+        "hidden_costs": "Hostel, mess, and exam fees are extra."
+      },
+      "placements": {
+        "avg_package": "Not surfaced",
+        "reality_check": "Highest package: Not surfaced. Industry demand is high."
+      },
+      "vibe_and_culture": {
+        "student_life": "Active student groups, year-round events, and dynamic campus culture.",
+        "reddit_verdict": "Highly regarded. Established in Not surfaced."
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Explorer",
+        "The Analyst"
+      ],
+      "keywords": [
+        "Santosh University",
+        "santosh_university"
+      ]
+    },
+    {
+      "id": "indian_institute_of_technology_delhi_iit_delhi",
+      "name": "Indian Institute of Technology Delhi (IIT Delhi)",
+      "location": {
+        "city": "South West Delhi",
+        "region": "Delhi NCR"
+      },
+      "type": "Institute of National Importance",
+      "tier": "aspirational",
+      "admission": {
+        "exams": [
+          "JEE Advanced"
+        ],
+        "process": "JEE Advanced",
+        "cutoff_general_estimate": "See website for details"
+      },
+      "financials": {
+        "approx_annual_fee": "₹2,20,000–₹2,50,000",
+        "hidden_costs": "Hostel, mess, and exam fees are extra."
+      },
+      "placements": {
+        "avg_package": "₹16–22 LPA",
+        "reality_check": "Highest package: ₹2.8 Crore. Industry demand is high."
+      },
+      "vibe_and_culture": {
+        "student_life": "Active student groups, year-round events, and dynamic campus culture.",
+        "reddit_verdict": "Highly regarded. Established in 1961."
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Builder",
+        "The Innovator"
+      ],
+      "keywords": [
+        "Indian Institute of Technology Delhi (IIT Delhi)",
+        "indian_institute_of_technology_delhi_iit_delhi"
+      ]
+    },
+    {
+      "id": "national_institute_of_technology_delhi_nit_delhi",
+      "name": "National Institute of Technology Delhi (NIT Delhi)",
+      "location": {
+        "city": "Outer North Delhi",
+        "region": "Delhi NCR"
+      },
+      "type": "NIT",
+      "tier": "aspirational",
+      "admission": {
+        "exams": [
+          "JEE Main"
+        ],
+        "process": "JEE Main",
+        "cutoff_general_estimate": "See website for details"
+      },
+      "financials": {
+        "approx_annual_fee": "₹1,25,000–₹1,50,000",
+        "hidden_costs": "Hostel, mess, and exam fees are extra."
+      },
+      "placements": {
+        "avg_package": "₹7–10 LPA",
+        "reality_check": "Highest package: ₹35 LPA. Industry demand is high."
+      },
+      "vibe_and_culture": {
+        "student_life": "Active student groups, year-round events, and dynamic campus culture.",
+        "reddit_verdict": "Highly regarded. Established in 2010."
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Builder",
+        "The Innovator"
+      ],
+      "keywords": [
+        "National Institute of Technology Delhi (NIT Delhi)",
+        "national_institute_of_technology_delhi_nit_delhi"
+      ]
+    },
+    {
+      "id": "iim_rohtak_near_ncr_rohtak",
+      "name": "IIM Rohtak (Near NCR – Rohtak)",
+      "location": {
+        "city": "Rohtak",
+        "region": "Delhi NCR"
+      },
+      "type": "IIM",
+      "tier": "aspirational",
+      "admission": {
+        "exams": [
+          "CAT"
+        ],
+        "process": "CAT",
+        "cutoff_general_estimate": "See website for details"
+      },
+      "financials": {
+        "approx_annual_fee": "₹9,00,000–₹10,00,000",
+        "hidden_costs": "Hostel, mess, and exam fees are extra."
+      },
+      "placements": {
+        "avg_package": "₹12–16 LPA",
+        "reality_check": "Highest package: ₹45 LPA. Industry demand is high."
+      },
+      "vibe_and_culture": {
+        "student_life": "Active student groups, year-round events, and dynamic campus culture.",
+        "reddit_verdict": "Highly regarded. Established in 2009."
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Creator",
+        "The Connector"
+      ],
+      "keywords": [
+        "IIM Rohtak (Near NCR – Rohtak)",
+        "iim_rohtak_near_ncr_rohtak"
+      ]
+    },
+    {
+      "id": "galgotias_university",
+      "name": "Galgotias University",
+      "location": {
+        "city": "Greater Noida",
+        "region": "Delhi NCR"
+      },
+      "type": "Private University",
+      "tier": "safe",
+      "admission": {
+        "exams": [
+          "CUET"
+        ],
+        "process": "CUET/Direct",
+        "cutoff_general_estimate": "See website for details"
+      },
+      "financials": {
+        "approx_annual_fee": "₹1,20,000–₹2,00,000",
+        "hidden_costs": "Hostel, mess, and exam fees are extra."
+      },
+      "placements": {
+        "avg_package": "₹4–7 LPA",
+        "reality_check": "Highest package: ₹30 LPA. Industry demand is high."
+      },
+      "vibe_and_culture": {
+        "student_life": "Active student groups, year-round events, and dynamic campus culture.",
+        "reddit_verdict": "Highly regarded. Established in 2011."
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Builder",
+        "The Innovator"
+      ],
+      "keywords": [
+        "Galgotias University",
+        "galgotias_university"
+      ]
+    },
+    {
+      "id": "sharda_university",
+      "name": "Sharda University",
+      "location": {
+        "city": "Greater Noida",
+        "region": "Delhi NCR"
+      },
+      "type": "Private University",
+      "tier": "safe",
+      "admission": {
+        "exams": [
+          "Direct/Merit"
+        ],
+        "process": "Direct/Merit",
+        "cutoff_general_estimate": "See website for details"
+      },
+      "financials": {
+        "approx_annual_fee": "₹1,40,000–₹3,00,000",
+        "hidden_costs": "Hostel, mess, and exam fees are extra."
+      },
+      "placements": {
+        "avg_package": "₹4–8 LPA",
+        "reality_check": "Highest package: ₹35 LPA. Industry demand is high."
+      },
+      "vibe_and_culture": {
+        "student_life": "Active student groups, year-round events, and dynamic campus culture.",
+        "reddit_verdict": "Highly regarded. Established in 2009."
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Builder",
+        "The Innovator"
+      ],
+      "keywords": [
+        "Sharda University",
+        "sharda_university"
+      ]
+    },
+    {
+      "id": "noida_international_university_niu",
+      "name": "Noida International University (NIU)",
+      "location": {
+        "city": "Greater Noida",
+        "region": "Delhi NCR"
+      },
+      "type": "Private University",
+      "tier": "safe",
+      "admission": {
+        "exams": [
+          "Direct/Merit"
+        ],
+        "process": "Direct/Merit",
+        "cutoff_general_estimate": "See website for details"
+      },
+      "financials": {
+        "approx_annual_fee": "₹80,000–₹1,80,000",
+        "hidden_costs": "Hostel, mess, and exam fees are extra."
+      },
+      "placements": {
+        "avg_package": "₹3–5 LPA",
+        "reality_check": "Highest package: ₹20 LPA. Industry demand is high."
+      },
+      "vibe_and_culture": {
+        "student_life": "Active student groups, year-round events, and dynamic campus culture.",
+        "reddit_verdict": "Highly regarded. Established in 2010."
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Builder",
+        "The Innovator"
+      ],
+      "keywords": [
+        "Noida International University (NIU)",
+        "noida_international_university_niu"
+      ]
+    },
+    {
+      "id": "gautam_buddha_university_gbu",
+      "name": "Gautam Buddha University (GBU)",
+      "location": {
+        "city": "Greater Noida",
+        "region": "Delhi NCR"
+      },
+      "type": "State University",
+      "tier": "safe",
+      "admission": {
+        "exams": [
+          "State CET/Merit"
+        ],
+        "process": "State CET/Merit",
+        "cutoff_general_estimate": "See website for details"
+      },
+      "financials": {
+        "approx_annual_fee": "₹50,000–₹1,50,000",
+        "hidden_costs": "Hostel, mess, and exam fees are extra."
+      },
+      "placements": {
+        "avg_package": "₹4–6 LPA",
+        "reality_check": "Highest package: ₹20 LPA. Industry demand is high."
+      },
+      "vibe_and_culture": {
+        "student_life": "Active student groups, year-round events, and dynamic campus culture.",
+        "reddit_verdict": "Highly regarded. Established in 2002."
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Builder",
+        "The Innovator"
+      ],
+      "keywords": [
+        "Gautam Buddha University (GBU)",
+        "gautam_buddha_university_gbu"
+      ]
+    },
+    {
+      "id": "the_northcap_university_ncu",
+      "name": "The NorthCap University (NCU)",
+      "location": {
+        "city": "Gurugram",
+        "region": "Delhi NCR"
+      },
+      "type": "Private University",
+      "tier": "safe",
+      "admission": {
+        "exams": [
+          "Merit/Entrance"
+        ],
+        "process": "Merit/Entrance",
+        "cutoff_general_estimate": "See website for details"
+      },
+      "financials": {
+        "approx_annual_fee": "₹1,50,000–₹2,50,000",
+        "hidden_costs": "Hostel, mess, and exam fees are extra."
+      },
+      "placements": {
+        "avg_package": "₹5–8 LPA",
+        "reality_check": "Highest package: ₹35 LPA. Industry demand is high."
+      },
+      "vibe_and_culture": {
+        "student_life": "Active student groups, year-round events, and dynamic campus culture.",
+        "reddit_verdict": "Highly regarded. Established in 2009."
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Builder",
+        "The Innovator"
+      ],
+      "keywords": [
+        "The NorthCap University (NCU)",
+        "the_northcap_university_ncu"
+      ]
+    },
+    {
+      "id": "k_r_mangalam_university",
+      "name": "K.R. Mangalam University",
+      "location": {
+        "city": "Gurugram",
+        "region": "Delhi NCR"
+      },
+      "type": "Private University",
+      "tier": "safe",
+      "admission": {
+        "exams": [
+          "Merit/Direct"
+        ],
+        "process": "Merit/Direct",
+        "cutoff_general_estimate": "See website for details"
+      },
+      "financials": {
+        "approx_annual_fee": "₹1,20,000–₹2,00,000",
+        "hidden_costs": "Hostel, mess, and exam fees are extra."
+      },
+      "placements": {
+        "avg_package": "₹3–6 LPA",
+        "reality_check": "Highest package: ₹20 LPA. Industry demand is high."
+      },
+      "vibe_and_culture": {
+        "student_life": "Active student groups, year-round events, and dynamic campus culture.",
+        "reddit_verdict": "Highly regarded. Established in 2013."
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Builder",
+        "The Innovator"
+      ],
+      "keywords": [
+        "K.R. Mangalam University",
+        "k_r_mangalam_university"
+      ]
+    },
+    {
+      "id": "bml_munjal_university",
+      "name": "BML Munjal University",
+      "location": {
+        "city": "Gurugram",
+        "region": "Delhi NCR"
+      },
+      "type": "Private University",
+      "tier": "safe",
+      "admission": {
+        "exams": [
+          "Merit/Entrance"
+        ],
+        "process": "Merit/Entrance",
+        "cutoff_general_estimate": "See website for details"
+      },
+      "financials": {
+        "approx_annual_fee": "₹2,00,000–₹2,80,000",
+        "hidden_costs": "Hostel, mess, and exam fees are extra."
+      },
+      "placements": {
+        "avg_package": "₹6–9 LPA",
+        "reality_check": "Highest package: ₹30 LPA. Industry demand is high."
+      },
+      "vibe_and_culture": {
+        "student_life": "Active student groups, year-round events, and dynamic campus culture.",
+        "reddit_verdict": "Highly regarded. Established in 2014."
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Builder",
+        "The Innovator"
+      ],
+      "keywords": [
+        "BML Munjal University",
+        "bml_munjal_university"
+      ]
+    },
+    {
+      "id": "gd_goenka_university",
+      "name": "GD Goenka University",
+      "location": {
+        "city": "Gurugram",
+        "region": "Delhi NCR"
+      },
+      "type": "Private University",
+      "tier": "safe",
+      "admission": {
+        "exams": [
+          "Merit/Direct"
+        ],
+        "process": "Merit/Direct",
+        "cutoff_general_estimate": "See website for details"
+      },
+      "financials": {
+        "approx_annual_fee": "₹1,80,000–₹2,80,000",
+        "hidden_costs": "Hostel, mess, and exam fees are extra."
+      },
+      "placements": {
+        "avg_package": "₹4–7 LPA",
+        "reality_check": "Highest package: ₹22 LPA. Industry demand is high."
+      },
+      "vibe_and_culture": {
+        "student_life": "Active student groups, year-round events, and dynamic campus culture.",
+        "reddit_verdict": "Highly regarded. Established in 2013."
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Builder",
+        "The Innovator"
+      ],
+      "keywords": [
+        "GD Goenka University",
+        "gd_goenka_university"
+      ]
+    },
+    {
+      "id": "sushant_university_ansal_university",
+      "name": "Sushant University (Ansal University)",
+      "location": {
+        "city": "Gurugram",
+        "region": "Delhi NCR"
+      },
+      "type": "Private University",
+      "tier": "safe",
+      "admission": {
+        "exams": [
+          "Merit/Direct"
+        ],
+        "process": "Merit/Direct",
+        "cutoff_general_estimate": "See website for details"
+      },
+      "financials": {
+        "approx_annual_fee": "₹1,60,000–₹2,40,000",
+        "hidden_costs": "Hostel, mess, and exam fees are extra."
+      },
+      "placements": {
+        "avg_package": "₹4–7 LPA",
+        "reality_check": "Highest package: ₹20 LPA. Industry demand is high."
+      },
+      "vibe_and_culture": {
+        "student_life": "Active student groups, year-round events, and dynamic campus culture.",
+        "reddit_verdict": "Highly regarded. Established in 2012."
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Builder",
+        "The Innovator"
+      ],
+      "keywords": [
+        "Sushant University (Ansal University)",
+        "sushant_university_ansal_university"
+      ]
+    },
+    {
+      "id": "iilm_university",
+      "name": "IILM University",
+      "location": {
+        "city": "Gurugram",
+        "region": "Delhi NCR"
+      },
+      "type": "Private University",
+      "tier": "safe",
+      "admission": {
+        "exams": [
+          "Merit/Direct"
+        ],
+        "process": "Merit/Direct",
+        "cutoff_general_estimate": "See website for details"
+      },
+      "financials": {
+        "approx_annual_fee": "₹1,50,000–₹2,50,000",
+        "hidden_costs": "Hostel, mess, and exam fees are extra."
+      },
+      "placements": {
+        "avg_package": "₹4–7 LPA",
+        "reality_check": "Highest package: ₹20 LPA. Industry demand is high."
+      },
+      "vibe_and_culture": {
+        "student_life": "Active student groups, year-round events, and dynamic campus culture.",
+        "reddit_verdict": "Highly regarded. Established in 2018."
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Connector",
+        "The Analyst"
+      ],
+      "keywords": [
+        "IILM University",
+        "iilm_university"
+      ]
+    },
+    {
+      "id": "starex_university",
+      "name": "Starex University",
+      "location": {
+        "city": "Gurugram",
+        "region": "Delhi NCR"
+      },
+      "type": "Private University",
+      "tier": "safe",
+      "admission": {
+        "exams": [
+          "Merit/Direct"
+        ],
+        "process": "Merit/Direct",
+        "cutoff_general_estimate": "See website for details"
+      },
+      "financials": {
+        "approx_annual_fee": "₹80,000–₹1,60,000",
+        "hidden_costs": "Hostel, mess, and exam fees are extra."
+      },
+      "placements": {
+        "avg_package": "₹3–5 LPA",
+        "reality_check": "Highest package: ₹15 LPA. Industry demand is high."
+      },
+      "vibe_and_culture": {
+        "student_life": "Active student groups, year-round events, and dynamic campus culture.",
+        "reddit_verdict": "Highly regarded. Established in 2016."
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Builder",
+        "The Innovator"
+      ],
+      "keywords": [
+        "Starex University",
+        "starex_university"
+      ]
+    },
+    {
+      "id": "maulana_azad_institute_of_dental_sciences_maids",
+      "name": "Maulana Azad Institute of Dental Sciences (MAIDS)",
+      "location": {
+        "city": "New Delhi",
+        "region": "Delhi NCR"
+      },
+      "type": "Dental College",
+      "tier": "realistic",
+      "admission": {
+        "exams": [
+          "NEET"
+        ],
+        "process": "NEET",
+        "cutoff_general_estimate": "See website for details"
+      },
+      "financials": {
+        "approx_annual_fee": "₹10,000–₹50,000",
+        "hidden_costs": "Hostel, mess, and exam fees are extra."
+      },
+      "placements": {
+        "avg_package": "Not surfaced",
+        "reality_check": "Highest package: Not surfaced. Industry demand is high."
+      },
+      "vibe_and_culture": {
+        "student_life": "Active student groups, year-round events, and dynamic campus culture.",
+        "reddit_verdict": "Highly regarded. Established in 1993."
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Builder",
+        "The Innovator"
+      ],
+      "keywords": [
+        "Maulana Azad Institute of Dental Sciences (MAIDS)",
+        "maulana_azad_institute_of_dental_sciences_maids"
+      ]
+    },
+    {
+      "id": "university_college_of_medical_sciences_ucms",
+      "name": "University College of Medical Sciences (UCMS)",
+      "location": {
+        "city": "New Delhi",
+        "region": "Delhi NCR"
+      },
+      "type": "Medical College",
+      "tier": "realistic",
+      "admission": {
+        "exams": [
+          "NEET"
+        ],
+        "process": "NEET",
+        "cutoff_general_estimate": "See website for details"
+      },
+      "financials": {
+        "approx_annual_fee": "₹15,000–₹50,000",
+        "hidden_costs": "Hostel, mess, and exam fees are extra."
+      },
+      "placements": {
+        "avg_package": "Not surfaced",
+        "reality_check": "Highest package: Not surfaced. Industry demand is high."
+      },
+      "vibe_and_culture": {
+        "student_life": "Active student groups, year-round events, and dynamic campus culture.",
+        "reddit_verdict": "Highly regarded. Established in 1971."
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Builder",
+        "The Innovator"
+      ],
+      "keywords": [
+        "University College of Medical Sciences (UCMS)",
+        "university_college_of_medical_sciences_ucms"
+      ]
+    },
+    {
+      "id": "government_institute_of_medical_sciences_gims",
+      "name": "Government Institute of Medical Sciences (GIMS)",
+      "location": {
+        "city": "Greater Noida",
+        "region": "Delhi NCR"
+      },
+      "type": "Medical College",
+      "tier": "realistic",
+      "admission": {
+        "exams": [
+          "NEET"
+        ],
+        "process": "NEET",
+        "cutoff_general_estimate": "See website for details"
+      },
+      "financials": {
+        "approx_annual_fee": "₹20,000–₹60,000",
+        "hidden_costs": "Hostel, mess, and exam fees are extra."
+      },
+      "placements": {
+        "avg_package": "Not surfaced",
+        "reality_check": "Highest package: Not surfaced. Industry demand is high."
+      },
+      "vibe_and_culture": {
+        "student_life": "Active student groups, year-round events, and dynamic campus culture.",
+        "reddit_verdict": "Highly regarded. Established in 2008."
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Builder",
+        "The Innovator"
+      ],
+      "keywords": [
+        "Government Institute of Medical Sciences (GIMS)",
+        "government_institute_of_medical_sciences_gims"
+      ]
+    },
+    {
+      "id": "footwear_design_and_development_institute_fddi",
+      "name": "Footwear Design and Development Institute (FDDI)",
+      "location": {
+        "city": "Noida",
+        "region": "Delhi NCR"
+      },
+      "type": "Design Institute",
+      "tier": "realistic",
+      "admission": {
+        "exams": [
+          "FDDI Entrance Exam"
+        ],
+        "process": "FDDI Entrance Exam",
+        "cutoff_general_estimate": "See website for details"
+      },
+      "financials": {
+        "approx_annual_fee": "₹1,00,000–₹1,50,000",
+        "hidden_costs": "Hostel, mess, and exam fees are extra."
+      },
+      "placements": {
+        "avg_package": "₹4–7 LPA",
+        "reality_check": "Highest package: ₹20 LPA. Industry demand is high."
+      },
+      "vibe_and_culture": {
+        "student_life": "Active student groups, year-round events, and dynamic campus culture.",
+        "reddit_verdict": "Highly regarded. Established in 1986."
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Creator",
+        "The Explorer"
+      ],
+      "keywords": [
+        "Footwear Design and Development Institute (FDDI)",
+        "footwear_design_and_development_institute_fddi"
+      ]
+    },
+    {
+      "id": "g_l_bajaj_institute_of_technology_and_management",
+      "name": "G L Bajaj Institute of Technology and Management",
+      "location": {
+        "city": "Greater Noida",
+        "region": "Delhi NCR"
+      },
+      "type": "Engineering/Management College",
+      "tier": "safe",
+      "admission": {
+        "exams": [
+          "JEE Main"
+        ],
+        "process": "JEE Main/Direct",
+        "cutoff_general_estimate": "See website for details"
+      },
+      "financials": {
+        "approx_annual_fee": "₹90,000–₹1,10,000",
+        "hidden_costs": "Hostel, mess, and exam fees are extra."
+      },
+      "placements": {
+        "avg_package": "₹7.35 LPA",
+        "reality_check": "Highest package: ₹58 LPA. Industry demand is high."
+      },
+      "vibe_and_culture": {
+        "student_life": "Active student groups, year-round events, and dynamic campus culture.",
+        "reddit_verdict": "Highly regarded. Established in 2000."
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Builder",
+        "The Innovator"
+      ],
+      "keywords": [
+        "G L Bajaj Institute of Technology and Management",
+        "g_l_bajaj_institute_of_technology_and_management"
+      ]
+    },
+    {
+      "id": "greater_noida_institute_of_technology_gniot",
+      "name": "Greater Noida Institute of Technology (GNIOT)",
+      "location": {
+        "city": "Greater Noida",
+        "region": "Delhi NCR"
+      },
+      "type": "Engineering College",
+      "tier": "safe",
+      "admission": {
+        "exams": [
+          "JEE Main"
+        ],
+        "process": "JEE Main/Direct",
+        "cutoff_general_estimate": "See website for details"
+      },
+      "financials": {
+        "approx_annual_fee": "₹70,000–₹90,000",
+        "hidden_costs": "Hostel, mess, and exam fees are extra."
+      },
+      "placements": {
+        "avg_package": "₹4.5 LPA",
+        "reality_check": "Highest package: ₹50 LPA. Industry demand is high."
+      },
+      "vibe_and_culture": {
+        "student_life": "Active student groups, year-round events, and dynamic campus culture.",
+        "reddit_verdict": "Highly regarded. Established in 2001."
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Builder",
+        "The Innovator"
+      ],
+      "keywords": [
+        "Greater Noida Institute of Technology (GNIOT)",
+        "greater_noida_institute_of_technology_gniot"
+      ]
+    },
+    {
+      "id": "management_development_institute_mdi_gurgaon",
+      "name": "Management Development Institute (MDI Gurgaon)",
+      "location": {
+        "city": "Gurugram",
+        "region": "Delhi NCR"
+      },
+      "type": "Management College",
+      "tier": "safe",
+      "admission": {
+        "exams": [
+          "CAT"
+        ],
+        "process": "CAT",
+        "cutoff_general_estimate": "See website for details"
+      },
+      "financials": {
+        "approx_annual_fee": "₹12,00,000–₹13,00,000",
+        "hidden_costs": "Hostel, mess, and exam fees are extra."
+      },
+      "placements": {
+        "avg_package": "₹24 LPA",
+        "reality_check": "Highest package: ₹72 LPA. Industry demand is high."
+      },
+      "vibe_and_culture": {
+        "student_life": "Active student groups, year-round events, and dynamic campus culture.",
+        "reddit_verdict": "Highly regarded. Established in 1973."
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Creator",
+        "The Connector"
+      ],
+      "keywords": [
+        "Management Development Institute (MDI Gurgaon)",
+        "management_development_institute_mdi_gurgaon"
+      ]
+    },
+    {
+      "id": "imt_ghaziabad",
+      "name": "IMT Ghaziabad",
+      "location": {
+        "city": "Ghaziabad",
+        "region": "Delhi NCR"
+      },
+      "type": "Management College",
+      "tier": "safe",
+      "admission": {
+        "exams": [
+          "CAT"
+        ],
+        "process": "CAT/XAT/GMAT",
+        "cutoff_general_estimate": "See website for details"
+      },
+      "financials": {
+        "approx_annual_fee": "₹9,00,000–₹10,00,000",
+        "hidden_costs": "Hostel, mess, and exam fees are extra."
+      },
+      "placements": {
+        "avg_package": "₹14.7 LPA",
+        "reality_check": "Highest package: ₹52 LPA. Industry demand is high."
+      },
+      "vibe_and_culture": {
+        "student_life": "Active student groups, year-round events, and dynamic campus culture.",
+        "reddit_verdict": "Highly regarded. Established in 1980."
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Creator",
+        "The Connector"
+      ],
+      "keywords": [
+        "IMT Ghaziabad",
+        "imt_ghaziabad"
+      ]
+    },
+    {
+      "id": "manav_rachna_international_institute_of_research_and_studies",
+      "name": "Manav Rachna International Institute of Research and Studies",
+      "location": {
+        "city": "Faridabad",
+        "region": "Delhi NCR"
+      },
+      "type": "Private University",
+      "tier": "safe",
+      "admission": {
+        "exams": [
+          "Merit/Entrance"
+        ],
+        "process": "Merit/Entrance",
+        "cutoff_general_estimate": "See website for details"
+      },
+      "financials": {
+        "approx_annual_fee": "₹1,00,000–₹2,50,000",
+        "hidden_costs": "Hostel, mess, and exam fees are extra."
+      },
+      "placements": {
+        "avg_package": "₹4–6 LPA",
+        "reality_check": "Highest package: ₹22 LPA. Industry demand is high."
+      },
+      "vibe_and_culture": {
+        "student_life": "Active student groups, year-round events, and dynamic campus culture.",
+        "reddit_verdict": "Highly regarded. Established in 2008."
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Builder",
+        "The Innovator"
+      ],
+      "keywords": [
+        "Manav Rachna International Institute of Research and Studies",
+        "manav_rachna_international_institute_of_research_and_studies"
+      ]
+    },
+    {
+      "id": "daulat_ram_college",
+      "name": "Daulat Ram College",
+      "location": {
+        "city": "Delhi",
+        "region": "Delhi NCR"
+      },
+      "type": "Government College (DU)",
+      "tier": "realistic",
+      "admission": {
+        "exams": [
+          "CUET"
+        ],
+        "process": "CUET Entrance Exam + CSAS Counselling",
+        "cutoff_general_estimate": "CUET Score 650–750 out of 800 (85%–97% percentile)"
+      },
+      "financials": {
+        "approx_annual_fee": "₹10,000–₹25,000 per year",
+        "hidden_costs": "Exam fees, college society contributions, and commuting costs."
+      },
+      "placements": {
+        "avg_package": "₹3.5–5 LPA",
+        "reality_check": "Moderate campus placements. Most students opt for higher education (MA/MSc/MBA) or off-campus hiring."
+      },
+      "vibe_and_culture": {
+        "student_life": "Extremely vibrant campus environment with high-profile cultural fests, active debate/drama societies, and student union activities.",
+        "reddit_verdict": "Best known for: Women's education under DU"
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Builder",
+        "The Creator"
+      ],
+      "keywords": [
+        "Daulat Ram College",
+        "daulat_ram_college",
+        "DU",
+        "Delhi University"
+      ],
+      "websiteUrl": "https://dr.du.ac.in"
+    },
+    {
+      "id": "hindu_college",
+      "name": "Hindu College",
+      "location": {
+        "city": "Delhi",
+        "region": "Delhi NCR"
+      },
+      "type": "Government College (DU)",
+      "tier": "aspirational",
+      "admission": {
+        "exams": [
+          "CUET"
+        ],
+        "process": "CUET Entrance Exam + CSAS Counselling",
+        "cutoff_general_estimate": "CUET Score 760+ out of 800 (98%+ percentile)"
+      },
+      "financials": {
+        "approx_annual_fee": "₹10,000–₹25,000 per year",
+        "hidden_costs": "Exam fees, college society contributions, and commuting costs."
+      },
+      "placements": {
+        "avg_package": "₹7–12 LPA",
+        "reality_check": "Highly competitive campus placements. Top students bag packages exceeding ₹20 LPA through societies and cell."
+      },
+      "vibe_and_culture": {
+        "student_life": "Extremely vibrant campus environment with high-profile cultural fests, active debate/drama societies, and student union activities.",
+        "reddit_verdict": "Best known for: Academic reputation and DU campus life"
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Builder",
+        "The Creator"
+      ],
+      "keywords": [
+        "Hindu College",
+        "hindu_college",
+        "DU",
+        "Delhi University"
+      ],
+      "websiteUrl": "https://hinducollege.ac.in"
+    },
+    {
+      "id": "hansraj_college",
+      "name": "Hansraj College",
+      "location": {
+        "city": "Delhi",
+        "region": "Delhi NCR"
+      },
+      "type": "Government College (DU)",
+      "tier": "aspirational",
+      "admission": {
+        "exams": [
+          "CUET"
+        ],
+        "process": "CUET Entrance Exam + CSAS Counselling",
+        "cutoff_general_estimate": "CUET Score 760+ out of 800 (98%+ percentile)"
+      },
+      "financials": {
+        "approx_annual_fee": "₹10,000–₹25,000 per year",
+        "hidden_costs": "Exam fees, college society contributions, and commuting costs."
+      },
+      "placements": {
+        "avg_package": "₹7–12 LPA",
+        "reality_check": "Highly competitive campus placements. Top students bag packages exceeding ₹20 LPA through societies and cell."
+      },
+      "vibe_and_culture": {
+        "student_life": "Extremely vibrant campus environment with high-profile cultural fests, active debate/drama societies, and student union activities.",
+        "reddit_verdict": "Best known for: Science and commerce under DU"
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Builder",
+        "The Creator"
+      ],
+      "keywords": [
+        "Hansraj College",
+        "hansraj_college",
+        "DU",
+        "Delhi University"
+      ],
+      "websiteUrl": "https://www.hansrajcollege.ac.in"
+    },
+    {
+      "id": "indraprastha_college_for_women",
+      "name": "Indraprastha College for Women",
+      "location": {
+        "city": "Delhi",
+        "region": "Delhi NCR"
+      },
+      "type": "Government College (DU)",
+      "tier": "aspirational",
+      "admission": {
+        "exams": [
+          "CUET"
+        ],
+        "process": "CUET Entrance Exam + CSAS Counselling",
+        "cutoff_general_estimate": "CUET Score 760+ out of 800 (98%+ percentile)"
+      },
+      "financials": {
+        "approx_annual_fee": "₹10,000–₹25,000 per year",
+        "hidden_costs": "Exam fees, college society contributions, and commuting costs."
+      },
+      "placements": {
+        "avg_package": "₹7–12 LPA",
+        "reality_check": "Highly competitive campus placements. Top students bag packages exceeding ₹20 LPA through societies and cell."
+      },
+      "vibe_and_culture": {
+        "student_life": "Extremely vibrant campus environment with high-profile cultural fests, active debate/drama societies, and student union activities.",
+        "reddit_verdict": "Best known for: Historic women's college"
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Creator",
+        "The Analyst"
+      ],
+      "keywords": [
+        "Indraprastha College for Women",
+        "indraprastha_college_for_women",
+        "DU",
+        "Delhi University"
+      ],
+      "websiteUrl": "https://ipcollege.ac.in"
+    },
+    {
+      "id": "kirori_mal_college",
+      "name": "Kirori Mal College",
+      "location": {
+        "city": "Delhi",
+        "region": "Delhi NCR"
+      },
+      "type": "Government College (DU)",
+      "tier": "aspirational",
+      "admission": {
+        "exams": [
+          "CUET"
+        ],
+        "process": "CUET Entrance Exam + CSAS Counselling",
+        "cutoff_general_estimate": "CUET Score 760+ out of 800 (98%+ percentile)"
+      },
+      "financials": {
+        "approx_annual_fee": "₹10,000–₹25,000 per year",
+        "hidden_costs": "Exam fees, college society contributions, and commuting costs."
+      },
+      "placements": {
+        "avg_package": "₹7–12 LPA",
+        "reality_check": "Highly competitive campus placements. Top students bag packages exceeding ₹20 LPA through societies and cell."
+      },
+      "vibe_and_culture": {
+        "student_life": "Extremely vibrant campus environment with high-profile cultural fests, active debate/drama societies, and student union activities.",
+        "reddit_verdict": "Best known for: Strong DU academics and societies"
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Builder",
+        "The Creator"
+      ],
+      "keywords": [
+        "Kirori Mal College",
+        "kirori_mal_college",
+        "DU",
+        "Delhi University"
+      ],
+      "websiteUrl": "https://kmc.du.ac.in"
+    },
+    {
+      "id": "miranda_house",
+      "name": "Miranda House",
+      "location": {
+        "city": "Delhi",
+        "region": "Delhi NCR"
+      },
+      "type": "Government College (DU)",
+      "tier": "aspirational",
+      "admission": {
+        "exams": [
+          "CUET"
+        ],
+        "process": "CUET Entrance Exam + CSAS Counselling",
+        "cutoff_general_estimate": "CUET Score 760+ out of 800 (98%+ percentile)"
+      },
+      "financials": {
+        "approx_annual_fee": "₹10,000–₹25,000 per year",
+        "hidden_costs": "Exam fees, college society contributions, and commuting costs."
+      },
+      "placements": {
+        "avg_package": "₹7–12 LPA",
+        "reality_check": "Highly competitive campus placements. Top students bag packages exceeding ₹20 LPA through societies and cell."
+      },
+      "vibe_and_culture": {
+        "student_life": "Extremely vibrant campus environment with high-profile cultural fests, active debate/drama societies, and student union activities.",
+        "reddit_verdict": "Best known for: Top women's college reputation"
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Builder",
+        "The Creator"
+      ],
+      "keywords": [
+        "Miranda House",
+        "miranda_house",
+        "DU",
+        "Delhi University"
+      ],
+      "websiteUrl": "https://www.mirandahouse.ac.in"
+    },
+    {
+      "id": "ramjas_college",
+      "name": "Ramjas College",
+      "location": {
+        "city": "Delhi",
+        "region": "Delhi NCR"
+      },
+      "type": "Government College (DU)",
+      "tier": "aspirational",
+      "admission": {
+        "exams": [
+          "CUET"
+        ],
+        "process": "CUET Entrance Exam + CSAS Counselling",
+        "cutoff_general_estimate": "CUET Score 760+ out of 800 (98%+ percentile)"
+      },
+      "financials": {
+        "approx_annual_fee": "₹10,000–₹25,000 per year",
+        "hidden_costs": "Exam fees, college society contributions, and commuting costs."
+      },
+      "placements": {
+        "avg_package": "₹7–12 LPA",
+        "reality_check": "Highly competitive campus placements. Top students bag packages exceeding ₹20 LPA through societies and cell."
+      },
+      "vibe_and_culture": {
+        "student_life": "Extremely vibrant campus environment with high-profile cultural fests, active debate/drama societies, and student union activities.",
+        "reddit_verdict": "Best known for: Balanced academics and campus culture"
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Builder",
+        "The Creator"
+      ],
+      "keywords": [
+        "Ramjas College",
+        "ramjas_college",
+        "DU",
+        "Delhi University"
+      ],
+      "websiteUrl": "https://ramjas.du.ac.in"
+    },
+    {
+      "id": "st_stephen_s_college",
+      "name": "St. Stephen's College",
+      "location": {
+        "city": "Delhi",
+        "region": "Delhi NCR"
+      },
+      "type": "Government College (DU)",
+      "tier": "aspirational",
+      "admission": {
+        "exams": [
+          "CUET"
+        ],
+        "process": "CUET Entrance Exam + CSAS Counselling",
+        "cutoff_general_estimate": "CUET Score 760+ out of 800 (98%+ percentile)"
+      },
+      "financials": {
+        "approx_annual_fee": "₹10,000–₹25,000 per year",
+        "hidden_costs": "Exam fees, college society contributions, and commuting costs."
+      },
+      "placements": {
+        "avg_package": "₹7–12 LPA",
+        "reality_check": "Highly competitive campus placements. Top students bag packages exceeding ₹20 LPA through societies and cell."
+      },
+      "vibe_and_culture": {
+        "student_life": "Extremely vibrant campus environment with high-profile cultural fests, active debate/drama societies, and student union activities.",
+        "reddit_verdict": "Best known for: Elite humanities and sciences"
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Builder",
+        "The Creator"
+      ],
+      "keywords": [
+        "St. Stephen's College",
+        "st_stephen_s_college",
+        "DU",
+        "Delhi University"
+      ],
+      "websiteUrl": "https://www.ststephens.edu"
+    },
+    {
+      "id": "shaheed_sukhdev_college_of_business_studies",
+      "name": "Shaheed Sukhdev College of Business Studies",
+      "location": {
+        "city": "Delhi",
+        "region": "Delhi NCR"
+      },
+      "type": "Government College (DU)",
+      "tier": "aspirational",
+      "admission": {
+        "exams": [
+          "CUET"
+        ],
+        "process": "CUET Entrance Exam + CSAS Counselling",
+        "cutoff_general_estimate": "CUET Score 760+ out of 800 (98%+ percentile)"
+      },
+      "financials": {
+        "approx_annual_fee": "₹10,000–₹25,000 per year",
+        "hidden_costs": "Exam fees, college society contributions, and commuting costs."
+      },
+      "placements": {
+        "avg_package": "₹7–12 LPA",
+        "reality_check": "Highly competitive campus placements. Top students bag packages exceeding ₹20 LPA through societies and cell."
+      },
+      "vibe_and_culture": {
+        "student_life": "Extremely vibrant campus environment with high-profile cultural fests, active debate/drama societies, and student union activities.",
+        "reddit_verdict": "Best known for: Excellent for BBA/BMS and ROI"
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Builder",
+        "The Analyst"
+      ],
+      "keywords": [
+        "Shaheed Sukhdev College of Business Studies",
+        "shaheed_sukhdev_college_of_business_studies",
+        "DU",
+        "Delhi University"
+      ],
+      "websiteUrl": "https://sscbs.du.ac.in"
+    },
+    {
+      "id": "shri_ram_college_of_commerce",
+      "name": "Shri Ram College of Commerce",
+      "location": {
+        "city": "Delhi",
+        "region": "Delhi NCR"
+      },
+      "type": "Government College (DU)",
+      "tier": "aspirational",
+      "admission": {
+        "exams": [
+          "CUET"
+        ],
+        "process": "CUET Entrance Exam + CSAS Counselling",
+        "cutoff_general_estimate": "CUET Score 760+ out of 800 (98%+ percentile)"
+      },
+      "financials": {
+        "approx_annual_fee": "₹10,000–₹25,000 per year",
+        "hidden_costs": "Exam fees, college society contributions, and commuting costs."
+      },
+      "placements": {
+        "avg_package": "₹7–12 LPA",
+        "reality_check": "Highly competitive campus placements. Top students bag packages exceeding ₹20 LPA through societies and cell."
+      },
+      "vibe_and_culture": {
+        "student_life": "Extremely vibrant campus environment with high-profile cultural fests, active debate/drama societies, and student union activities.",
+        "reddit_verdict": "Best known for: Excellent for commerce and placements"
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Builder",
+        "The Analyst"
+      ],
+      "keywords": [
+        "Shri Ram College of Commerce",
+        "shri_ram_college_of_commerce",
+        "DU",
+        "Delhi University"
+      ],
+      "websiteUrl": "https://www.srcc.edu"
+    },
+    {
+      "id": "sri_guru_tegh_bahadur_khalsa_college",
+      "name": "Sri Guru Tegh Bahadur Khalsa College",
+      "location": {
+        "city": "Delhi",
+        "region": "Delhi NCR"
+      },
+      "type": "Government College (DU)",
+      "tier": "realistic",
+      "admission": {
+        "exams": [
+          "CUET"
+        ],
+        "process": "CUET Entrance Exam + CSAS Counselling",
+        "cutoff_general_estimate": "CUET Score 650–750 out of 800 (85%–97% percentile)"
+      },
+      "financials": {
+        "approx_annual_fee": "₹10,000–₹25,000 per year",
+        "hidden_costs": "Exam fees, college society contributions, and commuting costs."
+      },
+      "placements": {
+        "avg_package": "₹3.5–5 LPA",
+        "reality_check": "Moderate campus placements. Most students opt for higher education (MA/MSc/MBA) or off-campus hiring."
+      },
+      "vibe_and_culture": {
+        "student_life": "Extremely vibrant campus environment with high-profile cultural fests, active debate/drama societies, and student union activities.",
+        "reddit_verdict": "Best known for: North Campus academics"
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Builder",
+        "The Creator"
+      ],
+      "keywords": [
+        "Sri Guru Tegh Bahadur Khalsa College",
+        "sri_guru_tegh_bahadur_khalsa_college",
+        "DU",
+        "Delhi University"
+      ],
+      "websiteUrl": "https://sgtbkhalsadu.ac.in"
+    },
+    {
+      "id": "school_of_open_learning",
+      "name": "School of Open Learning",
+      "location": {
+        "city": "Delhi",
+        "region": "Delhi NCR"
+      },
+      "type": "Government College (DU)",
+      "tier": "safe",
+      "admission": {
+        "exams": [
+          "CUET"
+        ],
+        "process": "CUET Entrance Exam + CSAS Counselling",
+        "cutoff_general_estimate": "CUET Score 500–640 out of 800 (70%–84% percentile) or Open Admission"
+      },
+      "financials": {
+        "approx_annual_fee": "₹5,000–₹12,000 per year",
+        "hidden_costs": "Exam fees, college society contributions, and commuting costs."
+      },
+      "placements": {
+        "avg_package": "₹3.5–5 LPA",
+        "reality_check": "Moderate campus placements. Most students opt for higher education (MA/MSc/MBA) or off-campus hiring."
+      },
+      "vibe_and_culture": {
+        "student_life": "Extremely vibrant campus environment with high-profile cultural fests, active debate/drama societies, and student union activities.",
+        "reddit_verdict": "Best known for: Affordable distance education"
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Creator",
+        "The Connector"
+      ],
+      "keywords": [
+        "School of Open Learning",
+        "school_of_open_learning",
+        "DU",
+        "Delhi University"
+      ],
+      "websiteUrl": "https://sol.du.ac.in"
+    },
+    {
+      "id": "swami_shraddhanand_college",
+      "name": "Swami Shraddhanand College",
+      "location": {
+        "city": "Delhi",
+        "region": "Delhi NCR"
+      },
+      "type": "Government College (DU)",
+      "tier": "realistic",
+      "admission": {
+        "exams": [
+          "CUET"
+        ],
+        "process": "CUET Entrance Exam + CSAS Counselling",
+        "cutoff_general_estimate": "CUET Score 650–750 out of 800 (85%–97% percentile)"
+      },
+      "financials": {
+        "approx_annual_fee": "₹10,000–₹25,000 per year",
+        "hidden_costs": "Exam fees, college society contributions, and commuting costs."
+      },
+      "placements": {
+        "avg_package": "₹3.5–5 LPA",
+        "reality_check": "Moderate campus placements. Most students opt for higher education (MA/MSc/MBA) or off-campus hiring."
+      },
+      "vibe_and_culture": {
+        "student_life": "Extremely vibrant campus environment with high-profile cultural fests, active debate/drama societies, and student union activities.",
+        "reddit_verdict": "Best known for: Affordable DU degree"
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Builder",
+        "The Creator"
+      ],
+      "keywords": [
+        "Swami Shraddhanand College",
+        "swami_shraddhanand_college",
+        "DU",
+        "Delhi University"
+      ],
+      "websiteUrl": "https://ss.du.ac.in"
+    },
+    {
+      "id": "aryabhatta_college",
+      "name": "Aryabhatta College",
+      "location": {
+        "city": "Delhi",
+        "region": "Delhi NCR"
+      },
+      "type": "Government College (DU)",
+      "tier": "realistic",
+      "admission": {
+        "exams": [
+          "CUET"
+        ],
+        "process": "CUET Entrance Exam + CSAS Counselling",
+        "cutoff_general_estimate": "CUET Score 650–750 out of 800 (85%–97% percentile)"
+      },
+      "financials": {
+        "approx_annual_fee": "₹10,000–₹25,000 per year",
+        "hidden_costs": "Exam fees, college society contributions, and commuting costs."
+      },
+      "placements": {
+        "avg_package": "₹3.5–5 LPA",
+        "reality_check": "Moderate campus placements. Most students opt for higher education (MA/MSc/MBA) or off-campus hiring."
+      },
+      "vibe_and_culture": {
+        "student_life": "Extremely vibrant campus environment with high-profile cultural fests, active debate/drama societies, and student union activities.",
+        "reddit_verdict": "Best known for: Good South Campus access"
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Creator",
+        "The Analyst"
+      ],
+      "keywords": [
+        "Aryabhatta College",
+        "aryabhatta_college",
+        "DU",
+        "Delhi University"
+      ],
+      "websiteUrl": "https://aryabhattacollege.ac.in"
+    },
+    {
+      "id": "delhi_college_of_arts_and_commerce",
+      "name": "Delhi College of Arts and Commerce",
+      "location": {
+        "city": "Delhi",
+        "region": "Delhi NCR"
+      },
+      "type": "Government College (DU)",
+      "tier": "aspirational",
+      "admission": {
+        "exams": [
+          "CUET"
+        ],
+        "process": "CUET Entrance Exam + CSAS Counselling",
+        "cutoff_general_estimate": "CUET Score 760+ out of 800 (98%+ percentile)"
+      },
+      "financials": {
+        "approx_annual_fee": "₹10,000–₹25,000 per year",
+        "hidden_costs": "Exam fees, college society contributions, and commuting costs."
+      },
+      "placements": {
+        "avg_package": "₹7–12 LPA",
+        "reality_check": "Highly competitive campus placements. Top students bag packages exceeding ₹20 LPA through societies and cell."
+      },
+      "vibe_and_culture": {
+        "student_life": "Extremely vibrant campus environment with high-profile cultural fests, active debate/drama societies, and student union activities.",
+        "reddit_verdict": "Best known for: Commerce and media-adjacent options"
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Creator",
+        "The Analyst"
+      ],
+      "keywords": [
+        "Delhi College of Arts and Commerce",
+        "delhi_college_of_arts_and_commerce",
+        "DU",
+        "Delhi University"
+      ],
+      "websiteUrl": "https://dcac.du.ac.in"
+    },
+    {
+      "id": "jesus_and_mary_college",
+      "name": "Jesus and Mary College",
+      "location": {
+        "city": "Delhi",
+        "region": "Delhi NCR"
+      },
+      "type": "Government College (DU)",
+      "tier": "aspirational",
+      "admission": {
+        "exams": [
+          "CUET"
+        ],
+        "process": "CUET Entrance Exam + CSAS Counselling",
+        "cutoff_general_estimate": "CUET Score 760+ out of 800 (98%+ percentile)"
+      },
+      "financials": {
+        "approx_annual_fee": "₹10,000–₹25,000 per year",
+        "hidden_costs": "Exam fees, college society contributions, and commuting costs."
+      },
+      "placements": {
+        "avg_package": "₹7–12 LPA",
+        "reality_check": "Highly competitive campus placements. Top students bag packages exceeding ₹20 LPA through societies and cell."
+      },
+      "vibe_and_culture": {
+        "student_life": "Extremely vibrant campus environment with high-profile cultural fests, active debate/drama societies, and student union activities.",
+        "reddit_verdict": "Best known for: Women's liberal arts"
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Creator",
+        "The Analyst"
+      ],
+      "keywords": [
+        "Jesus and Mary College",
+        "jesus_and_mary_college",
+        "DU",
+        "Delhi University"
+      ],
+      "websiteUrl": "https://jmc.ac.in"
+    },
+    {
+      "id": "maitreyi_college",
+      "name": "Maitreyi College",
+      "location": {
+        "city": "Delhi",
+        "region": "Delhi NCR"
+      },
+      "type": "Government College (DU)",
+      "tier": "realistic",
+      "admission": {
+        "exams": [
+          "CUET"
+        ],
+        "process": "CUET Entrance Exam + CSAS Counselling",
+        "cutoff_general_estimate": "CUET Score 650–750 out of 800 (85%–97% percentile)"
+      },
+      "financials": {
+        "approx_annual_fee": "₹10,000–₹25,000 per year",
+        "hidden_costs": "Exam fees, college society contributions, and commuting costs."
+      },
+      "placements": {
+        "avg_package": "₹3.5–5 LPA",
+        "reality_check": "Moderate campus placements. Most students opt for higher education (MA/MSc/MBA) or off-campus hiring."
+      },
+      "vibe_and_culture": {
+        "student_life": "Extremely vibrant campus environment with high-profile cultural fests, active debate/drama societies, and student union activities.",
+        "reddit_verdict": "Best known for: Women's academics and affordability"
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Builder",
+        "The Creator"
+      ],
+      "keywords": [
+        "Maitreyi College",
+        "maitreyi_college",
+        "DU",
+        "Delhi University"
+      ],
+      "websiteUrl": "https://maitreyi.ac.in"
+    },
+    {
+      "id": "motilal_nehru_college",
+      "name": "Motilal Nehru College",
+      "location": {
+        "city": "Delhi",
+        "region": "Delhi NCR"
+      },
+      "type": "Government College (DU)",
+      "tier": "realistic",
+      "admission": {
+        "exams": [
+          "CUET"
+        ],
+        "process": "CUET Entrance Exam + CSAS Counselling",
+        "cutoff_general_estimate": "CUET Score 650–750 out of 800 (85%–97% percentile)"
+      },
+      "financials": {
+        "approx_annual_fee": "₹10,000–₹25,000 per year",
+        "hidden_costs": "Exam fees, college society contributions, and commuting costs."
+      },
+      "placements": {
+        "avg_package": "₹3.5–5 LPA",
+        "reality_check": "Moderate campus placements. Most students opt for higher education (MA/MSc/MBA) or off-campus hiring."
+      },
+      "vibe_and_culture": {
+        "student_life": "Extremely vibrant campus environment with high-profile cultural fests, active debate/drama societies, and student union activities.",
+        "reddit_verdict": "Best known for: Good ROI under DU"
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Builder",
+        "The Creator"
+      ],
+      "keywords": [
+        "Motilal Nehru College",
+        "motilal_nehru_college",
+        "DU",
+        "Delhi University"
+      ],
+      "websiteUrl": "https://mlncdu.ac.in"
+    },
+    {
+      "id": "ram_lal_anand_college",
+      "name": "Ram Lal Anand College",
+      "location": {
+        "city": "Delhi",
+        "region": "Delhi NCR"
+      },
+      "type": "Government College (DU)",
+      "tier": "realistic",
+      "admission": {
+        "exams": [
+          "CUET"
+        ],
+        "process": "CUET Entrance Exam + CSAS Counselling",
+        "cutoff_general_estimate": "CUET Score 650–750 out of 800 (85%–97% percentile)"
+      },
+      "financials": {
+        "approx_annual_fee": "₹10,000–₹25,000 per year",
+        "hidden_costs": "Exam fees, college society contributions, and commuting costs."
+      },
+      "placements": {
+        "avg_package": "₹3.5–5 LPA",
+        "reality_check": "Moderate campus placements. Most students opt for higher education (MA/MSc/MBA) or off-campus hiring."
+      },
+      "vibe_and_culture": {
+        "student_life": "Extremely vibrant campus environment with high-profile cultural fests, active debate/drama societies, and student union activities.",
+        "reddit_verdict": "Best known for: Balanced DU academics"
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Builder",
+        "The Creator"
+      ],
+      "keywords": [
+        "Ram Lal Anand College",
+        "ram_lal_anand_college",
+        "DU",
+        "Delhi University"
+      ],
+      "websiteUrl": "https://rlacollege.edu.in"
+    },
+    {
+      "id": "sri_venkateswara_college",
+      "name": "Sri Venkateswara College",
+      "location": {
+        "city": "Delhi",
+        "region": "Delhi NCR"
+      },
+      "type": "Government College (DU)",
+      "tier": "aspirational",
+      "admission": {
+        "exams": [
+          "CUET"
+        ],
+        "process": "CUET Entrance Exam + CSAS Counselling",
+        "cutoff_general_estimate": "CUET Score 760+ out of 800 (98%+ percentile)"
+      },
+      "financials": {
+        "approx_annual_fee": "₹10,000–₹25,000 per year",
+        "hidden_costs": "Exam fees, college society contributions, and commuting costs."
+      },
+      "placements": {
+        "avg_package": "₹7–12 LPA",
+        "reality_check": "Highly competitive campus placements. Top students bag packages exceeding ₹20 LPA through societies and cell."
+      },
+      "vibe_and_culture": {
+        "student_life": "Extremely vibrant campus environment with high-profile cultural fests, active debate/drama societies, and student union activities.",
+        "reddit_verdict": "Best known for: Strong science and commerce"
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Builder",
+        "The Creator"
+      ],
+      "keywords": [
+        "Sri Venkateswara College",
+        "sri_venkateswara_college",
+        "DU",
+        "Delhi University"
+      ],
+      "websiteUrl": "https://svc.ac.in"
+    },
+    {
+      "id": "college_of_vocational_studies",
+      "name": "College of Vocational Studies",
+      "location": {
+        "city": "Delhi",
+        "region": "Delhi NCR"
+      },
+      "type": "Government College (DU)",
+      "tier": "realistic",
+      "admission": {
+        "exams": [
+          "CUET"
+        ],
+        "process": "CUET Entrance Exam + CSAS Counselling",
+        "cutoff_general_estimate": "CUET Score 650–750 out of 800 (85%–97% percentile)"
+      },
+      "financials": {
+        "approx_annual_fee": "₹10,000–₹25,000 per year",
+        "hidden_costs": "Exam fees, college society contributions, and commuting costs."
+      },
+      "placements": {
+        "avg_package": "₹3.5–5 LPA",
+        "reality_check": "Moderate campus placements. Most students opt for higher education (MA/MSc/MBA) or off-campus hiring."
+      },
+      "vibe_and_culture": {
+        "student_life": "Extremely vibrant campus environment with high-profile cultural fests, active debate/drama societies, and student union activities.",
+        "reddit_verdict": "Best known for: Applied courses and employability"
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Creator",
+        "The Analyst"
+      ],
+      "keywords": [
+        "College of Vocational Studies",
+        "college_of_vocational_studies",
+        "DU",
+        "Delhi University"
+      ],
+      "websiteUrl": "https://cvs.edu.in"
+    },
+    {
+      "id": "delhi_institute_of_pharmaceutical_sciences_and_research",
+      "name": "Delhi Institute of Pharmaceutical Sciences and Research",
+      "location": {
+        "city": "Delhi",
+        "region": "Delhi NCR"
+      },
+      "type": "Government College (DU)",
+      "tier": "realistic",
+      "admission": {
+        "exams": [
+          "CUET"
+        ],
+        "process": "CUET Entrance Exam + CSAS Counselling",
+        "cutoff_general_estimate": "CUET Score 650–750 out of 800 (85%–97% percentile)"
+      },
+      "financials": {
+        "approx_annual_fee": "₹10,000–₹25,000 per year",
+        "hidden_costs": "Exam fees, college society contributions, and commuting costs."
+      },
+      "placements": {
+        "avg_package": "₹3.5–5 LPA",
+        "reality_check": "Moderate campus placements. Most students opt for higher education (MA/MSc/MBA) or off-campus hiring."
+      },
+      "vibe_and_culture": {
+        "student_life": "Extremely vibrant campus environment with high-profile cultural fests, active debate/drama societies, and student union activities.",
+        "reddit_verdict": "Best known for: Excellent for pharmacy"
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Creator",
+        "The Connector"
+      ],
+      "keywords": [
+        "Delhi Institute of Pharmaceutical Sciences and Research",
+        "delhi_institute_of_pharmaceutical_sciences_and_research",
+        "DU",
+        "Delhi University"
+      ],
+      "websiteUrl": "http://dpsru.edu.in"
+    },
+    {
+      "id": "deshbandhu_college",
+      "name": "Deshbandhu College",
+      "location": {
+        "city": "Delhi",
+        "region": "Delhi NCR"
+      },
+      "type": "Government College (DU)",
+      "tier": "realistic",
+      "admission": {
+        "exams": [
+          "CUET"
+        ],
+        "process": "CUET Entrance Exam + CSAS Counselling",
+        "cutoff_general_estimate": "CUET Score 650–750 out of 800 (85%–97% percentile)"
+      },
+      "financials": {
+        "approx_annual_fee": "₹10,000–₹25,000 per year",
+        "hidden_costs": "Exam fees, college society contributions, and commuting costs."
+      },
+      "placements": {
+        "avg_package": "₹3.5–5 LPA",
+        "reality_check": "Moderate campus placements. Most students opt for higher education (MA/MSc/MBA) or off-campus hiring."
+      },
+      "vibe_and_culture": {
+        "student_life": "Extremely vibrant campus environment with high-profile cultural fests, active debate/drama societies, and student union activities.",
+        "reddit_verdict": "Best known for: Affordable South Campus option"
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Builder",
+        "The Creator"
+      ],
+      "keywords": [
+        "Deshbandhu College",
+        "deshbandhu_college",
+        "DU",
+        "Delhi University"
+      ],
+      "websiteUrl": "https://www.deshbandhucollege.ac.in"
+    },
+    {
+      "id": "dyal_singh_college",
+      "name": "Dyal Singh College",
+      "location": {
+        "city": "Delhi",
+        "region": "Delhi NCR"
+      },
+      "type": "Government College (DU)",
+      "tier": "realistic",
+      "admission": {
+        "exams": [
+          "CUET"
+        ],
+        "process": "CUET Entrance Exam + CSAS Counselling",
+        "cutoff_general_estimate": "CUET Score 650–750 out of 800 (85%–97% percentile)"
+      },
+      "financials": {
+        "approx_annual_fee": "₹10,000–₹25,000 per year",
+        "hidden_costs": "Exam fees, college society contributions, and commuting costs."
+      },
+      "placements": {
+        "avg_package": "₹3.5–5 LPA",
+        "reality_check": "Moderate campus placements. Most students opt for higher education (MA/MSc/MBA) or off-campus hiring."
+      },
+      "vibe_and_culture": {
+        "student_life": "Extremely vibrant campus environment with high-profile cultural fests, active debate/drama societies, and student union activities.",
+        "reddit_verdict": "Best known for: Strong local reputation"
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Builder",
+        "The Creator"
+      ],
+      "keywords": [
+        "Dyal Singh College",
+        "dyal_singh_college",
+        "DU",
+        "Delhi University"
+      ],
+      "websiteUrl": "https://dsc.du.ac.in"
+    },
+    {
+      "id": "gargi_college",
+      "name": "Gargi College",
+      "location": {
+        "city": "Delhi",
+        "region": "Delhi NCR"
+      },
+      "type": "Government College (DU)",
+      "tier": "aspirational",
+      "admission": {
+        "exams": [
+          "CUET"
+        ],
+        "process": "CUET Entrance Exam + CSAS Counselling",
+        "cutoff_general_estimate": "CUET Score 760+ out of 800 (98%+ percentile)"
+      },
+      "financials": {
+        "approx_annual_fee": "₹10,000–₹25,000 per year",
+        "hidden_costs": "Exam fees, college society contributions, and commuting costs."
+      },
+      "placements": {
+        "avg_package": "₹7–12 LPA",
+        "reality_check": "Highly competitive campus placements. Top students bag packages exceeding ₹20 LPA through societies and cell."
+      },
+      "vibe_and_culture": {
+        "student_life": "Extremely vibrant campus environment with high-profile cultural fests, active debate/drama societies, and student union activities.",
+        "reddit_verdict": "Best known for: Women's academics and culture"
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Builder",
+        "The Creator"
+      ],
+      "keywords": [
+        "Gargi College",
+        "gargi_college",
+        "DU",
+        "Delhi University"
+      ],
+      "websiteUrl": "https://gargicollege.in"
+    },
+    {
+      "id": "institute_of_home_economics",
+      "name": "Institute of Home Economics",
+      "location": {
+        "city": "Delhi",
+        "region": "Delhi NCR"
+      },
+      "type": "Government College (DU)",
+      "tier": "realistic",
+      "admission": {
+        "exams": [
+          "CUET"
+        ],
+        "process": "CUET Entrance Exam + CSAS Counselling",
+        "cutoff_general_estimate": "CUET Score 650–750 out of 800 (85%–97% percentile)"
+      },
+      "financials": {
+        "approx_annual_fee": "₹10,000–₹25,000 per year",
+        "hidden_costs": "Exam fees, college society contributions, and commuting costs."
+      },
+      "placements": {
+        "avg_package": "₹3.5–5 LPA",
+        "reality_check": "Moderate campus placements. Most students opt for higher education (MA/MSc/MBA) or off-campus hiring."
+      },
+      "vibe_and_culture": {
+        "student_life": "Extremely vibrant campus environment with high-profile cultural fests, active debate/drama societies, and student union activities.",
+        "reddit_verdict": "Best known for: Excellent for home science and nutrition"
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Builder",
+        "The Creator"
+      ],
+      "keywords": [
+        "Institute of Home Economics",
+        "institute_of_home_economics",
+        "DU",
+        "Delhi University"
+      ],
+      "websiteUrl": "https://ihe.du.ac.in"
+    },
+    {
+      "id": "kamala_nehru_college",
+      "name": "Kamala Nehru College",
+      "location": {
+        "city": "Delhi",
+        "region": "Delhi NCR"
+      },
+      "type": "Government College (DU)",
+      "tier": "realistic",
+      "admission": {
+        "exams": [
+          "CUET"
+        ],
+        "process": "CUET Entrance Exam + CSAS Counselling",
+        "cutoff_general_estimate": "CUET Score 650–750 out of 800 (85%–97% percentile)"
+      },
+      "financials": {
+        "approx_annual_fee": "₹10,000–₹25,000 per year",
+        "hidden_costs": "Exam fees, college society contributions, and commuting costs."
+      },
+      "placements": {
+        "avg_package": "₹3.5–5 LPA",
+        "reality_check": "Moderate campus placements. Most students opt for higher education (MA/MSc/MBA) or off-campus hiring."
+      },
+      "vibe_and_culture": {
+        "student_life": "Extremely vibrant campus environment with high-profile cultural fests, active debate/drama societies, and student union activities.",
+        "reddit_verdict": "Best known for: Women's arts and humanities"
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Creator",
+        "The Analyst"
+      ],
+      "keywords": [
+        "Kamala Nehru College",
+        "kamala_nehru_college",
+        "DU",
+        "Delhi University"
+      ],
+      "websiteUrl": "https://knc.edu.in"
+    },
+    {
+      "id": "lady_shri_ram_college_for_women",
+      "name": "Lady Shri Ram College for Women",
+      "location": {
+        "city": "Delhi",
+        "region": "Delhi NCR"
+      },
+      "type": "Government College (DU)",
+      "tier": "aspirational",
+      "admission": {
+        "exams": [
+          "CUET"
+        ],
+        "process": "CUET Entrance Exam + CSAS Counselling",
+        "cutoff_general_estimate": "CUET Score 760+ out of 800 (98%+ percentile)"
+      },
+      "financials": {
+        "approx_annual_fee": "₹10,000–₹25,000 per year",
+        "hidden_costs": "Exam fees, college society contributions, and commuting costs."
+      },
+      "placements": {
+        "avg_package": "₹7–12 LPA",
+        "reality_check": "Highly competitive campus placements. Top students bag packages exceeding ₹20 LPA through societies and cell."
+      },
+      "vibe_and_culture": {
+        "student_life": "Extremely vibrant campus environment with high-profile cultural fests, active debate/drama societies, and student union activities.",
+        "reddit_verdict": "Best known for: Excellent for humanities and local reputation"
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Builder",
+        "The Creator"
+      ],
+      "keywords": [
+        "Lady Shri Ram College for Women",
+        "lady_shri_ram_college_for_women",
+        "DU",
+        "Delhi University"
+      ],
+      "websiteUrl": "https://lsr.edu.in"
+    },
+    {
+      "id": "pgdav_college",
+      "name": "PGDAV College",
+      "location": {
+        "city": "Delhi",
+        "region": "Delhi NCR"
+      },
+      "type": "Government College (DU)",
+      "tier": "realistic",
+      "admission": {
+        "exams": [
+          "CUET"
+        ],
+        "process": "CUET Entrance Exam + CSAS Counselling",
+        "cutoff_general_estimate": "CUET Score 650–750 out of 800 (85%–97% percentile)"
+      },
+      "financials": {
+        "approx_annual_fee": "₹10,000–₹25,000 per year",
+        "hidden_costs": "Exam fees, college society contributions, and commuting costs."
+      },
+      "placements": {
+        "avg_package": "₹3.5–5 LPA",
+        "reality_check": "Moderate campus placements. Most students opt for higher education (MA/MSc/MBA) or off-campus hiring."
+      },
+      "vibe_and_culture": {
+        "student_life": "Extremely vibrant campus environment with high-profile cultural fests, active debate/drama societies, and student union activities.",
+        "reddit_verdict": "Best known for: Affordable commerce option"
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Creator",
+        "The Analyst"
+      ],
+      "keywords": [
+        "PGDAV College",
+        "pgdav_college",
+        "DU",
+        "Delhi University"
+      ],
+      "websiteUrl": "https://pgdavcollege.in"
+    },
+    {
+      "id": "rajkumari_amrit_kaur_college_of_nursing",
+      "name": "Rajkumari Amrit Kaur College of Nursing",
+      "location": {
+        "city": "Delhi",
+        "region": "Delhi NCR"
+      },
+      "type": "Government College (DU)",
+      "tier": "realistic",
+      "admission": {
+        "exams": [
+          "CUET"
+        ],
+        "process": "CUET Entrance Exam + CSAS Counselling",
+        "cutoff_general_estimate": "CUET Score 650–750 out of 800 (85%–97% percentile)"
+      },
+      "financials": {
+        "approx_annual_fee": "₹10,000–₹25,000 per year",
+        "hidden_costs": "Exam fees, college society contributions, and commuting costs."
+      },
+      "placements": {
+        "avg_package": "₹3.5–5 LPA",
+        "reality_check": "Moderate campus placements. Most students opt for higher education (MA/MSc/MBA) or off-campus hiring."
+      },
+      "vibe_and_culture": {
+        "student_life": "Extremely vibrant campus environment with high-profile cultural fests, active debate/drama societies, and student union activities.",
+        "reddit_verdict": "Best known for: Excellent for nursing"
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Creator",
+        "The Connector"
+      ],
+      "keywords": [
+        "Rajkumari Amrit Kaur College of Nursing",
+        "rajkumari_amrit_kaur_college_of_nursing",
+        "DU",
+        "Delhi University"
+      ],
+      "websiteUrl": "https://www.rakcon.com"
+    },
+    {
+      "id": "ramanujan_college",
+      "name": "Ramanujan College",
+      "location": {
+        "city": "Delhi",
+        "region": "Delhi NCR"
+      },
+      "type": "Government College (DU)",
+      "tier": "realistic",
+      "admission": {
+        "exams": [
+          "CUET"
+        ],
+        "process": "CUET Entrance Exam + CSAS Counselling",
+        "cutoff_general_estimate": "CUET Score 650–750 out of 800 (85%–97% percentile)"
+      },
+      "financials": {
+        "approx_annual_fee": "₹10,000–₹25,000 per year",
+        "hidden_costs": "Exam fees, college society contributions, and commuting costs."
+      },
+      "placements": {
+        "avg_package": "₹3.5–5 LPA",
+        "reality_check": "Moderate campus placements. Most students opt for higher education (MA/MSc/MBA) or off-campus hiring."
+      },
+      "vibe_and_culture": {
+        "student_life": "Extremely vibrant campus environment with high-profile cultural fests, active debate/drama societies, and student union activities.",
+        "reddit_verdict": "Best known for: Coding culture and applied learning"
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Creator",
+        "The Analyst"
+      ],
+      "keywords": [
+        "Ramanujan College",
+        "ramanujan_college",
+        "DU",
+        "Delhi University"
+      ],
+      "websiteUrl": "https://ramanujancollege.ac.in"
+    },
+    {
+      "id": "sri_aurobindo_college",
+      "name": "Sri Aurobindo College",
+      "location": {
+        "city": "Delhi",
+        "region": "Delhi NCR"
+      },
+      "type": "Government College (DU)",
+      "tier": "realistic",
+      "admission": {
+        "exams": [
+          "CUET"
+        ],
+        "process": "CUET Entrance Exam + CSAS Counselling",
+        "cutoff_general_estimate": "CUET Score 650–750 out of 800 (85%–97% percentile)"
+      },
+      "financials": {
+        "approx_annual_fee": "₹10,000–₹25,000 per year",
+        "hidden_costs": "Exam fees, college society contributions, and commuting costs."
+      },
+      "placements": {
+        "avg_package": "₹3.5–5 LPA",
+        "reality_check": "Moderate campus placements. Most students opt for higher education (MA/MSc/MBA) or off-campus hiring."
+      },
+      "vibe_and_culture": {
+        "student_life": "Extremely vibrant campus environment with high-profile cultural fests, active debate/drama societies, and student union activities.",
+        "reddit_verdict": "Best known for: Affordable DU option"
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Creator",
+        "The Analyst"
+      ],
+      "keywords": [
+        "Sri Aurobindo College",
+        "sri_aurobindo_college",
+        "DU",
+        "Delhi University"
+      ],
+      "websiteUrl": "https://www.sac.ac.in"
+    },
+    {
+      "id": "shaheed_bhagat_singh_college",
+      "name": "Shaheed Bhagat Singh College",
+      "location": {
+        "city": "Delhi",
+        "region": "Delhi NCR"
+      },
+      "type": "Government College (DU)",
+      "tier": "realistic",
+      "admission": {
+        "exams": [
+          "CUET"
+        ],
+        "process": "CUET Entrance Exam + CSAS Counselling",
+        "cutoff_general_estimate": "CUET Score 650–750 out of 800 (85%–97% percentile)"
+      },
+      "financials": {
+        "approx_annual_fee": "₹10,000–₹25,000 per year",
+        "hidden_costs": "Exam fees, college society contributions, and commuting costs."
+      },
+      "placements": {
+        "avg_package": "₹3.5–5 LPA",
+        "reality_check": "Moderate campus placements. Most students opt for higher education (MA/MSc/MBA) or off-campus hiring."
+      },
+      "vibe_and_culture": {
+        "student_life": "Extremely vibrant campus environment with high-profile cultural fests, active debate/drama societies, and student union activities.",
+        "reddit_verdict": "Best known for: Excellent ROI for commerce"
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Builder",
+        "The Creator"
+      ],
+      "keywords": [
+        "Shaheed Bhagat Singh College",
+        "shaheed_bhagat_singh_college",
+        "DU",
+        "Delhi University"
+      ],
+      "websiteUrl": "https://sbsc.in"
+    },
+    {
+      "id": "ayurvedic_and_unani_tibbia_college",
+      "name": "Ayurvedic and Unani Tibbia College",
+      "location": {
+        "city": "Delhi",
+        "region": "Delhi NCR"
+      },
+      "type": "Government College (DU)",
+      "tier": "realistic",
+      "admission": {
+        "exams": [
+          "CUET"
+        ],
+        "process": "CUET Entrance Exam + CSAS Counselling",
+        "cutoff_general_estimate": "CUET Score 650–750 out of 800 (85%–97% percentile)"
+      },
+      "financials": {
+        "approx_annual_fee": "₹10,000–₹25,000 per year",
+        "hidden_costs": "Exam fees, college society contributions, and commuting costs."
+      },
+      "placements": {
+        "avg_package": "₹3.5–5 LPA",
+        "reality_check": "Moderate campus placements. Most students opt for higher education (MA/MSc/MBA) or off-campus hiring."
+      },
+      "vibe_and_culture": {
+        "student_life": "Extremely vibrant campus environment with high-profile cultural fests, active debate/drama societies, and student union activities.",
+        "reddit_verdict": "Best known for: Traditional medicine"
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Creator",
+        "The Connector"
+      ],
+      "keywords": [
+        "Ayurvedic and Unani Tibbia College",
+        "ayurvedic_and_unani_tibbia_college",
+        "DU",
+        "Delhi University"
+      ],
+      "websiteUrl": "https://tibbia.du.ac.in"
+    },
+    {
+      "id": "janki_devi_memorial_college",
+      "name": "Janki Devi Memorial College",
+      "location": {
+        "city": "Delhi",
+        "region": "Delhi NCR"
+      },
+      "type": "Government College (DU)",
+      "tier": "realistic",
+      "admission": {
+        "exams": [
+          "CUET"
+        ],
+        "process": "CUET Entrance Exam + CSAS Counselling",
+        "cutoff_general_estimate": "CUET Score 650–750 out of 800 (85%–97% percentile)"
+      },
+      "financials": {
+        "approx_annual_fee": "₹10,000–₹25,000 per year",
+        "hidden_costs": "Exam fees, college society contributions, and commuting costs."
+      },
+      "placements": {
+        "avg_package": "₹3.5–5 LPA",
+        "reality_check": "Moderate campus placements. Most students opt for higher education (MA/MSc/MBA) or off-campus hiring."
+      },
+      "vibe_and_culture": {
+        "student_life": "Extremely vibrant campus environment with high-profile cultural fests, active debate/drama societies, and student union activities.",
+        "reddit_verdict": "Best known for: Women's education and affordability"
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Creator",
+        "The Analyst"
+      ],
+      "keywords": [
+        "Janki Devi Memorial College",
+        "janki_devi_memorial_college",
+        "DU",
+        "Delhi University"
+      ],
+      "websiteUrl": "https://jdm.du.ac.in"
+    },
+    {
+      "id": "lady_hardinge_medical_college",
+      "name": "Lady Hardinge Medical College",
+      "location": {
+        "city": "Delhi",
+        "region": "Delhi NCR"
+      },
+      "type": "Government College (DU)",
+      "tier": "realistic",
+      "admission": {
+        "exams": [
+          "CUET"
+        ],
+        "process": "CUET Entrance Exam + CSAS Counselling",
+        "cutoff_general_estimate": "CUET Score 650–750 out of 800 (85%–97% percentile)"
+      },
+      "financials": {
+        "approx_annual_fee": "₹10,000–₹25,000 per year",
+        "hidden_costs": "Exam fees, college society contributions, and commuting costs."
+      },
+      "placements": {
+        "avg_package": "₹3.5–5 LPA",
+        "reality_check": "Moderate campus placements. Most students opt for higher education (MA/MSc/MBA) or off-campus hiring."
+      },
+      "vibe_and_culture": {
+        "student_life": "Extremely vibrant campus environment with high-profile cultural fests, active debate/drama societies, and student union activities.",
+        "reddit_verdict": "Best known for: Excellent for women's medical education"
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Creator",
+        "The Connector"
+      ],
+      "keywords": [
+        "Lady Hardinge Medical College",
+        "lady_hardinge_medical_college",
+        "DU",
+        "Delhi University"
+      ],
+      "websiteUrl": "https://lhmc-hosp.gov.in"
+    },
+    {
+      "id": "lady_irwin_college",
+      "name": "Lady Irwin College",
+      "location": {
+        "city": "Delhi",
+        "region": "Delhi NCR"
+      },
+      "type": "Government College (DU)",
+      "tier": "realistic",
+      "admission": {
+        "exams": [
+          "CUET"
+        ],
+        "process": "CUET Entrance Exam + CSAS Counselling",
+        "cutoff_general_estimate": "CUET Score 650–750 out of 800 (85%–97% percentile)"
+      },
+      "financials": {
+        "approx_annual_fee": "₹10,000–₹25,000 per year",
+        "hidden_costs": "Exam fees, college society contributions, and commuting costs."
+      },
+      "placements": {
+        "avg_package": "₹3.5–5 LPA",
+        "reality_check": "Moderate campus placements. Most students opt for higher education (MA/MSc/MBA) or off-campus hiring."
+      },
+      "vibe_and_culture": {
+        "student_life": "Extremely vibrant campus environment with high-profile cultural fests, active debate/drama societies, and student union activities.",
+        "reddit_verdict": "Best known for: Home science and education"
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Builder"
+      ],
+      "keywords": [
+        "Lady Irwin College",
+        "lady_irwin_college",
+        "DU",
+        "Delhi University"
+      ],
+      "websiteUrl": "https://ladyirwin.edu.in"
+    },
+    {
+      "id": "mata_sundri_college_for_women",
+      "name": "Mata Sundri College for Women",
+      "location": {
+        "city": "Delhi",
+        "region": "Delhi NCR"
+      },
+      "type": "Government College (DU)",
+      "tier": "realistic",
+      "admission": {
+        "exams": [
+          "CUET"
+        ],
+        "process": "CUET Entrance Exam + CSAS Counselling",
+        "cutoff_general_estimate": "CUET Score 650–750 out of 800 (85%–97% percentile)"
+      },
+      "financials": {
+        "approx_annual_fee": "₹10,000–₹25,000 per year",
+        "hidden_costs": "Exam fees, college society contributions, and commuting costs."
+      },
+      "placements": {
+        "avg_package": "₹3.5–5 LPA",
+        "reality_check": "Moderate campus placements. Most students opt for higher education (MA/MSc/MBA) or off-campus hiring."
+      },
+      "vibe_and_culture": {
+        "student_life": "Extremely vibrant campus environment with high-profile cultural fests, active debate/drama societies, and student union activities.",
+        "reddit_verdict": "Best known for: Women's college in central Delhi"
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Creator",
+        "The Analyst"
+      ],
+      "keywords": [
+        "Mata Sundri College for Women",
+        "mata_sundri_college_for_women",
+        "DU",
+        "Delhi University"
+      ],
+      "websiteUrl": "https://mscw.ac.in"
+    },
+    {
+      "id": "maulana_azad_medical_college",
+      "name": "Maulana Azad Medical College",
+      "location": {
+        "city": "Delhi",
+        "region": "Delhi NCR"
+      },
+      "type": "Government College (DU)",
+      "tier": "realistic",
+      "admission": {
+        "exams": [
+          "CUET"
+        ],
+        "process": "CUET Entrance Exam + CSAS Counselling",
+        "cutoff_general_estimate": "CUET Score 650–750 out of 800 (85%–97% percentile)"
+      },
+      "financials": {
+        "approx_annual_fee": "₹10,000–₹25,000 per year",
+        "hidden_costs": "Exam fees, college society contributions, and commuting costs."
+      },
+      "placements": {
+        "avg_package": "₹3.5–5 LPA",
+        "reality_check": "Moderate campus placements. Most students opt for higher education (MA/MSc/MBA) or off-campus hiring."
+      },
+      "vibe_and_culture": {
+        "student_life": "Extremely vibrant campus environment with high-profile cultural fests, active debate/drama societies, and student union activities.",
+        "reddit_verdict": "Best known for: Excellent for medicine"
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Creator",
+        "The Connector"
+      ],
+      "keywords": [
+        "Maulana Azad Medical College",
+        "maulana_azad_medical_college",
+        "DU",
+        "Delhi University"
+      ],
+      "websiteUrl": "https://www.mamc.ac.in"
+    },
+    {
+      "id": "sri_guru_nanak_dev_khalsa_college",
+      "name": "Sri Guru Nanak Dev Khalsa College",
+      "location": {
+        "city": "Delhi",
+        "region": "Delhi NCR"
+      },
+      "type": "Government College (DU)",
+      "tier": "realistic",
+      "admission": {
+        "exams": [
+          "CUET"
+        ],
+        "process": "CUET Entrance Exam + CSAS Counselling",
+        "cutoff_general_estimate": "CUET Score 650–750 out of 800 (85%–97% percentile)"
+      },
+      "financials": {
+        "approx_annual_fee": "₹10,000–₹25,000 per year",
+        "hidden_costs": "Exam fees, college society contributions, and commuting costs."
+      },
+      "placements": {
+        "avg_package": "₹3.5–5 LPA",
+        "reality_check": "Moderate campus placements. Most students opt for higher education (MA/MSc/MBA) or off-campus hiring."
+      },
+      "vibe_and_culture": {
+        "student_life": "Extremely vibrant campus environment with high-profile cultural fests, active debate/drama societies, and student union activities.",
+        "reddit_verdict": "Best known for: Commerce and Sikh minority institution reputation"
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Builder",
+        "The Creator"
+      ],
+      "keywords": [
+        "Sri Guru Nanak Dev Khalsa College",
+        "sri_guru_nanak_dev_khalsa_college",
+        "DU",
+        "Delhi University"
+      ],
+      "websiteUrl": "https://sgndkc.org"
+    },
+    {
+      "id": "zakir_husain_delhi_college",
+      "name": "Zakir Husain Delhi College",
+      "location": {
+        "city": "Delhi",
+        "region": "Delhi NCR"
+      },
+      "type": "Government College (DU)",
+      "tier": "realistic",
+      "admission": {
+        "exams": [
+          "CUET"
+        ],
+        "process": "CUET Entrance Exam + CSAS Counselling",
+        "cutoff_general_estimate": "CUET Score 650–750 out of 800 (85%–97% percentile)"
+      },
+      "financials": {
+        "approx_annual_fee": "₹10,000–₹25,000 per year",
+        "hidden_costs": "Exam fees, college society contributions, and commuting costs."
+      },
+      "placements": {
+        "avg_package": "₹3.5–5 LPA",
+        "reality_check": "Moderate campus placements. Most students opt for higher education (MA/MSc/MBA) or off-campus hiring."
+      },
+      "vibe_and_culture": {
+        "student_life": "Extremely vibrant campus environment with high-profile cultural fests, active debate/drama societies, and student union activities.",
+        "reddit_verdict": "Best known for: Historic DU college"
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Builder",
+        "The Creator"
+      ],
+      "keywords": [
+        "Zakir Husain Delhi College",
+        "zakir_husain_delhi_college",
+        "DU",
+        "Delhi University"
+      ],
+      "websiteUrl": "https://zakirhusaindelhicollege.ac.in"
+    },
+    {
+      "id": "maharaja_agrasen_college",
+      "name": "Maharaja Agrasen College",
+      "location": {
+        "city": "Delhi",
+        "region": "Delhi NCR"
+      },
+      "type": "Government College (DU)",
+      "tier": "realistic",
+      "admission": {
+        "exams": [
+          "CUET"
+        ],
+        "process": "CUET Entrance Exam + CSAS Counselling",
+        "cutoff_general_estimate": "CUET Score 650–750 out of 800 (85%–97% percentile)"
+      },
+      "financials": {
+        "approx_annual_fee": "₹10,000–₹25,000 per year",
+        "hidden_costs": "Exam fees, college society contributions, and commuting costs."
+      },
+      "placements": {
+        "avg_package": "₹3.5–5 LPA",
+        "reality_check": "Moderate campus placements. Most students opt for higher education (MA/MSc/MBA) or off-campus hiring."
+      },
+      "vibe_and_culture": {
+        "student_life": "Extremely vibrant campus environment with high-profile cultural fests, active debate/drama societies, and student union activities.",
+        "reddit_verdict": "Best known for: East Delhi DU option"
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Builder",
+        "The Creator"
+      ],
+      "keywords": [
+        "Maharaja Agrasen College",
+        "maharaja_agrasen_college",
+        "DU",
+        "Delhi University"
+      ],
+      "websiteUrl": "https://mac.du.ac.in"
+    },
+    {
+      "id": "maharshi_valmiki_college_of_education",
+      "name": "Maharshi Valmiki College of Education",
+      "location": {
+        "city": "Delhi",
+        "region": "Delhi NCR"
+      },
+      "type": "Government College (DU)",
+      "tier": "realistic",
+      "admission": {
+        "exams": [
+          "CUET"
+        ],
+        "process": "CUET Entrance Exam + CSAS Counselling",
+        "cutoff_general_estimate": "CUET Score 650–750 out of 800 (85%–97% percentile)"
+      },
+      "financials": {
+        "approx_annual_fee": "₹10,000–₹25,000 per year",
+        "hidden_costs": "Exam fees, college society contributions, and commuting costs."
+      },
+      "placements": {
+        "avg_package": "₹3.5–5 LPA",
+        "reality_check": "Moderate campus placements. Most students opt for higher education (MA/MSc/MBA) or off-campus hiring."
+      },
+      "vibe_and_culture": {
+        "student_life": "Extremely vibrant campus environment with high-profile cultural fests, active debate/drama societies, and student union activities.",
+        "reddit_verdict": "Best known for: Teacher education"
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Creator",
+        "The Connector"
+      ],
+      "keywords": [
+        "Maharshi Valmiki College of Education",
+        "maharshi_valmiki_college_of_education",
+        "DU",
+        "Delhi University"
+      ],
+      "websiteUrl": "https://mvce.du.ac.in"
+    },
+    {
+      "id": "shaheed_rajguru_college_of_applied_sciences_for_women",
+      "name": "Shaheed Rajguru College of Applied Sciences for Women",
+      "location": {
+        "city": "Delhi",
+        "region": "Delhi NCR"
+      },
+      "type": "Government College (DU)",
+      "tier": "realistic",
+      "admission": {
+        "exams": [
+          "CUET"
+        ],
+        "process": "CUET Entrance Exam + CSAS Counselling",
+        "cutoff_general_estimate": "CUET Score 650–750 out of 800 (85%–97% percentile)"
+      },
+      "financials": {
+        "approx_annual_fee": "₹10,000–₹25,000 per year",
+        "hidden_costs": "Exam fees, college society contributions, and commuting costs."
+      },
+      "placements": {
+        "avg_package": "₹3.5–5 LPA",
+        "reality_check": "Moderate campus placements. Most students opt for higher education (MA/MSc/MBA) or off-campus hiring."
+      },
+      "vibe_and_culture": {
+        "student_life": "Extremely vibrant campus environment with high-profile cultural fests, active debate/drama societies, and student union activities.",
+        "reddit_verdict": "Best known for: Applied sciences for women"
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Builder"
+      ],
+      "keywords": [
+        "Shaheed Rajguru College of Applied Sciences for Women",
+        "shaheed_rajguru_college_of_applied_sciences_for_women",
+        "DU",
+        "Delhi University"
+      ],
+      "websiteUrl": "https://www.rajgurucollege.com"
+    },
+    {
+      "id": "shyam_lal_college",
+      "name": "Shyam Lal College",
+      "location": {
+        "city": "Delhi",
+        "region": "Delhi NCR"
+      },
+      "type": "Government College (DU)",
+      "tier": "realistic",
+      "admission": {
+        "exams": [
+          "CUET"
+        ],
+        "process": "CUET Entrance Exam + CSAS Counselling",
+        "cutoff_general_estimate": "CUET Score 650–750 out of 800 (85%–97% percentile)"
+      },
+      "financials": {
+        "approx_annual_fee": "₹10,000–₹25,000 per year",
+        "hidden_costs": "Exam fees, college society contributions, and commuting costs."
+      },
+      "placements": {
+        "avg_package": "₹3.5–5 LPA",
+        "reality_check": "Moderate campus placements. Most students opt for higher education (MA/MSc/MBA) or off-campus hiring."
+      },
+      "vibe_and_culture": {
+        "student_life": "Extremely vibrant campus environment with high-profile cultural fests, active debate/drama societies, and student union activities.",
+        "reddit_verdict": "Best known for: Affordable East Delhi option"
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Creator",
+        "The Analyst"
+      ],
+      "keywords": [
+        "Shyam Lal College",
+        "shyam_lal_college",
+        "DU",
+        "Delhi University"
+      ],
+      "websiteUrl": "https://shyamlalcollege.du.ac.in"
+    },
+    {
+      "id": "vivekananda_college",
+      "name": "Vivekananda College",
+      "location": {
+        "city": "Delhi",
+        "region": "Delhi NCR"
+      },
+      "type": "Government College (DU)",
+      "tier": "realistic",
+      "admission": {
+        "exams": [
+          "CUET"
+        ],
+        "process": "CUET Entrance Exam + CSAS Counselling",
+        "cutoff_general_estimate": "CUET Score 650–750 out of 800 (85%–97% percentile)"
+      },
+      "financials": {
+        "approx_annual_fee": "₹10,000–₹25,000 per year",
+        "hidden_costs": "Exam fees, college society contributions, and commuting costs."
+      },
+      "placements": {
+        "avg_package": "₹3.5–5 LPA",
+        "reality_check": "Moderate campus placements. Most students opt for higher education (MA/MSc/MBA) or off-campus hiring."
+      },
+      "vibe_and_culture": {
+        "student_life": "Extremely vibrant campus environment with high-profile cultural fests, active debate/drama societies, and student union activities.",
+        "reddit_verdict": "Best known for: Women's humanities college"
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Creator"
+      ],
+      "keywords": [
+        "Vivekananda College",
+        "vivekananda_college",
+        "DU",
+        "Delhi University"
+      ],
+      "websiteUrl": "https://www.vivekanandacollege.edu.in"
+    },
+    {
+      "id": "deen_dayal_upadhyaya_college",
+      "name": "Deen Dayal Upadhyaya College",
+      "location": {
+        "city": "Delhi",
+        "region": "Delhi NCR"
+      },
+      "type": "Government College (DU)",
+      "tier": "realistic",
+      "admission": {
+        "exams": [
+          "CUET"
+        ],
+        "process": "CUET Entrance Exam + CSAS Counselling",
+        "cutoff_general_estimate": "CUET Score 650–750 out of 800 (85%–97% percentile)"
+      },
+      "financials": {
+        "approx_annual_fee": "₹10,000–₹25,000 per year",
+        "hidden_costs": "Exam fees, college society contributions, and commuting costs."
+      },
+      "placements": {
+        "avg_package": "₹3.5–5 LPA",
+        "reality_check": "Moderate campus placements. Most students opt for higher education (MA/MSc/MBA) or off-campus hiring."
+      },
+      "vibe_and_culture": {
+        "student_life": "Extremely vibrant campus environment with high-profile cultural fests, active debate/drama societies, and student union activities.",
+        "reddit_verdict": "Best known for: Science and value"
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Builder",
+        "The Analyst"
+      ],
+      "keywords": [
+        "Deen Dayal Upadhyaya College",
+        "deen_dayal_upadhyaya_college",
+        "DU",
+        "Delhi University"
+      ],
+      "websiteUrl": "https://dducollegedu.ac.in"
+    },
+    {
+      "id": "indira_gandhi_institute_of_physical_education_and_sports_sciences",
+      "name": "Indira Gandhi Institute of Physical Education and Sports Sciences",
+      "location": {
+        "city": "Delhi",
+        "region": "Delhi NCR"
+      },
+      "type": "Government College (DU)",
+      "tier": "realistic",
+      "admission": {
+        "exams": [
+          "CUET"
+        ],
+        "process": "CUET Entrance Exam + CSAS Counselling",
+        "cutoff_general_estimate": "CUET Score 650–750 out of 800 (85%–97% percentile)"
+      },
+      "financials": {
+        "approx_annual_fee": "₹10,000–₹25,000 per year",
+        "hidden_costs": "Exam fees, college society contributions, and commuting costs."
+      },
+      "placements": {
+        "avg_package": "₹3.5–5 LPA",
+        "reality_check": "Moderate campus placements. Most students opt for higher education (MA/MSc/MBA) or off-campus hiring."
+      },
+      "vibe_and_culture": {
+        "student_life": "Extremely vibrant campus environment with high-profile cultural fests, active debate/drama societies, and student union activities.",
+        "reddit_verdict": "Best known for: Excellent for sports education"
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Builder"
+      ],
+      "keywords": [
+        "Indira Gandhi Institute of Physical Education and Sports Sciences",
+        "indira_gandhi_institute_of_physical_education_and_sports_sciences",
+        "DU",
+        "Delhi University"
+      ],
+      "websiteUrl": "https://www.igipess.du.ac.in"
+    },
+    {
+      "id": "kalindi_college",
+      "name": "Kalindi College",
+      "location": {
+        "city": "Delhi",
+        "region": "Delhi NCR"
+      },
+      "type": "Government College (DU)",
+      "tier": "realistic",
+      "admission": {
+        "exams": [
+          "CUET"
+        ],
+        "process": "CUET Entrance Exam + CSAS Counselling",
+        "cutoff_general_estimate": "CUET Score 650–750 out of 800 (85%–97% percentile)"
+      },
+      "financials": {
+        "approx_annual_fee": "₹10,000–₹25,000 per year",
+        "hidden_costs": "Exam fees, college society contributions, and commuting costs."
+      },
+      "placements": {
+        "avg_package": "₹3.5–5 LPA",
+        "reality_check": "Moderate campus placements. Most students opt for higher education (MA/MSc/MBA) or off-campus hiring."
+      },
+      "vibe_and_culture": {
+        "student_life": "Extremely vibrant campus environment with high-profile cultural fests, active debate/drama societies, and student union activities.",
+        "reddit_verdict": "Best known for: Women's education"
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Creator",
+        "The Analyst"
+      ],
+      "keywords": [
+        "Kalindi College",
+        "kalindi_college",
+        "DU",
+        "Delhi University"
+      ],
+      "websiteUrl": "https://www.kalindicollege.in"
+    },
+    {
+      "id": "rajdhani_college",
+      "name": "Rajdhani College",
+      "location": {
+        "city": "Delhi",
+        "region": "Delhi NCR"
+      },
+      "type": "Government College (DU)",
+      "tier": "realistic",
+      "admission": {
+        "exams": [
+          "CUET"
+        ],
+        "process": "CUET Entrance Exam + CSAS Counselling",
+        "cutoff_general_estimate": "CUET Score 650–750 out of 800 (85%–97% percentile)"
+      },
+      "financials": {
+        "approx_annual_fee": "₹10,000–₹25,000 per year",
+        "hidden_costs": "Exam fees, college society contributions, and commuting costs."
+      },
+      "placements": {
+        "avg_package": "₹3.5–5 LPA",
+        "reality_check": "Moderate campus placements. Most students opt for higher education (MA/MSc/MBA) or off-campus hiring."
+      },
+      "vibe_and_culture": {
+        "student_life": "Extremely vibrant campus environment with high-profile cultural fests, active debate/drama societies, and student union activities.",
+        "reddit_verdict": "Best known for: Balanced DU option"
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Builder",
+        "The Creator"
+      ],
+      "keywords": [
+        "Rajdhani College",
+        "rajdhani_college",
+        "DU",
+        "Delhi University"
+      ],
+      "websiteUrl": "https://www.rajdhanicollege.ac.in"
+    },
+    {
+      "id": "shivaji_college",
+      "name": "Shivaji College",
+      "location": {
+        "city": "Delhi",
+        "region": "Delhi NCR"
+      },
+      "type": "Government College (DU)",
+      "tier": "realistic",
+      "admission": {
+        "exams": [
+          "CUET"
+        ],
+        "process": "CUET Entrance Exam + CSAS Counselling",
+        "cutoff_general_estimate": "CUET Score 650–750 out of 800 (85%–97% percentile)"
+      },
+      "financials": {
+        "approx_annual_fee": "₹10,000–₹25,000 per year",
+        "hidden_costs": "Exam fees, college society contributions, and commuting costs."
+      },
+      "placements": {
+        "avg_package": "₹3.5–5 LPA",
+        "reality_check": "Moderate campus placements. Most students opt for higher education (MA/MSc/MBA) or off-campus hiring."
+      },
+      "vibe_and_culture": {
+        "student_life": "Extremely vibrant campus environment with high-profile cultural fests, active debate/drama societies, and student union activities.",
+        "reddit_verdict": "Best known for: Good faculty and sports"
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Builder",
+        "The Creator"
+      ],
+      "keywords": [
+        "Shivaji College",
+        "shivaji_college",
+        "DU",
+        "Delhi University"
+      ],
+      "websiteUrl": "https://shivajicollege.ac.in"
+    },
+    {
+      "id": "shyama_prasad_mukherji_college_for_women",
+      "name": "Shyama Prasad Mukherji College for Women",
+      "location": {
+        "city": "Delhi",
+        "region": "Delhi NCR"
+      },
+      "type": "Government College (DU)",
+      "tier": "realistic",
+      "admission": {
+        "exams": [
+          "CUET"
+        ],
+        "process": "CUET Entrance Exam + CSAS Counselling",
+        "cutoff_general_estimate": "CUET Score 650–750 out of 800 (85%–97% percentile)"
+      },
+      "financials": {
+        "approx_annual_fee": "₹10,000–₹25,000 per year",
+        "hidden_costs": "Exam fees, college society contributions, and commuting costs."
+      },
+      "placements": {
+        "avg_package": "₹3.5–5 LPA",
+        "reality_check": "Moderate campus placements. Most students opt for higher education (MA/MSc/MBA) or off-campus hiring."
+      },
+      "vibe_and_culture": {
+        "student_life": "Extremely vibrant campus environment with high-profile cultural fests, active debate/drama societies, and student union activities.",
+        "reddit_verdict": "Best known for: Women's college with local reputation"
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Creator",
+        "The Analyst"
+      ],
+      "keywords": [
+        "Shyama Prasad Mukherji College for Women",
+        "shyama_prasad_mukherji_college_for_women",
+        "DU",
+        "Delhi University"
+      ],
+      "websiteUrl": "https://spm.du.ac.in"
+    },
+    {
+      "id": "keshav_mahavidyalaya",
+      "name": "Keshav Mahavidyalaya",
+      "location": {
+        "city": "Delhi",
+        "region": "Delhi NCR"
+      },
+      "type": "Government College (DU)",
+      "tier": "realistic",
+      "admission": {
+        "exams": [
+          "CUET"
+        ],
+        "process": "CUET Entrance Exam + CSAS Counselling",
+        "cutoff_general_estimate": "CUET Score 650–750 out of 800 (85%–97% percentile)"
+      },
+      "financials": {
+        "approx_annual_fee": "₹10,000–₹25,000 per year",
+        "hidden_costs": "Exam fees, college society contributions, and commuting costs."
+      },
+      "placements": {
+        "avg_package": "₹3.5–5 LPA",
+        "reality_check": "Moderate campus placements. Most students opt for higher education (MA/MSc/MBA) or off-campus hiring."
+      },
+      "vibe_and_culture": {
+        "student_life": "Extremely vibrant campus environment with high-profile cultural fests, active debate/drama societies, and student union activities.",
+        "reddit_verdict": "Best known for: Excellent for BMS/B.Com and ROI"
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Analyst",
+        "The Connector"
+      ],
+      "keywords": [
+        "Keshav Mahavidyalaya",
+        "keshav_mahavidyalaya",
+        "DU",
+        "Delhi University"
+      ],
+      "websiteUrl": "https://keshav.du.ac.in"
+    },
+    {
+      "id": "lakshmibai_college",
+      "name": "Lakshmibai College",
+      "location": {
+        "city": "Delhi",
+        "region": "Delhi NCR"
+      },
+      "type": "Government College (DU)",
+      "tier": "realistic",
+      "admission": {
+        "exams": [
+          "CUET"
+        ],
+        "process": "CUET Entrance Exam + CSAS Counselling",
+        "cutoff_general_estimate": "CUET Score 650–750 out of 800 (85%–97% percentile)"
+      },
+      "financials": {
+        "approx_annual_fee": "₹10,000–₹25,000 per year",
+        "hidden_costs": "Exam fees, college society contributions, and commuting costs."
+      },
+      "placements": {
+        "avg_package": "₹3.5–5 LPA",
+        "reality_check": "Moderate campus placements. Most students opt for higher education (MA/MSc/MBA) or off-campus hiring."
+      },
+      "vibe_and_culture": {
+        "student_life": "Extremely vibrant campus environment with high-profile cultural fests, active debate/drama societies, and student union activities.",
+        "reddit_verdict": "Best known for: Affordable women's college"
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Builder",
+        "The Creator"
+      ],
+      "keywords": [
+        "Lakshmibai College",
+        "lakshmibai_college",
+        "DU",
+        "Delhi University"
+      ],
+      "websiteUrl": "https://lakshmibaicollege.in"
+    },
+    {
+      "id": "satyawati_college",
+      "name": "Satyawati College",
+      "location": {
+        "city": "Delhi",
+        "region": "Delhi NCR"
+      },
+      "type": "Government College (DU)",
+      "tier": "realistic",
+      "admission": {
+        "exams": [
+          "CUET"
+        ],
+        "process": "CUET Entrance Exam + CSAS Counselling",
+        "cutoff_general_estimate": "CUET Score 650–750 out of 800 (85%–97% percentile)"
+      },
+      "financials": {
+        "approx_annual_fee": "₹10,000–₹25,000 per year",
+        "hidden_costs": "Exam fees, college society contributions, and commuting costs."
+      },
+      "placements": {
+        "avg_package": "₹3.5–5 LPA",
+        "reality_check": "Moderate campus placements. Most students opt for higher education (MA/MSc/MBA) or off-campus hiring."
+      },
+      "vibe_and_culture": {
+        "student_life": "Extremely vibrant campus environment with high-profile cultural fests, active debate/drama societies, and student union activities.",
+        "reddit_verdict": "Best known for: Affordable North West Delhi option"
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Builder",
+        "The Creator"
+      ],
+      "keywords": [
+        "Satyawati College",
+        "satyawati_college",
+        "DU",
+        "Delhi University"
+      ],
+      "websiteUrl": "https://satyawati.du.ac.in"
+    },
+    {
+      "id": "sri_guru_gobind_singh_college_of_commerce",
+      "name": "Sri Guru Gobind Singh College of Commerce",
+      "location": {
+        "city": "Delhi",
+        "region": "Delhi NCR"
+      },
+      "type": "Government College (DU)",
+      "tier": "realistic",
+      "admission": {
+        "exams": [
+          "CUET"
+        ],
+        "process": "CUET Entrance Exam + CSAS Counselling",
+        "cutoff_general_estimate": "CUET Score 650–750 out of 800 (85%–97% percentile)"
+      },
+      "financials": {
+        "approx_annual_fee": "₹10,000–₹25,000 per year",
+        "hidden_costs": "Exam fees, college society contributions, and commuting costs."
+      },
+      "placements": {
+        "avg_package": "₹3.5–5 LPA",
+        "reality_check": "Moderate campus placements. Most students opt for higher education (MA/MSc/MBA) or off-campus hiring."
+      },
+      "vibe_and_culture": {
+        "student_life": "Extremely vibrant campus environment with high-profile cultural fests, active debate/drama societies, and student union activities.",
+        "reddit_verdict": "Best known for: Excellent for commerce"
+      },
+      "is_hidden_gem": false,
+      "best_for_archetypes": [
+        "The Builder",
+        "The Analyst"
+      ],
+      "keywords": [
+        "Sri Guru Gobind Singh College of Commerce",
+        "sri_guru_gobind_singh_college_of_commerce",
+        "DU",
+        "Delhi University"
+      ],
+      "websiteUrl": "https://sggscc.ac.in"
     }
   ]
 }

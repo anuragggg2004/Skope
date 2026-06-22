@@ -168,7 +168,7 @@ function InteractiveDemo() {
         />
         {/* Green — navigate to start */}
         <button
-          onClick={() => navigate(user ? '/form' : '/login')}
+          onClick={() => { sessionStorage.setItem('skope_assessment_started', 'true'); navigate(user ? '/form' : '/login') }}
           title="Open full diagnostic"
           style={{ width: 12, height: 12, borderRadius: '50%', background: 'rgba(74,222,128,0.7)', border: 'none', cursor: 'pointer', padding: 0, transition: 'background 0.15s' }}
           onMouseEnter={e => e.currentTarget.style.background = '#4ade80'}
@@ -260,7 +260,7 @@ function InteractiveDemo() {
 
                     <div className="flex gap-3">
                       <button
-                        onClick={() => navigate(user ? '/form' : '/login')}
+                        onClick={() => { sessionStorage.setItem('skope_assessment_started', 'true'); navigate(user ? '/form' : '/login') }}
                         className="btn-primary text-[13px] px-5 py-2.5"
                       >
                         Get My Full PathReport →
@@ -337,6 +337,7 @@ export default function LandingPage() {
   const { user, pathReport } = useAuth()
 
   const handleStart = () => {
+    sessionStorage.setItem('skope_assessment_started', 'true')
     if (user) {
       if (pathReport) {
         navigate('/result')

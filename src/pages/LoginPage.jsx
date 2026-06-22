@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import { auth } from '../firebase'
 import { fetchSignInMethodsForEmail } from 'firebase/auth'
-import AuroraBackground from '../components/AuroraBackground'
 
 // ─── Icon Components ──────────────────────────────────
 const GoogleIcon = () => (
@@ -116,9 +115,11 @@ export default function LoginPage() {
     return () => clearInterval(t)
   }, [])
 
-  // Redirect if already authenticated
   useEffect(() => {
     if (!loading && user) {
+      if (!pathReport) {
+        sessionStorage.setItem('skope_assessment_started', 'true')
+      }
       navigate(pathReport ? '/result' : '/form')
     }
   }, [user, loading, pathReport, navigate])
@@ -151,6 +152,7 @@ export default function LoginPage() {
     setGuestLoading(true)
     try {
       await loginAsGuest()
+      sessionStorage.setItem('skope_assessment_started', 'true')
       navigate('/form')
     } catch (err) {
       setError(`Guest login failed: ${err.message}`)

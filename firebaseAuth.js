@@ -11,7 +11,7 @@ async function getGooglePublicCerts() {
   }
 
   console.log('[Auth] Fetching fresh Firebase public keys from Google...')
-  const res = await fetch('https://www.googleapis.com/robot/v1/metadata/x509/securetoken-system@system.gserviceaccount.com')
+  const res = await fetch('https://www.googleapis.com/robot/v1/metadata/x509/securetoken@system.gserviceaccount.com')
   if (!res.ok) {
     throw new Error('Failed to fetch Firebase public keys')
   }
