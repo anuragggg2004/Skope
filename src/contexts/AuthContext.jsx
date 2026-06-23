@@ -3,9 +3,10 @@ import { auth, googleProvider } from '../firebase'
 import {
   onAuthStateChanged,
   signInWithPopup,
+  signInWithRedirect,
+  getRedirectResult,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
-  signInAnonymously,
   signOut,
   updateProfile,
   sendPasswordResetEmail
@@ -19,6 +20,31 @@ export function useAuth() {
   return ctx
 }
 
+// ─── Helpers ────────────────────────────────────────────────
+function isMobileBrowser() {
+  return /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(navigator.userAgent)
+}
+
+// Fetch the user's saved PathReport from backend
+async function fetchPathReport(uid, token) {
+  const res = await fetch(`/api/get-report/${uid}`, {
+    headers: { Authorization: `Bearer ${token}` }
+  })
+  if (!res.ok) return null
+  const data = await res.json()
+  return data.success && data.found ? data.reportData : null
+}
+
+// Sync user record to MongoDB (non-blocking — errors don't interrupt auth)
+function syncUser(uid, email, displayName, provider, token) {
+  fetch('/api/admin/sync-user', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+    body: JSON.stringify({ uid, email, displayName, provider })
+  }).catch(err => console.error('[Auth] Sync user failed:', err.message))
+}
+
+// ─── Provider ───────────────────────────────────────────────
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(() => {
     try {
@@ -28,87 +54,109 @@ export function AuthProvider({ children }) {
       return null
     }
   })
-  // Start loading = true so the UI waits for Firebase to resolve auth state
+  // loading starts true — we wait for Firebase to resolve auth state
   const [loading, setLoading] = useState(true)
   const [pathReport, setPathReport] = useState(null)
 
   useEffect(() => {
+    // ── STEP 1: Consume any pending redirect result FIRST ──
+    // This handles the case where signInWithRedirect (mobile fallback) completed
+    // and the browser returned to the app. Without this, the user appears logged out.
+    getRedirectResult(auth)
+      .then((result) => {
+        if (result?.user) {
+          console.log('[Auth] Redirect sign-in completed for:', result.user.email)
+          // onAuthStateChanged will fire automatically after this — no extra work needed
+        }
+      })
+      .catch((err) => {
+        // Known non-error: auth/no-auth-event means no redirect is pending — safe to ignore
+        if (err.code !== 'auth/no-auth-event' && err.code !== 'auth/null-user') {
+          console.warn('[Auth] Redirect result error:', err.code, err.message)
+        }
+      })
+
+    // ── STEP 2: Subscribe to ongoing auth state changes ──
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
-      // If local guest mode is active, do not override user with null
+      // Guest mode — don't override with Firebase null
       const isLocalGuest = sessionStorage.getItem('skope_guest_mode') === 'true'
       if (isLocalGuest) {
         setLoading(false)
         return
       }
 
-      if (firebaseUser) {
-        setLoading(true)
-      }
-
       setUser(firebaseUser)
 
       if (firebaseUser && !firebaseUser.isAnonymous) {
-        // Keep loading = true until ALL async operations complete
-        // This prevents premature redirect before the report is fetched
+        // Keep loading=true while we fetch data so UI doesn't flash
+        setLoading(true)
         try {
           const token = await firebaseUser.getIdToken()
 
-          // Sync user to MongoDB on login/auth change
-          await fetch('/api/admin/sync-user', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${token}`
-            },
-            body: JSON.stringify({
-              uid: firebaseUser.uid,
-              email: firebaseUser.email,
-              displayName: firebaseUser.displayName,
-              provider: firebaseUser.providerData?.[0]?.providerId || 'email'
-            })
-          }).catch(err => console.error('Sync user failed:', err))
+          // Sync user to MongoDB (fire-and-forget)
+          syncUser(
+            firebaseUser.uid,
+            firebaseUser.email,
+            firebaseUser.displayName,
+            firebaseUser.providerData?.[0]?.providerId || 'email',
+            token
+          )
 
-          // Fetch existing report so we can route to /result vs /form
-          const res = await fetch(`/api/get-report/${firebaseUser.uid}`, {
-            headers: { 'Authorization': `Bearer ${token}` }
-          })
-          if (res.ok) {
-            const data = await res.json()
-            if (data.success && data.found) {
-              setPathReport(data.reportData)
-              sessionStorage.setItem('pathreport', JSON.stringify(data.reportData))
-            } else {
-              setPathReport(null)
-            }
+          // Fetch existing PathReport (determines /form vs /result routing)
+          const report = await fetchPathReport(firebaseUser.uid, token)
+          if (report) {
+            setPathReport(report)
+            sessionStorage.setItem('pathreport', JSON.stringify(report))
+          } else {
+            setPathReport(null)
           }
         } catch (err) {
-          console.error('Failed to pre-fetch user report from database:', err)
+          console.error('[Auth] Failed to fetch user report:', err.message)
           setPathReport(null)
         }
-      } else {
-        if (!firebaseUser) {
-          setPathReport(null)
-          sessionStorage.removeItem('pathreport')
-        }
+      } else if (!firebaseUser) {
+        setPathReport(null)
+        sessionStorage.removeItem('pathreport')
       }
 
-      // Only set loading = false AFTER everything is complete
+      // Release loading AFTER all async work is done
       setLoading(false)
     })
+
     return unsubscribe
   }, [])
 
-  // ─── Auth Methods ──────────────────────────────────────
+  // ─── Auth Methods ──────────────────────────────────────────
 
   const loginWithGoogle = async () => {
     setLoading(true)
     sessionStorage.removeItem('skope_guest_mode')
     sessionStorage.removeItem('skope_guest_user')
+
     try {
-      // Use popup-only — avoids cross-origin storage issues on custom domains (Render, Vercel, etc.)
-      const result = await signInWithPopup(auth, googleProvider)
-      return result.user
+      if (isMobileBrowser()) {
+        // Mobile browsers block popups — use redirect instead
+        // The result will be picked up by getRedirectResult() on next page load
+        sessionStorage.setItem('skope_redirect_pending', 'true')
+        await signInWithRedirect(auth, googleProvider)
+        return // page will navigate away; auth resumes on return
+      } else {
+        // Desktop — use popup (faster UX, no page reload)
+        const result = await signInWithPopup(auth, googleProvider)
+        return result.user
+      }
     } catch (err) {
+      // If popup was blocked on desktop, fall back to redirect
+      if (err.code === 'auth/popup-blocked' || err.code === 'auth/popup-closed-by-user') {
+        try {
+          sessionStorage.setItem('skope_redirect_pending', 'true')
+          await signInWithRedirect(auth, googleProvider)
+          return
+        } catch (redirectErr) {
+          setLoading(false)
+          throw redirectErr
+        }
+      }
       setLoading(false)
       throw err
     }
@@ -159,6 +207,7 @@ export function AuthProvider({ children }) {
   const logout = async () => {
     sessionStorage.removeItem('skope_guest_mode')
     sessionStorage.removeItem('skope_guest_user')
+    sessionStorage.removeItem('skope_redirect_pending')
     setUser(null)
     await signOut(auth)
   }

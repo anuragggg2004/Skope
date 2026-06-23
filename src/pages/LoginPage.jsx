@@ -87,6 +87,11 @@ export default function LoginPage() {
   const navigate = useNavigate()
   const { user, loading, pathReport, loginWithGoogle, loginWithEmail, signupWithEmail, loginAsGuest, resetPassword } = useAuth()
 
+  // Detect if we're returning from a Google redirect (mobile/popup-blocked flow)
+  const [redirectPending] = useState(
+    () => sessionStorage.getItem('skope_redirect_pending') === 'true'
+  )
+
   // viewMode: 'login' | 'forgot'
   const [viewMode, setViewMode]       = useState('login')
   const [isSignup, setIsSignup]       = useState(false)
@@ -115,12 +120,15 @@ export default function LoginPage() {
     return () => clearInterval(t)
   }, [])
 
+  // Navigate away once auth resolves
   useEffect(() => {
     if (!loading && user) {
+      // Clear the redirect flag on successful auth
+      sessionStorage.removeItem('skope_redirect_pending')
       if (!pathReport) {
         sessionStorage.setItem('skope_assessment_started', 'true')
       }
-      navigate(pathReport ? '/result' : '/form')
+      navigate(pathReport ? '/result' : '/form', { replace: true })
     }
   }, [user, loading, pathReport, navigate])
 
@@ -131,17 +139,21 @@ export default function LoginPage() {
     setGoogleLoading(true)
     try {
       await loginWithGoogle()
-      // onAuthStateChanged + redirect is handled by useEffect above
+      // For popup: onAuthStateChanged fires and the useEffect above navigates
+      // For redirect (mobile/blocked): page navigates away to Google — nothing else needed
     } catch (err) {
       console.error('[Auth] Google Login Error:', err)
-      const msgs = {
-        'auth/unauthorized-domain':    'Domain not authorized. Add it in Firebase Console → Authentication → Authorized Domains.',
-        'auth/popup-blocked':          'Popup was blocked. Please enable popups for this site in your browser settings.',
-        'auth/popup-closed-by-user':   'Sign-in cancelled.',
-        'auth/internal-error':         'Firebase internal error. Ensure Google sign-in is enabled in Firebase Console → Authentication → Sign-in method, and the project support email is configured in Settings.',
-        'auth/configuration-not-found':'Google provider not configured in Firebase Console. Enable it in Authentication → Sign-in method.',
+      // Don't show error if this was a redirect fallback (page is navigating away)
+      const isRedirectFallback = err.code === 'auth/popup-blocked' || err.code === 'auth/popup-closed-by-user'
+      if (!isRedirectFallback) {
+        const msgs = {
+          'auth/unauthorized-domain':    'Domain not authorized. Add it in Firebase Console → Authentication → Authorized Domains.',
+          'auth/internal-error':         'Firebase internal error. Ensure Google sign-in is enabled in Firebase Console → Authentication → Sign-in method.',
+          'auth/configuration-not-found':'Google provider not configured in Firebase Console. Enable it in Authentication → Sign-in method.',
+          'auth/network-request-failed': 'Network error. Please check your connection and try again.',
+        }
+        setError(msgs[err.code] || `Google sign-in failed: ${err.message}`)
       }
-      setError(msgs[err.code] || `Google sign-in failed: ${err.message}`)
     } finally {
       setGoogleLoading(false)
     }
@@ -234,10 +246,21 @@ export default function LoginPage() {
   }
 
   // Show full-page spinner while auth state is resolving
-  if (loading) {
+  // Show richer screen when returning from Google redirect (mobile/popup-blocked flow)
+  if (loading || redirectPending) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: '#080b14' }}>
+      <div className="min-h-screen flex flex-col items-center justify-center gap-4" style={{ background: '#080b14' }}>
+        <div className="w-12 h-12 rounded-[14px] flex items-center justify-center mb-1"
+          style={{ background: 'linear-gradient(135deg, #4f8ef7, #8b5cf6)', boxShadow: '0 4px 24px rgba(79,142,247,0.35)' }}>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <circle cx="10" cy="10" r="7" stroke="white" strokeWidth="2.5" fill="none"/>
+            <line x1="15" y1="15" x2="21" y2="21" stroke="white" strokeWidth="2.5" strokeLinecap="round"/>
+          </svg>
+        </div>
         <div className="w-8 h-8 border-2 border-[rgba(79,142,247,0.2)] border-t-[#4f8ef7] rounded-full animate-spin" />
+        <p className="font-dm text-[13px] text-[rgba(240,242,255,0.4)]">
+          {redirectPending ? 'Completing your sign-in…' : 'Loading…'}
+        </p>
       </div>
     )
   }
