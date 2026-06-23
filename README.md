@@ -61,6 +61,8 @@ skope/
 │   ├── Delhi_DU_Colleges_Expanded.csv    # DU expanded college dataset
 │   ├── Delhi_NCR_Colleges_Database.csv   # NCR colleges dataset
 │   └── knowledge_base.json               # Unified 247-college RAG knowledge base
+├── docs/
+│   └── github_profile_readme.md          # Profile description document
 ├── models/
 │   ├── College.js                        # Mongoose schema for College records
 │   ├── User.js                           # User details schema
@@ -68,13 +70,19 @@ skope/
 │   └── Admin.js                          # Admin authentication schema
 ├── public/
 │   └── dashboard.html                    # Visual mockup dashboard
+├── server/
+│   ├── adminAuth.js                      # Admin authentication middleware & logs
+│   ├── env.js                            # Backend environment validation (Zod)
+│   └── firebaseAuth.js                   # Firebase User verification middleware
 ├── src/
 │   ├── App.jsx                           # Core React routing & flow guards
 │   ├── components/                       # Shared UI components
 │   ├── pages/                            # Page components (Form, Result, Admin...)
 │   └── index.css                         # Global CSS & Design System
+├── tests/
+│   ├── server.test.js                    # Server CORS and security test suite
+│   └── test-gemini.js                    # Gemini API integration test script
 ├── server.js                             # Express API, RAG loading & Gemini routes
-├── server.test.js                        # Server CORS and security test suite
 ├── vite.config.js                        # Vite build configuration
 └── package.json                          # App dependencies & run scripts
 ```
