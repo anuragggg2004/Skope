@@ -21,7 +21,7 @@
 // Get free API key at: https://aistudio.google.com/apikey
 // =============================================
 
-import './env.js'
+import './server/env.js'
 import express from 'express'
 import cors from 'cors'
 import path from 'path'
@@ -41,8 +41,8 @@ import rateLimit from 'express-rate-limit'
 import mongoSanitize from 'express-mongo-sanitize'
 import compression from 'compression'
 import { z } from 'zod'
-import { authenticateFirebaseUser } from './firebaseAuth.js'
-import { authenticateAdmin, requireRole, signAdminToken, logAudit } from './adminAuth.js'
+import { authenticateFirebaseUser } from './server/firebaseAuth.js'
+import { authenticateAdmin, requireRole, signAdminToken, logAudit } from './server/adminAuth.js'
 
 
 // =============================================

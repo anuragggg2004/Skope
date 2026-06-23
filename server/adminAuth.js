@@ -10,7 +10,7 @@
 // =============================================
 
 import jwt from 'jsonwebtoken'
-import AuditLog from './models/AuditLog.js'
+import AuditLog from '../models/AuditLog.js'
 
 const getAdminSecret = () => process.env.ADMIN_JWT_SECRET || 'skope-admin-secret-change-in-prod'
 
