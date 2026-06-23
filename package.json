@@ -19,7 +19,7 @@
     "express": "^4.21.1",
     "express-mongo-sanitize": "^2.2.0",
     "express-rate-limit": "^8.5.2",
-    "firebase": "^12.14.0",
+    "firebase": "^12.15.0",
     "framer-motion": "^12.40.0",
     "helmet": "^8.2.0",
     "html2canvas": "^1.4.1",
