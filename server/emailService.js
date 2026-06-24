@@ -15,7 +15,9 @@ function getTransporter() {
   const smtpPass = (process.env.SMTP_PASS || '').replace(/\s+/g, '')
 
   _transporter = nodemailer.createTransport({
-    service: 'gmail',
+    host: 'smtp.gmail.com',
+    port: 587,
+    secure: false, // false for port 587 (STARTTLS)
     auth: {
       user: process.env.SMTP_USER,
       pass: smtpPass
