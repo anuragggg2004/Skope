@@ -1236,9 +1236,9 @@ app.post('/api/auth/signup', authLimiter, async (req, res, next) => {
     const existing = await User.findOne({ email: normalEmail })
     if (existing) return res.status(409).json({ error: 'An account with this email already exists. Please log in.' })
 
-    // Generate a unique userId (like Firebase UID format)
-    const { createId } = await import('@paralleldrive/cuid2')
-    const uid = createId()
+    // Generate a unique userId (standard secure UUID format)
+    const { randomUUID } = await import('crypto')
+    const uid = randomUUID()
 
     // Create user — passwordHash pre-save hook hashes it
     const user = new User({
