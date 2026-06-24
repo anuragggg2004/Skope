@@ -31,8 +31,6 @@ function getTransporter() {
 
 // ─── Send Password Reset Email ────────────────────────────
 export async function sendPasswordResetEmail({ to, resetUrl, displayName }) {
-  const transporter = getTransporter()
-
   const firstName = (displayName || to.split('@')[0]).split(' ')[0]
 
   const html = `
@@ -119,6 +117,38 @@ export async function sendPasswordResetEmail({ to, resetUrl, displayName }) {
 </html>
   `.trim()
 
+  const RESEND_API_KEY = process.env.RESEND_API_KEY
+  if (RESEND_API_KEY) {
+    console.log('[Email] Sending password reset email via Resend HTTP API...')
+    const fromEmail = process.env.EMAIL_FROM || 'onboarding@resend.dev'
+    const res = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${RESEND_API_KEY}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        from: `Skope <${fromEmail}>`,
+        to: [to],
+        subject: 'Reset your Skope password',
+        html,
+        text: `Hi ${firstName},\n\nReset your Skope password here (expires in 1 hour):\n${resetUrl}\n\nIf you didn't request this, ignore this email.\n\n— Skope Team`
+      })
+    })
+
+    if (!res.ok) {
+      const errText = await res.text()
+      throw new Error(`Resend API returned status ${res.status}: ${errText}`)
+    }
+
+    const data = await res.json()
+    console.log(`[Email] Password reset email sent via Resend API successfully. ID: ${data.id}`)
+    return
+  }
+
+  // Fallback to standard SMTP (Local development or Paid Render tier)
+  console.log('[Email] Sending password reset email via SMTP...')
+  const transporter = getTransporter()
   await transporter.sendMail({
     from: `"Skope" <${process.env.SMTP_USER}>`,
     to,
@@ -127,5 +157,5 @@ export async function sendPasswordResetEmail({ to, resetUrl, displayName }) {
     text: `Hi ${firstName},\n\nReset your Skope password here (expires in 1 hour):\n${resetUrl}\n\nIf you didn't request this, ignore this email.\n\n— Skope Team`
   })
 
-  console.log(`[Email] Password reset email sent to: ${to}`)
+  console.log(`[Email] Password reset email sent via SMTP to: ${to}`)
 }
