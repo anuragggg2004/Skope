@@ -17,6 +17,7 @@ const SharePage = React.lazy(() => import('./pages/SharePage'))
 const NotFoundPage = React.lazy(() => import('./pages/NotFoundPage'))
 const AdminLoginPage = React.lazy(() => import('./pages/AdminLoginPage'))
 const AdminDashboardPage = React.lazy(() => import('./pages/AdminDashboardPage'))
+const ResetPasswordPage = React.lazy(() => import('./pages/ResetPasswordPage'))
 
 // Only show HelpBot on the landing page
 function ConditionalHelpBot() {
@@ -140,9 +141,10 @@ export default function App() {
             <SmartRouteRedirector>
               <Routes>
                 {/* Public routes */}
-                <Route path="/"      element={<LandingPage />} />
-                <Route path="/login" element={<LoginPage />} />
-                <Route path="/share" element={<SharePage />} />
+                <Route path="/"             element={<LandingPage />} />
+                <Route path="/login"        element={<LoginPage />} />
+                <Route path="/share"        element={<SharePage />} />
+                <Route path="/reset-password" element={<ResetPasswordPage />} />
 
                 {/* Protected routes */}
                 <Route path="/form"        element={<ProtectedRoute><FormRoute><FormPage /></FormRoute></ProtectedRoute>} />

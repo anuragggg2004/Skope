@@ -35,6 +35,7 @@ import Feedback from './models/Feedback.js'
 import SystemSettings from './models/SystemSettings.js'
 import College from './models/College.js'
 import User from './models/User.js'
+import PasswordResetToken from './models/PasswordResetToken.js'
 import fs from 'fs'
 import helmet from 'helmet'
 import rateLimit from 'express-rate-limit'
@@ -43,6 +44,7 @@ import compression from 'compression'
 import { z } from 'zod'
 import { authenticateUser, signUserToken } from './server/jwtAuth.js'
 import { authenticateAdmin, requireRole, signAdminToken, logAudit } from './server/adminAuth.js'
+import { sendPasswordResetEmail } from './server/emailService.js'
 
 
 // =============================================
@@ -1294,23 +1296,92 @@ app.get('/api/auth/me', authenticateUser, async (req, res, next) => {
   } catch (err) { next(err) }
 })
 
-// POST /api/auth/reset-password — Request password reset
-// Since there is no email service configured, this validates email exists
-// and returns a success message prompting user to contact admin.
-app.post('/api/auth/reset-password', authLimiter, async (req, res, next) => {
+// POST /api/auth/forgot-password — Generate token and send reset email
+app.post('/api/auth/forgot-password', authLimiter, async (req, res, next) => {
   try {
     const { email } = req.body
     if (!email) return res.status(400).json({ error: 'Email is required.' })
     const normalEmail = email.toLowerCase().trim()
-    const user = await User.findOne({ email: normalEmail })
+
     // Always return success to prevent email enumeration
+    const user = await User.findOne({ email: normalEmail })
     if (!user) {
       return res.json({ success: true, message: 'If an account exists, a reset link has been sent.' })
     }
-    // In a full implementation, send an email with a reset token here.
-    // For now, log the request and direct user to contact admin.
-    console.log(`[Auth] Password reset requested for: ${normalEmail}`)
-    res.json({ success: true, message: 'If an account exists, a reset link has been sent. Please contact support if you need immediate help.' })
+
+    // Delete any existing tokens for this user
+    await PasswordResetToken.deleteMany({ userId: user.userId })
+
+    // Create new token — expires in 1 hour
+    const rawToken = PasswordResetToken.generateToken()
+    await PasswordResetToken.create({
+      userId: user.userId,
+      email: normalEmail,
+      token: rawToken,
+      expiresAt: new Date(Date.now() + 60 * 60 * 1000)  // 1 hour
+    })
+
+    // Build reset URL
+    const appUrl = process.env.APP_URL || 'http://localhost:3000'
+    const resetUrl = `${appUrl}/reset-password?token=${rawToken}`
+
+    // Send email
+    await sendPasswordResetEmail({
+      to: normalEmail,
+      resetUrl,
+      displayName: user.displayName || ''
+    })
+
+    console.log(`[Auth] Password reset email sent to: ${normalEmail}`)
+    res.json({ success: true, message: 'A password reset link has been sent to your email.' })
+  } catch (err) {
+    console.error('[Auth] Forgot password error:', err.message)
+    next(err)
+  }
+})
+
+// POST /api/auth/reset-password/:token — Validate token and set new password
+app.post('/api/auth/reset-password/:token', authLimiter, async (req, res, next) => {
+  try {
+    const { token } = req.params
+    const { password } = req.body
+
+    if (!token) return res.status(400).json({ error: 'Reset token is required.' })
+    if (!password || password.length < 6) return res.status(400).json({ error: 'Password must be at least 6 characters.' })
+
+    // Find and validate token
+    const resetRecord = await PasswordResetToken.findOne({ token })
+    if (!resetRecord) return res.status(400).json({ error: 'This reset link is invalid or has already been used.' })
+    if (resetRecord.expiresAt < new Date()) {
+      await PasswordResetToken.deleteOne({ token })
+      return res.status(400).json({ error: 'This reset link has expired. Please request a new one.' })
+    }
+
+    // Find user and update password
+    const user = await User.findOne({ userId: resetRecord.userId })
+    if (!user) return res.status(400).json({ error: 'User not found.' })
+
+    // The pre-save hook in User model will bcrypt this
+    user.passwordHash = password
+    await user.save()
+
+    // Delete the used token
+    await PasswordResetToken.deleteOne({ token })
+
+    console.log(`[Auth] Password reset successful for: ${resetRecord.email}`)
+    res.json({ success: true, message: 'Password updated successfully. You can now log in.' })
+  } catch (err) { next(err) }
+})
+
+// GET /api/auth/verify-reset-token/:token — Check if a reset token is valid (for UI)
+app.get('/api/auth/verify-reset-token/:token', async (req, res, next) => {
+  try {
+    const { token } = req.params
+    const record = await PasswordResetToken.findOne({ token })
+    if (!record || record.expiresAt < new Date()) {
+      return res.json({ valid: false })
+    }
+    res.json({ valid: true, email: record.email })
   } catch (err) { next(err) }
 })
 

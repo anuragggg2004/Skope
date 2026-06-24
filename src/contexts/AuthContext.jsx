@@ -160,13 +160,13 @@ export function AuthProvider({ children }) {
   }
 
   const resetPassword = async (email) => {
-    const res = await fetch('/api/auth/reset-password', {
+    const res = await fetch('/api/auth/forgot-password', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email })
     })
     const data = await res.json()
-    if (!res.ok) throw new Error(data.error || 'Password reset failed')
+    if (!res.ok) throw new Error(data.error || 'Failed to send reset email')
     return data
   }
 
