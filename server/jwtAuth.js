@@ -7,7 +7,16 @@
 
 import jwt from 'jsonwebtoken'
 
-const getJwtSecret = () => process.env.JWT_SECRET || 'skope-jwt-secret-change-in-prod'
+const getJwtSecret = () => {
+  const secret = process.env.JWT_SECRET
+  if (!secret) {
+    if (process.env.NODE_ENV === 'production') {
+      throw new Error('FATAL: JWT_SECRET environment variable is not set in production!')
+    }
+    return 'skope-jwt-secret-change-in-prod'
+  }
+  return secret
+}
 
 // Sign a user token (called after successful login/signup)
 export function signUserToken(payload) {

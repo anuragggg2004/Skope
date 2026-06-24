@@ -31,7 +31,6 @@ describe('Skope Server Audit & Hardening Tests', () => {
   beforeEach(() => {
     vi.clearAllMocks()
     process.env.NODE_ENV = 'test'
-    process.env.VITE_FIREBASE_PROJECT_ID = 'skope-54260'
   })
 
   describe('CORS Hardening Policy', () => {
@@ -83,7 +82,7 @@ describe('Skope Server Audit & Hardening Tests', () => {
     })
   })
 
-  describe('Firebase Authentication Guardrails', () => {
+  describe('JWT Authentication Guardrails', () => {
     it('should deny access to /api/save-report if Authorization header is missing', async () => {
       const response = await request(app)
         .post('/api/save-report')

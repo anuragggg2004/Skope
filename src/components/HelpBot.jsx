@@ -12,7 +12,7 @@ const FAQ = [
   },
   {
     keywords: ['is my data private', 'data privacy', 'data safe', 'information safe', 'secure', 'privacy'],
-    answer: "Your data stays with us and is not shared with third parties. Your PathReport is stored securely and linked to your account only. We use Firebase Authentication for secure login. The information you provide is only used to generate your personalized PathReport."
+    answer: "Your data stays with us and is not shared with third parties. Your PathReport is stored securely and linked to your account only. We use secure password hashing and JWT session tokens for authentication. The information you provide is only used to generate your personalized PathReport."
   },
   {
     keywords: ['how long', 'time does it take', 'how much time', 'duration'],
@@ -20,7 +20,7 @@ const FAQ = [
   },
   {
     keywords: ['cost', 'free', 'paid', 'price', 'subscription', 'money'],
-    answer: "Skope is currently free to use. You just need to create an account with Google or email/OTP and you can generate your PathReport at no cost."
+    answer: "Skope is currently free to use. You just need to create an account with your email or continue in guest mode, and you can generate your PathReport at no cost."
   },
   {
     keywords: ['hidden gem', 'hidden gems', 'lesser known', 'unknown colleges'],
@@ -51,8 +51,8 @@ const FAQ = [
     answer: "You can access your profile from the Navbar (click your avatar/initials in the top right). The profile page shows your account info, and you can edit your display name there."
   },
   {
-    keywords: ['login', 'sign in', 'sign up', 'create account', 'register', 'google', 'otp', 'phone'],
-    answer: "You can sign in using: (1) Google Sign-in — fastest, one click. (2) Email and Password — standard signup. (3) Phone OTP — enter your Indian mobile number and get a 6-digit SMS code. All methods are secure and free."
+    keywords: ['login', 'sign in', 'sign up', 'create account', 'register', 'guest'],
+    answer: "You can sign in using: (1) Email and Password — standard signup. (2) Guest Mode — start the test instantly without creating an account. All methods are secure and free."
   },
   {
     keywords: ['marks too low', 'low marks', 'bad marks', 'fail', 'not good', 'weak'],

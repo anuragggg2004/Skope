@@ -255,10 +255,10 @@ export default function ProfilePage() {
                   <p className="font-dm text-[12px] text-[rgba(240,242,255,0.35)] mt-0.5 truncate">
                     {isGuest ? 'Guest session' : (user.email || user.phoneNumber || 'No email')}
                   </p>
-                  {user.providerData?.[0]?.providerId && !isGuest && (
+                  {!isGuest && (
                     <div className="inline-flex items-center gap-1 mt-1.5 px-2 py-0.5 rounded-full bg-[rgba(255,255,255,0.04)] border border-[rgba(255,255,255,0.07)]">
                       <span className="font-dm text-[10px] text-[rgba(240,242,255,0.35)]">
-                        {user.providerData[0].providerId === 'google.com' ? 'Google Account' : 'Phone / Email'}
+                        Email Account
                       </span>
                     </div>
                   )}

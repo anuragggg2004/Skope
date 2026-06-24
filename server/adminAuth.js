@@ -12,7 +12,16 @@
 import jwt from 'jsonwebtoken'
 import AuditLog from '../models/AuditLog.js'
 
-const getAdminSecret = () => process.env.ADMIN_JWT_SECRET || 'skope-admin-secret-change-in-prod'
+const getAdminSecret = () => {
+  const secret = process.env.ADMIN_JWT_SECRET
+  if (!secret) {
+    if (process.env.NODE_ENV === 'production') {
+      throw new Error('FATAL: ADMIN_JWT_SECRET environment variable is not set in production!')
+    }
+    return 'skope-admin-secret-change-in-prod'
+  }
+  return secret
+}
 
 // Role hierarchy (higher = more access)
 const ROLE_LEVELS = {

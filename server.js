@@ -143,9 +143,13 @@ async function seedAdminData() {
     // Seed founder admin account if none exists
     const adminCount = await Admin.countDocuments()
     if (adminCount === 0) {
+      const adminPassword = process.env.INITIAL_ADMIN_PASSWORD || 'admin123'
+      if (!process.env.INITIAL_ADMIN_PASSWORD) {
+        console.warn('[Seed] WARNING: INITIAL_ADMIN_PASSWORD env var is not set. Using default weak password!')
+      }
       await Admin.create({
         email: 'atiwary253@gmail.com',
-        password: 'admin123',
+        password: adminPassword,
         role: 'founder',
         displayName: 'Anurag Tiwary'
       })
@@ -180,6 +184,9 @@ async function seedAdminData() {
 
 const app = express()
 
+// Trust reverse proxy (needed for express-rate-limit on Render/proxies)
+app.set('trust proxy', 1)
+
 // 1. Enable secure HTTP headers with Helmet
 app.use(helmet({
   contentSecurityPolicy: {
@@ -188,9 +195,9 @@ app.use(helmet({
       scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'", "https://cdnjs.cloudflare.com", "https://www.google.com", "https://www.gstatic.com", "https://apis.google.com", "https://accounts.google.com"],
       styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com", "https://api.fontshare.com", "https://www.gstatic.com"],
       imgSrc: ["'self'", "data:", "https://hoirqrkdgbmvpwutwuwj-all.supabase.co", "https://capsule-render.vercel.app", "https://readme-typing-svg.herokuapp.com", "https://img.shields.io"],
-      connectSrc: ["'self'", "https://generativelanguage.googleapis.com", "https://openrouter.ai", "https://*.googleapis.com", "https://www.googleapis.com", "https://identitytoolkit.googleapis.com", "https://securetoken.googleapis.com", "https://accounts.google.com", "https://*.firebaseapp.com", "https://*.firebaseio.com", "wss://*.firebaseio.com"],
+      connectSrc: ["'self'", "https://generativelanguage.googleapis.com", "https://openrouter.ai", "https://*.googleapis.com", "https://www.googleapis.com", "https://accounts.google.com"],
       fontSrc: ["'self'", "https://fonts.gstatic.com", "https://api.fontshare.com", "https://cdn.fontshare.com"],
-      frameSrc: ["'self'", "https://*.firebaseapp.com", "https://www.google.com", "https://recaptcha.google.com", "https://accounts.google.com"],
+      frameSrc: ["'self'", "https://www.google.com", "https://recaptcha.google.com", "https://accounts.google.com"],
       objectSrc: ["'none'"],
       upgradeInsecureRequests: [],
     },
@@ -384,12 +391,16 @@ async function fetchWithRetry(url, options, retries = 2) {
 async function callAIBase(payload) {
   let lastError = null
   for (const model of MODELS) {
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${GEMINI_API_KEY}`
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`
     console.log(`[AI] Attempting generation with model: ${model}`)
     try {
+      const headers = { 'Content-Type': 'application/json' }
+      if (GEMINI_API_KEY) {
+        headers['x-goog-api-key'] = GEMINI_API_KEY
+      }
       const response = await fetchWithRetry(url, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers,
         body: JSON.stringify(payload)
       })
 
