@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+import bcrypt from 'bcryptjs'
 
 const UserSchema = new mongoose.Schema({
   userId: {
@@ -14,7 +15,14 @@ const UserSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
+    unique: true,
+    lowercase: true,
+    trim: true,
     index: true
+  },
+  passwordHash: {
+    type: String,
+    default: null  // null for future OAuth or guest users
   },
   stream: {
     type: String,
@@ -56,9 +64,24 @@ const UserSchema = new mongoose.Schema({
   },
   provider: {
     type: String,
-    enum: ['email', 'google', 'anonymous'],
+    enum: ['email', 'anonymous'],
     default: 'email'
   }
 }, { timestamps: true })
+
+// Hash password before saving
+UserSchema.pre('save', async function (next) {
+  if (!this.isModified('passwordHash') || !this.passwordHash) return next()
+  // Only hash if it doesn't look like an already-hashed value
+  if (this.passwordHash.startsWith('$2')) return next()
+  this.passwordHash = await bcrypt.hash(this.passwordHash, 12)
+  next()
+})
+
+// Compare plain password to stored hash
+UserSchema.methods.comparePassword = async function (plainPassword) {
+  if (!this.passwordHash) return false
+  return bcrypt.compare(plainPassword, this.passwordHash)
+}
 
 export default mongoose.model('User', UserSchema)

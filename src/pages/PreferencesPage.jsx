@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useAuth } from '../contexts/AuthContext'
+import { useAuth, getStoredToken } from '../contexts/AuthContext'
 import Navbar from '../components/Navbar'
 import ProgressBar from '../components/ProgressBar'
 import LoadingDots from '../components/LoadingDots'
@@ -157,7 +157,8 @@ export default function PreferencesPage() {
       if (setPathReport) setPathReport(data)
 
       if (user && !user.isAnonymous) {
-        user.getIdToken().then(token => {
+        const token = getStoredToken()
+        if (token) {
           fetch('/api/save-report', {
             method: 'POST',
             headers: {
@@ -170,7 +171,7 @@ export default function PreferencesPage() {
               reportData: data
             })
           }).catch(e => console.error('Background report save failed:', e))
-        }).catch(e => console.error('Failed to get Firebase token:', e))
+        }
       }
 
       setProgress(100)

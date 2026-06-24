@@ -1,9 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useAuth } from '../contexts/AuthContext'
+import { useAuth, getStoredToken } from '../contexts/AuthContext'
 import Navbar from '../components/Navbar'
-import { updateProfile } from 'firebase/auth'
-import { auth } from '../firebase'
 
 // ─── SVG Icons ────────────────────────────────────────
 const IconEdit = () => (
@@ -143,7 +141,13 @@ export default function ProfilePage() {
     if (!displayName.trim()) return
     setSavingName(true); setNameMsg('')
     try {
-      await updateProfile(auth.currentUser, { displayName: displayName.trim() })
+      // Update display name in localStorage (persisted JWT session)
+      const storedUser = localStorage.getItem('skope_auth_user')
+      if (storedUser) {
+        const parsed = JSON.parse(storedUser)
+        parsed.displayName = displayName.trim()
+        localStorage.setItem('skope_auth_user', JSON.stringify(parsed))
+      }
       setNameMsg('Name saved!')
       setEditingName(false)
     } catch {

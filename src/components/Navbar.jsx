@@ -253,25 +253,8 @@ export default function Navbar() {
   const location = useLocation()
   const { user, logout } = useAuth()
 
-  const handleAdminRedirect = async () => {
-    try {
-      const idToken = await user.getIdToken()
-      const res = await fetch('/api/admin/firebase-login-exchange', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${idToken}`
-        }
-      })
-      const data = await res.json()
-      if (!res.ok) throw new Error(data.error || 'Failed to exchange token')
-      
-      sessionStorage.setItem('skope_admin_token', data.token)
-      sessionStorage.setItem('skope_admin_user', JSON.stringify(data.admin))
-      navigate('/admin/dashboard')
-    } catch (err) {
-      alert(`Admin Access Error: ${err.message}`)
-    }
+  const handleAdminRedirect = () => {
+    navigate('/admin/login')
   }
   const [scrolled, setScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)

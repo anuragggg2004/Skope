@@ -41,7 +41,7 @@ import rateLimit from 'express-rate-limit'
 import mongoSanitize from 'express-mongo-sanitize'
 import compression from 'compression'
 import { z } from 'zod'
-import { authenticateFirebaseUser } from './server/firebaseAuth.js'
+import { authenticateUser, signUserToken } from './server/jwtAuth.js'
 import { authenticateAdmin, requireRole, signAdminToken, logAudit } from './server/adminAuth.js'
 
 
@@ -1119,7 +1119,7 @@ What colleges, careers, and courses change? Return ONLY valid JSON in the same s
 // =============================================
 // ENDPOINT 4: POST /api/save-report
 // =============================================
-app.post('/api/save-report', authenticateFirebaseUser, async (req, res, next) => {
+app.post('/api/save-report', authenticateUser, async (req, res, next) => {
   try {
     if (mongoose.connection.readyState !== 1) {
       return res.status(503).json({ error: 'Database is currently unavailable. Please try again later.' })
@@ -1171,7 +1171,7 @@ app.post('/api/save-report', authenticateFirebaseUser, async (req, res, next) =>
 // =============================================
 // ENDPOINT 5: GET /api/get-report/:userId
 // =============================================
-app.get('/api/get-report/:userId', authenticateFirebaseUser, async (req, res, next) => {
+app.get('/api/get-report/:userId', authenticateUser, async (req, res, next) => {
   try {
     if (mongoose.connection.readyState !== 1) {
       return res.status(503).json({ error: 'Database is currently unavailable. Please try again later.' })
@@ -1194,6 +1194,124 @@ app.get('/api/get-report/:userId', authenticateFirebaseUser, async (req, res, ne
   } catch (error) {
     next(error)
   }
+})
+
+// =============================================
+// USER AUTH ROUTES (MongoDB + JWT)
+// =============================================
+
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 30,
+  message: { error: 'Too many requests. Please wait 15 minutes and try again.' }
+})
+
+// POST /api/auth/signup — Create new account
+app.post('/api/auth/signup', authLimiter, async (req, res, next) => {
+  try {
+    if (mongoose.connection.readyState !== 1) {
+      return res.status(503).json({ error: 'Database unavailable. Please try again.' })
+    }
+
+    const { email, password, name } = req.body
+    if (!email || !password) return res.status(400).json({ error: 'Email and password are required.' })
+    if (password.length < 6) return res.status(400).json({ error: 'Password must be at least 6 characters.' })
+
+    const normalEmail = email.toLowerCase().trim()
+
+    // Check for existing account
+    const existing = await User.findOne({ email: normalEmail })
+    if (existing) return res.status(409).json({ error: 'An account with this email already exists. Please log in.' })
+
+    // Generate a unique userId (like Firebase UID format)
+    const { createId } = await import('@paralleldrive/cuid2')
+    const uid = createId()
+
+    // Create user — passwordHash pre-save hook hashes it
+    const user = new User({
+      userId: uid,
+      email: normalEmail,
+      displayName: (name || '').trim(),
+      passwordHash: password,   // pre-save hook bcrypts this
+      provider: 'email',
+      signupDate: new Date(),
+      lastActive: new Date()
+    })
+    await user.save()
+
+    const token = signUserToken({ uid, email: normalEmail, displayName: user.displayName })
+
+    console.log(`[Auth] New user signed up: ${normalEmail}`)
+    res.status(201).json({
+      success: true,
+      token,
+      user: { uid, email: normalEmail, displayName: user.displayName }
+    })
+  } catch (err) { next(err) }
+})
+
+// POST /api/auth/login — Login existing account
+app.post('/api/auth/login', authLimiter, async (req, res, next) => {
+  try {
+    if (mongoose.connection.readyState !== 1) {
+      return res.status(503).json({ error: 'Database unavailable. Please try again.' })
+    }
+
+    const { email, password } = req.body
+    if (!email || !password) return res.status(400).json({ error: 'Email and password are required.' })
+
+    const normalEmail = email.toLowerCase().trim()
+    const user = await User.findOne({ email: normalEmail })
+
+    if (!user) return res.status(401).json({ error: 'No account found with this email. Please sign up.' })
+    if (user.status === 'banned') return res.status(403).json({ error: 'This account has been suspended.' })
+    if (!user.passwordHash) return res.status(401).json({ error: 'This account does not have a password set. Please contact support.' })
+
+    const valid = await user.comparePassword(password)
+    if (!valid) return res.status(401).json({ error: 'Incorrect password. Please try again.' })
+
+    // Update last active timestamp
+    user.lastActive = new Date()
+    await user.save()
+
+    const token = signUserToken({ uid: user.userId, email: normalEmail, displayName: user.displayName })
+
+    console.log(`[Auth] User logged in: ${normalEmail}`)
+    res.json({
+      success: true,
+      token,
+      user: { uid: user.userId, email: normalEmail, displayName: user.displayName }
+    })
+  } catch (err) { next(err) }
+})
+
+// GET /api/auth/me — Verify token and return current user
+app.get('/api/auth/me', authenticateUser, async (req, res, next) => {
+  try {
+    const user = await User.findOne({ userId: req.user.uid }).select('-passwordHash')
+    if (!user) return res.status(404).json({ error: 'User not found.' })
+    res.json({ success: true, user })
+  } catch (err) { next(err) }
+})
+
+// POST /api/auth/reset-password — Request password reset
+// Since there is no email service configured, this validates email exists
+// and returns a success message prompting user to contact admin.
+app.post('/api/auth/reset-password', authLimiter, async (req, res, next) => {
+  try {
+    const { email } = req.body
+    if (!email) return res.status(400).json({ error: 'Email is required.' })
+    const normalEmail = email.toLowerCase().trim()
+    const user = await User.findOne({ email: normalEmail })
+    // Always return success to prevent email enumeration
+    if (!user) {
+      return res.json({ success: true, message: 'If an account exists, a reset link has been sent.' })
+    }
+    // In a full implementation, send an email with a reset token here.
+    // For now, log the request and direct user to contact admin.
+    console.log(`[Auth] Password reset requested for: ${normalEmail}`)
+    res.json({ success: true, message: 'If an account exists, a reset link has been sent. Please contact support if you need immediate help.' })
+  } catch (err) { next(err) }
 })
 
 // =============================================
@@ -1253,34 +1371,6 @@ app.post('/api/admin/change-password', authenticateAdmin, async (req, res, next)
     })
 
     res.json({ success: true, message: 'Password changed successfully' })
-  } catch (err) { next(err) }
-})
-
-// POST /api/admin/firebase-login-exchange
-// Exchange a Firebase ID token for an admin session token if the Google account belongs to the founder
-app.post('/api/admin/firebase-login-exchange', authenticateFirebaseUser, async (req, res, next) => {
-  try {
-    const userEmail = req.user.email?.toLowerCase()
-    if (userEmail !== 'atiwary253@gmail.com') {
-      return res.status(403).json({ error: 'Forbidden: Insufficient permissions for admin exchange' })
-    }
-
-    // Find the founder admin record
-    const admin = await Admin.findOne({ email: userEmail })
-    if (!admin || !admin.isActive) {
-      return res.status(403).json({ error: 'Forbidden: Admin profile not active or not found' })
-    }
-
-    admin.lastLogin = new Date()
-    await admin.save()
-
-    const token = signAdminToken({ email: admin.email, role: admin.role, displayName: admin.displayName })
-    
-    res.json({
-      success: true,
-      token,
-      admin: { email: admin.email, role: admin.role, displayName: admin.displayName }
-    })
   } catch (err) { next(err) }
 })
 
@@ -1592,7 +1682,7 @@ app.post('/api/feedback', async (req, res, next) => {
 })
 
 // POST /api/admin/sync-user — Called after student login to sync user record
-app.post('/api/admin/sync-user', authenticateFirebaseUser, async (req, res, next) => {
+app.post('/api/admin/sync-user', authenticateUser, async (req, res, next) => {
   try {
     const { uid, email, displayName, provider } = req.body
     if (!uid || !email) return res.status(400).json({ error: 'uid and email required' })

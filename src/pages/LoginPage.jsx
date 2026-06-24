@@ -1,26 +1,8 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
-import { auth } from '../firebase'
-import { fetchSignInMethodsForEmail } from 'firebase/auth'
 
 // ─── Icon Components ──────────────────────────────────
-const GoogleIcon = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24">
-    <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4"/>
-    <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
-    <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
-    <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
-  </svg>
-)
-
-const GuestIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/>
-    <circle cx="12" cy="7" r="4"/>
-  </svg>
-)
-
 const EyeIcon = ({ open }) => open ? (
   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
     <path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/>
@@ -33,10 +15,31 @@ const EyeIcon = ({ open }) => open ? (
   </svg>
 )
 
+const GuestIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/>
+    <circle cx="12" cy="7" r="4"/>
+  </svg>
+)
+
 const MailIcon = () => (
   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
     <polyline points="22,6 12,13 2,6"/>
+  </svg>
+)
+
+const LockIcon = () => (
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+    <path d="M7 11V7a5 5 0 0110 0v4"/>
+  </svg>
+)
+
+const UserIcon = () => (
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/>
+    <circle cx="12" cy="7" r="4"/>
   </svg>
 )
 
@@ -85,12 +88,7 @@ const btnPrimary = 'w-full font-sora text-[14px] font-semibold bg-gradient-to-r 
 
 export default function LoginPage() {
   const navigate = useNavigate()
-  const { user, loading, pathReport, loginWithGoogle, loginWithEmail, signupWithEmail, loginAsGuest, resetPassword } = useAuth()
-
-  // Detect if we're returning from a Google redirect (mobile/popup-blocked flow)
-  const [redirectPending] = useState(
-    () => sessionStorage.getItem('skope_redirect_pending') === 'true'
-  )
+  const { user, loading, pathReport, loginWithEmail, signupWithEmail, loginAsGuest, resetPassword } = useAuth()
 
   // viewMode: 'login' | 'forgot'
   const [viewMode, setViewMode]       = useState('login')
@@ -104,7 +102,6 @@ export default function LoginPage() {
   const [showPw,      setShowPw]      = useState(false)
 
   // Loading states
-  const [googleLoading, setGoogleLoading] = useState(false)
   const [guestLoading,  setGuestLoading]  = useState(false)
   const [formLoading,   setFormLoading]   = useState(false)
   const [forgotLoading, setForgotLoading] = useState(false)
@@ -123,8 +120,6 @@ export default function LoginPage() {
   // Navigate away once auth resolves
   useEffect(() => {
     if (!loading && user) {
-      // Clear the redirect flag on successful auth
-      sessionStorage.removeItem('skope_redirect_pending')
       if (!pathReport) {
         sessionStorage.setItem('skope_assessment_started', 'true')
       }
@@ -133,31 +128,6 @@ export default function LoginPage() {
   }, [user, loading, pathReport, navigate])
 
   // ─── Handlers ─────────────────────────────────────────
-
-  const handleGoogleLogin = async () => {
-    setError('')
-    setGoogleLoading(true)
-    try {
-      await loginWithGoogle()
-      // For popup: onAuthStateChanged fires and the useEffect above navigates
-      // For redirect (mobile/blocked): page navigates away to Google — nothing else needed
-    } catch (err) {
-      console.error('[Auth] Google Login Error:', err)
-      // Don't show error if this was a redirect fallback (page is navigating away)
-      const isRedirectFallback = err.code === 'auth/popup-blocked' || err.code === 'auth/popup-closed-by-user'
-      if (!isRedirectFallback) {
-        const msgs = {
-          'auth/unauthorized-domain':    'Domain not authorized. Add it in Firebase Console → Authentication → Authorized Domains.',
-          'auth/internal-error':         'Firebase internal error. Ensure Google sign-in is enabled in Firebase Console → Authentication → Sign-in method.',
-          'auth/configuration-not-found':'Google provider not configured in Firebase Console. Enable it in Authentication → Sign-in method.',
-          'auth/network-request-failed': 'Network error. Please check your connection and try again.',
-        }
-        setError(msgs[err.code] || `Google sign-in failed: ${err.message}`)
-      }
-    } finally {
-      setGoogleLoading(false)
-    }
-  }
 
   const handleGuestLogin = async () => {
     setError('')
@@ -176,51 +146,20 @@ export default function LoginPage() {
   const handleEmailSubmit = async (e) => {
     e.preventDefault()
     if (!email.trim() || !password.trim()) { setError('Please fill in all fields.'); return }
+    if (isSignup && name.trim().length < 2) { setError('Please enter your name.'); return }
     if (password.length < 6) { setError('Password must be at least 6 characters.'); return }
 
     setError('')
     setFormLoading(true)
     try {
       if (isSignup) {
-        // Pre-check for Google-linked email before trying to create account
-        try {
-          const providers = await fetchSignInMethodsForEmail(auth, email)
-          if (providers.includes('google.com')) {
-            setError('This email is already registered using Google Sign-In. Please click "Continue with Google" to log in.')
-            setFormLoading(false)
-            return
-          }
-        } catch (checkErr) {
-          console.warn('Provider check failed:', checkErr)
-        }
         await signupWithEmail(email, password, name)
       } else {
         await loginWithEmail(email, password)
       }
+      // AuthContext useEffect above handles navigation after user state updates
     } catch (err) {
-      // If password login fails for a Google-linked email, guide user
-      if (!isSignup && (err.code === 'auth/wrong-password' || err.code === 'auth/invalid-credential')) {
-        try {
-          const providers = await fetchSignInMethodsForEmail(auth, email)
-          if (providers.includes('google.com') && !providers.includes('password')) {
-            setError('This email is registered via Google Sign-In. Please click "Continue with Google" above to log in, or reset your password to enable password login.')
-            setFormLoading(false)
-            return
-          }
-        } catch (checkErr) {
-          console.warn('Provider check failed:', checkErr)
-        }
-      }
-
-      const msgs = {
-        'auth/user-not-found':      'No account with this email. Try signing up.',
-        'auth/wrong-password':      'Incorrect password.',
-        'auth/invalid-credential':  'Invalid email or password.',
-        'auth/email-already-in-use':'Email already registered. Log in instead.',
-        'auth/invalid-email':       'Invalid email address.',
-        'auth/too-many-requests':   'Too many attempts. Try again later.',
-      }
-      setError(msgs[err.code] || 'Something went wrong. Please try again.')
+      setError(err.message || 'Something went wrong. Please try again.')
     } finally {
       setFormLoading(false)
     }
@@ -235,19 +174,14 @@ export default function LoginPage() {
       await resetPassword(forgotEmail)
       setForgotSuccess(true)
     } catch (err) {
-      const msgs = {
-        'auth/user-not-found':  'No account with this email.',
-        'auth/invalid-email':   'Invalid email format.',
-      }
-      setError(msgs[err.code] || 'Failed to send reset email. Try again.')
+      setError(err.message || 'Failed to send reset email. Try again.')
     } finally {
       setForgotLoading(false)
     }
   }
 
   // Show full-page spinner while auth state is resolving
-  // Show richer screen when returning from Google redirect (mobile/popup-blocked flow)
-  if (loading || redirectPending) {
+  if (loading) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center gap-4" style={{ background: '#080b14' }}>
         <div className="w-12 h-12 rounded-[14px] flex items-center justify-center mb-1"
@@ -258,9 +192,7 @@ export default function LoginPage() {
           </svg>
         </div>
         <div className="w-8 h-8 border-2 border-[rgba(79,142,247,0.2)] border-t-[#4f8ef7] rounded-full animate-spin" />
-        <p className="font-dm text-[13px] text-[rgba(240,242,255,0.4)]">
-          {redirectPending ? 'Completing your sign-in…' : 'Loading…'}
-        </p>
+        <p className="font-dm text-[13px] text-[rgba(240,242,255,0.4)]">Loading…</p>
       </div>
     )
   }
@@ -268,349 +200,260 @@ export default function LoginPage() {
   const testimonial = TESTIMONIALS[testimonialIdx]
 
   return (
-    <>
-      <div className="min-h-screen flex" style={{ background: '#080b14' }}>
+    <div className="min-h-screen flex" style={{ background: '#080b14' }}>
 
-        {/* ─── LEFT PANEL — Desktop only ──────────────────────── */}
-        <div
-          className="hidden lg:flex flex-col justify-between w-[460px] shrink-0 relative overflow-hidden p-10"
-          style={{
-            borderRight: '1px solid rgba(79,142,247,0.08)',
-            background: 'linear-gradient(160deg, rgba(79,142,247,0.05) 0%, rgba(139,92,246,0.08) 50%, #080b14 100%)',
-          }}
-        >
-          {/* Ambient orbs */}
-          <div className="absolute top-[-100px] left-[-60px] w-[320px] h-[320px] rounded-full opacity-[0.12] pointer-events-none"
-            style={{ background: 'radial-gradient(circle, #4f8ef7, transparent)' }} />
-          <div className="absolute bottom-[-80px] right-[-80px] w-[280px] h-[280px] rounded-full opacity-[0.1] pointer-events-none"
-            style={{ background: 'radial-gradient(circle, #8b5cf6, transparent)' }} />
+      {/* ─── Left Panel — Testimonial / Social Proof ──────────── */}
+      <div
+        className="hidden lg:flex flex-col justify-between w-[42%] p-12 relative overflow-hidden"
+        style={{
+          background: 'linear-gradient(135deg, rgba(79,142,247,0.08) 0%, rgba(139,92,246,0.06) 100%)',
+          borderRight: '1px solid rgba(255,255,255,0.04)'
+        }}
+      >
+        {/* Background orbs */}
+        <div className="absolute top-[-80px] left-[-80px] w-[320px] h-[320px] rounded-full opacity-20 blur-[80px]"
+          style={{ background: 'radial-gradient(circle, #4f8ef7, transparent)' }} />
+        <div className="absolute bottom-[-60px] right-[-60px] w-[240px] h-[240px] rounded-full opacity-15 blur-[60px]"
+          style={{ background: 'radial-gradient(circle, #8b5cf6, transparent)' }} />
 
-          {/* Logo */}
-          <button onClick={() => navigate('/')} className="flex items-center gap-3 bg-transparent border-none cursor-pointer w-fit">
-            <div className="w-10 h-10 rounded-[12px] flex items-center justify-center"
-              style={{ background: 'linear-gradient(135deg, #4f8ef7, #8b5cf6)', boxShadow: '0 4px 20px rgba(79,142,247,0.3)' }}>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+        {/* Logo */}
+        <div>
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-[10px] flex items-center justify-center"
+              style={{ background: 'linear-gradient(135deg, #4f8ef7, #8b5cf6)' }}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
                 <circle cx="10" cy="10" r="7" stroke="white" strokeWidth="2.5" fill="none"/>
                 <line x1="15" y1="15" x2="21" y2="21" stroke="white" strokeWidth="2.5" strokeLinecap="round"/>
               </svg>
             </div>
-            <span className="font-sora text-[22px] font-bold tracking-[-0.5px]">
-              <span className="text-white">Sk</span>
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#4f8ef7] to-[#8b5cf6]">o</span>
-              <span className="text-white">pe</span>
-            </span>
-          </button>
-
-          {/* Hero copy */}
-          <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[rgba(107,203,119,0.2)] bg-[rgba(107,203,119,0.06)] mb-6">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#6bcb77] animate-pulse inline-block" />
-              <span className="font-dm text-[11px] text-[rgba(240,242,255,0.6)]">No sugar coating. Just the mirror.</span>
-            </div>
-            <h2 className="font-sora text-[32px] font-bold text-white tracking-[-1px] leading-[1.2] mb-4">
-              The career advice<br/>
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#4f8ef7] to-[#8b5cf6]">nobody else will give</span><br/>
-              you.
-            </h2>
-            <p className="font-dm text-[13px] text-[rgba(240,242,255,0.4)] leading-[1.8] max-w-[320px]">
-              Hidden gem colleges. Unknown entrance exams. Career fields that pay well but nobody talks about.
-            </p>
+            <span className="font-sora text-[16px] font-bold text-white">Skope</span>
           </div>
-
-          {/* Stats row */}
-          <div className="flex gap-8">
-            {STATS.map((s, i) => (
-              <div key={i}>
-                <div className="font-sora text-[20px] font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#4f8ef7] to-[#8b5cf6]">{s.value}</div>
-                <div className="font-dm text-[11px] text-[rgba(240,242,255,0.35)] mt-0.5">{s.label}</div>
-              </div>
-            ))}
-          </div>
-
-          {/* Testimonial card */}
-          <div className="rounded-[16px] p-5" style={{ background: 'rgba(255,255,255,0.025)', border: '1px solid rgba(255,255,255,0.07)' }}>
-            <div className="flex gap-1 mb-3">
-              {[1,2,3,4,5].map(i => (
-                <svg key={i} width="12" height="12" viewBox="0 0 24 24" fill="#fbbf24">
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                </svg>
-              ))}
-            </div>
-            <p className="font-dm text-[13px] text-[rgba(240,242,255,0.6)] leading-[1.75] italic mb-4">"{testimonial.text}"</p>
-            <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-full flex items-center justify-center text-[11px] font-bold text-white shrink-0"
-                style={{ background: 'linear-gradient(135deg, #4f8ef7, #8b5cf6)' }}>
-                {testimonial.name[0]}
-              </div>
-              <div>
-                <div className="font-sora text-[12px] font-semibold text-white">{testimonial.name}</div>
-                <div className="font-dm text-[10px] text-[rgba(240,242,255,0.35)]">{testimonial.tag}</div>
-              </div>
-            </div>
-            {/* Dot indicators */}
-            <div className="flex gap-1.5 mt-4">
-              {TESTIMONIALS.map((_, i) => (
-                <button key={i} onClick={() => setTestimonialIdx(i)}
-                  className={`h-1 rounded-full border-none cursor-pointer transition-all duration-300 ${i === testimonialIdx ? 'w-6 bg-[#4f8ef7]' : 'w-2 bg-[rgba(255,255,255,0.15)]'}`}
-                />
-              ))}
-            </div>
-          </div>
+          <p className="mt-4 font-dm text-[13px] text-[rgba(240,242,255,0.4)] leading-relaxed max-w-[280px]">
+            AI-powered career discovery for Indian Class 12 students. No fluff. No generics. Just data.
+          </p>
         </div>
 
-        {/* ─── RIGHT PANEL — Auth Form ──────────────────────── */}
-        <div className="flex-1 flex items-center justify-center px-6 py-12">
-          <div className="w-full max-w-[400px] animate-fadeUp">
-
-            {/* Mobile logo */}
-            <div className="lg:hidden text-center mb-8">
-              <button onClick={() => navigate('/')} className="inline-flex items-center gap-2.5 bg-transparent border-none cursor-pointer">
-                <div className="w-9 h-9 rounded-[10px] flex items-center justify-center"
-                  style={{ background: 'linear-gradient(135deg, #4f8ef7, #8b5cf6)' }}>
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
-                    <circle cx="10" cy="10" r="7" stroke="white" strokeWidth="2.5" fill="none"/>
-                    <line x1="15" y1="15" x2="21" y2="21" stroke="white" strokeWidth="2.5" strokeLinecap="round"/>
-                  </svg>
-                </div>
-                <span className="font-sora text-[20px] font-bold tracking-[-0.5px]">
-                  <span className="text-white">Sk</span>
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#4f8ef7] to-[#8b5cf6]">o</span>
-                  <span className="text-white">pe</span>
-                </span>
-              </button>
+        {/* Stats */}
+        <div className="grid grid-cols-3 gap-4">
+          {STATS.map(s => (
+            <div key={s.label} className="text-center">
+              <p className="font-sora font-bold text-[22px] text-white">{s.value}</p>
+              <p className="font-dm text-[11px] text-[rgba(240,242,255,0.35)] mt-0.5 leading-snug">{s.label}</p>
             </div>
+          ))}
+        </div>
 
-            {/* Heading */}
-            <div className="mb-7">
-              <h1 className="font-sora text-[28px] font-bold text-white tracking-[-0.5px] mb-1.5">
-                {viewMode === 'login' && (isSignup ? 'Create account' : 'Welcome back')}
-                {viewMode === 'forgot' && 'Reset password'}
-              </h1>
-              <p className="font-dm text-[13px] text-[rgba(240,242,255,0.4)]">
-                {viewMode === 'login' && (isSignup ? 'No sugar coating — get your honest PathReport.' : 'Continue your career discovery.')}
-                {viewMode === 'forgot' && 'Enter your email and we\'ll send a reset link.'}
-              </p>
+        {/* Testimonial */}
+        <div
+          className="rounded-[16px] p-6 relative"
+          style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)' }}
+        >
+          <div className="text-[rgba(79,142,247,0.8)] text-[28px] font-serif leading-none mb-3">"</div>
+          <p className="font-dm text-[13.5px] text-[rgba(240,242,255,0.75)] leading-relaxed italic">
+            {testimonial.text}
+          </p>
+          <div className="mt-4 flex items-center gap-3">
+            <div className="w-7 h-7 rounded-full flex items-center justify-center text-[11px] font-sora font-bold text-white"
+              style={{ background: 'linear-gradient(135deg, #4f8ef7, #8b5cf6)' }}>
+              {testimonial.name[0]}
             </div>
-
-            {/* ─── Error Banner ─────────────────────────────── */}
-            {error && (
-              <div className="flex items-start gap-2.5 bg-[rgba(255,107,107,0.06)] border border-[rgba(255,107,107,0.18)] rounded-[12px] px-4 py-3 mb-5">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ff8a8a" strokeWidth="2" className="shrink-0 mt-0.5">
-                  <circle cx="12" cy="12" r="10"/>
-                  <line x1="12" y1="8" x2="12" y2="12"/>
-                  <line x1="12" y1="16" x2="12.01" y2="16"/>
-                </svg>
-                <p className="font-dm text-[12px] text-[#ff8a8a] leading-relaxed">{error}</p>
-              </div>
-            )}
-
-            {/* ─── LOGIN / SIGNUP MODE ──────────────────────── */}
-            {viewMode === 'login' && (
-              <>
-                {/* Google Sign-In */}
-                <button
-                  id="btn-google-login"
-                  onClick={handleGoogleLogin}
-                  disabled={googleLoading}
-                  className="w-full flex items-center justify-center gap-3 bg-white text-[#1f1f1f] font-dm text-[14px] font-medium py-3.5 rounded-[12px] border-none cursor-pointer hover:bg-[#f5f5f5] transition-colors disabled:opacity-60 mb-3 shadow-[0_2px_8px_rgba(0,0,0,0.15)]"
-                >
-                  {googleLoading
-                    ? <div className="w-5 h-5 border-2 border-[#ccc] border-t-[#333] rounded-full animate-spin" />
-                    : <GoogleIcon />
-                  }
-                  {googleLoading ? 'Signing in...' : 'Continue with Google'}
-                </button>
-
-                {/* Guest */}
-                <button
-                  id="btn-guest-login"
-                  onClick={handleGuestLogin}
-                  disabled={guestLoading}
-                  className="w-full flex items-center justify-center gap-2.5 bg-[rgba(255,255,255,0.04)] text-[rgba(240,242,255,0.7)] font-dm text-[14px] font-medium py-3.5 rounded-[12px] border border-[rgba(255,255,255,0.09)] cursor-pointer hover:bg-[rgba(255,255,255,0.07)] hover:text-white transition-all disabled:opacity-50 mb-5"
-                >
-                  {guestLoading
-                    ? <div className="w-4 h-4 border-2 border-[rgba(240,242,255,0.3)] border-t-white rounded-full animate-spin" />
-                    : <GuestIcon />
-                  }
-                  {guestLoading ? 'Loading...' : 'Continue as Guest'}
-                </button>
-
-                {/* Guest note */}
-                <div className="flex items-start gap-2 mb-5 px-1">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="rgba(240,242,255,0.3)" strokeWidth="2" className="shrink-0 mt-0.5">
-                    <circle cx="12" cy="12" r="10"/>
-                    <line x1="12" y1="8" x2="12" y2="12"/>
-                    <line x1="12" y1="16" x2="12.01" y2="16"/>
-                  </svg>
-                  <p className="font-dm text-[11px] text-[rgba(240,242,255,0.3)] leading-relaxed">
-                    Guest mode doesn't save your PathReport. Sign up to access it anytime.
-                  </p>
-                </div>
-
-                {/* Divider */}
-                <div className="flex items-center gap-3 mb-5">
-                  <div className="flex-1 h-px bg-[rgba(255,255,255,0.06)]" />
-                  <span className="font-dm text-[11px] text-[rgba(240,242,255,0.2)] uppercase tracking-[1px]">or</span>
-                  <div className="flex-1 h-px bg-[rgba(255,255,255,0.06)]" />
-                </div>
-
-                {/* Email form */}
-                <form onSubmit={handleEmailSubmit} className="space-y-4">
-                  {isSignup && (
-                    <div>
-                      <label className="font-dm text-[12px] text-[rgba(240,242,255,0.4)] block mb-1.5">Your Name</label>
-                      <input
-                        id="input-name"
-                        type="text"
-                        value={name}
-                        onChange={e => setName(e.target.value)}
-                        placeholder="What should we call you?"
-                        className={inputCls}
-                      />
-                    </div>
-                  )}
-
-                  <div>
-                    <label className="font-dm text-[12px] text-[rgba(240,242,255,0.4)] block mb-1.5">Email</label>
-                    <input
-                      id="input-email"
-                      type="email"
-                      value={email}
-                      onChange={e => setEmail(e.target.value)}
-                      placeholder="you@example.com"
-                      className={inputCls}
-                      autoComplete="email"
-                    />
-                  </div>
-
-                  <div>
-                    <div className="flex items-center justify-between mb-1.5">
-                      <label className="font-dm text-[12px] text-[rgba(240,242,255,0.4)]">Password</label>
-                      {!isSignup && (
-                        <button
-                          type="button"
-                          onClick={() => { setViewMode('forgot'); setError('') }}
-                          className="font-dm text-[11px] text-[#4f8ef7] bg-transparent border-none cursor-pointer hover:underline"
-                        >
-                          Forgot password?
-                        </button>
-                      )}
-                    </div>
-                    <div className="relative">
-                      <input
-                        id="input-password"
-                        type={showPw ? 'text' : 'password'}
-                        value={password}
-                        onChange={e => setPassword(e.target.value)}
-                        placeholder={isSignup ? 'At least 6 characters' : 'Your password'}
-                        className={inputCls + ' pr-11'}
-                        autoComplete={isSignup ? 'new-password' : 'current-password'}
-                      />
-                      <button
-                        type="button"
-                        onClick={() => setShowPw(!showPw)}
-                        className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[rgba(240,242,255,0.3)] hover:text-white transition-colors bg-transparent border-none cursor-pointer p-0.5"
-                      >
-                        <EyeIcon open={showPw} />
-                      </button>
-                    </div>
-                  </div>
-
-                  <button
-                    id="btn-email-submit"
-                    type="submit"
-                    disabled={formLoading}
-                    className={btnPrimary}
-                  >
-                    {formLoading
-                      ? <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                      : <MailIcon />
-                    }
-                    {formLoading ? (isSignup ? 'Creating account...' : 'Logging in...') : (isSignup ? 'Create Account' : 'Log In with Email')}
-                  </button>
-                </form>
-              </>
-            )}
-
-            {/* ─── FORGOT PASSWORD ─────────────────────────── */}
-            {viewMode === 'forgot' && (
-              <div className="space-y-4">
-                {forgotSuccess ? (
-                  <div className="text-center py-6">
-                    <div className="w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-4"
-                      style={{ background: 'rgba(34,211,160,0.1)', border: '1px solid rgba(34,211,160,0.2)' }}>
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#22d3a0" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                        <polyline points="22,6 12,13 2,6"/>
-                      </svg>
-                    </div>
-                    <h3 className="font-sora text-[16px] font-bold text-[#22d3a0] mb-2">Reset link sent!</h3>
-                    <p className="font-dm text-[13px] text-[rgba(240,242,255,0.5)] leading-relaxed">
-                      Check your inbox at <strong className="text-white">{forgotEmail}</strong><br/>
-                      (also check your spam folder)
-                    </p>
-                  </div>
-                ) : (
-                  <form onSubmit={handleForgotSubmit} className="space-y-4">
-                    <div>
-                      <label className="font-dm text-[12px] text-[rgba(240,242,255,0.4)] block mb-1.5">Email Address</label>
-                      <input
-                        id="input-forgot-email"
-                        type="email"
-                        value={forgotEmail}
-                        onChange={e => setForgotEmail(e.target.value)}
-                        placeholder="The email you signed up with"
-                        className={inputCls}
-                        autoFocus
-                      />
-                    </div>
-                    <button type="submit" disabled={forgotLoading} className={btnPrimary}>
-                      {forgotLoading
-                        ? <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                        : <SendIcon />
-                      }
-                      {forgotLoading ? 'Sending...' : 'Send Reset Link'}
-                    </button>
-                  </form>
-                )}
-
-                <button
-                  type="button"
-                  onClick={() => { setViewMode('login'); setForgotSuccess(false); setError('') }}
-                  className="w-full font-dm text-[12px] text-[rgba(240,242,255,0.4)] hover:text-white bg-transparent border-none cursor-pointer text-center hover:underline flex items-center justify-center gap-2 transition-colors mt-2"
-                >
-                  <BackIcon /> Back to Log In
-                </button>
-              </div>
-            )}
-
-            {/* Toggle login / signup */}
-            {viewMode === 'login' && (
-              <p className="text-center font-dm text-[13px] text-[rgba(240,242,255,0.4)] mt-6">
-                {isSignup ? 'Already have an account? ' : "Don't have an account? "}
-                <button
-                  onClick={() => { setIsSignup(!isSignup); setError('') }}
-                  className="text-[#4f8ef7] font-medium bg-transparent border-none cursor-pointer hover:underline"
-                >
-                  {isSignup ? 'Log in' : 'Sign up free'}
-                </button>
-              </p>
-            )}
-
-            {/* Footer privacy note */}
-            <div className="flex items-center justify-center gap-1.5 mt-5">
-              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="rgba(240,242,255,0.2)" strokeWidth="2">
-                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-                <path d="M7 11V7a5 5 0 0110 0v4"/>
-              </svg>
-              <p className="font-dm text-[11px] text-[rgba(240,242,255,0.2)]">
-                Your data stays private. Never shared or sold.
-              </p>
+            <div>
+              <p className="font-sora text-[12px] font-semibold text-white">{testimonial.name}</p>
+              <p className="font-dm text-[11px] text-[rgba(240,242,255,0.35)]">{testimonial.tag}</p>
             </div>
-
+          </div>
+          {/* Slide indicator dots */}
+          <div className="flex gap-1.5 mt-4">
+            {TESTIMONIALS.map((_, i) => (
+              <div key={i} className="h-1 rounded-full transition-all duration-500"
+                style={{
+                  width: i === testimonialIdx ? '20px' : '6px',
+                  background: i === testimonialIdx ? '#4f8ef7' : 'rgba(255,255,255,0.15)'
+                }} />
+            ))}
           </div>
         </div>
       </div>
-    </>
+
+      {/* ─── Right Panel — Login / Signup form ─────────────────── */}
+      <div className="flex-1 flex items-center justify-center p-6 lg:p-12">
+        <div className="w-full max-w-[400px]">
+
+          {/* Forgot Password View */}
+          {viewMode === 'forgot' ? (
+            <div>
+              <SkopeLogoMark />
+              <button
+                onClick={() => { setViewMode('login'); setError(''); setForgotSuccess(false) }}
+                className="flex items-center gap-1.5 text-[rgba(240,242,255,0.4)] hover:text-white transition-colors mb-6 font-dm text-[13px]"
+              >
+                <BackIcon /> Back to login
+              </button>
+              <h1 className="font-sora text-[22px] font-bold text-white mb-1">Reset your password</h1>
+              <p className="font-dm text-[13px] text-[rgba(240,242,255,0.45)] mb-6">
+                Enter your email and we'll send you a reset link.
+              </p>
+
+              {forgotSuccess ? (
+                <div className="rounded-[12px] p-4 text-center" style={{ background: 'rgba(16,185,129,0.1)', border: '1px solid rgba(16,185,129,0.2)' }}>
+                  <p className="font-sora font-semibold text-[#10b981] text-[14px]">✓ Reset email sent!</p>
+                  <p className="font-dm text-[12px] text-[rgba(240,242,255,0.5)] mt-1">Check your inbox (and spam folder).</p>
+                </div>
+              ) : (
+                <form onSubmit={handleForgotSubmit} className="space-y-4">
+                  {error && (
+                    <div className="rounded-[10px] p-3 font-dm text-[13px] text-[#f87171]"
+                      style={{ background: 'rgba(248,113,113,0.08)', border: '1px solid rgba(248,113,113,0.2)' }}>
+                      {error}
+                    </div>
+                  )}
+                  <div className="relative">
+                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[rgba(240,242,255,0.3)]"><MailIcon /></span>
+                    <input
+                      id="forgot-email"
+                      className={`${inputCls} pl-10`}
+                      type="email"
+                      placeholder="your@email.com"
+                      value={forgotEmail}
+                      onChange={e => setForgotEmail(e.target.value)}
+                      required
+                    />
+                  </div>
+                  <button type="submit" className={btnPrimary} disabled={forgotLoading}>
+                    {forgotLoading ? <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : <><SendIcon /> Send Reset Link</>}
+                  </button>
+                </form>
+              )}
+            </div>
+
+          ) : (
+            /* ── Login / Signup view ── */
+            <div>
+              <SkopeLogoMark />
+              <h1 className="font-sora text-[24px] font-bold text-white mb-1">
+                {isSignup ? 'Create your account' : 'Welcome back'}
+              </h1>
+              <p className="font-dm text-[13px] text-[rgba(240,242,255,0.45)] mb-7">
+                {isSignup
+                  ? 'Join thousands of students finding their real path.'
+                  : 'Sign in to continue your career journey.'}
+              </p>
+
+              {/* Email/Password Form */}
+              <form onSubmit={handleEmailSubmit} className="space-y-4">
+                {error && (
+                  <div className="rounded-[10px] p-3 font-dm text-[13px] text-[#f87171]"
+                    style={{ background: 'rgba(248,113,113,0.08)', border: '1px solid rgba(248,113,113,0.2)' }}>
+                    {error}
+                  </div>
+                )}
+
+                {isSignup && (
+                  <div className="relative">
+                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[rgba(240,242,255,0.3)]"><UserIcon /></span>
+                    <input
+                      id="signup-name"
+                      className={`${inputCls} pl-10`}
+                      type="text"
+                      placeholder="Your full name"
+                      value={name}
+                      onChange={e => setName(e.target.value)}
+                      autoComplete="name"
+                    />
+                  </div>
+                )}
+
+                <div className="relative">
+                  <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[rgba(240,242,255,0.3)]"><MailIcon /></span>
+                  <input
+                    id="email"
+                    className={`${inputCls} pl-10`}
+                    type="email"
+                    placeholder="your@email.com"
+                    value={email}
+                    onChange={e => setEmail(e.target.value)}
+                    autoComplete="email"
+                    required
+                  />
+                </div>
+
+                <div className="relative">
+                  <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[rgba(240,242,255,0.3)]"><LockIcon /></span>
+                  <input
+                    id="password"
+                    className={`${inputCls} pl-10 pr-11`}
+                    type={showPw ? 'text' : 'password'}
+                    placeholder={isSignup ? 'Create a password (min 6 chars)' : 'Your password'}
+                    value={password}
+                    onChange={e => setPassword(e.target.value)}
+                    autoComplete={isSignup ? 'new-password' : 'current-password'}
+                    required
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPw(v => !v)}
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-[rgba(240,242,255,0.3)] hover:text-[rgba(240,242,255,0.6)] transition-colors"
+                  >
+                    <EyeIcon open={showPw} />
+                  </button>
+                </div>
+
+                {!isSignup && (
+                  <div className="text-right">
+                    <button
+                      type="button"
+                      onClick={() => { setViewMode('forgot'); setError('') }}
+                      className="font-dm text-[12px] text-[rgba(79,142,247,0.7)] hover:text-[#4f8ef7] transition-colors"
+                    >
+                      Forgot password?
+                    </button>
+                  </div>
+                )}
+
+                <button type="submit" id="submit-btn" className={btnPrimary} disabled={formLoading}>
+                  {formLoading
+                    ? <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                    : isSignup ? 'Create Account' : 'Sign In'}
+                </button>
+              </form>
+
+              {/* Divider */}
+              <div className="relative my-5">
+                <div className="absolute inset-0 flex items-center">
+                  <div className="w-full border-t border-[rgba(255,255,255,0.07)]" />
+                </div>
+                <div className="relative flex justify-center text-[11px]">
+                  <span className="px-3 font-dm text-[rgba(240,242,255,0.3)]" style={{ background: '#080b14' }}>or</span>
+                </div>
+              </div>
+
+              {/* Guest access */}
+              <button
+                id="guest-btn"
+                onClick={handleGuestLogin}
+                disabled={guestLoading}
+                className="w-full flex items-center justify-center gap-2 py-3.5 rounded-[12px] font-dm text-[13px] text-[rgba(240,242,255,0.6)] hover:text-white transition-all duration-200 disabled:opacity-50"
+                style={{ border: '1px solid rgba(255,255,255,0.07)', background: 'rgba(255,255,255,0.02)' }}
+              >
+                {guestLoading
+                  ? <span className="w-4 h-4 border-2 border-white/20 border-t-white/60 rounded-full animate-spin" />
+                  : <><GuestIcon /> Continue as Guest</>}
+              </button>
+
+              {/* Toggle login / signup */}
+              <p className="text-center mt-5 font-dm text-[13px] text-[rgba(240,242,255,0.4)]">
+                {isSignup ? 'Already have an account? ' : "Don't have an account? "}
+                <button
+                  onClick={() => { setIsSignup(v => !v); setError(''); setPassword('') }}
+                  className="text-[#4f8ef7] hover:underline transition-colors font-medium"
+                >
+                  {isSignup ? 'Sign in' : 'Sign up for free'}
+                </button>
+              </p>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
   )
 }

@@ -1,16 +1,4 @@
 import { createContext, useContext, useState, useEffect } from 'react'
-import { auth, googleProvider } from '../firebase'
-import {
-  onAuthStateChanged,
-  signInWithPopup,
-  signInWithRedirect,
-  getRedirectResult,
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
-  signOut,
-  updateProfile,
-  sendPasswordResetEmail
-} from 'firebase/auth'
 
 const AuthContext = createContext(null)
 
@@ -21,173 +9,133 @@ export function useAuth() {
 }
 
 // ─── Helpers ────────────────────────────────────────────────
-function isMobileBrowser() {
-  return /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(navigator.userAgent)
+
+const TOKEN_KEY = 'skope_auth_token'
+const USER_KEY  = 'skope_auth_user'
+
+function saveSession(token, user) {
+  localStorage.setItem(TOKEN_KEY, token)
+  localStorage.setItem(USER_KEY, JSON.stringify(user))
+}
+
+function clearSession() {
+  localStorage.removeItem(TOKEN_KEY)
+  localStorage.removeItem(USER_KEY)
+  sessionStorage.removeItem('skope_guest_mode')
+  sessionStorage.removeItem('skope_guest_user')
+}
+
+export function getStoredToken() {
+  return localStorage.getItem(TOKEN_KEY)
 }
 
 // Fetch the user's saved PathReport from backend
 async function fetchPathReport(uid, token) {
-  const res = await fetch(`/api/get-report/${uid}`, {
-    headers: { Authorization: `Bearer ${token}` }
-  })
-  if (!res.ok) return null
-  const data = await res.json()
-  return data.success && data.found ? data.reportData : null
-}
-
-// Sync user record to MongoDB (non-blocking — errors don't interrupt auth)
-function syncUser(uid, email, displayName, provider, token) {
-  fetch('/api/admin/sync-user', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-    body: JSON.stringify({ uid, email, displayName, provider })
-  }).catch(err => console.error('[Auth] Sync user failed:', err.message))
+  try {
+    const res = await fetch(`/api/get-report/${uid}`, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+    if (!res.ok) return null
+    const data = await res.json()
+    return data.success && data.found ? data.reportData : null
+  } catch {
+    return null
+  }
 }
 
 // ─── Provider ───────────────────────────────────────────────
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(() => {
-    try {
-      const guest = sessionStorage.getItem('skope_guest_user')
-      return guest ? JSON.parse(guest) : null
-    } catch {
-      return null
-    }
-  })
-  // loading starts true — we wait for Firebase to resolve auth state
+  const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(true)
   const [pathReport, setPathReport] = useState(null)
 
+  // Rehydrate session on mount
   useEffect(() => {
-    // ── STEP 1: Consume any pending redirect result FIRST ──
-    // This handles the case where signInWithRedirect (mobile fallback) completed
-    // and the browser returned to the app. Without this, the user appears logged out.
-    getRedirectResult(auth)
-      .then((result) => {
-        if (result?.user) {
-          console.log('[Auth] Redirect sign-in completed for:', result.user.email)
-          // onAuthStateChanged will fire automatically after this — no extra work needed
-        }
-      })
-      .catch((err) => {
-        // Known non-error: auth/no-auth-event means no redirect is pending — safe to ignore
-        if (err.code !== 'auth/no-auth-event' && err.code !== 'auth/null-user') {
-          console.warn('[Auth] Redirect result error:', err.code, err.message)
-        }
-      })
-
-    // ── STEP 2: Subscribe to ongoing auth state changes ──
-    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
-      // Guest mode — don't override with Firebase null
-      const isLocalGuest = sessionStorage.getItem('skope_guest_mode') === 'true'
-      if (isLocalGuest) {
-        setLoading(false)
-        return
+    async function rehydrate() {
+      // Guest mode
+      const isGuest = sessionStorage.getItem('skope_guest_mode') === 'true'
+      if (isGuest) {
+        try {
+          const guest = JSON.parse(sessionStorage.getItem('skope_guest_user'))
+          if (guest) {
+            setUser(guest)
+            setLoading(false)
+            return
+          }
+        } catch { /* ignore */ }
       }
 
-      setUser(firebaseUser)
+      // JWT session
+      const token = localStorage.getItem(TOKEN_KEY)
+      const storedUser = localStorage.getItem(USER_KEY)
 
-      if (firebaseUser && !firebaseUser.isAnonymous) {
-        // Keep loading=true while we fetch data so UI doesn't flash
-        setLoading(true)
+      if (token && storedUser) {
         try {
-          const token = await firebaseUser.getIdToken()
-
-          // Sync user to MongoDB (fire-and-forget)
-          syncUser(
-            firebaseUser.uid,
-            firebaseUser.email,
-            firebaseUser.displayName,
-            firebaseUser.providerData?.[0]?.providerId || 'email',
-            token
-          )
+          const parsedUser = JSON.parse(storedUser)
+          setUser(parsedUser)
 
           // Fetch existing PathReport (determines /form vs /result routing)
-          const report = await fetchPathReport(firebaseUser.uid, token)
+          const report = await fetchPathReport(parsedUser.uid, token)
           if (report) {
             setPathReport(report)
             sessionStorage.setItem('pathreport', JSON.stringify(report))
-          } else {
-            setPathReport(null)
           }
-        } catch (err) {
-          console.error('[Auth] Failed to fetch user report:', err.message)
-          setPathReport(null)
+        } catch {
+          clearSession()
         }
-      } else if (!firebaseUser) {
-        setPathReport(null)
-        sessionStorage.removeItem('pathreport')
       }
 
-      // Release loading AFTER all async work is done
       setLoading(false)
-    })
+    }
 
-    return unsubscribe
+    rehydrate()
   }, [])
 
   // ─── Auth Methods ──────────────────────────────────────────
 
-  const loginWithGoogle = async () => {
+  const signupWithEmail = async (email, password, name) => {
     setLoading(true)
-    sessionStorage.removeItem('skope_guest_mode')
-    sessionStorage.removeItem('skope_guest_user')
-
     try {
-      if (isMobileBrowser()) {
-        // Mobile browsers block popups — use redirect instead
-        // The result will be picked up by getRedirectResult() on next page load
-        sessionStorage.setItem('skope_redirect_pending', 'true')
-        await signInWithRedirect(auth, googleProvider)
-        return // page will navigate away; auth resumes on return
-      } else {
-        // Desktop — use popup (faster UX, no page reload)
-        const result = await signInWithPopup(auth, googleProvider)
-        return result.user
-      }
-    } catch (err) {
-      // If popup was blocked on desktop, fall back to redirect
-      if (err.code === 'auth/popup-blocked' || err.code === 'auth/popup-closed-by-user') {
-        try {
-          sessionStorage.setItem('skope_redirect_pending', 'true')
-          await signInWithRedirect(auth, googleProvider)
-          return
-        } catch (redirectErr) {
-          setLoading(false)
-          throw redirectErr
-        }
-      }
+      const res = await fetch('/api/auth/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password, name })
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || 'Signup failed')
+
+      saveSession(data.token, data.user)
+      setUser(data.user)
+      return data.user
+    } finally {
       setLoading(false)
-      throw err
     }
   }
 
   const loginWithEmail = async (email, password) => {
     setLoading(true)
-    sessionStorage.removeItem('skope_guest_mode')
-    sessionStorage.removeItem('skope_guest_user')
     try {
-      const result = await signInWithEmailAndPassword(auth, email, password)
-      return result.user
-    } catch (err) {
-      setLoading(false)
-      throw err
-    }
-  }
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || 'Login failed')
 
-  const signupWithEmail = async (email, password, displayName) => {
-    setLoading(true)
-    sessionStorage.removeItem('skope_guest_mode')
-    sessionStorage.removeItem('skope_guest_user')
-    try {
-      const result = await createUserWithEmailAndPassword(auth, email, password)
-      if (displayName) {
-        await updateProfile(result.user, { displayName })
+      saveSession(data.token, data.user)
+      setUser(data.user)
+
+      // Fetch existing PathReport after login
+      const report = await fetchPathReport(data.user.uid, data.token)
+      if (report) {
+        setPathReport(report)
+        sessionStorage.setItem('pathreport', JSON.stringify(report))
       }
-      return result.user
-    } catch (err) {
+
+      return data.user
+    } finally {
       setLoading(false)
-      throw err
     }
   }
 
@@ -204,16 +152,22 @@ export function AuthProvider({ children }) {
     return mockUser
   }
 
-  const logout = async () => {
-    sessionStorage.removeItem('skope_guest_mode')
-    sessionStorage.removeItem('skope_guest_user')
-    sessionStorage.removeItem('skope_redirect_pending')
+  const logout = () => {
+    clearSession()
+    sessionStorage.removeItem('pathreport')
     setUser(null)
-    await signOut(auth)
+    setPathReport(null)
   }
 
   const resetPassword = async (email) => {
-    await sendPasswordResetEmail(auth, email)
+    const res = await fetch('/api/auth/reset-password', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email })
+    })
+    const data = await res.json()
+    if (!res.ok) throw new Error(data.error || 'Password reset failed')
+    return data
   }
 
   const value = {
@@ -221,7 +175,6 @@ export function AuthProvider({ children }) {
     loading,
     pathReport,
     setPathReport,
-    loginWithGoogle,
     loginWithEmail,
     signupWithEmail,
     loginAsGuest,
