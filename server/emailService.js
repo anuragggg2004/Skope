@@ -10,12 +10,19 @@ let _transporter = null
 
 function getTransporter() {
   if (_transporter) return _transporter
+  
+  // Strip all spaces from SMTP_PASS to prevent common user configuration/copy-paste errors
+  const smtpPass = (process.env.SMTP_PASS || '').replace(/\s+/g, '')
+
   _transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
       user: process.env.SMTP_USER,
-      pass: process.env.SMTP_PASS   // Gmail App Password (16 chars, no spaces)
-    }
+      pass: smtpPass
+    },
+    connectionTimeout: 10000, // 10s timeout
+    greetingTimeout: 10000,
+    socketTimeout: 10000
   })
   return _transporter
 }

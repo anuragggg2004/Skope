@@ -1332,8 +1332,11 @@ app.post('/api/auth/forgot-password', authLimiter, async (req, res, next) => {
       expiresAt: new Date(Date.now() + 60 * 60 * 1000)  // 1 hour
     })
 
-    // Build reset URL
-    const appUrl = process.env.APP_URL || 'http://localhost:3000'
+    // Build reset URL dynamically from request headers if APP_URL is not set
+    const protocol = req.headers['x-forwarded-proto'] || req.protocol
+    const host = req.headers['x-forwarded-host'] || req.headers.host
+    const dynamicAppUrl = `${protocol}://${host}`
+    const appUrl = process.env.APP_URL || dynamicAppUrl
     const resetUrl = `${appUrl}/reset-password?token=${rawToken}`
 
     // Send email
