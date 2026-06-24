@@ -70,12 +70,11 @@ const UserSchema = new mongoose.Schema({
 }, { timestamps: true })
 
 // Hash password before saving
-UserSchema.pre('save', async function (next) {
-  if (!this.isModified('passwordHash') || !this.passwordHash) return next()
+UserSchema.pre('save', async function () {
+  if (!this.isModified('passwordHash') || !this.passwordHash) return
   // Only hash if it doesn't look like an already-hashed value
-  if (this.passwordHash.startsWith('$2')) return next()
+  if (this.passwordHash.startsWith('$2')) return
   this.passwordHash = await bcrypt.hash(this.passwordHash, 12)
-  next()
 })
 
 // Compare plain password to stored hash
