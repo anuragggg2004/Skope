@@ -1785,8 +1785,28 @@ app.post('/api/admin/sync-user', authenticateUser, async (req, res, next) => {
 // =============================================
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
-app.use(express.static(path.join(__dirname, 'dist')))
+
+// Serve static assets with long-term caching headers
+app.use(express.static(path.join(__dirname, 'dist'), {
+  maxAge: '1y',
+  immutable: true,
+  setHeaders: (res, filepath) => {
+    // Only cache files in assets/ or specific static files forever
+    const isAsset = filepath.includes('/assets/') || filepath.match(/\.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2)$/)
+    if (isAsset) {
+      res.setHeader('Cache-Control', 'public, max-age=31536000, immutable')
+    } else {
+      // Root HTML files, favicons, manifests should revalidate
+      res.setHeader('Cache-Control', 'public, max-age=0, must-revalidate')
+    }
+  }
+}))
+
 app.get('*', (req, res) => {
+  // Browser should always validate the HTML
+  res.setHeader('Cache-Control', 'public, max-age=0, must-revalidate')
+  // Optional: Uncomment to let Cloudflare cache the HTML at the edge for 1 hour
+  // res.setHeader('CDN-Cache-Control', 'public, max-age=3600')
   res.sendFile(path.join(__dirname, 'dist', 'index.html'))
 })
 
