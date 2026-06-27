@@ -180,7 +180,7 @@ export default function ResetPasswordPage() {
 
         {/* New password */}
         <div>
-          <label className="block font-dm text-[12px] text-[rgba(240,242,255,0.4)] mb-2">New password</label>
+          <label htmlFor="new-password" className="block font-dm text-[12px] text-[rgba(240,242,255,0.4)] mb-2">New password</label>
           <div className="relative">
             <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[rgba(240,242,255,0.3)]"><LockIcon /></span>
             <input
@@ -202,7 +202,7 @@ export default function ResetPasswordPage() {
 
         {/* Confirm password */}
         <div>
-          <label className="block font-dm text-[12px] text-[rgba(240,242,255,0.4)] mb-2">Confirm new password</label>
+          <label htmlFor="confirm-password" className="block font-dm text-[12px] text-[rgba(240,242,255,0.4)] mb-2">Confirm new password</label>
           <div className="relative">
             <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[rgba(240,242,255,0.3)]"><LockIcon /></span>
             <input

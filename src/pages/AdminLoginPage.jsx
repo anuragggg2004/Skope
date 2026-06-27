@@ -70,10 +70,11 @@ export default function AdminLoginPage() {
 
           <form onSubmit={handleLogin}>
             <div style={{ marginBottom: 16 }}>
-              <label style={{ display: 'block', fontSize: 12, color: 'rgba(240,244,255,0.5)', marginBottom: 8, fontWeight: 500, letterSpacing: '0.5px' }}>
+              <label htmlFor="admin-email" style={{ display: 'block', fontSize: 12, color: 'rgba(240,244,255,0.5)', marginBottom: 8, fontWeight: 500, letterSpacing: '0.5px' }}>
                 ADMIN EMAIL
               </label>
               <input
+                id="admin-email"
                 type="email"
                 value={email}
                 onChange={e => setEmail(e.target.value)}
@@ -87,10 +88,11 @@ export default function AdminLoginPage() {
               />
             </div>
             <div style={{ marginBottom: 24 }}>
-              <label style={{ display: 'block', fontSize: 12, color: 'rgba(240,244,255,0.5)', marginBottom: 8, fontWeight: 500, letterSpacing: '0.5px' }}>
+              <label htmlFor="admin-password" style={{ display: 'block', fontSize: 12, color: 'rgba(240,244,255,0.5)', marginBottom: 8, fontWeight: 500, letterSpacing: '0.5px' }}>
                 PASSWORD
               </label>
               <input
+                id="admin-password"
                 type="password"
                 value={password}
                 onChange={e => setPassword(e.target.value)}

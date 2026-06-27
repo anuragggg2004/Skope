@@ -69,22 +69,25 @@ const Btn = ({ children, onClick, color = C.indigo, small = false, danger = fals
   }}>{children}</button>
 )
 
-const Input = ({ value, onChange, placeholder, type = 'text', style = {} }) => (
+const Input = ({ value, onChange, placeholder, type = 'text', style = {}, ...props }) => (
   <input type={type} value={value} onChange={onChange} placeholder={placeholder}
     style={{
       background: 'rgba(255,255,255,0.05)', border: `1px solid ${C.border}`, borderRadius: 8,
       color: C.white, padding: '8px 12px', fontSize: 13, outline: 'none', fontFamily: 'inherit', ...style
     }}
+    {...props}
   />
 )
 
-const Select = ({ value, onChange, options, style = {} }) => (
+const Select = ({ value, onChange, options, style = {}, ...props }) => (
   <select value={value} onChange={onChange}
     style={{
       background: C.card, border: `1px solid ${C.border}`, borderRadius: 8,
       color: C.muted, padding: '8px 12px', fontSize: 13, outline: 'none', fontFamily: 'inherit',
       cursor: 'pointer', ...style
-    }}>
+    }}
+    {...props}
+  >
     {options.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
   </select>
 )
@@ -638,12 +641,15 @@ function CollegesSection() {
     )}
   ]
 
-  const colField = (label, field, type = 'text') => (
-    <div style={{ marginBottom: 14 }}>
-      <label style={{ display: 'block', fontSize: 11, color: C.muted, marginBottom: 6, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.5px' }}>{label}</label>
-      <Input value={form[field] || ''} onChange={e => setForm(f => ({ ...f, [field]: e.target.value }))} type={type} style={{ width: '100%', boxSizing: 'border-box' }} />
-    </div>
-  )
+  const colField = (label, field, type = 'text') => {
+    const elementId = `col-field-${field}`
+    return (
+      <div style={{ marginBottom: 14 }}>
+        <label htmlFor={elementId} style={{ display: 'block', fontSize: 11, color: C.muted, marginBottom: 6, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.5px' }}>{label}</label>
+        <Input id={elementId} value={form[field] || ''} onChange={e => setForm(f => ({ ...f, [field]: e.target.value }))} type={type} style={{ width: '100%', boxSizing: 'border-box' }} />
+      </div>
+    )
+  }
 
   return (
     <div>
@@ -670,13 +676,13 @@ function CollegesSection() {
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 14 }}>
             <div>
-              <label style={{ display: 'block', fontSize: 11, color: C.muted, marginBottom: 6, fontWeight: 600, textTransform: 'uppercase' }}>TYPE</label>
-              <Select value={form.type || 'Other'} onChange={e => setForm(f => ({ ...f, type: e.target.value }))} style={{ width: '100%' }}
+              <label htmlFor="college-type-select" style={{ display: 'block', fontSize: 11, color: C.muted, marginBottom: 6, fontWeight: 600, textTransform: 'uppercase' }}>TYPE</label>
+              <Select id="college-type-select" value={form.type || 'Other'} onChange={e => setForm(f => ({ ...f, type: e.target.value }))} style={{ width: '100%' }}
                 options={['IIT','NIT','IIIT','Central University','Private','Deemed','Design','Law','Management','Medical','Other'].map(v => ({ value: v, label: v }))} />
             </div>
             <div>
-              <label style={{ display: 'block', fontSize: 11, color: C.muted, marginBottom: 6, fontWeight: 600, textTransform: 'uppercase' }}>STATUS</label>
-              <Select value={form.status || 'unverified'} onChange={e => setForm(f => ({ ...f, status: e.target.value }))} style={{ width: '100%' }}
+              <label htmlFor="college-status-select" style={{ display: 'block', fontSize: 11, color: C.muted, marginBottom: 6, fontWeight: 600, textTransform: 'uppercase' }}>STATUS</label>
+              <Select id="college-status-select" value={form.status || 'unverified'} onChange={e => setForm(f => ({ ...f, status: e.target.value }))} style={{ width: '100%' }}
                 options={[{ value: 'verified', label: 'Verified' }, { value: 'unverified', label: 'Unverified' }, { value: 'hidden_gem', label: 'Hidden Gem' }, { value: 'unconventional', label: 'Unconventional' }]} />
             </div>
           </div>
@@ -685,8 +691,8 @@ function CollegesSection() {
             {colField('Avg Placement %', 'avgPlacementPct', 'number')}
           </div>
           <div style={{ marginBottom: 14 }}>
-            <label style={{ display: 'block', fontSize: 11, color: C.muted, marginBottom: 6, fontWeight: 600, textTransform: 'uppercase' }}>KEY STRENGTHS</label>
-            <textarea value={form.keyStrengths || ''} onChange={e => setForm(f => ({ ...f, keyStrengths: e.target.value }))}
+            <label htmlFor="college-strengths-textarea" style={{ display: 'block', fontSize: 11, color: C.muted, marginBottom: 6, fontWeight: 600, textTransform: 'uppercase' }}>KEY STRENGTHS</label>
+            <textarea id="college-strengths-textarea" value={form.keyStrengths || ''} onChange={e => setForm(f => ({ ...f, keyStrengths: e.target.value }))}
               style={{ width: '100%', background: 'rgba(255,255,255,0.05)', border: `1px solid ${C.border}`, borderRadius: 8, color: C.white, padding: '8px 12px', fontSize: 13, outline: 'none', fontFamily: 'inherit', resize: 'vertical', minHeight: 80, boxSizing: 'border-box' }} />
           </div>
           <div style={{ display: 'flex', gap: 10 }}>
@@ -827,8 +833,8 @@ function FeedbackSection() {
             ))}
           </div>
           <div style={{ marginBottom: 16 }}>
-            <label style={{ fontSize: 11, color: C.muted, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.5px', display: 'block', marginBottom: 6 }}>INTERNAL NOTES</label>
-            <textarea value={notes} onChange={e => setNotes(e.target.value)}
+            <label htmlFor="internal-notes-textarea" style={{ fontSize: 11, color: C.muted, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.5px', display: 'block', marginBottom: 6 }}>INTERNAL NOTES</label>
+            <textarea id="internal-notes-textarea" value={notes} onChange={e => setNotes(e.target.value)}
               placeholder="Add team notes here…"
               style={{ width: '100%', background: 'rgba(255,255,255,0.05)', border: `1px solid ${C.border}`, borderRadius: 8, color: C.white, padding: '8px 12px', fontSize: 13, outline: 'none', fontFamily: 'inherit', resize: 'vertical', minHeight: 80, boxSizing: 'border-box' }} />
           </div>
@@ -957,20 +963,20 @@ function SettingsSection() {
         <Card>
           <div style={{ fontSize: 14, fontWeight: 700, color: C.yellow, marginBottom: 16 }}>⚡ Rate Limiting</div>
           <div style={{ marginBottom: 14 }}>
-            <label style={{ display: 'block', fontSize: 11, color: C.muted, marginBottom: 6, fontWeight: 600, textTransform: 'uppercase' }}>AI REQUESTS PER 10 MIN (per IP)</label>
-            <Input value={form.aiRateLimitPerTenMin || 15} onChange={e => setForm(f => ({ ...f, aiRateLimitPerTenMin: Number(e.target.value) }))} type="number" style={{ width: 100 }} />
+            <label htmlFor="ai-rate-limit-input" style={{ display: 'block', fontSize: 11, color: C.muted, marginBottom: 6, fontWeight: 600, textTransform: 'uppercase' }}>AI REQUESTS PER 10 MIN (per IP)</label>
+            <Input id="ai-rate-limit-input" value={form.aiRateLimitPerTenMin || 15} onChange={e => setForm(f => ({ ...f, aiRateLimitPerTenMin: Number(e.target.value) }))} type="number" style={{ width: 100 }} />
           </div>
           <div>
-            <label style={{ display: 'block', fontSize: 11, color: C.muted, marginBottom: 6, fontWeight: 600, textTransform: 'uppercase' }}>MAX CONVERSATION EXCHANGES</label>
-            <Input value={form.maxConversationExchanges || 20} onChange={e => setForm(f => ({ ...f, maxConversationExchanges: Number(e.target.value) }))} type="number" style={{ width: 100 }} />
+            <label htmlFor="max-exchanges-input" style={{ display: 'block', fontSize: 11, color: C.muted, marginBottom: 6, fontWeight: 600, textTransform: 'uppercase' }}>MAX CONVERSATION EXCHANGES</label>
+            <Input id="max-exchanges-input" value={form.maxConversationExchanges || 20} onChange={e => setForm(f => ({ ...f, maxConversationExchanges: Number(e.target.value) }))} type="number" style={{ width: 100 }} />
           </div>
         </Card>
 
         <Card>
           <div style={{ fontSize: 14, fontWeight: 700, color: C.purple, marginBottom: 16 }}>📧 Admin Contact</div>
           <div>
-            <label style={{ display: 'block', fontSize: 11, color: C.muted, marginBottom: 6, fontWeight: 600, textTransform: 'uppercase' }}>ADMIN EMAIL (for system alerts)</label>
-            <Input value={form.adminEmail || ''} onChange={e => setForm(f => ({ ...f, adminEmail: e.target.value }))} style={{ width: '100%', boxSizing: 'border-box' }} />
+            <label htmlFor="admin-email-input" style={{ display: 'block', fontSize: 11, color: C.muted, marginBottom: 6, fontWeight: 600, textTransform: 'uppercase' }}>ADMIN EMAIL (for system alerts)</label>
+            <Input id="admin-email-input" value={form.adminEmail || ''} onChange={e => setForm(f => ({ ...f, adminEmail: e.target.value }))} style={{ width: '100%', boxSizing: 'border-box' }} />
           </div>
           <Divider />
           <div style={{ padding: '10px 14px', background: `${C.indigo}15`, borderRadius: 8, border: `1px solid ${C.indigo}33` }}>
@@ -983,16 +989,16 @@ function SettingsSection() {
         <Card>
           <div style={{ fontSize: 14, fontWeight: 700, color: C.pink, marginBottom: 16 }}>🔑 Change Password</div>
           <div style={{ marginBottom: 12 }}>
-            <label style={{ display: 'block', fontSize: 11, color: C.muted, marginBottom: 6, fontWeight: 600, textTransform: 'uppercase' }}>Current Password</label>
-            <Input type="password" value={pwdForm.currentPassword} onChange={e => setPwdForm(f => ({ ...f, currentPassword: e.target.value }))} style={{ width: '100%', boxSizing: 'border-box' }} />
+            <label htmlFor="current-password-input" style={{ display: 'block', fontSize: 11, color: C.muted, marginBottom: 6, fontWeight: 600, textTransform: 'uppercase' }}>Current Password</label>
+            <Input id="current-password-input" type="password" value={pwdForm.currentPassword} onChange={e => setPwdForm(f => ({ ...f, currentPassword: e.target.value }))} style={{ width: '100%', boxSizing: 'border-box' }} />
           </div>
           <div style={{ marginBottom: 12 }}>
-            <label style={{ display: 'block', fontSize: 11, color: C.muted, marginBottom: 6, fontWeight: 600, textTransform: 'uppercase' }}>New Password</label>
-            <Input type="password" value={pwdForm.newPassword} onChange={e => setPwdForm(f => ({ ...f, newPassword: e.target.value }))} style={{ width: '100%', boxSizing: 'border-box' }} />
+            <label htmlFor="new-password-input" style={{ display: 'block', fontSize: 11, color: C.muted, marginBottom: 6, fontWeight: 600, textTransform: 'uppercase' }}>New Password</label>
+            <Input id="new-password-input" type="password" value={pwdForm.newPassword} onChange={e => setPwdForm(f => ({ ...f, newPassword: e.target.value }))} style={{ width: '100%', boxSizing: 'border-box' }} />
           </div>
           <div style={{ marginBottom: 16 }}>
-            <label style={{ display: 'block', fontSize: 11, color: C.muted, marginBottom: 6, fontWeight: 600, textTransform: 'uppercase' }}>Confirm New Password</label>
-            <Input type="password" value={pwdForm.confirmPassword} onChange={e => setPwdForm(f => ({ ...f, confirmPassword: e.target.value }))} style={{ width: '100%', boxSizing: 'border-box' }} />
+            <label htmlFor="confirm-password-input" style={{ display: 'block', fontSize: 11, color: C.muted, marginBottom: 6, fontWeight: 600, textTransform: 'uppercase' }}>Confirm New Password</label>
+            <Input id="confirm-password-input" type="password" value={pwdForm.confirmPassword} onChange={e => setPwdForm(f => ({ ...f, confirmPassword: e.target.value }))} style={{ width: '100%', boxSizing: 'border-box' }} />
           </div>
           {pwdError && <div style={{ color: C.red, fontSize: 12, marginBottom: 12, fontWeight: 600 }}>⚠️ {pwdError}</div>}
           {pwdSuccess && <div style={{ color: C.green, fontSize: 12, marginBottom: 12, fontWeight: 600 }}>✓ {pwdSuccess}</div>}

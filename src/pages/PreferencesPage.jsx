@@ -237,9 +237,9 @@ export default function PreferencesPage() {
 
             {/* Q1 — Budget */}
             <div className="mb-8">
-              <label className="font-dm text-[14px] text-white font-medium block mb-3">
+              <div className="font-dm text-[14px] text-white font-medium block mb-3">
                 What's your annual education budget? <span className="text-[rgba(240,242,255,0.35)] font-normal">(tuition + hostel + living)</span>
-              </label>
+              </div>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                 {budgetOptions.map((opt) => (
                   <button
@@ -259,7 +259,7 @@ export default function PreferencesPage() {
 
             {/* Q2 — Cities */}
             <div className="mb-8">
-              <label className="font-dm text-[14px] text-white font-medium block mb-3">
+              <label htmlFor="add-city-input" className="font-dm text-[14px] text-white font-medium block mb-3">
                 Which cities are you open to studying in? <span className="text-[rgba(240,242,255,0.35)] font-normal">(select multiple)</span>
               </label>
               <div className="flex flex-wrap gap-2 mb-3">
@@ -280,6 +280,7 @@ export default function PreferencesPage() {
               </div>
               <div className="flex gap-2">
                 <input
+                  id="add-city-input"
                   type="text"
                   className="flex-1 bg-navy3 border border-[rgba(108,99,255,0.15)] rounded-[10px] px-4 py-2 text-white font-dm text-[13px] outline-none focus:border-[#6c63ff] transition-colors placeholder:text-[rgba(240,242,255,0.25)]"
                   placeholder="Add another city..."
@@ -298,9 +299,9 @@ export default function PreferencesPage() {
 
             {/* Q3 — AI Relevance */}
             <div className="mb-8">
-              <label className="font-dm text-[14px] text-white font-medium block mb-3">
+              <div className="font-dm text-[14px] text-white font-medium block mb-3">
                 How important is it that your course stays relevant in the AI era?
-              </label>
+              </div>
               {[
                 { value: 'very_important', label: 'Very important — I want a career AI can\'t replace', emoji: '🛡️' },
                 { value: 'combine_with_ai', label: 'I want to combine my field with AI/tech', emoji: '🤖' },
@@ -324,10 +325,11 @@ export default function PreferencesPage() {
 
             {/* Q4 — Anything else (optional) */}
             <div className="mb-8">
-              <label className="font-dm text-[14px] text-white font-medium block mb-2">
+              <label htmlFor="additional-note-input" className="font-dm text-[14px] text-white font-medium block mb-2">
                 Anything else we should know? <span className="text-[rgba(240,242,255,0.35)] font-normal">(optional)</span>
               </label>
               <textarea
+                id="additional-note-input"
                 className="w-full glass-card border-[rgba(255,255,255,0.1)] rounded-[12px] px-4 py-3.5 text-white font-dm text-[14px] outline-none focus:border-purple focus:shadow-[0_0_15px_rgba(108,99,255,0.2)] transition-all placeholder:text-[rgba(240,242,255,0.25)] resize-y"
                 rows={2}
                 style={{ minHeight: '60px' }}

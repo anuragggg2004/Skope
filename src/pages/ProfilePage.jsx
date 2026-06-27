@@ -63,11 +63,13 @@ const IconLock = () => (
 
 // ─── Field component ──────────────────────────────────
 function ProfileField({ label, value, onChange, type = 'text', options, placeholder, hint }) {
+  const fieldId = `profile-${label.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`
   if (options) {
     return (
       <div>
-        <label className="font-dm text-[11px] text-[rgba(240,242,255,0.4)] uppercase tracking-[1px] block mb-1.5">{label}</label>
+        <label htmlFor={fieldId} className="font-dm text-[11px] text-[rgba(240,242,255,0.4)] uppercase tracking-[1px] block mb-1.5">{label}</label>
         <select
+          id={fieldId}
           value={value}
           onChange={e => onChange(e.target.value)}
           className="w-full bg-[rgba(255,255,255,0.04)] border border-[rgba(255,255,255,0.08)] rounded-[10px] px-3.5 py-3 text-white font-dm text-[13px] outline-none focus:border-[rgba(79,142,247,0.4)] transition-all appearance-none cursor-pointer"
@@ -81,9 +83,10 @@ function ProfileField({ label, value, onChange, type = 'text', options, placehol
   }
   return (
     <div>
-      <label className="font-dm text-[11px] text-[rgba(240,242,255,0.4)] uppercase tracking-[1px] block mb-1.5">{label}</label>
+      <label htmlFor={fieldId} className="font-dm text-[11px] text-[rgba(240,242,255,0.4)] uppercase tracking-[1px] block mb-1.5">{label}</label>
       {type === 'textarea' ? (
         <textarea
+          id={fieldId}
           value={value}
           onChange={e => onChange(e.target.value)}
           placeholder={placeholder}
@@ -92,6 +95,7 @@ function ProfileField({ label, value, onChange, type = 'text', options, placehol
         />
       ) : (
         <input
+          id={fieldId}
           type={type}
           value={value}
           onChange={e => onChange(e.target.value)}
