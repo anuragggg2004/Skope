@@ -109,7 +109,7 @@ const RouteSpinner = () => (
     <div className="orb-2" />
     <div className="page-wrapper min-h-screen flex items-center justify-center bg-[#050508]">
       <div className="text-center">
-        <div className="w-10 h-10 border-2 border-[rgba(99,102,241,0.15)] border-t-[#6366f1] rounded-full animate-spin mx-auto mb-4" />
+        <div className="w-10 h-10 border-2 border-[rgba(79,142,247,0.15)] border-t-[#4f8ef7] rounded-full animate-spin mx-auto mb-4" />
         <p className="font-dm text-[11px] text-[rgba(241,245,249,0.35)] uppercase tracking-[1.5px]">Loading skope...</p>
       </div>
     </div>

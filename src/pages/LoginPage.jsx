@@ -60,11 +60,12 @@ const BackIcon = () => (
 const SkopeLogoMark = () => (
   <div
     className="w-11 h-11 rounded-[14px] flex items-center justify-center mb-3"
-    style={{ background: 'linear-gradient(135deg, #4f8ef7, #8b5cf6)', boxShadow: '0 4px 24px rgba(79,142,247,0.35)' }}
+    style={{ background: '#4f8ef7', boxShadow: '0 4px 24px rgba(79,142,247,0.35)' }}
   >
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-      <circle cx="10" cy="10" r="7" stroke="white" strokeWidth="2.5" fill="none"/>
-      <line x1="15" y1="15" x2="21" y2="21" stroke="white" strokeWidth="2.5" strokeLinecap="round"/>
+    <svg width="24" height="24" viewBox="0 0 100 100" fill="none">
+      <circle cx="50" cy="50" r="10" fill="white" />
+      <circle cx="50" cy="50" r="25" fill="none" stroke="white" strokeWidth="10" />
+      <circle cx="50" cy="50" r="45" fill="none" stroke="white" strokeWidth="10" />
     </svg>
   </div>
 )

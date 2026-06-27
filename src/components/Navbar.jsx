@@ -9,17 +9,22 @@ function Logo() {
   return (
     <button
       onClick={() => navigate('/')}
-      className="flex items-center gap-0"
+      className="flex items-center gap-1.5"
       style={{ background: 'none', border: 'none', padding: 0 }}
     >
       <span style={{ fontFamily: "'Clash Display', sans-serif", fontSize: 22, fontWeight: 700, color: '#f1f5f9', letterSpacing: '-0.5px' }}>Sk</span>
-      <motion.span
-        style={{ fontFamily: "'Clash Display', sans-serif", fontSize: 22, fontWeight: 700, color: '#6366f1', letterSpacing: '-0.5px', display: 'inline-block' }}
-        whileHover={{ rotate: [0, -12, 12, 0], scale: [1, 1.25, 1.25, 1] }}
-        transition={{ duration: 0.45 }}
+      <motion.svg
+        width="22"
+        height="22"
+        viewBox="0 0 100 100"
+        whileHover={{ rotate: 360, scale: 1.15 }}
+        transition={{ duration: 0.6, ease: 'easeInOut' }}
+        style={{ display: 'inline-block', verticalAlign: 'middle', margin: '0 -1px' }}
       >
-        o
-      </motion.span>
+        <circle cx="50" cy="50" r="10" fill="#4f8ef7" />
+        <circle cx="50" cy="50" r="25" fill="none" stroke="#4f8ef7" strokeWidth="10" />
+        <circle cx="50" cy="50" r="45" fill="none" stroke="#4f8ef7" strokeWidth="10" />
+      </motion.svg>
       <span style={{ fontFamily: "'Clash Display', sans-serif", fontSize: 22, fontWeight: 700, color: '#f1f5f9', letterSpacing: '-0.5px' }}>pe</span>
     </button>
   )
@@ -63,8 +68,8 @@ function AvatarDropdown({ user, logout, handleAdminRedirect }) {
         style={{
           width: 36, height: 36,
           borderRadius: '50%',
-          background: 'linear-gradient(135deg, #6366f1, #a855f7)',
-          border: `2px solid ${open ? 'rgba(99,102,241,0.7)' : 'rgba(99,102,241,0.3)'}`,
+          background: 'linear-gradient(135deg, #4f8ef7, #a855f7)',
+          border: `2px solid ${open ? 'rgba(79,142,247,0.7)' : 'rgba(79,142,247,0.3)'}`,
           color: '#fff',
           fontFamily: 'Sora, sans-serif',
           fontSize: 13,
@@ -72,7 +77,7 @@ function AvatarDropdown({ user, logout, handleAdminRedirect }) {
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           cursor: 'pointer',
           transition: 'all 0.2s ease',
-          boxShadow: open ? '0 0 20px rgba(99,102,241,0.45)' : 'none',
+          boxShadow: open ? '0 0 20px rgba(79,142,247,0.45)' : 'none',
           overflow: 'hidden',
           flexShrink: 0,
         }}
@@ -96,7 +101,7 @@ function AvatarDropdown({ user, logout, handleAdminRedirect }) {
               background: 'rgba(17,17,24,0.97)',
               backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)',
               border: '1px solid rgba(255,255,255,0.08)',
-              boxShadow: '0 20px 60px rgba(0,0,0,0.6), 0 0 0 1px rgba(99,102,241,0.08)',
+              boxShadow: '0 20px 60px rgba(0,0,0,0.6), 0 0 0 1px rgba(79,142,247,0.08)',
             }}
           >
             {/* User info */}
@@ -215,7 +220,7 @@ function MobileMenu({ open, onClose, user, logout, handleAdminRedirect }) {
                   background: 'none', border: 'none',
                   borderBottom: '1px solid rgba(255,255,255,0.05)',
                   fontFamily: "'Clash Display', sans-serif", fontSize: 22, fontWeight: 600,
-                  color: '#6366f1',
+                  color: '#4f8ef7',
                   cursor: 'pointer',
                   transition: 'color 0.15s ease',
                 }}
@@ -323,7 +328,7 @@ export default function Navbar() {
                     <span style={{
                       position: 'absolute', bottom: 0, left: 0, right: 0,
                       height: 1.5, borderRadius: 2,
-                      background: 'linear-gradient(90deg, #6366f1, #a855f7)',
+                      background: 'linear-gradient(90deg, #4f8ef7, #a855f7)',
                     }} />
                   )}
                 </button>
@@ -383,15 +388,15 @@ export default function Navbar() {
                   style={{
                     fontFamily: 'Sora, sans-serif', fontSize: 13, fontWeight: 600,
                     color: '#fff',
-                    background: 'linear-gradient(135deg, #6366f1, #a855f7)',
+                    background: 'linear-gradient(135deg, #4f8ef7, #a855f7)',
                     border: 'none',
                     padding: '9px 20px', borderRadius: 100,
                     cursor: 'pointer',
                     transition: 'all 0.2s ease',
-                    boxShadow: '0 0 0 rgba(99,102,241,0)',
+                    boxShadow: '0 0 0 rgba(79,142,247,0)',
                   }}
-                  onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-1px)'; e.currentTarget.style.boxShadow = '0 0 24px rgba(99,102,241,0.4)' }}
-                  onMouseLeave={e => { e.currentTarget.style.transform = ''; e.currentTarget.style.boxShadow = '0 0 0 rgba(99,102,241,0)' }}
+                  onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-1px)'; e.currentTarget.style.boxShadow = '0 0 24px rgba(79,142,247,0.4)' }}
+                  onMouseLeave={e => { e.currentTarget.style.transform = ''; e.currentTarget.style.boxShadow = '0 0 0 rgba(79,142,247,0)' }}
                 >
                   Get Started
                 </button>

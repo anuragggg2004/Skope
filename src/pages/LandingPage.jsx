@@ -143,9 +143,9 @@ function InteractiveDemo() {
       className="max-w-[700px] mx-auto rounded-[24px] overflow-hidden"
       style={{
         background: 'rgba(17,17,24,0.8)',
-        border: '1px solid rgba(99,102,241,0.2)',
+        border: '1px solid rgba(79,142,247,0.2)',
         backdropFilter: 'blur(24px)',
-        boxShadow: '0 0 60px rgba(99,102,241,0.08), 0 24px 64px rgba(0,0,0,0.5)',
+        boxShadow: '0 0 60px rgba(79,142,247,0.08), 0 24px 64px rgba(0,0,0,0.5)',
       }}
     >
       {/* Terminal header bar */}
@@ -190,7 +190,7 @@ function InteractiveDemo() {
               <AnimatePresence mode="wait">
                 {step === 0 && (
                   <motion.div key="pick" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-                    <p className="font-mono text-[13px] text-[#6366f1] mb-1">→ skope analyze</p>
+                    <p className="font-mono text-[13px] text-[#4f8ef7] mb-1">→ skope analyze</p>
                     <p className="font-inter text-[14px] text-white/70 mb-5">
                       What subject do you actually enjoy? (not what you're "supposed" to say)
                     </p>
@@ -201,13 +201,13 @@ function InteractiveDemo() {
                           onClick={() => pick(s)}
                           className="font-inter text-[13px] font-medium px-4 py-2 rounded-[10px] transition-all duration-200 hover:scale-[1.03]"
                           style={{
-                            background: 'rgba(99,102,241,0.08)',
-                            border: '1px solid rgba(99,102,241,0.2)',
+                            background: 'rgba(79,142,247,0.08)',
+                            border: '1px solid rgba(79,142,247,0.2)',
                             color: 'rgba(241,245,249,0.8)',
                             cursor: 'pointer',
                           }}
-                          onMouseEnter={e => { e.currentTarget.style.background = 'rgba(99,102,241,0.18)'; e.currentTarget.style.borderColor = 'rgba(99,102,241,0.4)' }}
-                          onMouseLeave={e => { e.currentTarget.style.background = 'rgba(99,102,241,0.08)'; e.currentTarget.style.borderColor = 'rgba(99,102,241,0.2)' }}
+                          onMouseEnter={e => { e.currentTarget.style.background = 'rgba(79,142,247,0.18)'; e.currentTarget.style.borderColor = 'rgba(79,142,247,0.4)' }}
+                          onMouseLeave={e => { e.currentTarget.style.background = 'rgba(79,142,247,0.08)'; e.currentTarget.style.borderColor = 'rgba(79,142,247,0.2)' }}
                         >
                           {s}
                         </button>
@@ -226,7 +226,7 @@ function InteractiveDemo() {
                         transition={{ delay: i * 0.3 }}
                         className="flex items-center gap-3"
                       >
-                        <div className="w-4 h-4 rounded-full border border-[#6366f1] border-t-transparent animate-spin" style={{ animationDuration: '0.7s' }} />
+                        <div className="w-4 h-4 rounded-full border border-[#4f8ef7] border-t-transparent animate-spin" style={{ animationDuration: '0.7s' }} />
                         <span className="font-mono text-[12px] text-white/50">{t}</span>
                       </motion.div>
                     ))}
@@ -240,7 +240,7 @@ function InteractiveDemo() {
                       <span className="font-mono text-[11px] text-green-400">Analysis complete</span>
                     </div>
 
-                    <div className="rounded-[14px] p-4 mb-4" style={{ background: 'rgba(99,102,241,0.08)', border: '1px solid rgba(99,102,241,0.15)' }}>
+                    <div className="rounded-[14px] p-4 mb-4" style={{ background: 'rgba(79,142,247,0.08)', border: '1px solid rgba(79,142,247,0.15)' }}>
                       <p className="font-inter text-[11px] text-white/35 mb-1 uppercase tracking-widest">Your Career Vibe</p>
                       <p className="font-clash text-[22px] font-semibold text-white">{DEMO_ARCHETYPES[selected].vibe}</p>
                     </div>
@@ -300,7 +300,7 @@ function FAQItem({ q, a, index }) {
         <motion.span
           animate={{ rotate: open ? 45 : 0 }}
           transition={{ duration: 0.2 }}
-          className="flex-shrink-0 text-[#6366f1] text-xl font-light"
+          className="flex-shrink-0 text-[#4f8ef7] text-xl font-light"
         >
           +
         </motion.span>
@@ -514,7 +514,7 @@ export default function LandingPage() {
               icon="🎯"
               title="Career Vibe Matching"
               desc="Not job titles — actual archetypes. Analyst, Creator, Builder, Explorer, Strategist. We find yours from how you actually think, not what you think you should say."
-              accent="#6366f1"
+              accent="#4f8ef7"
               delay={0}
             />
             <BentoCard
@@ -631,7 +631,7 @@ export default function LandingPage() {
         <div
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[300px] pointer-events-none"
           style={{
-            background: 'radial-gradient(ellipse, rgba(99,102,241,0.15) 0%, transparent 70%)',
+            background: 'radial-gradient(ellipse, rgba(79,142,247,0.15) 0%, transparent 70%)',
             filter: 'blur(60px)',
           }}
         />
@@ -689,8 +689,14 @@ export default function LandingPage() {
       <footer className="relative z-10 border-t border-white/5 px-5 py-10">
         <div className="max-w-[900px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
           <div>
-            <span className="font-clash text-[18px] font-bold">
-              Sk<span className="text-[#6366f1]">o</span>pe
+            <span className="font-clash text-[18px] font-bold inline-flex items-center gap-1">
+              <span>Sk</span>
+              <svg width="18" height="18" viewBox="0 0 100 100" style={{ display: 'inline-block', verticalAlign: 'middle', margin: '0 -1px' }}>
+                <circle cx="50" cy="50" r="10" fill="#4f8ef7" />
+                <circle cx="50" cy="50" r="25" fill="none" stroke="#4f8ef7" strokeWidth="10" />
+                <circle cx="50" cy="50" r="45" fill="none" stroke="#4f8ef7" strokeWidth="10" />
+              </svg>
+              <span>pe</span>
             </span>
             <p className="font-inter text-[12px] text-white/25 mt-1">
               "Built because choosing a career shouldn't feel like gambling."

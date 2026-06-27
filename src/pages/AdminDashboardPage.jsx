@@ -8,7 +8,7 @@ const C = {
   blue: '#4f8ef7', purple: '#8b5cf6', green: '#22d3a0', yellow: '#fbbf24',
   red: '#f87171', pink: '#f472b6', white: '#f0f4ff',
   muted: 'rgba(240,244,255,0.45)', border: 'rgba(255,255,255,0.07)',
-  indigo: '#6366f1'
+  indigo: '#4f8ef7'
 }
 
 // ─── Helpers ───────────────────────────────────────
@@ -1219,8 +1219,14 @@ export default function AdminDashboardPage() {
       }}>
         {/* Logo */}
         <div style={{ padding: '22px 16px 18px', borderBottom: `1px solid ${C.border}`, display: 'flex', alignItems: 'center', gap: 10 }}>
-          <div style={{ fontSize: 20, fontWeight: 800, letterSpacing: '-0.5px', flexShrink: 0 }}>
-            <span style={{ color: C.white }}>Sk</span><span style={{ color: C.indigo }}>o</span><span style={{ color: C.white }}>pe</span>
+          <div style={{ fontSize: 20, fontWeight: 800, letterSpacing: '-0.5px', flexShrink: 0, display: 'flex', alignItems: 'center', gap: 2 }}>
+            <span style={{ color: C.white }}>Sk</span>
+            <svg width="18" height="18" viewBox="0 0 100 100" style={{ display: 'inline-block', verticalAlign: 'middle', margin: '0 -1px' }}>
+              <circle cx="50" cy="50" r="10" fill={C.indigo} />
+              <circle cx="50" cy="50" r="25" fill="none" stroke={C.indigo} strokeWidth="10" />
+              <circle cx="50" cy="50" r="45" fill="none" stroke={C.indigo} strokeWidth="10" />
+            </svg>
+            <span style={{ color: C.white }}>pe</span>
           </div>
           {sidebarOpen && <div style={{ fontSize: 10, color: 'rgba(240,244,255,0.35)', letterSpacing: '2px', textTransform: 'uppercase' }}>Admin</div>}
         </div>

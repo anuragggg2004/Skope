@@ -20,7 +20,7 @@
   --card-hi:       #16161f;
 
   /* Accents */
-  --indigo:        #6366f1;
+  --indigo:        #4f8ef7;
   --purple:        #a855f7;
   --cyan:          #22d3ee;
   --gold:          #f59e0b;
@@ -31,7 +31,7 @@
   --navy:          #050508;
   --navy2:         #0c0c14;
   --navy3:         #111118;
-  --blue:          #6366f1;
+  --blue:          #4f8ef7;
   --pink:          #a855f7;
   --white:         #f1f5f9;
   --yellow:        #f59e0b;
@@ -43,7 +43,7 @@
 
   /* Surfaces */
   --border:        rgba(255,255,255,0.06);
-  --border-hi:     rgba(99,102,241,0.35);
+  --border-hi:     rgba(79,142,247,0.35);
   --muted:         rgba(241,245,249,0.55);
 
   /* Easings */
@@ -111,7 +111,7 @@ body {
   position: fixed;
   top: 0; left: 0;
   width: 36px; height: 36px;
-  border: 1.5px solid rgba(99,102,241,0.5);
+  border: 1.5px solid rgba(79,142,247,0.5);
   border-radius: 50%;
   pointer-events: none;
   z-index: 9998;
@@ -131,12 +131,12 @@ body {
 .cursor-ring.hovering {
   width: 52px; height: 52px;
   border-color: var(--indigo);
-  background: rgba(99,102,241,0.08);
+  background: rgba(79,142,247,0.08);
 }
 
 .cursor-ring.clicking {
   width: 28px; height: 28px;
-  background: rgba(99,102,241,0.15);
+  background: rgba(79,142,247,0.15);
 }
 
 /* ─── Aurora Background ──────────────────────────────── */
@@ -159,7 +159,7 @@ body {
 .aurora-orb-1 {
   width: 700px; height: 700px;
   top: -15%; right: -8%;
-  background: radial-gradient(circle, rgba(99,102,241,0.18) 0%, rgba(168,85,247,0.08) 50%, transparent 70%);
+  background: radial-gradient(circle, rgba(79,142,247,0.18) 0%, rgba(168,85,247,0.08) 50%, transparent 70%);
   animation-delay: 0s;
 }
 
@@ -202,8 +202,8 @@ body {
   position: fixed;
   inset: 0;
   background-image:
-    linear-gradient(rgba(99,102,241,0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(99,102,241,0.04) 1px, transparent 1px);
+    linear-gradient(rgba(79,142,247,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(79,142,247,0.04) 1px, transparent 1px);
   background-size: 64px 64px;
   z-index: 0;
   pointer-events: none;
@@ -269,7 +269,7 @@ body {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, rgba(99,102,241,0.04) 0%, transparent 60%);
+  background: linear-gradient(135deg, rgba(79,142,247,0.04) 0%, transparent 60%);
   opacity: 0;
   transition: opacity 0.3s ease;
   pointer-events: none;
@@ -277,7 +277,7 @@ body {
 .card-premium:hover {
   border-color: var(--border-hi);
   transform: translateY(-3px);
-  box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 40px rgba(99,102,241,0.08), inset 0 1px 0 rgba(255,255,255,0.07);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 40px rgba(79,142,247,0.08), inset 0 1px 0 rgba(255,255,255,0.07);
 }
 .card-premium:hover::before {
   opacity: 1;
@@ -365,7 +365,7 @@ body {
   overflow: hidden;
   transition: transform 0.2s var(--ease-expo),
               box-shadow 0.2s var(--ease-expo);
-  box-shadow: 0 0 0 rgba(99,102,241,0);
+  box-shadow: 0 0 0 rgba(79,142,247,0);
 }
 .btn-primary::after {
   content: '';
@@ -377,7 +377,7 @@ body {
 }
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 0 32px rgba(99,102,241,0.4), 0 8px 24px rgba(0,0,0,0.3);
+  box-shadow: 0 0 32px rgba(79,142,247,0.4), 0 8px 24px rgba(0,0,0,0.3);
 }
 .btn-primary:hover::after { opacity: 1; }
 .btn-primary:active { transform: scale(0.96); }
@@ -438,8 +438,8 @@ body {
   padding: 5px 12px;
   border-radius: 100px;
   border: 1px solid var(--border-hi);
-  background: rgba(99,102,241,0.08);
-  color: rgba(99,102,241,0.9);
+  background: rgba(79,142,247,0.08);
+  color: rgba(79,142,247,0.9);
 }
 
 /* ─── Animations ─────────────────────────────────────── */
@@ -518,7 +518,7 @@ body {
 /* ─── Progress Bar ───────────────────────────────────── */
 .progress-bar {
   height: 3px;
-  background: rgba(99,102,241,0.12);
+  background: rgba(79,142,247,0.12);
   position: relative;
   overflow: hidden;
   border-radius: 2px;
@@ -534,16 +534,16 @@ body {
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb {
-  background: rgba(99,102,241,0.25);
+  background: rgba(79,142,247,0.25);
   border-radius: 10px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(99,102,241,0.45);
+  background: rgba(79,142,247,0.45);
 }
 
 /* ─── Selection ──────────────────────────────────────── */
 ::selection {
-  background: rgba(99,102,241,0.3);
+  background: rgba(79,142,247,0.3);
   color: var(--text-1);
 }
 

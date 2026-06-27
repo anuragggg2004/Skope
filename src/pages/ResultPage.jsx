@@ -1852,8 +1852,14 @@ export default function ResultPage() {
               {/* Card Content */}
               <div className="relative h-full flex flex-col justify-between p-6 z-10 text-center">
                 <div>
-                  <div className="font-sora text-[18px] font-extrabold text-white tracking-wide mb-8">
-                    Sk<span className="text-[#4f8ef7]">o</span>pe
+                  <div className="font-sora text-[18px] font-extrabold text-white tracking-wide mb-8 inline-flex items-center justify-center gap-1 w-full">
+                    <span>Sk</span>
+                    <svg width="18" height="18" viewBox="0 0 100 100" style={{ display: 'inline-block', verticalAlign: 'middle', margin: '0 -1px' }}>
+                      <circle cx="50" cy="50" r="10" fill="#4f8ef7" />
+                      <circle cx="50" cy="50" r="25" fill="none" stroke="#4f8ef7" strokeWidth="10" />
+                      <circle cx="50" cy="50" r="45" fill="none" stroke="#4f8ef7" strokeWidth="10" />
+                    </svg>
+                    <span>pe</span>
                   </div>
                   
                   <span className="font-dm text-[9px] uppercase tracking-[2px] text-pink font-bold block mb-1">My Career Vibe</span>

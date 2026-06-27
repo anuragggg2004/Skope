@@ -37,7 +37,7 @@ export default function AdminLoginPage() {
       fontFamily: "'Inter', 'DM Sans', sans-serif"
     }}>
       {/* Ambient orbs */}
-      <div style={{ position:'fixed', top:'10%', left:'5%', width:400, height:400, background:'radial-gradient(circle, rgba(99,102,241,0.12) 0%, transparent 70%)', pointerEvents:'none', borderRadius:'50%' }} />
+      <div style={{ position:'fixed', top:'10%', left:'5%', width:400, height:400, background:'radial-gradient(circle, rgba(79,142,247,0.12) 0%, transparent 70%)', pointerEvents:'none', borderRadius:'50%' }} />
       <div style={{ position:'fixed', bottom:'15%', right:'8%', width:350, height:350, background:'radial-gradient(circle, rgba(139,92,246,0.10) 0%, transparent 70%)', pointerEvents:'none', borderRadius:'50%' }} />
 
       <div style={{
@@ -45,9 +45,13 @@ export default function AdminLoginPage() {
       }}>
         {/* Logo */}
         <div style={{ textAlign: 'center', marginBottom: 40 }}>
-          <div style={{ fontSize: 32, fontWeight: 800, letterSpacing: '-1px', marginBottom: 8 }}>
+          <div style={{ fontSize: 32, fontWeight: 800, letterSpacing: '-1px', marginBottom: 8, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 4 }}>
             <span style={{ color: '#f0f4ff' }}>Sk</span>
-            <span style={{ color: '#6366f1' }}>o</span>
+            <svg width="28" height="28" viewBox="0 0 100 100" style={{ display: 'inline-block', verticalAlign: 'middle', margin: '0 -2px' }}>
+              <circle cx="50" cy="50" r="10" fill="#4f8ef7" />
+              <circle cx="50" cy="50" r="25" fill="none" stroke="#4f8ef7" strokeWidth="10" />
+              <circle cx="50" cy="50" r="45" fill="none" stroke="#4f8ef7" strokeWidth="10" />
+            </svg>
             <span style={{ color: '#f0f4ff' }}>pe</span>
           </div>
           <div style={{ fontSize: 13, color: 'rgba(240,244,255,0.4)', letterSpacing: '3px', textTransform: 'uppercase', fontWeight: 500 }}>
@@ -59,7 +63,7 @@ export default function AdminLoginPage() {
         <div style={{
           background: 'rgba(15,19,32,0.85)', border: '1px solid rgba(255,255,255,0.08)',
           borderRadius: 20, padding: '36px 32px',
-          backdropFilter: 'blur(20px)', boxShadow: '0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(99,102,241,0.05)'
+          backdropFilter: 'blur(20px)', boxShadow: '0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(79,142,247,0.05)'
         }}>
           <h1 style={{ fontSize: 22, fontWeight: 700, color: '#f0f4ff', margin: '0 0 6px 0' }}>Founder Access</h1>
           <p style={{ fontSize: 13, color: 'rgba(240,244,255,0.4)', margin: '0 0 28px 0' }}>Level 1 — Full system control</p>
@@ -114,18 +118,18 @@ export default function AdminLoginPage() {
               type="submit"
               disabled={loading}
               style={{
-                width: '100%', padding: '13px', background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
+                width: '100%', padding: '13px', background: 'linear-gradient(135deg, #4f8ef7, #8b5cf6)',
                 border: 'none', borderRadius: 10, color: '#fff', fontSize: 14, fontWeight: 600,
                 cursor: loading ? 'not-allowed' : 'pointer', opacity: loading ? 0.7 : 1,
                 fontFamily: 'inherit', letterSpacing: '0.3px',
-                transition: 'all 0.2s', boxShadow: '0 4px 20px rgba(99,102,241,0.35)'
+                transition: 'all 0.2s', boxShadow: '0 4px 20px rgba(79,142,247,0.35)'
               }}
             >
               {loading ? 'Authenticating…' : 'Enter Dashboard →'}
             </button>
           </form>
 
-          <div style={{ marginTop: 20, padding: '12px', background: 'rgba(99,102,241,0.08)', borderRadius: 8, border: '1px solid rgba(99,102,241,0.2)' }}>
+          <div style={{ marginTop: 20, padding: '12px', background: 'rgba(79,142,247,0.08)', borderRadius: 8, border: '1px solid rgba(79,142,247,0.2)' }}>
             <p style={{ margin: 0, fontSize: 11, color: 'rgba(240,244,255,0.4)', lineHeight: 1.6 }}>
               🔒 Session expires after 1 hour of inactivity. All admin actions are logged in the audit trail.
             </p>
@@ -134,7 +138,7 @@ export default function AdminLoginPage() {
 
         <p style={{ textAlign: 'center', marginTop: 20, fontSize: 12, color: 'rgba(240,244,255,0.25)' }}>
           Not an admin?{' '}
-          <a href="/" style={{ color: 'rgba(99,102,241,0.7)', textDecoration: 'none' }}>Return to Skope ↗</a>
+          <a href="/" style={{ color: 'rgba(79,142,247,0.7)', textDecoration: 'none' }}>Return to Skope ↗</a>
         </p>
       </div>
     </div>

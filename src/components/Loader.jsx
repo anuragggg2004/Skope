@@ -39,7 +39,7 @@ export default function Loader({ onComplete }) {
           exit={{ opacity: 0, scale: 0.98, transition: { duration: 0.6, ease: [0.16,1,0.3,1] } }}
         >
           {/* Logo */}
-          <div className="flex items-center gap-0 mb-12 overflow-hidden">
+          <div className="flex items-center gap-2 mb-12 overflow-hidden">
             <motion.span
               initial={{ x: -30, opacity: 0 }}
               animate={{ x: 0,   opacity: 1 }}
@@ -49,14 +49,19 @@ export default function Loader({ onComplete }) {
               Sk
             </motion.span>
 
-            <motion.span
+            <motion.svg
+              width="44"
+              height="44"
+              viewBox="0 0 100 100"
               initial={{ scale: 0, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ duration: 0.5, delay: 0.3, ease: [0.34,1.56,0.64,1] }}
-              className="font-clash text-[52px] font-bold text-[#6366f1] tracking-[-2px]"
+              style={{ display: 'inline-block', verticalAlign: 'middle', margin: '0 -2px' }}
             >
-              o
-            </motion.span>
+              <circle cx="50" cy="50" r="10" fill="#4f8ef7" />
+              <circle cx="50" cy="50" r="25" fill="none" stroke="#4f8ef7" strokeWidth="10" />
+              <circle cx="50" cy="50" r="45" fill="none" stroke="#4f8ef7" strokeWidth="10" />
+            </motion.svg>
 
             <motion.span
               initial={{ x: 30, opacity: 0 }}
@@ -80,9 +85,9 @@ export default function Loader({ onComplete }) {
                 className="h-full rounded-full transition-all duration-500"
                 style={{
                   width: `${progress}%`,
-                  background: 'linear-gradient(90deg, #6366f1, #a855f7)',
+                  background: 'linear-gradient(90deg, #4f8ef7, #a855f7)',
                   transition: 'width 0.5s cubic-bezier(0.16,1,0.3,1)',
-                  boxShadow: '0 0 12px rgba(99,102,241,0.6)',
+                  boxShadow: '0 0 12px rgba(79,142,247,0.6)',
                 }}
               />
             </div>
@@ -102,7 +107,7 @@ export default function Loader({ onComplete }) {
           <div
             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] pointer-events-none"
             style={{
-              background: 'radial-gradient(circle, rgba(99,102,241,0.12) 0%, transparent 70%)',
+              background: 'radial-gradient(circle, rgba(79,142,247,0.12) 0%, transparent 70%)',
               filter: 'blur(60px)',
               animation: 'pulseGlow 4s ease-in-out infinite',
             }}

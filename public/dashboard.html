@@ -1031,7 +1031,15 @@ button:active {
     <!-- DESKTOP SIDEBAR -->
     <aside class="sidebar">
       <div class="sidebar-header">
-        <div class="logo">Sk<span>o</span>pe</div>
+        <div class="logo" style="display: flex; align-items: center; gap: 2px;">
+          <span>Sk</span>
+          <svg width="18" height="18" viewBox="0 0 100 100" style="display: inline-block; vertical-align: middle; margin: 0 1px;">
+            <circle cx="50" cy="50" r="10" fill="#4f8ef7" />
+            <circle cx="50" cy="50" r="25" fill="none" stroke="#4f8ef7" stroke-width="10" />
+            <circle cx="50" cy="50" r="45" fill="none" stroke="#4f8ef7" stroke-width="10" />
+          </svg>
+          <span>pe</span>
+        </div>
         <div class="user-greeting">Hey, <span id="student-name">Explorer</span> 👋</div>
         <div class="user-meta" id="student-meta">Class 12 · PCM</div>
       </div>
