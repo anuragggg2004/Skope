@@ -64,7 +64,6 @@ const UserSchema = new mongoose.Schema({
   },
   provider: {
     type: String,
-    enum: ['email', 'anonymous'],
     default: 'email'
   }
 }, { timestamps: true })
