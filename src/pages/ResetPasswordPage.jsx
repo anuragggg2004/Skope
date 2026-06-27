@@ -83,10 +83,11 @@ export default function ResetPasswordPage() {
         {/* Logo */}
         <div className="flex items-center gap-2.5 mb-8">
           <div className="w-9 h-9 rounded-[11px] flex items-center justify-center"
-            style={{ background: 'linear-gradient(135deg, #4f8ef7, #8b5cf6)', boxShadow: '0 4px 20px rgba(79,142,247,0.35)' }}>
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
-              <circle cx="10" cy="10" r="7" stroke="white" strokeWidth="2.5" fill="none"/>
-              <line x1="15" y1="15" x2="21" y2="21" stroke="white" strokeWidth="2.5" strokeLinecap="round"/>
+            style={{ background: '#4f8ef7', boxShadow: '0 4px 20px rgba(79,142,247,0.35)' }}>
+            <svg width="18" height="18" viewBox="0 0 100 100" fill="none">
+              <circle cx="50" cy="50" r="10" fill="white" />
+              <circle cx="50" cy="50" r="25" fill="none" stroke="white" strokeWidth="10" />
+              <circle cx="50" cy="50" r="45" fill="none" stroke="white" strokeWidth="10" />
             </svg>
           </div>
           <span className="font-sora text-[16px] font-bold text-white">Skope</span>
