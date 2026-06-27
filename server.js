@@ -192,7 +192,7 @@ app.use(helmet({
   contentSecurityPolicy: {
     directives: {
       defaultSrc: ["'self'"],
-      scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'", "https://cdnjs.cloudflare.com", "https://www.google.com", "https://www.gstatic.com", "https://apis.google.com", "https://accounts.google.com"],
+      scriptSrc: ["'self'", "'unsafe-inline'", "https://cdnjs.cloudflare.com", "https://www.google.com", "https://www.gstatic.com", "https://apis.google.com", "https://accounts.google.com"],
       styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com", "https://api.fontshare.com", "https://www.gstatic.com"],
       imgSrc: ["'self'", "data:", "https://hoirqrkdgbmvpwutwuwj-all.supabase.co", "https://capsule-render.vercel.app", "https://readme-typing-svg.herokuapp.com", "https://img.shields.io"],
       connectSrc: ["'self'", "https://generativelanguage.googleapis.com", "https://openrouter.ai", "https://*.googleapis.com", "https://www.googleapis.com", "https://accounts.google.com"],
