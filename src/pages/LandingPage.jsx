@@ -330,6 +330,10 @@ const FAQ = [
   { q: "What if I don't have my final marks yet?", a: "Give us your estimated marks. You can come back after results and generate a new PathReport with updated numbers." },
   { q: "Does it only work for engineering?", a: "No. Skope covers PCM, PCB, Commerce, Arts, Design, Law, Hotel Management, Agriculture, Media, and more. It knows real Indian colleges across every stream." },
   { q: "How is this different from Googling colleges?", a: "Google gives you sponsored lists. Skope gives you a ranked shortlist filtered by YOUR marks, YOUR budget, YOUR city, and YOUR interest — with honest reality checks attached." },
+  { q: "Can my parents read the alignment report?", a: "Yes. The generated PathReport includes a dedicated 'Parent Alignment Vibe Check' section designed to translate your career interests into parameters parents care about—like stability, growth, and ROI—helping clear communication gaps." },
+  { q: "Does Skope take commission from colleges?", a: "Absolutely not. We are 100% independent. We do not accept sponsored ads or placement commissions from universities. Every recommendation is purely data-driven." },
+  { q: "Can I download my career roadmap?", a: "Yes, you can export your complete PathReport as a high-quality PDF to print, save, or share directly with your parents or school counsellors." },
+  { q: "How do you verify placement and salary data?", a: "We cross-reference official NIRF data, university placement booklets, and actual student reviews on LinkedIn and Reddit to strip away marketing inflation and give you the raw placement truth." }
 ]
 
 export default function LandingPage() {
