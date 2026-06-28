@@ -211,6 +211,33 @@ function MobileMenu({ open, onClose, user, logout, handleAdminRedirect }) {
               </button>
             ))}
 
+            <a
+              href="https://discord.gg/ANeWgGASWm"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={onClose}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 12,
+                padding: '16px 0',
+                background: 'none',
+                border: 'none',
+                borderBottom: '1px solid rgba(255,255,255,0.05)',
+                fontFamily: "'Clash Display', sans-serif",
+                fontSize: 22,
+                fontWeight: 600,
+                color: '#5865F2',
+                cursor: 'pointer',
+                textDecoration: 'none',
+              }}
+            >
+              <svg width="22" height="22" viewBox="0 0 127.14 96.36" fill="currentColor">
+                <path d="M107.7,8.07A105.15,105.15,0,0,0,77.26,0a77.19,77.19,0,0,0-3.3,6.83A96.67,96.67,0,0,0,53.22,6.83,77.19,77.19,0,0,0,49.88,0,105.15,105.15,0,0,0,19.44,8.07C3.66,31.58-1.86,54.65,1,77.53A105.73,105.73,0,0,0,32,96.36a77.7,77.7,0,0,0,6.63-10.85,68.43,68.43,0,0,1-10.5-5c1-.73,2-1.5,2.92-2.3a75.7,75.7,0,0,0,85.22,0c.9.8,1.91,1.57,2.92,2.3a68.43,68.43,0,0,1-10.5,5,77.7,77.7,0,0,0,6.63,10.85,105.73,105.73,0,0,0,31.6-18.83C129.58,49.38,123.38,26.54,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53S36.18,40.36,42.45,40.36,53.83,46,53.83,53,48.72,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.24,60,73.24,53S78.41,40.36,84.69,40.36,96.07,46,96.07,53,91,65.69,84.69,65.69Z" />
+              </svg>
+              Join Discord
+            </a>
+
             {user && user.email?.toLowerCase() === 'atiwary253@gmail.com' && (
               <button
                 onClick={() => { onClose(); handleAdminRedirect() }}
@@ -338,6 +365,41 @@ export default function Navbar() {
 
           {/* Right side */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+            {/* Discord Community Button — desktop only */}
+            <a
+              href="https://discord.gg/ANeWgGASWm"
+              target="_blank"
+              rel="noopener noreferrer"
+              title="Join our Discord community"
+              className="hidden sm:flex"
+              style={{
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: 32,
+                height: 32,
+                borderRadius: '50%',
+                border: '1px solid rgba(255,255,255,0.08)',
+                background: 'none',
+                cursor: 'pointer',
+                transition: 'all 0.2s ease',
+                color: 'rgba(241,245,249,0.45)',
+              }}
+              onMouseEnter={e => {
+                e.currentTarget.style.color = '#5865F2';
+                e.currentTarget.style.background = 'rgba(88,101,242,0.1)';
+                e.currentTarget.style.borderColor = 'rgba(88,101,242,0.3)';
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.style.color = 'rgba(241,245,249,0.45)';
+                e.currentTarget.style.background = 'none';
+                e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)';
+              }}
+            >
+              <svg width="16" height="16" viewBox="0 0 127.14 96.36" fill="currentColor">
+                <path d="M107.7,8.07A105.15,105.15,0,0,0,77.26,0a77.19,77.19,0,0,0-3.3,6.83A96.67,96.67,0,0,0,53.22,6.83,77.19,77.19,0,0,0,49.88,0,105.15,105.15,0,0,0,19.44,8.07C3.66,31.58-1.86,54.65,1,77.53A105.73,105.73,0,0,0,32,96.36a77.7,77.7,0,0,0,6.63-10.85,68.43,68.43,0,0,1-10.5-5c1-.73,2-1.5,2.92-2.3a75.7,75.7,0,0,0,85.22,0c.9.8,1.91,1.57,2.92,2.3a68.43,68.43,0,0,1-10.5,5,77.7,77.7,0,0,0,6.63,10.85,105.73,105.73,0,0,0,31.6-18.83C129.58,49.38,123.38,26.54,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53S36.18,40.36,42.45,40.36,53.83,46,53.83,53,48.72,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.24,60,73.24,53S78.41,40.36,84.69,40.36,96.07,46,96.07,53,91,65.69,84.69,65.69Z" />
+              </svg>
+            </a>
+
             {user ? (
               <>
                 {/* Retake Test — desktop only */}
