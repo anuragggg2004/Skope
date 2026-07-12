@@ -83,7 +83,7 @@ function AvatarDropdown({ user, logout, handleAdminRedirect }) {
         }}
       >
         {user?.photoURL
-          ? <img src={user.photoURL} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '50%' }} />
+          ? <img src={user.photoURL} alt="User profile avatar" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '50%' }} />
           : initials
         }
       </button>
